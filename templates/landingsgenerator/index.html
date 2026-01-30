@@ -1,0 +1,17 @@
+{% extends "landingsgenerator/base.html" %}
+
+{% block title %}Relance salon — Essais LPPP{% endblock %}
+
+{% block content %}
+<h1>Présentation relance salon</h1>
+<p style="color: var(--text-muted);">Reprise de contact avec les personnes rencontrées au salon — feeling bien passé.</p>
+
+<section style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border);">
+    <h2 style="font-size: 1.1rem; margin: 0 0 0.5rem;">Objectif</h2>
+    <p style="margin: 0;">Se positionner comme <strong>produit commercial</strong> à la fin : cibler à partir de leur activité, besoins supposés et pain points ; se présenter comme <strong>freelance</strong> ou <strong>alternant</strong> (selon matching) sérieux à envisager.</p>
+</section>
+
+<section style="margin-top: 1rem;">
+    <p><a href="{% url 'admin:landing_pages_landingpage_changelist' %}" style="color: var(--accent);">Voir les landing pages dans l’admin</a></p>
+</section>
+{% endblock %}

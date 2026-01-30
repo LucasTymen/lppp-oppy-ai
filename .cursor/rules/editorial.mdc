@@ -1,0 +1,17 @@
+---
+description: Éditorial anti-détection IA et humanisation (landing, contenu, templates)
+globs: "**/templates/**/*.html,**/content*.json,**/landing*"
+alwaysApply: false
+---
+
+# Éditorial LPPP (inspiré SquidResearch)
+
+Pour les landing pages, blocs de contenu et textes destinés aux prospects.
+
+- **Varier les structures** : pas que des listes à puces ; mélanger phrases courtes et longues.
+- **Éviter** : « En conclusion », « Il est important de noter que », « solution innovante », « accompagnement sur-mesure » sans donnée précise.
+- **Ton direct** : « on », « vous », formulations concrètes. Un destinataire réel (prospect, entreprise).
+- **Ancrage concret** : chiffre, exemple, cas d’usage quand c’est possible.
+- **Pas de sur-polissage** : ton naturel, pas de remplissage.
+
+Référence complète : `docs/bonnes-pratiques.md`.

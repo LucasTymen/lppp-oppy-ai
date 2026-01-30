@@ -1,0 +1,29 @@
+# Contact : P4S-archi (p4s-archi.com)
+
+**Premier rapport SEO** et **première landing page** pour ce prospect.
+
+---
+
+## Données SEO (Screaming Frog)
+
+Les exports CSV utilisés pour générer le rapport SEO sont actuellement dans le dossier **Downloads** de l’utilisateur :
+
+| Fichier | Usage |
+|---------|--------|
+| `SEO_rapport_P4S-archi_rapport_aperçu_problemes.csv` | Problèmes / opportunités (H1, H2, contenu, meta, images, sécurité, codes) |
+| `SEO_rapport_P4S-archi_temps_de_réponse_(en_secondes).csv` | Temps de réponse (98,86 % en 0–1 s) |
+| `SEO_rapport_P4S-archi_codes_de_réponse_externes,_redirection_(3xx).csv` | Redirections 3xx (ex. reseau-entreprendre.org, LinkedIn, uecc-hexatrust) |
+| `SEO_rapport_P4S-archi_codes_de_réponse_externes,_erreur_du_client_(4xx).csv` | Erreurs 4xx (ex. bpifrance.fr 403) |
+| `SEO_rapport_P4S-archi_codes_de_réponse_tous.csv` | Tous les codes (200, 302, 403, etc.) |
+
+**Option** : copier ces 5 fichiers dans `docs/contacts/p4s-archi/pieces/` pour les garder avec le dossier contact, ou laisser en Downloads et indiquer le chemin à l’agent Expert SEO.
+
+---
+
+## Livrables prévus
+
+- **Rapport SEO** (synthèse) : `rapport-seo.md` — Expert SEO + analyse sémantique.
+- **Étude Growth** (funnel + KPIs) : voir segmentation `2025-01-30-premier-rapport-seo-landing-p4s-archi.md`.
+- **Landing** : contenu cas par cas (template relance événement ou autre) — Rédacteur, Designer, Chef de Projet.
+
+**Règle** : un contact = un dossier — `docs/base-de-connaissances/organisation-donnees-contacts.md`.

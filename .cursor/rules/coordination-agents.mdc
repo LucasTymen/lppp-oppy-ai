@@ -1,0 +1,47 @@
+# Coordination des agents LPPP
+
+## Principe
+
+Chaque agent a un **rôle défini** et des **responsabilités claires** (voir `docs/base-de-connaissances/agents-roles-responsabilites.md`).
+
+Le **Chef de Projet** orchestre les agents en :
+1. Segmentant les features en tâches atomiques
+2. Assignant les tâches selon la matrice RACI
+3. Validant les livrables avant intégration
+
+## Workflow de segmentation
+
+Quand une nouvelle feature est demandée :
+
+1. **Conseiller** (point d'entrée) : consulte les agents, recherche (Stack Overflow, Reddit, Gemini), discute avec l'utilisateur jusqu'à **accord explicite** sur la stratégie. Aucun code avant accord. Voir `.cursor/rules/conseiller.mdc`.
+2. Une fois l'accord obtenu, **Chef de Projet** analyse et crée une segmentation dans `docs/base-de-connaissances/segmentations/` (nom : `YYYY-MM-DD-nom-feature.md`)
+3. **Chef de Projet** met à jour `docs/TODO.md` avec les tâches
+4. **Agents concernés** lisent la segmentation et réalisent leurs tâches
+5. **Chef de Projet** valide les livrables et met à jour les logs
+
+## Format de segmentation
+
+Chaque segmentation doit contenir :
+- **User Story** : besoin utilisateur
+- **Specs techniques** : détails d'implémentation
+- **Tâches par agent** : checklist avec estimation de temps
+- **Dépendances** : ordre d'exécution (parallèle ou séquentiel)
+- **Critères de validation** : comment valider que c'est terminé
+
+## Règles de coordination
+
+- **Un agent = un rôle** : ne pas mélanger les responsabilités (ex: le Designer ne fait pas de DevOps)
+- **Consulter avant décider** : voir la matrice RACI (qui doit être Consulted)
+- **Documenter les décisions** : toute décision → `docs/base-de-connaissances/decisions.md`
+- **Paralléliser quand possible** : lancer plusieurs agents en même temps si pas de dépendances
+
+## Référence
+
+- **Rôles et responsabilités** : `docs/base-de-connaissances/agents-roles-responsabilites.md`
+- **Registre agents et ressources** : `docs/base-de-connaissances/registre-agents-ressources.md` (source de vérité temps réel : rôles, règles Cursor, ressources par pilote ; maintenu par l’orchestrateur)
+- **Matrice RACI** : qui fait quoi (Responsible, Accountable, Consulted, Informed)
+- **TODO** : `docs/TODO.md` (statut des tâches)
+
+## Nouvel agent ou nouvelle règle
+
+- Lors de l’ajout d’un nouvel agent ou d’une nouvelle règle Cursor : suivre la procédure dans le registre (section 5) et mettre à jour le registre + la stratégie (rôles, RACI). Voir `.cursor/rules/orchestrateur.mdc`.

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ landing_page.title }}</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { color: #111; }
+        .meta { color: #666; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <h1>{{ landing_page.title }}</h1>
+    {% if landing_page.prospect_company %}
+    <p class="meta">Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}</p>
+    {% endif %}
+    <div class="content">
+        {% if content.blocks %}
+        {% for block in content.blocks %}
+        <section>{{ block }}</section>
+        {% endfor %}
+        {% else %}
+        <p>Contenu personnalisé à venir.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

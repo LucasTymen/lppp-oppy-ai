@@ -1,0 +1,40 @@
+---
+description: Pilotage des agents — anti-hallucination, data-driven, sources
+alwaysApply: true
+---
+
+# Pilotage des agents LPPP
+
+## Anti-hallucination
+
+- Ne jamais inventer de fichiers, d’API, de variables ou de fonctionnalités qui n’existent pas dans le dépôt.
+- Avant d’affirmer un fait (stack, chiffre, comportement) : vérifier dans le code, `README.md` ou `docs/base-de-connaissances/`.
+- Si une info n’est pas trouvée : indiquer « à vérifier » ou ne pas l’affirmer.
+
+## Data-driven et sources
+
+- S’appuyer sur les données du projet : modèles, templates, `docs/`, `README.md`.
+- Toute décision ou fait documenté doit être enregistré dans `docs/base-de-connaissances/` (decisions.md, sources.md).
+- Le chef de projet / agent pilote met à jour les logs (`docs/logs/log-projet.md`, `docs/logs/log-ia.md`), la base de connaissances, `docs/TODO.md` et `docs/boite-a-idees.md` après les sessions.
+
+## Référence éditoriale
+
+- Pour tout contenu rédigé (landing, docs, messages) : appliquer les bonnes pratiques dans `docs/bonnes-pratiques.md` (éditorial anti-détection IA, humanisation).
+
+## Sécurité
+
+- **Rien de sensible committé** : pas de secrets, mots de passe, clés privées ou tokens dans le dépôt. Respecter le `.gitignore` (cf. `docs/base-de-connaissances/infra-devops.md` § Conventions).
+- **Règles de sécurité** : appliquer les règles dans `docs/base-de-connaissances/regles-securite.md` (Django prod, CSRF/XSS/injection, auth, API, checklist prod). En cas de modification de config ou d’API, vérifier l’impact sécurité.
+
+## Rangement, nettoyage et organisation
+
+- **Nettoyer derrière soi** : ne jamais laisser de fichiers temporaires, scripts one-shot ou debug en fin de session ; les supprimer.
+- **Rien d’inutile à la racine** : ne pas créer de fichiers ou dossiers à la racine sauf ceux prévus (README, Makefile, manage.py, docker-compose, requirements, .env.example, .gitignore, dossiers apps/, lppp/, docs/, docker/, templates/, .cursor/). Voir `docs/bonnes-pratiques.md` § 5.
+- **Pas de scripts temporaires** : interdiction de créer des scripts « pour tester » ou « au cas où » qui restent dans le dépôt. Script utile → intégrer au bon endroit (commande Django, Makefile, ou dossier `scripts/` documenté) ; sinon supprimer.
+- **Organisation** : code métier dans `apps/<app>/`, doc dans `docs/`, config dans `lppp/` et `docker/`. Un fichier = un rôle clair ; pas de doublons ni de fichiers inutiles.
+
+## Orchestrateur et registre des ressources
+
+- L’**orchestrateur** (règle `.cursor/rules/orchestrateur.mdc`) maintient le **registre des agents et ressources** : `docs/base-de-connaissances/registre-agents-ressources.md`.
+- Le Chef de Projet et l’agent en charge de la stratégie de fonctionnement s’y réfèrent pour connaître les ressources disponibles (rôles, règles Cursor, docs par pilote).
+- À chaque création d’agent ou de règle, l’orchestrateur met à jour le registre et aligne la stratégie (rôles, RACI, segmentations).

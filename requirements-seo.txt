@@ -1,0 +1,20 @@
+# SEO sémantique — dépendances optionnelles (keyword-to-topic, topic modelling, clustering)
+# Utilisé par : Expert SEO / AI-GEO. Intégration : voir docs/base-de-connaissances/seo-semantique-outils-open-source.md
+# Installation : pip install -r requirements-seo.txt (dans un venv dédié ou après accord DevOps/Dev)
+
+# NLP, entités, tokens, lemmatisation
+spacy>=3.7,<4
+
+# Topic modelling (LDA), similarité documentaire
+gensim>=4.3,<5
+
+# Traitement linguistique (stopwords, tokenize, stemmers)
+nltk>=3.8,<4
+
+# Embeddings, modèles Hugging Face (optionnel, plus lourd)
+transformers>=4.36,<5
+sentence-transformers>=2.2,<3
+
+# Modèles spaCy : télécharger séparément après install
+# python -m spacy download fr_core_news_sm
+# python -m spacy download en_core_web_sm

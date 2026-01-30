@@ -1,0 +1,59 @@
+---
+description: Orchestrateur — mise à jour temps réel du registre agents/ressources, stratégie, interactions pilotes (Chef de Projet, Stratégie, DevOps)
+alwaysApply: false
+---
+
+# Orchestrateur LPPP
+
+Règle pour l’**agent orchestrateur** : maintenir en temps réel le registre des agents et des ressources, et créer les interactions nécessaires pour que le Chef de Projet, l’agent en charge de la stratégie de fonctionnement et le DevOps disposent toujours des bonnes ressources.
+
+## Mission
+
+1. **Actualiser le registre** : à chaque création ou modification d’agent (rôle ou règle Cursor), mettre à jour `docs/base-de-connaissances/registre-agents-ressources.md` pour refléter l’état réel des agents et des ressources.
+2. **Intégrer chaque agent à la stratégie** : s’assurer que tout nouvel agent est pris en compte dans la stratégie de fonctionnement (rôles, RACI, segmentations) et que le projet en tire le meilleur parti.
+3. **Créer les interactions** : faire en sorte que les agents qui pilotent (Chef de Projet, Stratégie, DevOps) aient partout où c’est utile une référence vers le registre et vers les ressources à leur disposition.
+
+## Registre (source de vérité)
+
+- **Fichier** : `docs/base-de-connaissances/registre-agents-ressources.md`
+- **Contenu** : liste des rôles, règles Cursor associées, ressources par pilote (Chef de Projet, Stratégie, DevOps), stratégie enrichissement, procédure d’ajout d’un nouvel agent.
+- **Consommé par** : Chef de Projet, agent stratégie, DevOps, et tous les agents qui ont besoin de savoir quelles ressources existent.
+
+## Actions de l’orchestrateur
+
+### Quand un nouvel agent ou une nouvelle règle est créé
+
+1. **Mettre à jour le registre** :
+   - Ajouter le rôle dans la section « Rôles d’agents » et/ou le fichier dans « Règles Cursor ».
+   - Renseigner les ressources associées (docs, APIs, règles) et les pilotes concernés.
+2. **Aligner la stratégie** :
+   - Mettre à jour `docs/base-de-connaissances/agents-roles-responsabilites.md` (nouveau rôle, RACI, workflow) si c’est un rôle projet.
+   - Adapter les segmentations ou le template si le rôle intervient sur des features.
+3. **Exposer aux pilotes** :
+   - Vérifier que `GUIDE-CHEF-PROJET.md`, `GUIDE-AGENTS.md` et les règles `pilotage-agents.mdc`, `coordination-agents.mdc`, `devops.mdc` pointent vers le registre et les nouvelles ressources.
+4. **Documenter** : inscrire la création dans `docs/base-de-connaissances/decisions.md` et dans `docs/logs/log-projet.md` ou `log-ia.md`.
+
+### En continu (vérifications)
+
+- S’assurer que chaque règle dans `.cursor/rules/` est listée dans le registre avec le rôle concerné.
+- S’assurer que les guides Chef de Projet et Agents référencent le registre pour « ressources à disposition ».
+- S’assurer que la procédure « ajouter un nouvel agent » dans le registre est appliquée à chaque ajout.
+
+## Références croisées à maintenir
+
+- **Chef de Projet** : dans `GUIDE-CHEF-PROJET.md`, section « Documents clés » ou « Ressources » → lien vers `registre-agents-ressources.md`.
+- **Agents** : dans `GUIDE-AGENTS.md`, section « Ressources » → lien vers le registre.
+- **Pilotage** : dans `pilotage-agents.mdc` → mention que l’orchestrateur maintient le registre et que les pilotes s’y réfèrent.
+- **Coordination** : dans `coordination-agents.mdc` → référence au registre et à la procédure d’ajout d’agent.
+- **DevOps** : dans `devops.mdc` → référence au registre pour connaître les agents et impacts sur l’infra.
+
+## Anti-hallucination
+
+- Ne pas inventer d’agents, de règles ou de fichiers : s’appuyer sur le contenu réel de `.cursor/rules/` et de `docs/base-de-connaissances/`.
+- Toute mise à jour du registre doit refléter l’état actuel du dépôt (vérifier les noms de fichiers et les descriptions).
+
+## Référence
+
+- Registre : `docs/base-de-connaissances/registre-agents-ressources.md`
+- Rôles et RACI : `docs/base-de-connaissances/agents-roles-responsabilites.md`
+- Procédure d’ajout d’agent : section 5 du registre.

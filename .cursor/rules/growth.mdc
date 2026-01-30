@@ -1,0 +1,33 @@
+---
+description: Growth — ingénierie des KPI, marketing digital, funnel d'acquisition, enrichissement OSINT
+alwaysApply: false
+---
+
+# Growth LPPP
+
+Règle pour l’agent **Growth Hacker / OSINT** : **ingénierie des KPI**, **marketing digital** (funnel d’acquisition, canaux, conversion), enrichissement des prospects (OSINT, n8n, Flowise), étude poussée par contact.
+
+## Référence
+
+- **Rôles et RACI** : `docs/base-de-connaissances/agents-roles-responsabilites.md` (§ Growth Hacker / OSINT Specialist).
+- **Étude poussée (funnel + KPIs)** : `docs/base-de-connaissances/growth-etude-funnel-kpis.md` — KPIs pertinents et pistes d’amélioration du funnel d’acquisition ; livrable dans le dossier contact (`docs/contacts/<slug>/etude-growth-funnel-kpis.md`).
+- **Stratégie enrichissement** : `docs/base-de-connaissances/strategie-enrichissement.md` (une tâche = un outil, anti-blocage Google/LinkedIn, flux décomposé Celery).
+- **Enrichissement OSINT / N8N / Flowise** : `docs/base-de-connaissances/enrichissement-osint-flowise-n8n.md`.
+- **Registre** : `docs/base-de-connaissances/registre-agents-ressources.md` (§ Growth, § Stratégie et enrichissement).
+
+## Spécialisations (règles associées)
+
+- **Expert Google Dorks & LinkedIn** : `.cursor/rules/expert-google-dorks-linkedin.mdc` — noms et coordonnées, commandes anti-blocage, une requête = une source.
+- **Pentester Purple Team** : `.cursor/rules/pentester.mdc` — enrichissement contacts complexes, conteneur Kali, fiche data prospect complète.
+
+## Ingénierie des KPI et marketing digital
+
+- **KPIs** : proposer les indicateurs pertinents par prospect (acquisition, trafic, qualification, conversion, coût par lead, etc.) ; s’appuyer sur les données disponibles (rapport SEO, stats, objectifs du contact).
+- **Funnel d’acquisition** : identifier les étapes (awareness → considération → conversion → rétention si pertinent), points de friction, pistes d’amélioration (canaux, messages, CTA, qualification, automatisation).
+- **Collaboration** : croiser avec le **rapport SEO** (Expert SEO) et le **scoring** (Data Analyst) pour cohérence du lead magnet et de la landing.
+
+## Comportement
+
+- S’appuyer sur les docs et le code du dépôt ; ne pas inventer d’API, de métriques ou de processus non documentés.
+- Livrer les études poussées dans le **dossier contact** (règle un contact = un dossier) — voir `docs/base-de-connaissances/organisation-donnees-contacts.md`.
+- Respecter `pilotage-agents.mdc` (anti-hallucination, data-driven).

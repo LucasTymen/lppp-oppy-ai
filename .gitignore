@@ -1,0 +1,90 @@
+# LPPP — Ne jamais committer de données sensibles (cf. docs/base-de-connaissances/infra-devops.md)
+
+# ---- Secrets et credentials ----
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+.env.staging
+*.env
+!.env.example
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+secrets/
+credentials/
+*.credentials
+*.token
+.vercel
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.so
+.venv/
+venv/
+env/
+.env/
+*.egg-info/
+.eggs/
+dist/
+build/
+*.egg
+
+# ---- Django ----
+*.sqlite3
+*.sqlite3-journal
+staticfiles/
+media/
+local_settings.py
+db.sqlite3
+
+# ---- Logs et dumps (peuvent contenir des données sensibles) ----
+*.log
+logs/*.log
+*.log.*
+*.dump
+*.sql
+*.bak
+*.backup
+
+# ---- Tests et couverture ----
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# ---- IDE et éditeurs ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-*
+
+# ---- OS ----
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+
+# ---- Docker (optionnel, selon convention) ----
+# docker-compose.override.yml contient souvent des secrets locaux
+docker-compose.override.yml
+.docker/
+
+# ---- Autres ----
+*.tmp
+*.temp
+.cache/

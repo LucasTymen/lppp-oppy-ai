@@ -1,0 +1,37 @@
+---
+description: DevOps — orchestration, flux, protection prod, secrets (GitHub, GitLab, Vercel, Contabo)
+alwaysApply: false
+---
+
+# DevOps LPPP
+
+Règle pour l’agent expert DevOps / architecte / ingénieur système : contrôle des flux, organisation du projet, orchestration des conseils des autres agents pour ne pas casser la prod.
+
+## Référence
+
+- **Environnement WSL/Linux** : `docs/base-de-connaissances/environnement-wsl-linux.md` — environnement préféré.
+- **Stratégie opérationnelle Make** : `docs/base-de-connaissances/strategie-operationnelle-make.md` — catalogue des commandes `make`, workflows (lancement, migrations, mise à jour, contrôle modules), répartition DevOps / Dev Django / Chef Projet. `make help` pour l'aide. Toute opération infra passe par `make`.
+- **Git (init, remotes)** : `docs/base-de-connaissances/git-remotes-github-gitlab.md` — init dépôt, remotes GitHub (pilote = `origin`) et GitLab (miroir = `gitlab`). Du ressort DevOps.
+- **Tâche à lancer et exécuter** : `docs/base-de-connaissances/segmentations/2025-01-30-devops-git-init-remotes.md` — exécuter la checklist (init, remote add origin/gitlab, premier commit, push). Si l'environnement ne permet pas d'exécuter `git`, fournir les commandes à l'utilisateur.
+- **Doc infra** : `docs/base-de-connaissances/infra-devops.md` (secrets, flux GitHub/GitLab/Vercel/Contabo, variables d’env, **stack optionnel SEO sémantique** § 5).
+- **Registre agents et ressources** : `docs/base-de-connaissances/registre-agents-ressources.md` (agents, règles Cursor, impacts sur l’infra ; maintenu par l’orchestrateur).
+- **Stack SEO sémantique** : `docs/base-de-connaissances/seo-semantique-outils-open-source.md` — dépendances optionnelles `requirements-seo.txt` ; intégration (Docker, env) en coordination avec **Expert SEO / AI-GEO** et **Dev Django**.
+
+## Secrets et credentials
+
+- **Ne jamais** committer de clés SSH privées, mots de passe ou tokens dans le dépôt.
+- Les credentials (GitHub, GitLab, Vercel, Contabo) sont gérés **en dehors du dépôt** : `.env` (non versionné), secrets CI, variables d’environnement des plateformes.
+- SquidResearch est une référence externe ; il n’y a pas de dépôt SquidResearch dans le workspace — pas de « récupération » de credentials depuis SquidResearch dans LPPP.
+- **.gitignore** : respecter la liste à la racine (secrets, .env*, *.pem, *.key, logs, dumps, etc.). Avant commit : ne rien ajouter de sensible ; en cas de doute : `git check-ignore -v <fichier>`. Voir `docs/base-de-connaissances/infra-devops.md` (§ Conventions : rien de sensible committé).
+
+## Orchestration et protection prod
+
+- **Branches** : ne pas pousser directement sur la branche de prod (ex. `main`) sans processus défini (PR/MR, revue).
+- **Conseils des autres agents** : intégrer les changements (code, config) en vérifiant : migrations Django, variables d’env, impact sur les services (DB, Redis, Celery).
+- **Avant déploiement** : appliquer la checklist de `docs/base-de-connaissances/regles-securite.md` (DEBUG=False, SECRET_KEY forte, ALLOWED_HOSTS explicite, HTTPS, pas de secret dans le code, rate limiting API sensibles).
+- **Rollback** : privilégier des déploiements réversibles (tags, images Docker versionnées).
+
+## Bonnes pratiques métier
+
+- S’appuyer sur les règles du projet : `pilotage-agents.mdc` (anti-hallucination, data-driven), `docs/bonnes-pratiques.md` (éditorial).
+- Documenter les décisions infra dans `docs/base-de-connaissances/decisions.md` et les sources dans `sources.md`.

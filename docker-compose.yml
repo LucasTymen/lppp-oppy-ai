@@ -1,0 +1,166 @@
+# LandingsPagesPourProspections — stratégie conteneurs (inspirée SquidResearch)
+# Prospection & landing pages personnalisées : Django, n8n, Flowise, Celery, Enriched, Kali (conteneur quali)
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: lppp_db
+    environment:
+      POSTGRES_DB: ${DB_NAME:-lppp}
+      POSTGRES_USER: ${DB_USER:-lpppuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-lppppass123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-lpppuser} -d ${DB_NAME:-lppp}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: lppp_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    container_name: lppp_web
+    command: ["/entrypoint.sh", "gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "lppp.wsgi:application"]
+    env_file: .env
+    environment:
+      DB_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/1
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  celery:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    container_name: lppp_celery
+    command: ["/entrypoint.sh", "celery", "-A", "lppp", "worker", "-l", "info"]
+    env_file: .env
+    environment:
+      DB_HOST: db
+      CELERY_BROKER_URL: redis://redis:6379/1
+    volumes:
+      - .:/app
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    container_name: lppp_celery_beat
+    command: ["/entrypoint.sh", "celery", "-A", "lppp", "beat", "-l", "info"]
+    env_file: .env
+    environment:
+      DB_HOST: db
+      CELERY_BROKER_URL: redis://redis:6379/1
+    volumes:
+      - .:/app
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: lppp_n8n
+    environment:
+      N8N_HOST: ${N8N_HOST:-localhost}
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      NODE_ENV: production
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5678/}
+      GENERIC_TIMEZONE: ${TZ:-Europe/Paris}
+    volumes:
+      - n8n_data:/home/node/.n8n
+    ports:
+      - "5678:5678"
+    restart: unless-stopped
+
+  flowise:
+    image: flowiseai/flowise:latest
+    container_name: lppp_flowise
+    environment:
+      PORT: 3000
+      FLOWISE_USERNAME: ${FLOWISE_USERNAME:-}
+      FLOWISE_PASSWORD: ${FLOWISE_PASSWORD:-}
+    volumes:
+      - flowise_data:/root/.flowise
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  enriched:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.enriched
+    container_name: lppp_enriched
+    env_file: .env
+    environment:
+      DB_HOST: db
+      REDIS_URL: redis://redis:6379/0
+      CELERY_BROKER_URL: redis://redis:6379/1
+    volumes:
+      - .:/app
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    restart: unless-stopped
+    profiles:
+      - full
+
+  # Conteneur quali (Kali) : central à la stratégie d'enrichissement (OSINT, outils).
+  # Voir docs/base-de-connaissances/strategie-enrichissement.md
+  kalilinux:
+    image: kalilinux/kali-rolling:latest
+    container_name: lppp_kali
+    profiles:
+      - full
+    cap_add:
+      - NET_RAW
+      - NET_ADMIN
+    volumes:
+      - kali_data:/root
+    stdin_open: true
+    tty: true
+    command: ["/bin/bash", "-c", "tail -f /dev/null"]
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
+  n8n_data:
+  flowise_data:
+  kali_data:

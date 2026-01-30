@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing pages — Prospection</title>
+</head>
+<body>
+    <h1>Landing pages</h1>
+    <ul>
+        {% for lp in landing_pages %}
+        <li>
+            <a href="{% url 'landing_public' lp.slug %}">{{ lp.title }}</a>
+            — {{ lp.prospect_company|default:"—" }} ({{ lp.is_published|yesno:"publiée,brouillon" }})
+        </li>
+        {% empty %}
+        <li>Aucune landing page.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

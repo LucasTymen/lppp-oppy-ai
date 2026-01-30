@@ -1,0 +1,16 @@
+# LandingsPagesPourProspections — Python deps (Django, Celery, scraping, données)
+Django>=5.0,<6
+gunicorn>=21,<23
+psycopg[binary]>=3.1
+redis>=5.0
+celery[redis]>=5.3
+django-environ>=0.11
+django-cors-headers>=4.3
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=5.0
+python-dotenv>=1.0
+
+# Données : CSV, analytics, rapport SEO (Data Analyst, Expert SEO, Growth) — voir docs/base-de-connaissances/bibliotheques-agents-techniques.md
+pandas>=2.0,<3
+numpy>=1.24,<3
