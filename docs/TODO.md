@@ -2,13 +2,15 @@
 
 Liste de tâches (maintenue par le chef de projet / agent pilote).
 
-**Environnement choisi** : **Docker web** (conteneur web, pas runserver local). **URGENT** : Git init + remotes pas encore fait — voir tâche en tête du TODO et `2025-01-30-devops-git-init-remotes.md`.
+**Environnement choisi** : **Docker web** (conteneur web, pas runserver local). **Git init + premier commit + push** : fait (GitHub origin + GitLab gitlab, SSH SquidResearch).
+
+**Sprint en cours** : toute l'équipe technique mobilisée — voir `docs/base-de-connaissances/segmentations/2025-01-30-sprint-equipe-technique.md`.
 
 **Mobilisation agents système et connexions** : **DevOps, Dev Django, Pentester** sont mobilisés pour **réparer et lancer** le conteneur, le backend, le front et l’admin. Voir `2025-01-30-lancement-docker-projet.md`. **Montage du projet** : Orchestrateur, Chef de Projet, Data Analyst, Dev Django, DevOps — écrans, concordance des routes back, logique métier. Voir `2025-01-30-montage-projet-ecrans-routes-logique.md` et `routes-back-lppp.md`.
 
 | Statut   | Tâche | Priorité |
 |----------|--------|----------|
-| À faire  | **URGENT — Git init + remotes** : DevOps — initialiser Git et configurer remotes GitHub (origin) + GitLab (gitlab) ; exécuter `2025-01-30-devops-git-init-remotes.md`, doc `git-remotes-github-gitlab.md` | Haute |
+| Fait     | **Git init + premier commit + push** : Git initialisé, remotes SSH (origin GitHub, gitlab GitLab), commit 67a2055 (125 fichiers), push origin main et push gitlab main réussis. | — |
 | À faire  | **Montage projet** : Orchestrateur, Chef de Projet, Data Analyst, Dev Django, DevOps — écrans, concordance des routes back, logique métier ; segmentation `2025-01-30-montage-projet-ecrans-routes-logique.md`, doc `routes-back-lppp.md` | Haute |
 | À faire  | **Lancement stack** : DevOps + Dev Django + Pentester — réparer et lancer conteneur, backend, front, admin (localhost/127.0.0.1:8080 ou 8000) ; segmentation `2025-01-30-lancement-docker-projet.md` | Haute |
 | À faire  | **Premier rapport SEO P4S-archi** : Expert SEO — rapport à partir des 5 CSV Screaming Frog + analyse sémantique ; livrable `docs/contacts/p4s-archi/rapport-seo.md` | Haute |
@@ -19,9 +21,10 @@ Liste de tâches (maintenue par le chef de projet / agent pilote).
 | À faire  | Interface landingsgenerator : app Django /essais/, mobile-first, dark + switch clair/sombre, premier écran présentation relance salon | Haute |
 | À faire  | Rapport SEO prospect : rapport présentable (pas stockage), CSV Screaming Frog, manque à gagner, coût SEO pourri | Moyenne |
 | Fait     | Système de coordination des agents (rôles, RACI, segmentation) | — |
-| À faire  | Moderniser les landing pages (système de templates multiples) | Haute |
-| À faire  | Implémenter Tailwind CSS (design system moderne) | Haute |
-| À faire  | Créer composants réutilisables (hero, CTA, formulaires) | Haute |
+| À faire  | **Stack frontend Next.js + React** : migrer/développer les landings en Next.js + React (effet waouh, déploiement Vercel) — voir `stack-frontend-nextjs-react.md` | Haute |
+| À faire  | Moderniser les landing pages (système de templates multiples, composants React) | Haute |
+| À faire  | Implémenter Tailwind CSS (design system moderne, avec Next.js) | Haute |
+| À faire  | Créer composants React réutilisables (hero, CTA, formulaires) pour Next.js | Haute |
 | À faire  | Ajouter analytics et tracking (taux de conversion) | Moyenne |
 | À faire  | Appliquer l'éditorial anti-détection aux contenus des landing pages existantes (si besoin) | Moyenne |
 | À faire  | Exposer score / qualité dans l'admin (Prospect, campagnes) ou vues (optionnel) | Basse |

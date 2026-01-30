@@ -36,7 +36,8 @@
 ## 🔧 Specs techniques
 
 ### Architecture
-- Composants impactés : [ex: `apps/landing_pages/models.py`, `templates/`]
+- **Stack frontend** : Next.js + React (voir `stack-frontend-nextjs-react.md`) — déploiement Vercel.
+- Composants impactés : [ex: `apps/landing_pages/models.py`, composants Next.js, API Django]
 - Nouvelles dépendances : [ex: Tailwind CSS, Alpine.js]
 - Modifications de base de données : [ex: Nouvelle colonne `template_key`]
 
@@ -220,6 +221,7 @@
 - [ ] Tests unitaires passent (couverture > 80%)
 - [ ] Pas de linter errors (flake8, black)
 - [ ] Documentation à jour (README, base de connaissances)
+- [ ] **Definition of Done** : tâche considérée « done » selon `docs/base-de-connaissances/definition-of-done.md` (livrable livré, pas de régression, doc à jour, validation Chef de Projet)
 
 ### Éditorial
 - [ ] Contenus appliquent les bonnes pratiques (`docs/bonnes-pratiques.md`)

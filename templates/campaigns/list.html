@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campagnes — Prospection</title>
+</head>
+<body>
+    <h1>Campagnes de prospection</h1>
+    <ul>
+        {% for c in campaigns %}
+        <li>
+            <a href="{% url 'campaigns:campaign_detail' c.slug %}">{{ c.name }}</a>
+            — {{ c.is_active|yesno:"active,inactive" }} ({{ c.prospects.count }} prospect{{ c.prospects.count|pluralize }})
+        </li>
+        {% empty %}
+        <li>Aucune campagne. <a href="/admin/campaigns/campaign/">Créer une campagne dans l’admin</a>.</li>
+        {% endfor %}
+    </ul>
+    <p><a href="/admin/">Admin</a> · <a href="/essais/">Essais</a> · <a href="/">Landing pages</a></p>
+</body>
+</html>

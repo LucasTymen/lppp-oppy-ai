@@ -1,5 +1,6 @@
 # Réparer et lancer le stack — conteneur, backend, front, admin
 
+**Sprint** : voir `2025-01-30-sprint-equipe-technique.md` (toute l'équipe technique mobilisée).  
 **Date** : 2025-01-30  
 **Statut** : 🟢 **Mobilisation agents système et connexions**  
 **Objectif** : Tous les agents en relation avec le **système et les connexions** sont mobilisés pour **réparer et lancer** le conteneur Docker, le backend Django, le front (templates, /essais/) et l’admin Django, afin que le projet soit accessible (localhost ou 127.0.0.1:8000).
@@ -12,7 +13,8 @@
 |-------|------|-------------------|---------------------------|
 | **DevOps** | Conteneur, ports, env, accès | Lancer le stack Docker (build, up) ; si accès localhost/admin en ERR_EMPTY_RESPONSE sous Windows, mettre en place l’**Option B** (runserver local) et documenter dans `pret-a-demarrer.md` | Conteneurs up ; admin et /essais/ accessibles (Docker ou runserver) |
 | **Dev Django** | Backend, URLs, admin, front | Vérifier que le backend Django répond (vues, URLs, static) ; que l’admin et /essais/ sont configurés ; corriger les erreurs applicatives qui empêchent le chargement | Backend et front répondent ; admin et /essais/ fonctionnels |
-| **Pentester** (sécurité connexions) | Flux et connexions | Une fois le stack lancé : vérifier isolation des flux (API enrich, Flowise, n8n), pas de fuite de données ; appliquer `regles-securite.md` | Pas de régression sécurité sur les connexions |
+| **Pentester** (sécurité connexions) | Flux et connexions | Une fois le stack lancé : vérifier isolation des flux (API enrich, Flowise, n8n), pas de fuite de données ; collaborer avec **Automatizer** pour la sécurité des workflows (voir `info-automatizer-pour-equipe.md`) ; appliquer `regles-securite.md` | Pas de régression sécurité sur les connexions |
+| **Automatizer** (workflows N8N, Flowise) | Workflows et automatisation | Développer/maintenir workflows N8N/Flowise ; monitoring, optimisation tokens, traces de performances ; collaborer avec DevOps (conteneurs), Dev Django (API, Celery), Growth (pipelines), Pentester (sécurité flux). Voir `info-automatizer-pour-equipe.md`. | Workflows opérationnels, pas de régression |
 
 **Parallélisation** : DevOps et Dev Django peuvent avancer en parallèle (DevOps sur conteneur/ports/env, Dev Django sur code et URLs). Pentester intervient une fois l’accès rétabli.
 

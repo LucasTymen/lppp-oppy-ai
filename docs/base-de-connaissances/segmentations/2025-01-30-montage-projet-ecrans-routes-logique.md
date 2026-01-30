@@ -1,5 +1,6 @@
 # Montage du projet — écrans, concordance des routes back, logique métier
 
+**Sprint** : voir `2025-01-30-sprint-equipe-technique.md` (toute l'équipe technique mobilisée).  
 **Date** : 2025-01-30  
 **Statut** : 🟢 À lancer (environnement et admin opérationnels)  
 **Objectif** : Mettre en place toutes les fonctionnalités en coordonnant les **orchestrateurs**, l’agent **logique métier / algorithmes**, le **Dev Django** et le **DevOps** : écrans, concordance des routes dans le back, branchement de la logique métier.

@@ -10,7 +10,7 @@ Document de synthèse (Chef de Projet / Orchestrateur). Mis à jour à partir du
 
 | Reste à faire | Qui | Référence |
 |---------------|-----|-----------|
-| **URGENT — Git init + remotes** (GitHub, GitLab) : pas encore fait, signalé comme priorité par l’utilisateur. | DevOps | `2025-01-30-devops-git-init-remotes.md`, `git-remotes-github-gitlab.md` |
+| **Git init + remotes** : **fait** (GitHub origin + GitLab gitlab, SSH SquidResearch). (GitHub, GitLab) : fait (voir log-projet) par l’utilisateur. | — | `git-remotes-github-gitlab.md` |
 | **Vérifier** : admin et /essais/ accessibles (Docker web sur 127.0.0.1:8000 ou runserver 8080 en dépannage), migrations à jour, pas de régression. | DevOps, Dev Django | `lancement-docker-projet.md` |
 
 ---
@@ -20,7 +20,7 @@ Document de synthèse (Chef de Projet / Orchestrateur). Mis à jour à partir du
 | Reste à faire | Qui | Référence |
 |---------------|-----|-----------|
 | **Concordance des routes** : tenir à jour `routes-back-lppp.md` à chaque ajout de route. | Dev Django | `routes-back-lppp.md`, `2025-01-30-montage-projet-ecrans-routes-logique.md` |
-| **/campaigns/** : définir et implémenter les routes (liste, détail, éventuel CRUD) — actuellement `apps.campaigns.urls` est vide. | Dev Django, Chef de Projet | `montage-projet-ecrans-routes-logique.md` |
+| **/campaigns/** : liste et détail implémentés (`campaign_list`, `campaign_detail`, templates `campaigns/list.html`, `campaigns/detail.html`). CRUD restant en admin. | Dev Django | `routes-back-lppp.md` |
 | **Écrans /essais/** : premier écran (relance salon) en place ; ajouter les écrans suivants selon specs (wizard, choix template, etc.). | Dev Django, Designer, Chef de Projet | `2025-01-30-interface-landingsgenerator.md` |
 | **Designer** : vérifier /essais/ page par page (mode nuit, switch clair/sombre, cas limites). | Designer | `interface-landingsgenerator.md` |
 | **Logique métier** : documenter les appels `apps.intelligence` pour les écrans (score_prospect, prospect_completeness, best_landing_for_prospect) ; brancher les vues sur l’intelligence. | Data Analyst, Dev Django | `intelligence-metier-algorithmes.md`, `montage-projet-ecrans-routes-logique.md` |
@@ -52,10 +52,16 @@ Document de synthèse (Chef de Projet / Orchestrateur). Mis à jour à partir du
 
 ---
 
-## 5. Ordre recommandé « avant que tout fonctionne bien »
+## 5. Sprint en cours — toute l'équipe technique
 
-1. **URGENT — Git init + remotes** : exécuter la tâche DevOps `2025-01-30-devops-git-init-remotes.md` (GitHub origin + GitLab gitlab). Environnement choisi : **Docker web** (port 8000).
-2. **Montage projet** : routes /campaigns/ + écrans /essais/ supplémentaires + branchement logique métier (intelligence) dans les vues.
+**Document d'assignation** : `docs/base-de-connaissances/segmentations/2025-01-30-sprint-equipe-technique.md`. Chaque rôle technique (Chef de Projet, Orchestrateur, Dev Django, DevOps, Pentester, Designer, Data Analyst, Growth, Rédacteur, Expert SEO) y a au moins une tâche explicite. Consulter ce document pour savoir qui fait quoi sur ce sprint.
+
+---
+
+## 6. Ordre recommandé « avant que tout fonctionne bien »
+
+1. **Git init + remotes** : fait (GitHub origin + GitLab gitlab, SSH SquidResearch).
+2. **Montage projet** : routes /campaigns/ (liste + détail) en place ; écrans /essais/ supplémentaires + branchement logique métier (intelligence) dans les vues à poursuivre.
 3. **Livrables P4S-archi** : rapport SEO + étude Growth + première landing (une fois les écrans et routes de base en place).
 4. **Design / UX** : vérification Designer sur /essais/, puis Tailwind et composants.
 
@@ -63,6 +69,8 @@ Document de synthèse (Chef de Projet / Orchestrateur). Mis à jour à partir du
 
 ## Références
 
+- **Réunion agile organisation** : `docs/base-de-connaissances/reunion-agile-2025-01-30-organisation-equipe.md` (point organisation, segmentations à renforcer, actions décidées).
+- **Sprint équipe technique** : `docs/base-de-connaissances/segmentations/2025-01-30-sprint-equipe-technique.md`
 - **TODO** : `docs/TODO.md`
 - **Segmentations** : `docs/base-de-connaissances/segmentations/`
 - **Routes back** : `docs/base-de-connaissances/routes-back-lppp.md`

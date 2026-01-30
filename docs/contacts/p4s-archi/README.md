@@ -26,4 +26,11 @@ Les exports CSV utilisés pour générer le rapport SEO sont actuellement dans l
 - **Étude Growth** (funnel + KPIs) : voir segmentation `2025-01-30-premier-rapport-seo-landing-p4s-archi.md`.
 - **Landing** : contenu cas par cas (template relance événement ou autre) — Rédacteur, Designer, Chef de Projet.
 
+## Livrables réalisés
+
+- **Étude concurrentielle PESTEL-SWOT-Porter** : `etude-concurrentielle-pestel-swot-porter.md` (société, produits, concurrence, verdict prospection).
+- **Landing page proposition** : `content-json-proposition.md` et `landing-proposition-joel.json` — contenu personnalisé pour Joël Courtois (ton courtois et chaleureux, proposition Growth Engineer).
+- **Brief copywriting + CTA** : `brief-seo-growth-designer-copywriting-cta.md` — mission Expert SEO, Growth, Designer pour étudier le copywriting et les mots-clés des call-to-actions.
+- **Page Next.js** : `frontend/src/app/p4s-archi/page.tsx` — landing P4S déployable sur Vercel. Voir `deploiement-vercel-frontend.md`.
+
 **Règle** : un contact = un dossier — `docs/base-de-connaissances/organisation-donnees-contacts.md`.

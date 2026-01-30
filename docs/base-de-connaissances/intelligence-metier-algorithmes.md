@@ -2,6 +2,8 @@
 
 Document de référence pour le **matching**, le **scoring**, le **filtrage** et la **qualité des données**, afin d’adapter les contenus rédigés (landing pages) et les stratégies de prospection. Les algorithmes sont centralisés dans l’app `apps.intelligence` et réutilisables partout (campaigns, landing_pages, scraping).
 
+**Spec canonique des formules** : pour les **formules mathématiques et algorithmes explicites** (score prospect, complétude, matching, normalisation), voir **`formules-et-algorithmes-reference.md`**. Ce document décrit où brancher les algorithmes et la stratégie d’implantation ; le Data Analyst et le Dev Django s’inspirent du doc de référence pour implémenter sans réinventer.
+
 ---
 
 ## 1. Sources des algorithmes
@@ -37,8 +39,9 @@ SquidResearch est une référence externe (chemin documenté dans `sources.md`).
 
 ## 4. Qualité des données
 
-- **Complétude** : champs obligatoires / optionnels par entité (Prospect, LandingPage).
-- **Cohérence** : email valide, noms normalisés (trim, casse), pas de doublons critères choisis (ex. campaign + email).
+- **Complétude prospect** : définition et sortie de `prospect_completeness` → **`formules-et-algorithmes-reference.md`** (§ 3). Champs obligatoires / optionnels par entité (Prospect, LandingPage).
+- **Normalisation** : email (regex), nom entreprise (NFD, suppression accents), nom contact (trim, collapse espaces) → **`formules-et-algorithmes-reference.md`** (§ 4).
+- **Cohérence** : pas de doublons critères choisis (ex. campaign + email).
 - **Enriched_data** : structure attendue documentée ; champs manquants ou invalides dégradent le score ou déclenchent des alertes.
 
 Les résultats de qualité alimentent le scoring et les stratégies d’affichage (contenus rédigés).
@@ -58,8 +61,13 @@ Les résultats de qualité alimentent le scoring et les stratégies d’affichag
 1. **Centraliser** dans `apps.intelligence` : pas de logique de scoring/qualité/matching dupliquée dans les autres apps.
 2. **Réutiliser** les mêmes fonctions depuis les nodes, les vues, les tâches Celery et l’admin.
 3. **Configurer** les seuils et formules (django.conf ou modèles) pour adapter sans toucher au code.
-4. **Documenter** toute nouvelle règle ou formule dans ce fichier et dans `decisions.md` si décision de conception.
+4. **Documenter** toute nouvelle règle ou formule dans **`formules-et-algorithmes-reference.md`** (spec canonique), puis dans ce fichier si impact sur les points d’entrée ; et dans `decisions.md` si décision de conception.
 
 ---
+
+## Références
+
+- **Formules et algorithmes (spec canonique)** : `formules-et-algorithmes-reference.md`
+- **Décisions** : `decisions.md`
 
 *Dernière mise à jour : 2025-01-30. Référence : SquidResearch `data_nodes.py` (safe_eval, ENRICHED), structure LPPP.*

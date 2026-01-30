@@ -52,9 +52,10 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 ---
 
 ### 2. **Développeur Full-Stack Django**
-**Expertise** : Django, Python, PostgreSQL, Celery, Docker
+**Expertise** : Django, Python, **Next.js + React** (frontend landings), PostgreSQL, Celery, Docker
 
 **Responsabilités** :
+- Développer le **frontend Next.js/React** des landing pages (stack standard — voir `stack-frontend-nextjs-react.md`) ; déploiement Vercel
 - Développer les modèles Django (apps.landing_pages, apps.campaigns)
 - Créer les vues, URLs, serializers
 - Implémenter les tâches Celery (enrichissement, génération)
@@ -64,6 +65,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Outils** :
 - `apps/`, `lppp/settings.py`, `docker-compose.yml`
+- **Next.js + React** (frontend) — `stack-frontend-nextjs-react.md`, déploiement Vercel
 - pytest, Django ORM, Celery
 
 **Dépendances** :
@@ -74,12 +76,12 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 ---
 
 ### 3. **Designer UI/UX & Front-End**
-**Expertise** : HTML/CSS/JS, Tailwind CSS, design systems, accessibilité
+**Expertise** : HTML/CSS/JS, **Next.js + React**, Tailwind CSS, design systems, accessibilité
 
 **Responsabilités** :
-- Créer les templates HTML des landing pages
+- Créer les **composants et pages Next.js/React** des landing pages (stack frontend standard — voir `stack-frontend-nextjs-react.md`)
 - **Thématisation prospect** : reprendre le style (CSS, polices, couleurs, thème) de la société contactée ; fallback charte graphique SquidResearch si trop moche (voir `docs/base-de-connaissances/theming-landing-prospect.md`)
-- Développer les composants réutilisables (hero, CTA, formulaires)
+- Développer les composants React réutilisables (hero, CTA, formulaires) pour l'effet « waouh »
 - Implémenter le design system (couleurs, typographie, espacements)
 - Optimiser l'expérience mobile (responsive)
 - Intégrer les animations et micro-interactions
@@ -92,7 +94,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Dépendances** :
 - Reçoit les wireframes du Chef de Projet
-- Fournit les templates au Développeur Django
+- Fournit les composants et pages Next.js/React au Développeur
 - Collabore avec le Growth Hacker (A/B testing)
 
 ---
@@ -146,6 +148,33 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - Livrable : fiche data prospect complète et enrichie (`Prospect.enriched_data` + qualité/score) ; badges complets.
 - Collabore avec Expert Google Dorks & LinkedIn, Growth Hacker, orchestration. Anti-hallucination stricte.
 
+**Sous-assistant — Growth Analyst** (règle `.cursor/rules/growth-analyst.mdc`) :
+- Études concurrentielles, analyses SWOT (porteurs de SWOT), analyse de funnel de conversion, positionnement par rapport à la concurrence, analyse du marché, KPIs et leviers de croissance ; à terme : performances des campagnes Ads, optimisation, pistes pour de nouveaux marchés. Voir `growth-analyst-concurrentiel-marche-ads.md`. Le Growth délègue à ce sous-assistant pour tout ce périmètre.
+
+---
+
+### 5b. **Growth Analyst (concurrentiel, marché, funnel, Ads)**
+**Expertise** : Études concurrentielles, SWOT, funnel de conversion, positionnement concurrence, analyse du marché, KPIs et leviers de croissance ; performances des campagnes Ads, optimisation Ads, pistes pour de nouveaux marchés.
+
+**Responsabilités** :
+- Réaliser des **études concurrentielles** (acteurs, offres, positionnement, forces/faiblesses).
+- Produire des **analyses SWOT** (porteurs de SWOT) pour un prospect, un segment ou un marché.
+- Analyser le **funnel de conversion** (étapes, fuites, leviers d’optimisation) en lien avec le Growth.
+- Évaluer le **positionnement par rapport à la concurrence** et proposer des axes de différenciation.
+- Réaliser des **analyses de marché** (taille, tendances, segments, opportunités).
+- Définir et suivre les **KPIs** pertinents ; identifier les **leviers de croissance** (canaux, messages, automatisation).
+- **À terme** : analyser les **performances des campagnes Ads** (Google Ads, Meta, etc.), proposer des **optimisations** (enchères, créatifs, ciblage), et proposer des **pistes pour de nouveaux marchés** (segments, géographies, offres).
+
+**Outils** :
+- `docs/base-de-connaissances/growth-analyst-concurrentiel-marche-ads.md` — cadre et périmètre des livrables.
+- `docs/base-de-connaissances/growth-etude-funnel-kpis.md` — croisement avec l’étude funnel/KPIs du Growth.
+- `docs/contacts/<slug>/` — dossiers contact pour les livrables (études, SWOT, positionnement, Ads, nouveaux marchés).
+- `.cursor/rules/growth-analyst.mdc`
+
+**Dépendances** :
+- Placé sous la responsabilité du **Growth Hacker / OSINT** ; le Growth délègue les tâches du périmètre concurrentiel / marché / funnel / Ads / nouveaux marchés.
+- Collabore avec le **Chef de Projet** (validation, priorisation), le **Data Analyst** (données, scoring), l’**Expert SEO** (cohérence funnel et visibilité).
+
 ---
 
 ### 6. **DevOps / Infrastructure**
@@ -155,7 +184,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - **Initialiser Git et configurer les remotes** (GitHub pilote = `origin`, GitLab miroir = `gitlab`) — voir `docs/base-de-connaissances/git-remotes-github-gitlab.md`
 - Gérer les conteneurs Docker (build, orchestration)
 - Configurer les pipelines CI/CD (GitHub Actions, GitLab CI)
-- Déployer sur Vercel (front) et Contabo (back)
+- Déployer sur **Vercel** (frontend Next.js — voir `stack-frontend-nextjs-react.md`) et Contabo (back Django)
 - Sécuriser les secrets (`.env`, GitHub Secrets, Vercel Env Vars)
 - Monitorer les services (logs, alertes)
 - Documenter l'infrastructure dans `infra-devops.md`
@@ -226,27 +255,59 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ---
 
+### 9. **Automatizer (workflows, N8N, Flowise, MCP, API)**
+**Expertise** : N8N, Flowise (LLM et big data), MCP, flux d'API en Python et Django, développement et maintenance de workflows, monitoring, optimisation des tokens, traces de performances pour rapports data-driven
+
+**Responsabilités** :
+- Développer, maintenir et actualiser tous les workflows (N8N, Flowise, flux API Django, webhooks, tâches Celery, MCP)
+- Intervenir directement sur les workflows ; prendre en compte les bugs du monitoring et proposer des correctifs
+- Assurer une consommation optimale des tokens (LLM, API) ; proposer des améliorations si un plan est mal pensé ou mal configuré
+- Garder des traces des performances (latence, débit, taux d'erreur, coût estimé) pour alimenter les rapports data-driven et les statistiques
+- Collaborer avec Growth (pipelines OSINT), DevOps (conteneurs n8n/flowise, secrets), Dev Django (API, Celery), Pentester (sécurité des flux) ; s'aligner sur le registre et les segmentations sous la responsabilité des orchestrateurs
+
+**Outils** :
+- `docs/base-de-connaissances/enrichissement-osint-flowise-n8n.md`, `docs/base-de-connaissances/routes-back-lppp.md`
+- `docs/base-de-connaissances/strategie-operationnelle-make.md` (make n8n-logs, make flowise-logs)
+- `docs/base-de-connaissances/infra-devops.md`, `docs/base-de-connaissances/politique-credentials-securite-flux.md`
+- `.cursor/rules/automatizer.mdc`
+
+**Dépendances** :
+- Reçoit les specs de flux du Chef de Projet ou de Growth
+- Fournit les traces de performances au Chef de Projet et au Data Analyst pour les rapports
+- Collabore avec DevOps (déploiement n8n/flowise), Dev Django (API webhook, Celery)
+
+---
+
 ## 📊 Matrice de responsabilité (RACI)
 
-| Tâche | Conseiller | Chef Projet | Dev Django | Designer | Data Analyst | Growth | DevOps | Rédacteur | Expert SEO |
-|-------|------------|-------------|------------|----------|--------------|--------|--------|-----------|------------|
-| **Définir stratégie feature (accord avant code)** | **R** | A | C | C | C | C | I | I | I |
-| **Définir features prioritaires** | C | **R** | C | C | C | C | I | I | C |
-| **Créer modèles Django** | I | I | **R** | I | C | I | I | I | I |
-| **Designer templates landing** | I | A | I | **R** | I | I | I | C | I |
-| **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I |
-| **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I |
-| **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I |
-| **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I |
-| **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** |
-| **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** |
-| **Recommandations visibilité robots / IA** | I | A | I | I | I | I | I | C | **R** |
-| **Intégrer / maintenir stack SEO sémantique (Python)** | I | A | C | I | I | I | C | I | **R** |
-| **Intégrer Tailwind CSS** | I | I | C | **R** | I | I | I | I | I |
-| **Créer tâches Celery enrichissement** | I | I | **R** | I | I | C | I | I | I |
-| **Analyser taux de conversion** | I | A | I | I | **R** | C | I | C | I |
-| **Configurer CI/CD GitHub Actions** | I | A | C | I | I | I | **R** | I | I |
-| **Documenter base de connaissances** | C | **R** | C | C | C | C | C | C | C |
+| Tâche | Conseiller | Chef Projet | Dev Django | Designer | Data Analyst | Growth | DevOps | Rédacteur | Expert SEO | Automatizer | Growth Analyst |
+|-------|------------|-------------|------------|----------|--------------|--------|--------|-----------|------------|-------------|----------------|
+| **Définir stratégie feature (accord avant code)** | **R** | A | C | C | C | C | I | I | I | I | I |
+| **Définir features prioritaires** | C | **R** | C | C | C | C | I | I | C | I | I |
+| **Créer modèles Django** | I | I | **R** | I | C | I | I | I | I | I | I |
+| **Designer templates landing** | I | A | I | **R** | I | I | I | C | I | I | I |
+| **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I | I | I |
+| **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I | C | I |
+| **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I | I | I |
+| **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** | I | I |
+| **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** | I | I |
+| **Recommandations visibilité robots / IA** | I | A | I | I | I | I | I | C | **R** | I | I |
+| **Intégrer / maintenir stack SEO sémantique (Python)** | I | A | C | I | I | I | C | I | **R** | I | I |
+| **Intégrer Tailwind CSS** | I | I | C | **R** | I | I | I | I | I | I | I |
+| **Créer tâches Celery enrichissement** | I | I | **R** | I | I | C | I | I | I | C | I |
+| **Développer / maintenir workflows N8N/Flowise/MCP** | I | A | C | I | I | C | C | I | I | **R** | I |
+| **Optimiser tokens et traces performances (workflows)** | I | A | I | I | C | C | I | I | I | **R** | I |
+| **Analyser taux de conversion** | I | A | I | I | **R** | C | I | C | I | I | C |
+| **Configurer CI/CD GitHub Actions** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Documenter base de connaissances** | C | **R** | C | C | C | C | C | C | C | C | C |
+| **Études concurrentielles** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **Analyses SWOT (porteurs de SWOT)** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **Analyse funnel conversion (concurrence/marché)** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **Positionnement concurrence / analyse marché** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **KPIs et leviers croissance (analyse)** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **Performances campagnes Ads / optimisation** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **Pistes nouveaux marchés** | I | A | I | I | C | C | I | I | I | I | **R** |
 
 **Légende** :
 - **R** = Responsible (réalise la tâche)
@@ -275,7 +336,9 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 **Designer** → Crée les templates HTML/CSS
 **Développeur Django** → Développe les modèles et vues
 **Data Analyst** → Implémente les algorithmes de scoring
-**Growth Hacker** → Configure les pipelines OSINT
+**Growth Hacker** → Configure les pipelines OSINT ; délègue au **Growth Analyst** (concurrentiel, SWOT, marché, funnel, Ads, nouveaux marchés) les études et analyses de ce périmètre.
+**Growth Analyst** → Études concurrentielles, SWOT, funnel, positionnement, marché, KPIs/leviers, campagnes Ads, pistes nouveaux marchés (sous-assistant du Growth).
+**Automatizer** → Développe et maintient les workflows (N8N, Flowise, MCP, API Django) ; optimise les tokens et garde les traces de performances pour les rapports data-driven.
 **Rédacteur** → Rédige les contenus
 **Expert SEO / AI-GEO** → Analyse les stats fournies et produit le rapport lead magnet (SEO + visibilité IA) ; collabore avec Chef de Projet et Rédacteur pour l’intégration
 

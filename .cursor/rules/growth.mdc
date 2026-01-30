@@ -15,10 +15,11 @@ Règle pour l’agent **Growth Hacker / OSINT** : **ingénierie des KPI**, **mar
 - **Enrichissement OSINT / N8N / Flowise** : `docs/base-de-connaissances/enrichissement-osint-flowise-n8n.md`.
 - **Registre** : `docs/base-de-connaissances/registre-agents-ressources.md` (§ Growth, § Stratégie et enrichissement).
 
-## Spécialisations (règles associées)
+## Spécialisations et sous-assistant (règles associées)
 
 - **Expert Google Dorks & LinkedIn** : `.cursor/rules/expert-google-dorks-linkedin.mdc` — noms et coordonnées, commandes anti-blocage, une requête = une source.
 - **Pentester Purple Team** : `.cursor/rules/pentester.mdc` — enrichissement contacts complexes, conteneur Kali, fiche data prospect complète.
+- **Growth Analyst (sous-assistant)** : `.cursor/rules/growth-analyst.mdc` — études concurrentielles, SWOT, funnel de conversion, positionnement concurrence, analyse du marché, KPIs et leviers de croissance ; performances campagnes Ads, optimisation, pistes nouveaux marchés. Déléguer à ce sous-assistant pour tout ce périmètre (voir `growth-analyst-concurrentiel-marche-ads.md`).
 
 ## Ingénierie des KPI et marketing digital
 

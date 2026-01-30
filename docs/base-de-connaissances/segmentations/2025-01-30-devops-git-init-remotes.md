@@ -1,8 +1,8 @@
-# DevOps — Initialisation Git et remotes (GitHub + GitLab) — URGENCE
+# DevOps — Initialisation Git et remotes (GitHub + GitLab)
 
 **Date** : 2025-01-30  
 **Pilote** : **DevOps** (règle `.cursor/rules/devops.mdc`)  
-**Statut** : 🔴 **URGENCE** — À exécuter en priorité (signalé par l’utilisateur)
+**Statut** : 🟢 **Terminé** — Git init, remotes SSH (origin + gitlab), premier commit 67a2055 (125 fichiers), push origin main et push gitlab main réussis. (signalé par l’utilisateur)
 
 ---
 

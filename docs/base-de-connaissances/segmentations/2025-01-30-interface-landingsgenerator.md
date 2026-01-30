@@ -1,5 +1,6 @@
 # Interface landingsgenerator (/essais/) — mobile-first, dark + switch
 
+**Sprint** : voir `2025-01-30-sprint-equipe-technique.md` (toute l'équipe technique mobilisée).  
 **Date** : 2025-01-30  
 **Chef de Projet** : Agent Chef de Projet  
 **Statut** : 🟡 En cours (stratégie validée, développement à lancer)  

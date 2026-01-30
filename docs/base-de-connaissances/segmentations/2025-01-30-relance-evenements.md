@@ -29,6 +29,7 @@
 ### Architecture
 - **Composants impactés** : `apps/landing_pages/` (models, views, templates), `templates/landing_pages/` (nouveau template type « relance-evenement » ou intégré au système de templates).
 - **Structure `content_json`** : champs type hero (titre, sous-titre, visuel), CTA (texte, lien), bloc positionnement (freelance / alternant selon matching), personnalisation prospect (activité, pain points).
+- **Stack frontend** : Next.js + React (effet waouh, déploiement Vercel) — voir `stack-frontend-nextjs-react.md`.
 
 ### Design
 - Hero section + CTA ciblés ; thème prospect ou fallback SquidResearch (voir `theming-landing-prospect.md`).

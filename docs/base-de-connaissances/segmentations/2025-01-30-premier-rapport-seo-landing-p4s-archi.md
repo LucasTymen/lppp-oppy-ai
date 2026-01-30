@@ -50,11 +50,13 @@
 - [ ] Lire les 5 CSV (ou chemin fourni par l’utilisateur).
 - [ ] Produire le **rapport SEO** (synthèse présentable, manque à gagner, coût SEO pourri) — voir `rapport-seo-prospect.md`.
 - [ ] Réaliser une **analyse sémantique** (wording, copywriting, croisement avec le rapport) — voir `expert-seo-demarche-rapport-wording-copywriting.md`, `seo-semantique-outils-open-source.md`.
+- [ ] Étudier les **mots-clés des CTA** et proposer des variantes — voir `docs/contacts/p4s-archi/brief-seo-growth-designer-copywriting-cta.md`.
 - [ ] Livrable : `docs/contacts/p4s-archi/rapport-seo.md` (et partie lead magnet pour l’onglet landing).
 
 ### Growth Hacker / OSINT
 
 - [ ] **Étude poussée** : **KPIs** pertinents pour ce prospect (acquisition, conversion, trafic, qualification).
+- [ ] Proposer des **variantes CTA** (intention de conversion, libellés orientés conversion, A/B) — voir `docs/contacts/p4s-archi/brief-seo-growth-designer-copywriting-cta.md`.
 - [ ] **Étude poussée** : **Pistes d’amélioration du funnel d’acquisition** (entrée, qualification, conversion, rétention si pertinent).
 - [ ] Livrable : note ou rapport dans `docs/contacts/p4s-archi/` (ex. `etude-growth-funnel-kpis.md`) — à partager avec Chef de Projet et Expert SEO pour cohérence avec le rapport lead magnet.
 
@@ -72,6 +74,7 @@
 ### Designer
 
 - [ ] Visuel / thème de la landing pour P4S-archi (ou fallback charte) — voir `theming-landing-prospect.md`.
+- [ ] Avis **placement, visibilité et cohérence visuelle du CTA** — voir `docs/contacts/p4s-archi/brief-seo-growth-designer-copywriting-cta.md`.
 
 ### Dev Django
 
@@ -95,6 +98,7 @@
 - **Rapport SEO** : `rapport-seo-prospect.md`
 - **Expert SEO** : `expert-seo-demarche-rapport-wording-copywriting.md`, `seo-semantique-outils-open-source.md`
 - **Landing** : `structure-content-json-relance-evenement.md`, `2025-01-30-relance-evenements.md`
+- **Brief copywriting + CTA** : `docs/contacts/p4s-archi/brief-seo-growth-designer-copywriting-cta.md` — mission Expert SEO, Growth, Designer pour copywriting et mots-clés des CTA
 - **Un contact = un dossier** : `organisation-donnees-contacts.md`
 
 ---

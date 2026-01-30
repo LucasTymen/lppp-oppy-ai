@@ -13,7 +13,7 @@
 | `admin/` | Django admin | Interface d’administration |
 | `""` | `apps.landing_pages.urls` | Landing pages (liste, page publique) |
 | `essais/` | `apps.landingsgenerator.urls` | Interface essais / prospection |
-| `campaigns/` | `apps.campaigns.urls` | Campagnes (à développer) |
+| `campaigns/` | `apps.campaigns.urls` | Campagnes (liste, détail) |
 | `api/` | `apps.scraping.urls` | API scraping / enrichissement |
 
 ---
@@ -58,7 +58,8 @@
 | `/` | GET | Liste des landing pages |
 | `/p/<slug>/` | GET | Page publique landing |
 | `/essais/` | GET | Index essais (relance salon) |
-| `/campaigns/` | — | À définir |
+| `/campaigns/` | GET | Liste des campagnes (authentifié) |
+| `/campaigns/<slug>/` | GET | Détail campagne (authentifié) |
 | `/api/enriched/enrich` | POST | Webhook enrichissement |
 | `/api/enriched/enrich-one` | POST | Enrichissement un par un |
 

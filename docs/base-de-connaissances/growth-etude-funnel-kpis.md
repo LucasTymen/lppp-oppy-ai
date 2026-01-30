@@ -2,8 +2,8 @@
 
 **Rôle** : Cadre pour l’agent **Growth Hacker / OSINT** lorsqu’il réalise une **étude poussée** sur un prospect : **KPIs** pertinents et **pistes d’amélioration du funnel d’acquisition**.
 
-**Pilote** : Growth (règle `.cursor/rules/growth.mdc` — ingénierie KPI + marketing digital ; `expert-google-dorks-linkedin.mdc`, `pentester.mdc` en spécialisations).  
-**Collaboration** : Chef de Projet (validation), Expert SEO (cohérence avec rapport lead magnet), Data Analyst (scoring, analytics).
+**Pilote** : Growth (règle `.cursor/rules/growth.mdc` — ingénierie KPI + marketing digital ; `expert-google-dorks-linkedin.mdc`, `pentester.mdc` en spécialisations ; **Growth Analyst** en sous-assistant pour concurrentiel, SWOT, marché, funnel, Ads).  
+**Collaboration** : Chef de Projet (validation), Expert SEO (cohérence avec rapport lead magnet), Data Analyst (scoring, analytics), **Growth Analyst** (études concurrentielles, SWOT, positionnement, analyse marché — voir `growth-analyst-concurrentiel-marche-ads.md`).
 
 ---
 

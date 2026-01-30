@@ -4,7 +4,8 @@
 **Rôle** : Configuration Git LPPP avec deux remotes ; **GitHub pilote** (principal), **GitLab** en miroir.  
 **Référence** : `docs/base-de-connaissances/infra-devops.md` (secrets, flux).
 
-> **À exécuter sur ta machine** : les commandes ci-dessous doivent être lancées dans un terminal où Git est installé (PowerShell, CMD, ou Git Bash).
+> **À exécuter sur ta machine** : les commandes ci-dessous doivent être lancées dans un terminal où Git est installé (PowerShell, CMD, ou Git Bash).  
+> **Premier commit et push** : réalisés le 2025-01-30 (commit 67a2055, 125 fichiers ; push origin main et push gitlab main OK).
 
 ---
 

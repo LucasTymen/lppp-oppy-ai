@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ campaign.name }} — Campagne</title>
+</head>
+<body>
+    <h1>{{ campaign.name }}</h1>
+    {% if campaign.description %}<p>{{ campaign.description }}</p>{% endif %}
+    <p>Statut : {{ campaign.is_active|yesno:"Active,Inactive" }} · {{ prospects|length }} prospect{{ prospects|length|pluralize }}</p>
+    <ul>
+        {% for p in prospects %}
+        <li>
+            {{ p.company_name }}{% if p.contact_name %} — {{ p.contact_name }}{% endif %}
+            {% if p.landing_page %}
+            · <a href="{% url 'landing_public' p.landing_page.slug %}">Landing</a>
+            {% endif %}
+        </li>
+        {% empty %}
+        <li>Aucun prospect dans cette campagne.</li>
+        {% endfor %}
+    </ul>
+    <p><a href="{% url 'campaigns:campaign_list' %}">← Liste des campagnes</a> · <a href="/admin/">Admin</a> · <a href="/essais/">Essais</a></p>
+</body>
+</html>

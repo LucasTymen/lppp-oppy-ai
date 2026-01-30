@@ -34,6 +34,15 @@ Chaque segmentation doit contenir :
 - **Consulter avant décider** : voir la matrice RACI (qui doit être Consulted)
 - **Documenter les décisions** : toute décision → `docs/base-de-connaissances/decisions.md`
 - **Paralléliser quand possible** : lancer plusieurs agents en même temps si pas de dépendances
+- **Escalade / blocage** : en cas de blocage (technique, dépendance, ambiguïté de spec), l’agent concerné **signale au Chef de Projet** et met à jour le statut de la segmentation en « Bloqué » si besoin. Le Chef de Projet arbitre ou remonte à l’Orchestrateur / à l’utilisateur selon le cas.
+
+## Handoff Conseiller → Chef de Projet
+
+Après accord stratégie, le Conseiller transmet au Chef de Projet un **brief** (accord résumé, périmètre, contraintes, risques, ressources utilisateur). Voir `docs/base-de-connaissances/handoff-conseiller-chef-projet.md`. Le Chef de Projet s’en sert pour créer la segmentation.
+
+## Definition of Done
+
+Quand une tâche ou une étude est considérée « done » : voir `docs/base-de-connaissances/definition-of-done.md`. Référence dans le TEMPLATE de segmentation.
 
 ## Référence
 

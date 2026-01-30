@@ -86,7 +86,7 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 
 | Cible | Usage typique | Secrets / config |
 |-------|----------------|------------------|
-| **Vercel** | Front statique ou serverless si usage futur. **Espace projet** : [vercel.com/lucas-tymens-projects](https://vercel.com/lucas-tymens-projects) | Env vars dans le dashboard Vercel ; token CLI créé dans Vercel (Account → Tokens), jamais dans le dépôt |
+| **Vercel** | **Frontend Next.js** (landing pages) — déploiement natif Next.js, liaison Git, déploiement auto. **Espace projet** : [vercel.com/lucas-tymens-projects](https://vercel.com/lucas-tymens-projects). Voir `stack-frontend-nextjs-react.md`. | Env vars dans le dashboard Vercel ; token CLI créé dans Vercel (Account → Tokens), jamais dans le dépôt |
 | **Contabo** | VPS pour Django, Docker, PostgreSQL, Redis, Celery, n8n, Flowise | SSH + `.env` sur le serveur ; docker-compose ou stack déployée via CI ou manuellement |
 
 - **CI (optionnel)** : GitHub Actions / GitLab CI pour tests, lint, puis déploiement (build Docker, push, ou SSH vers Contabo). Les secrets (tokens, clés SSH déploy) sont dans les variables CI, jamais dans le code.
@@ -94,7 +94,7 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 #### Connexion et déploiement Vercel (automatique ou manuel)
 
 - **Connexion** : se connecter sur [vercel.com/lucas-tymens-projects](https://vercel.com/lucas-tymens-projects) (email, Google, GitHub, etc.). Aucun token ni mot de passe ne doit être stocké dans LPPP ou dans les fichiers de SquidResearch versionnés.
-- **Déploiement automatique (recommandé)** : lier le dépôt LPPP à Vercel (Import Git Repository) ; chaque push sur la branche choisie déclenche un déploiement. Variables d’environnement à configurer dans **Project → Settings → Environment Variables**.
+- **Déploiement automatique (recommandé)** : lier le dépôt LPPP à Vercel (Import Git Repository) ; chaque push sur la branche choisie déclenche un déploiement. **Stack frontend** : Next.js + React (voir `stack-frontend-nextjs-react.md`) — Vercel détecte Next.js automatiquement. Variables d’environnement à configurer dans **Project → Settings → Environment Variables**.
 - **Déploiement CLI** : `npx vercel` ou `vercel --prod` après `vercel login` ; le token est géré par Vercel (Account → Tokens), à utiliser en local ou en CI via une variable d’environnement (ex. `VERCEL_TOKEN`), jamais committée.
 - Les logs et fichiers de paramètres d’un autre projet (ex. SquidResearch) ne doivent pas servir à extraire des credentials pour LPPP : chaque projet utilise ses propres tokens, créés dans le dashboard Vercel.
 

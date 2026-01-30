@@ -2,6 +2,8 @@
 
 Document de référence pour **récupérer les algorithmes et le codage SquidResearch** (OSINT / ENRICHED), **enrichir une liste de prospects** rapidement, et **piloter les robots Flowise et N8N** via API et guide-rails.
 
+**Pour collaborer avec le spécialiste workflows N8N/automatisation** : voir **`docs/base-de-connaissances/info-automatizer-pour-equipe.md`** (qui est l’Automatizer, quand le solliciter, quelles ressources).
+
 ---
 
 ## 1. Récupération des algorithmes SquidResearch
