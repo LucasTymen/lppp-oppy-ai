@@ -36,7 +36,22 @@
   ```
 - Toujours **recharger sans cache** (Ctrl+Shift+R) pour voir les changements.
 
-### C. Headers anti-cache (déjà en place)
+### C. Après déploiement : rendre la landing publique
+
+Pour que la landing soit **visible** (plus de 404 sur `/p/p4s-archi/`), elle doit être **publiée** en base (`is_published=True`). Après un déploiement (nouvelle base ou premier déploiement) :
+
+```bash
+# En local
+python manage.py create_landing_p4s --update --publish
+
+# Avec Docker
+make landing-p4s
+# ou : docker compose exec web python manage.py create_landing_p4s --update --publish
+```
+
+Cela crée ou met à jour la landing P4S et la marque comme **publiée**. À refaire après chaque déploiement si la base a été réinitialisée.
+
+### D. Headers anti-cache (déjà en place)
 
 - La vue `landing_public` envoie désormais les en-têtes **Cache-Control**, **Pragma** et **Expires** pour limiter la mise en cache du navigateur. Après déploiement, les rechargements devraient afficher la dernière version sans avoir à vider le cache manuellement à chaque fois.
 
