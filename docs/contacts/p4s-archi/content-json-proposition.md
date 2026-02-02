@@ -4,6 +4,8 @@
 
 **Template utilisé** : `proposition.html` (structure content_json).
 
+> **Si tu ne vois pas** l'onglet « Qui je suis », ni Paid Media, ni les liens « Consulter le rapport » : le contenu affiché vient de la **base de données**. Exécuter `python manage.py create_landing_p4s --update` puis recharger sans cache. Voir aussi `brief-integration-redaction-style.md`.
+
 ---
 
 ## Appliquer les modifications en base
@@ -27,7 +29,7 @@ Fichier source : `landing-proposition-joel.json`.
 
 - **page_title** : titre de la page (pas la phrase d’accroche).
 - **intro** : phrase d’accroche comme texte d’intro.
-- **icebreaker** : à personnaliser selon ton contexte de prospection (événement, échange, post, etc.).
+- **icebreaker** : contexte de prospection (où et comment vous vous êtes rencontrés, ce qui a accroché). Ex. P4S : rencontre au Cyber Security Show à Champerret, discussion tech / IoT, écoute et contact chaleureux de Joël, pertinence des produits.
 - **about_me** : texte de l'onglet « Qui je suis » (premier onglet de « Ce que j'offre »). Tu peux reprendre le bloc de présentation de ta landing page CV (référence `design-brief-landing-reference-cv.md`) : copier-coller le paragraphe « à propos » ici. Les retours à la ligne sont conservés.
 - **about_me_title** : libellé de l'onglet (défaut : « Qui je suis »).
 

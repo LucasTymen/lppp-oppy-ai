@@ -17,6 +17,11 @@ alwaysApply: true
 - Toute décision ou fait documenté doit être enregistré dans `docs/base-de-connaissances/` (decisions.md, sources.md).
 - Le chef de projet / agent pilote met à jour les logs (`docs/logs/log-projet.md`, `docs/logs/log-ia.md`), la base de connaissances, `docs/TODO.md` et `docs/boite-a-idees.md` après les sessions.
 
+## Terminal — WSL par défaut
+
+- **Par défaut** : exécuter les commandes terminal (git, make, python, pip, etc.) dans **WSL** (Ubuntu), pas dans PowerShell Windows. Chemin projet WSL : `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`. Voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+- Si l’utilisateur demande explicitement PowerShell ou Windows, utiliser alors le shell Windows.
+
 ## Référence éditoriale
 
 - Pour tout contenu rédigé (landing, docs, messages) : appliquer les bonnes pratiques dans `docs/bonnes-pratiques.md` (éditorial anti-détection IA, humanisation).

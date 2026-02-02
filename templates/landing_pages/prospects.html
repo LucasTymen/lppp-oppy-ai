@@ -1,0 +1,47 @@
+{% load landing_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Prospects — {{ content.page_title|default:landing_page.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% if use_perso_style %}{% include "landing_pages/includes/perso_style.html" %}{% endif %}
+    <style>
+        {% if not use_perso_style and content.theme_css %}{{ content.theme_css|safe }}{% endif %}
+        :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1rem; }
+        .nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav-logo { max-height: 36px; width: auto; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-cta { padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; }
+        .page-wrap { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .page-wrap h1 { font-size: 1.5rem; color: var(--lp-heading, #fff); margin-bottom: 1.5rem; }
+        .prospect-card { padding: 1rem 1.25rem; margin-bottom: 0.75rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)); border-radius: 12px; border-left: 4px solid var(--lp-primary, #4a9eff); }
+        .prospect-card strong { color: var(--lp-heading, #fff); }
+        .prospect-empty { padding: 3rem 2rem; text-align: center; color: var(--lp-muted, #999); }
+    </style>
+</head>
+<body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    {% include "landing_pages/includes/nav_landing_annexes.html" with current_page="prospects" %}
+    <main class="page-wrap">
+        <h1>Prospects</h1>
+        {% if prospects %}
+        <p style="margin-bottom: 1rem;">Échantillon de prospects identifiés pour {{ landing_page.prospect_company|default:landing_page.title }}.</p>
+        {% for p in prospects %}
+        <div class="prospect-card">
+            {% if p.name %}<strong>{{ p.name }}</strong>{% endif %}
+            {% if p.company %} — {{ p.company }}{% endif %}
+            {% if p.role or p.relevance %}<br><span style="color: var(--lp-muted); font-size: 0.9rem;">{% if p.role %}{{ p.role }}{% endif %}{% if p.role and p.relevance %} · {% endif %}{% if p.relevance %}{{ p.relevance }}{% endif %}</span>{% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="prospect-empty">Aucun prospect renseigné pour l’instant. Vous pouvez ajouter une liste <code>prospects</code> dans le <code>content_json</code> de la landing (objets avec <code>name</code>, <code>company</code>, <code>role</code>, <code>relevance</code>).</p>
+        {% endif %}
+    </main>
+</body>
+</html>

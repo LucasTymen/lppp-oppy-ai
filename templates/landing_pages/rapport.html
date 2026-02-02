@@ -1,0 +1,50 @@
+{% load landing_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Rapport — {{ content.page_title|default:landing_page.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% if use_perso_style %}{% include "landing_pages/includes/perso_style.html" %}{% endif %}
+    <style>
+        {% if not use_perso_style and content.theme_css %}{{ content.theme_css|safe }}{% endif %}
+        :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1rem; }
+        .nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav-logo { max-height: 36px; width: auto; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; }
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
+        .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
+        .report-body h2 { font-size: 1.35rem; }
+        .report-body h3 { font-size: 1.1rem; }
+        .report-body p { margin: 0 0 0.75rem; }
+        .report-body ul, .report-body ol { margin: 0 0 0.75rem 1.5rem; }
+        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; }
+        .report-body th, .report-body td { border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); padding: 0.5rem 0.75rem; text-align: left; }
+        .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
+        .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
+        .report-intro { margin: 0 0 1.5rem; padding: 0.85rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-left: 4px solid var(--lp-primary, #4a9eff); font-size: 0.95rem; color: var(--lp-text, #e6e6e6); }
+        .report-unavailable { padding: 3rem 2rem; text-align: center; color: var(--lp-muted, #999); }
+    </style>
+</head>
+<body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    {% include "landing_pages/includes/nav_landing_annexes.html" with current_page="rapport" %}
+    <main class="page-wrap">
+        {% if report_available %}
+        <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à {{ landing_page.prospect_company|default:"votre société" }}</strong> — diagnostic, opportunités et plan d'action. Pas de théorie : du concret pour prioriser.</p>
+        <div class="report-body">{{ report_html|safe }}</div>
+        {% else %}
+        <p class="report-unavailable">Rapport non disponible pour ce contact. Le fichier <code>rapport-complet-&lt;slug&gt;.md</code> doit être présent dans <code>docs/contacts/{{ landing_page.slug }}/</code>.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

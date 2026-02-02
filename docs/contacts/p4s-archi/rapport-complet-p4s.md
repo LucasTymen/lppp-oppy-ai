@@ -14,7 +14,7 @@ P4S (P4S Architecture) est une **startup française** de cybersécurité industr
 
 ## 1. Société, produits et concurrence
 
-*Détail complet dans* : [`etude-concurrentielle-pestel-swot-porter.md`](./etude-concurrentielle-pestel-swot-porter.md).
+*Détail complet et **données techniques sourcées** (latence, débit, consommation, certifications) dans* : [`etude-concurrentielle-pestel-swot-porter.md`](./etude-concurrentielle-pestel-swot-porter.md) *(tableau « Données techniques » + § 1–2).*
 
 ### 1.1 La société
 
@@ -85,11 +85,13 @@ P4S (P4S Architecture) est une **startup française** de cybersécurité industr
 
 **Périmètre** : SEO technique, SEO sémantique, potentiel business.
 
+**Sources des données** : site p4s-archi.com ; **5 exports CSV Screaming Frog** (voir `docs/contacts/p4s-archi/README.md` : aperçu problèmes, temps de réponse, 3xx, 4xx, codes tous). Aucun chiffre inventé.
+
 ### 3.0 Éléments obligatoires du rapport (nombre de problèmes, impact, prospects)
 
 | Élément | Contenu |
 |---------|---------|
-| **Nombre de problèmes identifiés** | À **quantifier** lors d’un crawl complet (Screaming Frog) : consigner ici le total d’URLs en 4xx, 3xx non optimisées, pages lentes, etc. *Recommandation : exécuter un crawl complet et mettre à jour ce tableau.* |
+| **Nombre de problèmes identifiés** | **D’après les 5 exports Screaming Frog** : **temps de réponse** : 98,86 % des URLs en 0–1 s (reste au-dessus des seuils) ; **4xx** : présence (ex. bpifrance.fr 403) ; **3xx** : présence (ex. reseau-entreprendre.org, LinkedIn, uecc-hexatrust). *Nombre total d’URLs en 4xx / 3xx et pages lentes : à consigner après agrégation des CSV (crawl complet).* |
 | **Impact** | Voir § 3.2 et 3.3 : perte de crawl budget, dilution du PageRank, dégradation Core Web Vitals, mauvaise compréhension sémantique par les moteurs, impossibilité de se positionner sur des requêtes à intention business. |
 | **Échantillon de 5 prospects** | **À renseigner** lors de la prospection (cibles, leads, entreprises pertinentes identifiées). Pour ce rapport initial : pas de données disponibles — à compléter après campagne ou enrichissement. |
 
@@ -116,17 +118,17 @@ Une correction progressive mais structurée permettrait :
 
 #### 3.2.1 Codes de réponse HTTP
 
-Les exports montrent la présence :
-- d’URLs en erreur **4xx** (pages inexistantes ou mal appelées),
-- de **redirections 3xx** non optimisées ou en chaîne.
+**D’après les exports Screaming Frog** (fichiers 3xx et 4xx) :
+- **4xx** : présence d’URLs en erreur client (ex. bpifrance.fr 403).
+- **3xx** : présence de redirections (ex. reseau-entreprendre.org, LinkedIn, uecc-hexatrust).
 
 **Impact SEO** : perte de crawl budget, dilution de l’autorité interne (PageRank), ralentissement du crawl et de l’indexation.
 
 #### 3.2.2 Temps de réponse et performance
 
-Plusieurs pages présentent un **temps de réponse supérieur aux seuils recommandés**.
+**D’après l’export « temps de réponse (en secondes) »** : **98,86 %** des URLs en 0–1 s ; la part restante dépasse les seuils recommandés (nombre exact de pages concernées à extraire des CSV).
 
-**Impact SEO** : dégradation des Core Web Vitals, diminution de la capacité de Google à crawler fréquemment, impact indirect sur le positionnement (notamment mobile).
+**Impact SEO** : dégradation des Core Web Vitals sur les pages lentes, diminution de la capacité de Google à crawler fréquemment, impact indirect sur le positionnement (notamment mobile).
 
 #### 3.2.3 Architecture du site
 
@@ -175,7 +177,7 @@ Le site ne développe pas suffisamment de contenus experts, de démonstrations d
 | Leads SEO mensuels | 0–1 | 5–15 |
 | Dépendance Ads | Élevée | Réduite |
 
-*Hypothèses : correction technique propre, production de contenus ciblés et réguliers, suivi via Google Search Console.*
+*Hypothèses : correction technique propre, production de contenus ciblés et réguliers, suivi via Google Search Console. Fourchettes ordre de grandeur basées sur le diagnostic ; à affiner avec GSC et crawl complet — pas de vanity metrics.*
 
 ---
 

@@ -1,8 +1,8 @@
 # Environnement WSL / Linux — LPPP
 
-**Environnement préféré** : WSL (Ubuntu) ou Linux natif. Tous les scripts, le Makefile et la documentation sont optimisés pour cet environnement.
+**Environnement préféré (par défaut)** : **WSL** (Ubuntu) ou Linux natif — préférence explicite de l’utilisateur. Tous les scripts, le Makefile et la documentation sont optimisés pour cet environnement.
 
-**Décision** : Linux/WSL est l'environnement cible pour le développement LPPP. Les commandes Windows (PowerShell) restent documentées en fallback si besoin.
+**Décision** : Linux/WSL est l’environnement **par défaut** pour le développement LPPP. Les commandes Windows (PowerShell) restent documentées en fallback si besoin.
 
 ---
 
@@ -95,12 +95,10 @@ make services-urls   # Afficher toutes les URLs
 
 ```bash
 make dev
-source .venv/bin/activate
-pip install -r requirements.txt
-python manage.py migrate --noinput
-python manage.py createsuperuser
-make runserver
+make venv-install   # Crée .venv + installe toutes les deps (dont django-environ)
+make runserver      # Utilise automatiquement .venv/bin/python si présent
 # Ouvrir http://127.0.0.1:8000/admin/
+# Migrations / superuser : make migrate (dans Docker) ou .venv/bin/python manage.py migrate
 ```
 
 ---
@@ -143,6 +141,19 @@ deactivate
 ---
 
 ## 6. Erreurs connues et solutions
+
+### ModuleNotFoundError: No module named 'environ' (WSL / Linux sans Docker)
+
+En WSL ou Linux, si tu lances `python3 manage.py runserver` (ou `make runserver`) **sans avoir installé les dépendances**, Django plante au chargement de `lppp/settings.py` (qui utilise `django-environ`).
+
+**Solution** : à la racine du projet :
+
+```bash
+make venv-install   # Crée .venv + pip install -r requirements.txt
+make runserver      # Lance Django (utilise .venv automatiquement)
+```
+
+**Référence détaillée** : `docs/base-de-connaissances/pret-a-demarrer.md` § 5.1.
 
 ### ERR_EMPTY_RESPONSE (problème Windows natif)
 

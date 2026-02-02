@@ -15,3 +15,6 @@ python-dotenv>=1.0
 # Données : CSV, analytics, rapport SEO (Data Analyst, Expert SEO, Growth) — voir docs/base-de-connaissances/bibliotheques-agents-techniques.md
 pandas>=2.0,<3
 numpy>=1.24,<3
+
+# Rapport complet : rendu Markdown → HTML (page « Consulter le rapport »)
+markdown>=3.5

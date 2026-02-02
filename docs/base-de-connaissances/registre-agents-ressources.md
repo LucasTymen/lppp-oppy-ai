@@ -105,7 +105,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 
 ### DevOps
 
-- **Environnement WSL/Linux** : `docs/base-de-connaissances/environnement-wsl-linux.md` — environnement préféré, chemins, prérequis, démarrage.
+- **Environnement WSL/Linux** : `docs/base-de-connaissances/environnement-wsl-linux.md` — **WSL par défaut** (préférence utilisateur), chemins, prérequis, démarrage. Privilégier WSL dans les procédures et commandes.
 - **Infra et secrets** : `docs/base-de-connaissances/infra-devops.md`
 - **Stratégie opérationnelle Make** : `docs/base-de-connaissances/strategie-operationnelle-make.md` — catalogue des commandes `make`, workflows (lancement, migrations, mise à jour, contrôle), répartition des responsabilités (DevOps, Dev Django, Chef de Projet). `make help` pour l'aide.
 - **Tâche prioritaire (mobilisation système et connexions)** : `docs/base-de-connaissances/segmentations/2025-01-30-lancement-docker-projet.md` — réparer et lancer conteneur, backend, front, admin (avec Dev Django, Pentester) ; Option B runserver si ERR_EMPTY_RESPONSE sous Windows.
@@ -116,6 +116,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 
 ### Tous les agents
 
+- **Préférence utilisateur** : **WSL par défaut** (environnement de dev et commandes terminal). Privilégier WSL dans les procédures, la doc et les commandes proposées. Décision : `decisions.md` ; doc : `environnement-wsl-linux.md`.
 - **Fiche de rôle** : `docs/base-de-connaissances/agents-roles-responsabilites.md`
 - **Registre des ressources** : ce fichier
 - **Sprint en cours** : `docs/base-de-connaissances/segmentations/2025-01-30-sprint-equipe-technique.md` (matrice d'assignation — toute l'équipe technique mobilisée)

@@ -25,14 +25,27 @@ CYAN   = \033[0;36m
 NC     = \033[0m
 
 .PHONY: help start go relance full-setup services-urls info backup restore backup-clean
-.PHONY: up down stop restart full build build-no-cache pull update
+.PHONY: up down stop restart full build build-no-cache pull update clean-containers
 .PHONY: migrate migrate-wait makemigrations showmigrations dbshell
-.PHONY: shell createsuperuser static check
+.PHONY: shell createsuperuser landing-p4s static check
 .PHONY: test test-docker lint lint-fix validate prod-check release-checklist
 .PHONY: ps logs logs-web logs-celery logs-n8n logs-flowise health health-check
 .PHONY: celery-restart celery-beat-restart
-.PHONY: venv runserver dev docker-up-seq
+.PHONY: venv venv-install runserver dev docker-up-seq ensure-env
 .PHONY: secret-key clean security-check
+
+# =============================================================================
+# Prérequis Docker (.env requis par docker-compose env_file)
+# =============================================================================
+# Si .env n'existe pas, docker compose up échoue. Créer .env depuis .env.example.
+ensure-env:
+	@if [ ! -f .env ]; then \
+		echo "$(YELLOW)⚠️  Fichier .env absent — copie depuis .env.example$(NC)"; \
+		cp .env.example .env; \
+		echo "$(GREEN)✅ .env créé. Vérifier SECRET_KEY et mots de passe si besoin.$(NC)"; \
+	else \
+		echo "$(GREEN)✅ .env présent$(NC)"; \
+	fi
 
 # =============================================================================
 # COMMANDES PRINCIPALES (stratégie SquidResearch)
@@ -40,7 +53,7 @@ NC     = \033[0m
 
 # go — Démarrage à froid complet (tout depuis zéro)
 # Requiert : bash ou sh (Linux, Mac, WSL, Git Bash)
-go:
+go: ensure-env
 	@echo "$(CYAN)🚀 $(PROJECT_NAME) — DÉMARRAGE À FROID COMPLET$(NC)"
 	@echo "$(YELLOW)⚠️  Arrêt et nettoyage des services existants...$(NC)"
 	$(DOCKER) down -v --remove-orphans 2>/dev/null || $(DOCKER) down
@@ -97,7 +110,7 @@ relance: docker-restart-seq health-check
 	@$(MAKE) services-urls
 
 # full-setup — Configuration complète initiale (première fois)
-full-setup: build
+full-setup: ensure-env build
 	@echo "$(CYAN)🚀 Configuration complète $(PROJECT_NAME)...$(NC)"
 	$(DOCKER) up -d
 	@sleep 15
@@ -109,7 +122,7 @@ full-setup: build
 	@$(MAKE) services-urls
 
 # Démarrage séquentiel (éviter race conditions)
-docker-up-seq:
+docker-up-seq: ensure-env
 	@echo "$(CYAN)🚀 Démarrage séquentiel...$(NC)"
 	$(DOCKER) up -d db redis
 	@sleep 10
@@ -169,6 +182,7 @@ help:
 	@echo "  make start        — Lancer tout (séquentiel, attente Django, migrate)"
 	@echo "  make up           — Lancer le stack (sans attente)"
 	@echo "  make down         — Arrêter le stack"
+	@echo "  make clean-containers — Supprimer conteneurs lppp_* (si « name already in use »)"
 	@echo "  make stop         — Arrêter sans supprimer"
 	@echo "  make restart      — Redémarrer"
 	@echo "  make full         — Stack complet (enriched + kalilinux)"
@@ -189,6 +203,7 @@ help:
 	@echo "$(CYAN)Django:$(NC)"
 	@echo "  make shell        — Shell Django"
 	@echo "  make createsuperuser — Créer un superutilisateur"
+	@echo "  make landing-p4s  — Créer/mettre à jour la landing P4S en base (évite 404 /p/p4s-archi/)"
 	@echo "  make static       — Collecter les fichiers statiques"
 	@echo "  make check        — Vérifier la config Django"
 	@echo ""
@@ -215,10 +230,14 @@ help:
 	@echo "  make restore      — Restaurer la base"
 	@echo "  make backup-clean — Nettoyer anciennes sauvegardes"
 	@echo ""
-	@echo "$(CYAN)Dev local:$(NC)"
-	@echo "  make dev          — db+redis pour runserver"
-	@echo "  make venv         — Créer .venv"
-	@echo "  make runserver    — Lancer runserver"
+	@echo "$(CYAN)Dev local (WSL / Linux sans Docker):$(NC)"
+	@echo "  make venv-install — Créer .venv + installer deps (dont django-environ) — corriger ModuleNotFoundError en WSL"
+	@echo "  make runserver     — Lancer Django en local (utilise .venv si présent)"
+	@echo "  make dev          — db+redis pour runserver (Docker) ; puis make venv-install && make runserver"
+	@echo "  make venv         — Créer .venv uniquement (sans installer deps)"
+	@echo ""
+	@echo "$(CYAN)Prérequis Docker:$(NC)"
+	@echo "  make ensure-env   — Créer .env depuis .env.example si absent (évite plantage compose)"
 	@echo ""
 	@echo "$(CYAN)Utilitaires:$(NC)"
 	@echo "  make secret-key   — Générer SECRET_KEY"
@@ -233,6 +252,13 @@ up:
 
 down:
 	$(DOCKER) down
+
+# Supprimer les conteneurs LPPP par nom (quand "container name already in use" après make down)
+# Utile si les conteneurs ont été créés sous un autre répertoire / projet Compose
+clean-containers:
+	@echo "$(YELLOW)Suppression des conteneurs lppp_* (conflit de noms)...$(NC)"
+	@docker rm -f lppp_web lppp_celery lppp_celery_beat lppp_db lppp_redis lppp_n8n lppp_flowise lppp_enriched lppp_kali 2>/dev/null || true
+	@echo "$(GREEN)✅ Conteneurs supprimés. Relancer : make start$(NC)"
 
 stop:
 	$(DOCKER) stop
@@ -291,6 +317,11 @@ shell:
 
 createsuperuser:
 	$(DOCKER) exec web python manage.py createsuperuser
+
+# Recréer / mettre à jour la landing P4S en base (évite 404 sur /p/p4s-archi/)
+landing-p4s:
+	$(DOCKER) exec web python manage.py create_landing_p4s --update --publish
+	@echo "$(GREEN)✅ Landing P4S à jour. URL : http://localhost:8000/p/p4s-archi/$(NC)"
 
 static:
 	$(DOCKER) exec web python manage.py collectstatic --noinput
@@ -406,22 +437,35 @@ celery-beat-restart:
 	$(DOCKER) restart celery-beat
 
 # =============================================================================
-# Dev local
+# Dev local (WSL / Linux / option B sans Docker)
 # =============================================================================
+# Référence : docs/base-de-connaissances/pret-a-demarrer.md § 5.1 (ModuleNotFoundError environ)
+# DevOps : venv-install, runserver. Dev Django : deps, check. Orchestrateur : cohérence Make ↔ doc.
 
 dev:
 	$(DOCKER) up -d db redis
 	@echo "db et redis démarrés. .env : DB_HOST=localhost, REDIS_URL=redis://127.0.0.1:6379/0"
-	@echo "Puis : make runserver"
+	@echo "Puis : make venv-install && make runserver"
 
+# venv — Créer le venv uniquement (sans installer les deps)
 venv:
-	python3 -m venv .venv
+	python3 -m venv .venv 2>/dev/null || python -m venv .venv
 	@echo "Activer (Linux/WSL) : source .venv/bin/activate"
 	@echo "Activer (Windows)   : .venv\\Scripts\\Activate.ps1"
-	@echo "Puis : pip install -r requirements.txt"
+	@echo "Puis : make venv-install ou pip install -r requirements.txt"
 
+# venv-install — Créer le venv + installer toutes les dépendances (dont django-environ)
+# À utiliser en WSL/Linux quand ModuleNotFoundError: No module named 'environ'
+venv-install:
+	@if [ ! -d .venv ]; then echo "$(CYAN)Création du venv...$(NC)"; python3 -m venv .venv 2>/dev/null || python -m venv .venv; fi
+	@echo "$(CYAN)Installation des dépendances (requirements.txt)...$(NC)"
+	@if [ -f .venv/bin/pip ]; then .venv/bin/pip install -r requirements.txt; elif [ -f .venv/Scripts/pip.exe ]; then .venv/Scripts/pip install -r requirements.txt; else pip3 install -r requirements.txt || pip install -r requirements.txt; fi
+	@echo "$(GREEN)✅ Venv prêt. Lancer : make runserver$(NC)"
+
+# runserver — Lance Django en local (utilise .venv si présent, sinon python3)
+# WSL/Linux : après make venv-install, make runserver fonctionne sans activer le venv à la main
 runserver:
-	PYTHONPATH=".:apps" python manage.py runserver
+	@if [ -f .venv/bin/python ]; then PYTHONPATH=".:apps" .venv/bin/python manage.py runserver; elif [ -f .venv/Scripts/python.exe ]; then PYTHONPATH=".:apps" .venv/Scripts/python.exe manage.py runserver; else PYTHONPATH=".:apps" python3 manage.py runserver 2>/dev/null || PYTHONPATH=".:apps" python manage.py runserver; fi
 
 # =============================================================================
 # Utilitaires

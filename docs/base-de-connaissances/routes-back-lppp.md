@@ -27,6 +27,10 @@
 | `""` | `views.landing_list` | — | Liste des landing pages (racine `/`) avec filtres `?sector=` et `?category=` |
 | `p/<slug:slug>/` | `views.landing_public` | `landing_public` | Page publique d’une landing (`/p/<slug>/`) |
 
+| `p/<slug:slug>/rapport/` | `views.landing_rapport` | `landing_rapport` | Page « Consulter le rapport » : rendu Markdown depuis `docs/contacts/<slug>/rapport-complet*.md` |
+| `p/<slug:slug>/prospects/` | `views.landing_prospects` | `landing_prospects` | Page « Prospects » : échantillon (`content_json.prospects`) |
+| `p/<slug:slug>/proposition/` | `views.landing_proposition_value` | `landing_proposition_value` | Page « Proposition de valeur » : vue structurée depuis `content_json` |
+
 ### `apps.landingsgenerator`
 
 | Route | Vue | Nom | Usage |

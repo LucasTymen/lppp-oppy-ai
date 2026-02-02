@@ -28,10 +28,14 @@ Les exports CSV utilisés pour générer le rapport SEO sont actuellement dans l
 
 ## Livrables réalisés
 
-- **Rapport complet P4S** : `rapport-complet-p4s.md` — document unique (société, produits, concurrence, PESTEL/SWOT/Porter + rapport SEO étude initiale & estimation d’impact, priorisation, verdict prospection). Contient les éléments obligatoires : nombre de problèmes (à quantifier), impact, échantillon 5 prospects (à renseigner).
+- **Rapport complet P4S** : `rapport-complet-p4s.md` — **source unique**, généré une seule fois, trace pour réutilisation. Document unique (société, produits, concurrence, PESTEL/SWOT/Porter + rapport SEO étude initiale & estimation d’impact, priorisation, verdict prospection). Contient les éléments obligatoires : nombre de problèmes (à quantifier), impact, échantillon 5 prospects (à renseigner). **PDF** : export optionnel depuis ce Markdown (ex. pour envoi au prospect après échange) ; ne pas maintenir deux versions.
+- **Rapport teaser (public)** : `rapport-teaser-p4s.md` — extrait affiché sur `/p/p4s-archi/rapport/` pour montrer le sérieux et que tu as des données (synthèse + synthèse exécutive SEO + table estimation d’impact), sans dévoiler tout le rapport. Le rapport complet reste en interne.
 - **Étude concurrentielle PESTEL-SWOT-Porter** : `etude-concurrentielle-pestel-swot-porter.md` (société, produits, concurrence, verdict prospection) — alimente le rapport complet.
 - **Landing page proposition** : `content-json-proposition.md` et `landing-proposition-joel.json` — contenu personnalisé pour Joël Courtois (ton courtois et chaleureux, proposition Growth Engineer).
 - **Brief copywriting + CTA** : `brief-seo-growth-designer-copywriting-cta.md` — mission Expert SEO, Growth, Designer pour étudier le copywriting et les mots-clés des call-to-actions.
-- **Page Next.js** : `frontend/src/app/p4s-archi/page.tsx` — landing P4S déployable sur Vercel. Voir `deploiement-vercel-frontend.md`.
+- **Brief intégration Rédacteur / Style** : `brief-integration-redaction-style.md` — ce qui doit apparaître (Qui je suis, rapport, prospects, proposition de valeur, Paid Media), procédure `create_landing_p4s --update`, checklist.
+- **Page Next.js** : `frontend/src/app/p4s-archi/page.tsx` — landing P4S déployable sur Vercel (version simplifiée, pas la même structure que Django). Voir `deploiement-vercel-frontend.md`.
+
+**Landing complète (Qui je suis, rapport, services, liens)** : consulter l’URL **Django** `/p/p4s-archi/` (backend LPPP). Après toute modif du JSON, lancer `python manage.py create_landing_p4s --update` pour voir les changements.
 
 **Règle** : un contact = un dossier — `docs/base-de-connaissances/organisation-donnees-contacts.md`.

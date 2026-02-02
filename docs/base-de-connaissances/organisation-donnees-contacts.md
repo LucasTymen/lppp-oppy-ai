@@ -37,7 +37,8 @@ Nommage libre tant qu’il est **unique** et **stable** pour ce contact.
 |-------------------|--------------------|
 | `content_json.json` ou `landing-relance.json` | Contenu de landing pour ce contact (hero, CTA, etc.) |
 | `notes.md` | Notes, CR d’échanges, relances |
-| `rapport-complet-<slug>.md` | **Rapport complet** : fiche société + concurrence + PESTEL/SWOT/Porter + rapport SEO. Utiliser le **template** `docs/base-de-connaissances/template-rapport-complet-prospect.md` (copier dans le dossier contact, renommer, remplir). Uniforme pour toutes les entreprises démarchées. |
+| `rapport-complet-<slug>.md` | **Rapport complet** (source unique) : fiche société + concurrence + PESTEL/SWOT/Porter + rapport SEO. **Généré une seule fois**, trace pour réutilisation. Utiliser le **template** `docs/base-de-connaissances/template-rapport-complet-prospect.md`. Ne pas dupliquer : le Markdown est la source ; le PDF est un **export** optionnel (envoi au prospect après échange si besoin). |
+| `rapport-teaser-<slug>.md` | **Extrait public** (optionnel) : 1–2 éléments pour montrer le sérieux et que tu as des données (synthèse + estimation d’impact, etc.) sans dévoiler tout le rapport. Affiché en priorité sur la page « Consulter le rapport » si présent ; sinon la vue affiche le rapport complet. Voir `protection-idees-rapport-lead-magnet.md`. |
 | `etude-concurrentielle-pestel-swot-porter.md` | Étude détaillée société, produits, concurrence, PESTEL, SWOT, Porter (peut alimenter le rapport complet). |
 | `rapport-seo.md` | Synthèse rapport SEO seul (voir `rapport-seo-prospect.md`) si pas de rapport complet. |
 | `pieces/` | Fichiers annexes (exports, docs) pour ce contact uniquement |

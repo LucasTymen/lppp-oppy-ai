@@ -20,6 +20,7 @@
   - **Bien présenté** : clair, lisible, **sexy** à regarder.
   - **Objectif** : que des gens **peu techniques** prennent intérêt à regarder.
   - **Contenu** : pas trop enrober. **Prospection sur le manque à gagner** et **estimations de ce que ça leur coûte d'avoir un SEO pourri**.
+  - **Public** : décideur / homme d'affaires. Il veut savoir **ce qui s'applique à sa société** (diagnostic sur son site, impact business, actions prioritaires). **Pas de théorie** — privilégier le concret et l'actionnable. Voir `template-rapport-complet-prospect.md` § Public cible.
 
 ---
 

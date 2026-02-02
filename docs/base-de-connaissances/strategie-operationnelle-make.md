@@ -114,13 +114,14 @@ Toute commande opérationnelle passe par `make` — les agents et l'utilisateur 
 | `make logs-celery` | Logs Celery | `docker compose logs -f celery` | DevOps |
 | `make health` | Vérifier la santé des services | Ping db, redis, web (healthcheck) | DevOps |
 
-### 3.7 Dev local (sans Docker web)
+### 3.7 Dev local (WSL / Linux sans Docker web)
 
 | Commande | Rôle | Description | Pilote |
 |----------|------|-------------|--------|
-| `make venv` | Créer l'environnement virtuel | `python -m venv .venv` + instructions | DevOps |
-| `make runserver` | Lancer Django en local | `python manage.py runserver` (db+redis en Docker) | Dev Django |
-| `make dev` | Démarrer db+redis pour dev local | `docker compose up -d db redis` | DevOps |
+| `make venv-install` | **Créer venv + installer deps** | Crée .venv + `pip install -r requirements.txt` (dont django-environ). Corrige ModuleNotFoundError en WSL. | DevOps |
+| `make runserver` | Lancer Django en local | Utilise `.venv/bin/python` si présent, sinon `python3` (db+redis en Docker ou .env local) | Dev Django |
+| `make venv` | Créer le venv uniquement | `python3 -m venv .venv` + instructions (sans installer deps) | DevOps |
+| `make dev` | Démarrer db+redis pour dev local | `docker compose up -d db redis` ; puis `make venv-install && make runserver` | DevOps |
 
 ### 3.8 Sécurité et production
 

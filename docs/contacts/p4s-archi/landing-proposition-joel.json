@@ -4,10 +4,14 @@
   "hero_headline": "Automatisez 80% de votre Lead Gen Cyber sans recruter",
   "hero_sub_headline": "Infrastructure Python + Stratégie Growth",
   "hero_subtitle": "Pour P4S — Joël",
-  "intro": "Joël, suite à notre échange — ce que je peux faire pour P4S",
-  "icebreaker": "",
+  "intro": "Joël, suite à notre échange au Cyber Security Show — ce que je peux faire pour P4S",
+  "icebreaker": "Nous nous sommes rencontrés au salon Cyber Security Show à Champerret. Nous avons parlé technologie ; en tant que développeur et intéressé par l'IoT, la conversation s'est bien établie. J'ai apprécié votre écoute attentive, votre contact chaleureux, et en tant que geek concerné par la cybersécurité, la pertinence et la force de vos produits.",
   "cta_text": "Réserver mon Diagnostic Flash (15 min)",
-  "cta_url": "mailto:VOTRE_EMAIL?subject=Diagnostic Flash P4S — 15 min",
+  "cta_url": "",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Diagnostic Flash P4S — 15 min",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
   "pain_points": [
     "Le cycle de vente industriel est trop long ?",
     "Identifier les bons décideurs (industrie, médical, gouvernement) sans y passer des mois ?",
@@ -16,11 +20,15 @@
   "solution_workflow": "Votre force, c'est le produit : SOFTLESS, les SF-106, la latence, le Made in France. Le défi, à mon sens, c'est moins la techno que la diffusion. Je mets en place des pipelines de données (veille, ciblage, gouvernance) qui transforment le chaos en système : gouvernance claire, scalabilité, sécurité. Une logique de responsabilité (RACI) intégrée au code.",
   "workflow_image_url": "",
   "about_me_title": "Qui je suis",
-  "about_me": "Growth Engineer : acquisition B2B, SEO, automatisation et data.\n\nJe construis des pipelines de données (veille, enrichissement, scoring) et des rapports actionnables pour que l’acquisition ne repose pas sur du vent. Python, Django, Make, n8n — et une logique de responsabilité (RACI) intégrée au code.\n\nTu peux remplacer ce bloc par le texte de présentation de ta landing page CV (référence design-brief-landing-reference-cv.md).",
+  "about_me": "Growth / Webmarketing orienté acquisition B2B, avec un socle SEO + Paid + Data + tracking. J'aide les PME B2B à transformer leur visibilité digitale en leads mesurables, de façon data-driven et pragmatique.\n\n1. Acquisition payante (Paid Media)\nGoogle Ads (Search B2B, Performance Max), Meta Ads (Facebook / Instagram leadgen), bases LinkedIn Ads / TikTok Ads. Structuration comptes, mots-clés, annonces, pilotage CPC / CPA / ROAS. Proposition en prix récupérateur selon vos besoins.\n\n2. SEO (technique + sémantique + business)\nSEO technique (codes 3xx/4xx, temps de réponse, structure), SEO sémantique (SERP, intention), SEO conversion (landing pages, synergie SEO ↔ Paid). Automatisation : scraping (Python), monitoring positions, reporting.\n\n3. Data, tracking & pilotage\nGA4 (paramétrage, conversions), tracking (événements clés, funnel), reporting (Looker Studio, Sheets / Excel, recommandations actionnables).\n\n4. Growth & automatisation\nOptimisation des funnels, automatisation (reporting, monitoring SEO, workflows data), APIs & webhooks (contexte SEO / marketing), croisement SEO + Paid + Data pour la décision.\n\n5. Création & optimisation de supports\nLanding pages orientées conversion, UX simple, WordPress / Canva / PowerPoint / Notion. Audit → plan d'action concret.\n\nOffres : Audit & plan d'action (SEO / Ads / Tracking) · Acquisition B2B clé en main (Ads + landing + tracking + reporting) · Optimisation & scaling (campagnes existantes, baisse CPA) · Mise en place tracking & data (GA4, dashboards, KPI business).",
   "services": [
     {
       "title": "Rapport SEO",
       "description": "Analyse de votre visibilité et de celle de vos concurrents (mots-clés, backlinks, opportunités). Livrable actionnable pour prioriser les actions acquisition."
+    },
+    {
+      "title": "Paid Media (Google Ads, Meta Ads)",
+      "description": "Acquisition payante B2B : structuration de comptes, mots-clés, annonces, pilotage CPC / CPA / ROAS. Génération de leads qualifiés, pas du trafic vanity. Proposition en prix récupérateur adaptée à vos besoins (budget, objectifs, périmètre)."
     },
     {
       "title": "Échantillon de prospects",

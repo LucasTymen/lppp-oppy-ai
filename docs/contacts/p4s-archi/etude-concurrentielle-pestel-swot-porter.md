@@ -8,6 +8,26 @@
 
 ---
 
+## Données techniques (sources site p4s-archi.com)
+
+| Donnée | Valeur | Source |
+|--------|--------|--------|
+| Âge entreprise | ~2,5 ans (startup) | À propos |
+| R&D sous-jacente | > 10 ans de recherche | Technologie |
+| Latence chiffrement | < 3 µs | Produits (CipherWall) |
+| Ratio vs logiciel | jusqu’à 1000× plus rapide | Produits |
+| Débit | > 18 Gbps | Produits (SF-106-2) |
+| Algorithme | AES-256 GCM 16 | Produits |
+| Bande passante | 100 % utilisable (full duplex, par port) | Produits |
+| Consommation SF-106-2 | < 1 W | Produits |
+| Consommation SF-106-8 | < 10 W | Produits |
+| Certification | CSPN (ANSSI) en cours | Produits / site |
+| Fabricants FPGA (contexte Porter) | Xilinx, Intel | Analyse concurrence fournisseurs |
+
+*Aucun chiffre inventé ; pas de part de marché ni CA estimé.*
+
+---
+
 ## 1. La société
 
 **P4S** (P4S Architecture) est une **startup française** spécialisée dans la cybersécurité des réseaux (IT et OT — Opérationnel Industriel). Elle propose une approche **"hardware-centric"** : la technologie **SOFTLESS** remplace les couches logicielles traditionnelles par de la logique câblée sur composants **FPGA**.
@@ -126,8 +146,9 @@
 
 ### Positionnement P4S vs concurrence
 
-- **Différenciation** : approche 100 % matérielle (SOFTLESS), latence &lt; 3 µs, 100 % bande passante, consommation &lt; 1–10 W.
+- **Différenciation (données site)** : approche 100 % matérielle (SOFTLESS), latence &lt; 3 µs, 100 % bande passante, consommation &lt; 1 W (SF-106-2) / &lt; 10 W (SF-106-8).
 - **Angle** : « Je protège et j’oublie » — déploiement en quelques heures, sans modification de l’existant.
+- **Concurrence** : noms et positionnement issus de sources publiques (sites, offres) ; pas de part de marché ni chiffre d’affaires inventés.
 
 ---
 

@@ -1,0 +1,85 @@
+{% load landing_filters %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Proposition de valeur — {{ content.page_title|default:landing_page.title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% if use_perso_style %}{% include "landing_pages/includes/perso_style.html" %}{% endif %}
+    <style>
+        {% if not use_perso_style and content.theme_css %}{{ content.theme_css|safe }}{% endif %}
+        :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1rem; }
+        .nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav-logo { max-height: 36px; width: auto; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-cta { padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; }
+        .page-wrap { max-width: 800px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .pv-section { margin-bottom: 2.5rem; }
+        .pv-section h2 { font-size: 1.25rem; color: var(--lp-primary, #4a9eff); margin-bottom: 0.75rem; border-left: 4px solid var(--lp-primary, #4a9eff); padding-left: 0.75rem; }
+        .pv-section p, .pv-section ul { margin: 0 0 0.5rem; }
+        .pv-section ul { padding-left: 1.5rem; }
+        .pv-headline { font-size: 1.5rem; color: var(--lp-heading, #fff); margin-bottom: 0.5rem; }
+        .pv-sub { color: var(--lp-muted, #999); margin-bottom: 2rem; }
+        .pv-card { padding: 1.25rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)); border-radius: 12px; margin-top: 0.5rem; }
+        .pv-quote { padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); font-style: italic; margin: 0; }
+    </style>
+</head>
+<body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    {% include "landing_pages/includes/nav_landing_annexes.html" with current_page="proposition" %}
+    <main class="page-wrap">
+        <h1 class="pv-headline">{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
+        {% if content.hero_sub_headline or content.hero_subtitle %}<p class="pv-sub">{{ content.hero_sub_headline|default:content.hero_subtitle }}</p>{% endif %}
+
+        {% if content.intro %}<div class="pv-section"><p>{{ content.intro }}</p></div>{% endif %}
+
+        {% if content.pain_points %}
+        <div class="pv-section">
+            <h2>Vos enjeux</h2>
+            <ul>{% for item in content.pain_points|as_list %}<li>{{ item }}</li>{% endfor %}</ul>
+        </div>
+        {% endif %}
+
+        {% if content.solution_workflow or content.positionnement %}
+        <div class="pv-section">
+            <h2>Comment je transforme le chaos en système</h2>
+            <div class="pv-card"><p>{{ content.solution_workflow|default:content.positionnement }}</p></div>
+        </div>
+        {% endif %}
+
+        {% if content.services %}
+        <div class="pv-section">
+            <h2>Ce que j’offre</h2>
+            {% for s in content.services %}
+            <p><strong>{{ s.title }}</strong> — {{ s.description }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if content.mission_flash or content.produit_commercial %}
+        <div class="pv-section">
+            <h2>Mission Flash</h2>
+            <p>{{ content.mission_flash|default:content.produit_commercial }}</p>
+        </div>
+        {% endif %}
+
+        {% if content.why_growth_engineer %}
+        <div class="pv-section">
+            <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
+            <blockquote class="pv-quote">{{ content.why_growth_engineer }}</blockquote>
+        </div>
+        {% endif %}
+
+        {% if content.cta_text and content.cta_url %}
+        <div class="pv-section">
+            <a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text }}</a>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

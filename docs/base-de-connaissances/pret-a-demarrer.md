@@ -123,7 +123,40 @@ Tu peux créer une campagne, un prospect, puis une landing page associée pour p
 
 ---
 
-## 5. Dépannage : localhost / admin ne répond pas (connexion réinitialisée, ERR_EMPTY_RESPONSE)
+## 5. Dépannage
+
+### 5.1 ModuleNotFoundError: No module named 'environ' (WSL / Linux)
+
+En WSL ou Linux, si tu lances `python3 manage.py runserver` **sans avoir installé les dépendances**, Django plante au chargement de `lppp/settings.py` (qui utilise `django-environ`).
+
+**À faire** : à la racine du projet (là où se trouvent `manage.py` et `requirements.txt`) :
+
+```bash
+# Option 1 : venv (recommandé)
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Option 2 : sans venv (Python système)
+pip3 install -r requirements.txt
+```
+
+Puis lancer le serveur :
+
+```bash
+# Avec python3 (WSL / Linux n’a souvent pas de commande « python »)
+python3 manage.py runserver
+```
+
+Pour activer le mode debug (traceback détaillée en cas d’erreur 500) :
+
+```bash
+export DEBUG=True
+python3 manage.py runserver
+# ou en une ligne : DEBUG=True python3 manage.py runserver
+```
+
+### 5.2 localhost / admin ne répond pas (connexion réinitialisée, ERR_EMPTY_RESPONSE)
 
 **Environnement virtuel** : avec Docker (`make start`, `make go`), aucun venv n'est requis — tout tourne dans les conteneurs. Le venv sert uniquement à l'Option B (runserver local).
 
@@ -137,6 +170,45 @@ Tu peux créer une campagne, un prospect, puis une landing page associée pour p
 4. Ouvrir **http://127.0.0.1:8080/admin/** et **http://127.0.0.1:8080/essais/** (ou 8000 si runserver a réussi sur 8000).
 
 Voir § 2 Option B pour le détail.
+
+### 5.3 Docker planté / conteneurs qui redémarrent (web en crash loop)
+
+Si le stack Docker ne répond pas ou que le conteneur **web** redémarre en boucle :
+
+1. **Vérifier que `.env` existe** (obligatoire pour `docker compose` — les services web, celery utilisent `env_file: .env`) :
+   ```bash
+   make ensure-env   # Crée .env depuis .env.example si absent
+   ```
+
+2. **Voir les logs du service web** pour identifier l’erreur :
+   ```bash
+   make logs-web
+   # ou : docker compose logs web
+   # ou : docker compose logs --tail=100 web
+   ```
+   Erreurs fréquentes : fichier `.env` absent, `ModuleNotFoundError` (image non reconstruite), connexion DB refusée (attendre que `db` soit healthy).
+
+3. **Reconstruire les images** si le code ou les dépendances ont changé :
+   ```bash
+   make build
+   make start
+   ```
+   Si le cache pose problème : `make build-no-cache` puis `make start`.
+
+4. **Conflit « container name already in use »** (conteneurs lppp_db, lppp_web, etc. déjà présents) :  
+   Cela arrive quand les conteneurs ont été créés depuis un autre répertoire ou projet Compose. `make down` ne les supprime pas. **Solution** :
+   ```bash
+   make clean-containers   # Supprime les conteneurs lppp_* par nom
+   make start
+   ```
+
+5. **Relancer proprement** (WSL recommandé, projet sous `/home/...` pour éviter soucis de montage) :
+   ```bash
+   make down
+   make ensure-env
+   make start
+   ```
+   Si erreur « name already in use » : `make clean-containers` puis `make start`.
 
 ---
 

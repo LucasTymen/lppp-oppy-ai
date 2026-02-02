@@ -263,6 +263,17 @@
         .workflow-figure img { max-width: 100%; height: auto; border-radius: 12px; }
 
         /* Services onglets */
+        .services-annexes {
+            margin: 0 0 1rem;
+            font-size: 0.95rem;
+        }
+        .services-annexes a {
+            color: var(--lp-primary, #4a9eff);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .services-annexes a:hover { text-decoration: underline; }
+        .services-annexes .sep { color: var(--lp-muted, #999); margin: 0 0.35rem; }
         .services-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
         .services-tabs input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
         .services-tabs label {
@@ -310,6 +321,11 @@
             text-transform: uppercase; letter-spacing: 0.06em;
             margin-bottom: 0.5rem;
         }
+        .coordonnees-intro { margin-top: 0; margin-bottom: 1rem; }
+        .coordonnees-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+        .coordonnees-list a { color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; }
+        .coordonnees-list a:hover { text-decoration: underline; }
+
         .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .stack-tag {
             padding: 0.45rem 0.85rem;
@@ -448,7 +464,11 @@
             {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
             {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
             {% if content.diagram_url or content.funnel_image_url %}<a href="#diagramme-funnel">En un coup d'œil</a>{% endif %}
-            {% if content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
+            <a href="{% url 'landing_rapport' landing_page.slug %}">Consulter le rapport</a>
+            <a href="{% url 'landing_prospects' landing_page.slug %}">Prospects</a>
+            <a href="{% url 'landing_proposition_value' landing_page.slug %}">Proposition de valeur</a>
+            {% if content.about_me %}<a href="#qui-je-suis">Qui je suis</a>{% endif %}
+            {% if content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="#coordonnees">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
         </div>
     </nav>
 
@@ -462,8 +482,10 @@
             {% endif %}
             <h1>{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
             <p class="hero-sub">{{ content.hero_sub_headline|default:content.hero_subtitle|default:'' }}{% if not content.hero_sub_headline and not content.hero_subtitle and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
-            {% if content.cta_text and content.cta_url %}
-            <a href="{{ content.cta_url }}" class="cta">{{ content.cta_text }}</a>
+            {% if content.cta_text %}
+            {% if content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
+            <a href="#coordonnees" class="cta">{{ content.cta_text }}</a>
+            {% endif %}
             {% endif %}
         </section>
 
@@ -493,25 +515,25 @@
         </section>
         {% endif %}
 
-        {% if content.services or content.about_me %}
+        {% if content.services %}
         <section class="section" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
+            <div class="rapport-cta-block">
+                <a href="{% url 'landing_rapport' landing_page.slug %}" class="rapport-cta-link">Consulter le rapport complet (société, stratégie, SEO) →</a>
+            </div>
+            <p class="services-annexes">
+                <a href="{% url 'landing_rapport' landing_page.slug %}">Rapport complet</a>
+                <span class="sep">·</span>
+                <a href="{% url 'landing_prospects' landing_page.slug %}">Prospects</a>
+                <span class="sep">·</span>
+                <a href="{% url 'landing_proposition_value' landing_page.slug %}">Proposition de valeur</a>
+            </p>
             <div class="services-tabs">
-                {% if content.about_me %}
-                <input type="radio" name="services-tab" id="service-0" checked>
-                <label for="service-0">{{ content.about_me_title|default:"Qui je suis" }}</label>
-                {% endif %}
                 {% for service in content.services %}
-                <input type="radio" name="services-tab" id="service-{% if content.about_me %}{{ forloop.counter }}{% else %}{{ forloop.counter0 }}{% endif %}" {% if not content.about_me and forloop.first %}checked{% endif %}>
-                <label for="service-{% if content.about_me %}{{ forloop.counter }}{% else %}{{ forloop.counter0 }}{% endif %}">{{ service.title }}</label>
+                <input type="radio" name="services-tab" id="service-{{ forloop.counter0 }}" {% if forloop.first %}checked{% endif %}>
+                <label for="service-{{ forloop.counter0 }}">{{ service.title }}</label>
                 {% endfor %}
                 <div class="services-panels">
-                    {% if content.about_me %}
-                    <div class="services-panel">
-                        <h3>{{ content.about_me_title|default:"Qui je suis" }}</h3>
-                        <div class="about-me-content">{{ content.about_me|linebreaksbr }}</div>
-                    </div>
-                    {% endif %}
                     {% for service in content.services %}
                     <div class="services-panel"><h3>{{ service.title }}</h3><p>{{ service.description }}</p></div>
                     {% endfor %}
@@ -565,10 +587,27 @@
         </section>
         {% endif %}
 
-        {% if content.cta_text and content.cta_url %}
+        {% if content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
+        <section class="section" id="coordonnees">
+            <div class="section-head"><span class="section-num">07</span><h2>Coordonnées</h2></div>
+            <div class="card">
+                <p class="coordonnees-intro">Pour échanger ou planifier un Diagnostic Flash, retrouvez mes coordonnées ci-dessous.</p>
+                <ul class="coordonnees-list">
+                    {% if content.contact_gmail %}<li><a href="{{ content.contact_gmail }}" target="_blank" rel="noopener noreferrer">Gmail</a></li>{% endif %}
+                    {% if content.contact_linkedin %}<li><a href="{{ content.contact_linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>{% endif %}
+                    {% if content.contact_github %}<li><a href="{{ content.contact_github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>{% endif %}
+                    {% if content.contact_linktree %}<li><a href="{{ content.contact_linktree }}" target="_blank" rel="noopener noreferrer">Linktree</a></li>{% endif %}
+                </ul>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if content.cta_text %}
+        {% if content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
         <div class="cta-wrap">
-            <a href="{{ content.cta_url }}" class="cta">{{ content.cta_text }}</a>
+            <a href="#coordonnees" class="cta">{{ content.cta_text }}</a>
         </div>
+        {% endif %}
         {% endif %}
     </main>
 </body>

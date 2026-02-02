@@ -6,6 +6,13 @@
 
 ---
 
+## Public cible et angle rédactionnel
+
+**Public** : décideur / homme d'affaires (DG, directeur, responsable).  
+**Règle** : il veut savoir **ce qui s'applique à sa société** — diagnostic concret, opportunités, plan d'action, chiffres. **Pas de théorie** : privilégier le concret (problèmes identifiés sur son site, impact business, priorités, estimation d'impact). Chaque section doit répondre à « Qu'est-ce que ça change pour nous ? ».
+
+---
+
 ## Guide de remplissage
 
 | Étape | Où | Action |
@@ -20,6 +27,8 @@
 | 8 | Références | Lien site, lien étude détaillée (`etude-concurrentielle-pestel-swot-porter.md` dans le dossier contact). |
 
 **Usage** : copier ce fichier dans `docs/contacts/<slug_contact>/rapport-complet-[slug].md` (ex. `rapport-complet-p4s-archi.md`) et remplir les sections. L’étude détaillée concurrence peut rester dans un fichier séparé `etude-concurrentielle-pestel-swot-porter.md` au même endroit.
+
+**Data-driven, pas de vanity** : s’appuyer sur des **données sourcées** (site cible, crawl Screaming Frog, exports CSV) ; **ne pas inventer** de chiffres (CA, part de marché, classements) ; **éviter les métriques de vanity** (ex. « meilleur du marché », « leader » sans source). Indiquer la source pour chaque donnée (ex. « D’après l’export X », « Source : site Y, page Z »). Les fourchettes d’estimation (trafic, leads) sont des ordres de grandeur à affiner avec GSC / crawl — pas des promesses.
 
 ---
 
