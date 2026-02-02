@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LPPP — Landings Pages Pour Prospections",
-  description: "Landing pages personnalisées pour la prospection",
+  title: "LPPP",
+  description: "Accès par lien direct uniquement",
 };
 
 export default function RootLayout({

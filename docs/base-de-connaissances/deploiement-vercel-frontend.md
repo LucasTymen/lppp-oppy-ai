@@ -71,7 +71,42 @@ Pour le monorepo, configurer le **Root Directory** dans le projet Vercel (Dashbo
 
 ---
 
-## 5. Variable d'environnement CTA
+## 6. Où voir la landing P4S sur Vercel (pour les types techniques)
+
+Le **dashboard Vercel** affiche la liste des **projets**, pas des routes. La landing P4S n’apparaît pas comme une entrée séparée : elle est une **route** du projet.
+
+| Ce que tu vois sur Vercel | Ce que c’est |
+|---------------------------|---------------|
+| **Projet** « landing-page-creator-for-prospection » | C’est le frontend Next.js (monorepo, `rootDirectory: "frontend"`). |
+| **URL du projet** (ex. `landing-page-creator-for-prospectio.vercel.app`) | Accueil Next.js. Depuis là : lien « Page P4S-archi » ou URL directe `/p4s-archi`. |
+| **Page P4S** | `https://<projet>.vercel.app/p4s-archi` — à ouvrir dans le navigateur, pas listée dans le dashboard. |
+
+**Si la page P4S ne s’affiche pas ou renvoie 404 (y compris « 404: NOT_FOUND » / `DEPLOYMENT_NOT_FOUND`) :**
+
+C’est en général parce que Vercel build depuis la **racine du dépôt** au lieu de `frontend/`. Il n’y a pas d’app Next.js à la racine → pas de déploiement valide → 404.
+
+**À faire (priorité 1) :**
+
+1. **Vercel** → projet **landing-page-creator-for-prospection** → **Settings** → **General**.
+2. **Root Directory** : cliquer **Edit**, saisir `frontend` (sans slash final), **Save**.
+3. **Redeploy** : onglet **Deployments** → **…** sur le dernier déploiement → **Redeploy** (ou pousser un commit sur la branche liée).
+4. Attendre la fin du build, puis réessayer : `https://landing-page-creator-for-prospectio.vercel.app/p4s-archi`.
+
+**Si ça persiste :**
+
+- **Build** : vérifier que le dernier déploiement est **Ready** (pas Failed). Si Failed, ouvrir les logs pour voir l’erreur (souvent Node, dépendances ou chemin).
+- **Route** : la page est définie par `frontend/src/app/p4s-archi/page.tsx` ; Next.js expose automatiquement `/p4s-archi` une fois le build fait depuis `frontend/`.
+
+**Landings standalone (un projet, pas de hub)** : la page d'accueil `/` est neutralisée (aucun lien vers les landings). Chaque prospect n'arrive que par lien direct (ex. `...vercel.app/p4s-archi`). Pas de lien « Accueil » sur les landings. Voir `strategie-landings-standalone-vs-hub.md`.
+
+**Deux déploiements distincts :**
+
+- **Django (backend LPPP)** : `/p/p4s-archi/` — hébergement propre (ex. Contabo), pas sur Vercel. Rendu complet (Qui je suis, rapport, services). Voir `procedure-modifications-landing-visible.md` pour `make landing-p4s`.
+- **Vercel (frontend Next.js)** : `/p4s-archi` — version simplifiée, déployée automatiquement à chaque push sur la branche liée.
+
+---
+
+## 7. Variable d'environnement CTA
 
 Pour que le bouton « Reprendre la conversation » envoie l'email vers toi :
 
@@ -83,7 +118,7 @@ Sans cette variable, le CTA ouvre le client mail avec le sujet pré-rempli (l'ut
 
 ---
 
-## 7. Déploiement automatique
+## 8. Déploiement automatique
 
 Une fois le projet lié à GitHub, **chaque push sur la branche principale** déclenche un déploiement automatique.
 
