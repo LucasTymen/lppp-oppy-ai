@@ -2,7 +2,21 @@
 
 **Contexte** : Suite à un échange positif avec Joël Courtois (CEO, docteur en IA, ancien DG EPITA). Proposition de ce que tu peux faire pour P4S. Ton : courtois, chaleureux, personnel.
 
-**Template utilisé** : `relance-evenement.html` (structure content_json).
+**Template utilisé** : `proposition.html` (structure content_json).
+
+---
+
+## Appliquer les modifications en base
+
+**Après toute modification de `landing-proposition-joel.json`**, lancer la commande pour mettre à jour la base :
+
+```bash
+python manage.py create_landing_p4s --update
+```
+
+(Dans Docker : `docker compose exec web python manage.py create_landing_p4s --update`.)
+
+Sans cette étape, les changements dans le fichier JSON **ne s'affichent pas** sur la landing (le contenu affiché vient de la base). Voir `docs/base-de-connaissances/procedure-modifications-landing-visible.md`.
 
 ---
 
@@ -14,6 +28,8 @@ Fichier source : `landing-proposition-joel.json`.
 - **page_title** : titre de la page (pas la phrase d’accroche).
 - **intro** : phrase d’accroche comme texte d’intro.
 - **icebreaker** : à personnaliser selon ton contexte de prospection (événement, échange, post, etc.).
+- **about_me** : texte de l'onglet « Qui je suis » (premier onglet de « Ce que j'offre »). Tu peux reprendre le bloc de présentation de ta landing page CV (référence `design-brief-landing-reference-cv.md`) : copier-coller le paragraphe « à propos » ici. Les retours à la ligne sont conservés.
+- **about_me_title** : libellé de l'onglet (défaut : « Qui je suis »).
 
 ---
 

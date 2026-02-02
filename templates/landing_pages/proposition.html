@@ -5,150 +5,294 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>{{ content.page_title|default:landing_page.title }}</title>
-    <!-- Google Fonts : polices par défaut + thème si connu -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    {% if use_perso_style %}
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% include "landing_pages/includes/perso_style.html" %}
+    {% endif %}
     <style>
-        {% if content.theme_css %}
+        {% if not use_perso_style and content.theme_css %}
         {{ content.theme_css|safe }}
         {% endif %}
+        :root {
+            --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --lp-section-padding: clamp(3rem, 8vw, 5rem);
+            /* Breakpoints (équipe style : déclinaisons tablette / desktop / HD) */
+            --lp-bp-tablet: 768px;
+            --lp-bp-desktop: 1024px;
+            --lp-bp-hd: 1440px;
+        }
         * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif);
             margin: 0;
             min-height: 100vh;
             background: var(--lp-bg, #0d0d0d);
             color: var(--lp-text, #e6e6e6);
-            padding: 1rem;
-            padding-left: max(1rem, env(safe-area-inset-left));
-            padding-right: max(1rem, env(safe-area-inset-right));
-            line-height: 1.5;
+            line-height: 1.6;
             font-size: 1rem;
         }
-        .wrap { max-width: 720px; margin: 0 auto; }
 
-        /* Hero — mobile-first */
-        .hero {
-            padding: 1.5rem 0 1.25rem;
-            text-align: center;
-            border-bottom: 1px solid var(--lp-border, #2a2a2a);
-        }
-        .hero-logo {
-            margin-bottom: 1rem;
-        }
-        .hero-logo img {
-            max-height: 40px;
-            width: auto;
-            display: block;
-            margin: 0 auto;
-        }
-        .hero h1 {
-            font-family: var(--lp-font-heading, 'Open Sans', var(--lp-font-body, inherit));
-            font-size: 1.5rem;
-            font-weight: 700;
-            line-height: 1.25;
-            margin: 0 0 0.5rem;
-            color: var(--lp-heading, var(--lp-text, #fff));
-        }
-        .hero .hero-sub {
-            font-size: 0.95rem;
-            color: var(--lp-muted, #999);
-            margin: 0 0 1rem;
-        }
-        .hero .cta {
-            display: inline-block;
-            min-width: 44px;
-            min-height: 44px;
-            padding: 0.75rem 1.25rem;
-            background: var(--lp-primary, #4a9eff);
-            color: var(--lp-cta-text, #fff);
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-        .hero .cta:hover { opacity: 0.95; }
-
-        /* Icebreaker */
-        .icebreaker {
-            padding: 0.75rem 1rem;
-            margin: 1rem 0;
-            background: var(--lp-block-bg, #1a2a1a);
-            border-left: 4px solid var(--lp-primary, #4a9eff);
-            border-radius: 0 8px 8px 0;
-            font-size: 0.9rem;
-            color: var(--lp-text, #e6e6e6);
-        }
-
-        /* Sections génériques — mobile-first */
-        .section {
-            padding: 1.25rem 0;
-            border-bottom: 1px solid var(--lp-border, #1a1a1a);
-        }
-        .section:last-of-type { border-bottom: none; }
-        .section h2 {
-            font-family: var(--lp-font-heading, inherit);
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin: 0 0 0.75rem;
-            color: var(--lp-heading, var(--lp-text, #fff));
-        }
-        .section p { margin: 0 0 0.5rem; }
-        .section p:last-child { margin-bottom: 0; }
-
-        /* Pain points : liste ou paragraphe */
-        .pain-list { margin: 0; padding-left: 1.25rem; }
-        .pain-list li { margin-bottom: 0.35rem; }
-
-        /* Solution / Workflow : image optionnelle */
-        .workflow-figure { margin: 1rem 0 0; text-align: center; }
-        .workflow-figure img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
-        }
-
-        /* Services : Ce que j'offre — onglets visuels (blocs empilés mobile-first) */
-        .services-section { padding: 1.25rem 0; border-bottom: 1px solid var(--lp-border, #1a1a1a); }
-        .services-section h2 { margin-bottom: 1rem; }
-        .services-tabs {
+        /* ===== Nav sticky — bordure couleur société ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent);
         }
-        .services-tabs input { position: absolute; opacity: 0; width: 0; height: 0; margin: 0; pointer-events: none; }
-        .services-tabs label {
-            display: inline-block;
-            padding: 0.5rem 0.9rem;
+        .nav-logo { max-height: 36px; width: auto; display: block; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a {
             font-size: 0.9rem;
             font-weight: 500;
             color: var(--lp-muted, #999);
-            background: var(--lp-block-bg, #1a1a1a);
+            text-decoration: none;
+            transition: color 0.2s var(--lp-ease);
+        }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-cta {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 600;
+            font-size: 0.9rem;
             border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s var(--lp-ease), box-shadow 0.2s var(--lp-ease);
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent); }
+
+        /* ===== Hero pleine hauteur (effet waouh) ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Hero (Aérosection) : ton image en background 100 %, parallaxe, assombrissement léger uniquement */
+        .hero.has-bg-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .hero.has-bg-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            pointer-events: none;
+        }
+        /* Scanlines légères (texture, pas forme dominante) */
+        .hero.has-bg-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                rgba(0, 0, 0, 0.12) 2px,
+                rgba(0, 0, 0, 0.12) 4px
+            );
+            pointer-events: none;
+        }
+        /* Fond hero sans image : fond uni (pas de V ni forme blanche) */
+        .hero:not(.has-bg-image)::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--lp-bg, #0d0d0d);
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero-logo { margin-bottom: 2rem; }
+        .hero-logo img {
+            max-height: 64px;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 2px 12px rgba(0,0,0,0.4));
+        }
+        .hero h1 {
+            font-family: var(--lp-font-heading, 'Open Sans', var(--lp-font-body, inherit));
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 0 0 1rem;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.02em;
+            max-width: 20ch;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s var(--lp-ease) both;
+        }
+        .hero .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--lp-muted, rgba(255,255,255,0.75));
+            margin: 0 0 2rem;
+            max-width: 28ch;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s var(--lp-ease) 0.1s both;
+        }
+        .hero .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+            animation: fadeInUp 0.8s var(--lp-ease) 0.2s both;
+        }
+        .hero .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+        .hero .cta { animation: fadeInUp 0.8s var(--lp-ease) 0.2s both; }
+        .hero .cta:hover { animation: none; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Sections (style page perso : aérées, couleurs, effets) ===== */
+        .section {
+            padding: var(--lp-section-padding) 1.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+            animation: sectionReveal 0.7s var(--lp-ease) both;
+        }
+        .section:nth-of-type(2) { animation-delay: 0.05s; }
+        .section:nth-of-type(3) { animation-delay: 0.12s; }
+        .section:nth-of-type(4) { animation-delay: 0.19s; }
+        .section:nth-of-type(5) { animation-delay: 0.26s; }
+        .section:nth-of-type(6) { animation-delay: 0.33s; }
+        .section:nth-of-type(7) { animation-delay: 0.4s; }
+        .section:nth-of-type(8) { animation-delay: 0.47s; }
+        @keyframes sectionReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section:nth-of-type(odd) {
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section:nth-of-type(even) {
+            background: color-mix(in srgb, var(--lp-secondary, #5ebeff) 5%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+        }
+        .section:nth-of-type(even) .section-head { border-left-color: var(--lp-secondary, #5ebeff); }
+        .section-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--lp-primary, #4a9eff);
+            min-width: 2rem;
+        }
+        .section:nth-of-type(even) .section-num { color: var(--lp-secondary, #5ebeff); }
+        .section h2 {
+            font-family: var(--lp-font-heading, inherit);
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 700;
+            margin: 0;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.02em;
+        }
+        .section p { margin: 0 0 0.75rem; }
+        .section p:last-child { margin-bottom: 0; }
+
+        .icebreaker {
+            max-width: 720px;
+            margin: 0 auto 1rem;
+            padding: 1rem 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d));
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+            border-radius: 0 12px 12px 0;
+            font-size: 0.95rem;
+        }
+
+        .pain-list { margin: 0; padding-left: 1.35rem; }
+        .pain-list li { margin-bottom: 0.5rem; }
+
+        .card {
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border: 1px solid var(--lp-border, rgba(255,255,255,0.08));
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: border-color 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+        }
+        .card:hover {
+            border-color: color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 0 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, transparent);
+        }
+        .card:last-child { margin-bottom: 0; }
+
+        .workflow-figure { margin: 1.5rem 0 0; text-align: center; }
+        .workflow-figure img { max-width: 100%; height: auto; border-radius: 12px; }
+
+        /* Services onglets */
+        .services-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .services-tabs input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+        .services-tabs label {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.65rem 1.1rem;
+            font-size: 0.9rem; font-weight: 600;
+            color: var(--lp-muted, #999);
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d));
+            border-radius: 10px;
             cursor: pointer;
-            min-height: 44px;
-            line-height: 1.3;
             border: 2px solid transparent;
+            transition: all 0.2s var(--lp-ease);
         }
         .services-tabs label:hover { color: var(--lp-text, #e6e6e6); }
         .services-tabs input:checked + label {
             color: var(--lp-cta-text, #fff);
             background: var(--lp-primary, #4a9eff);
             border-color: var(--lp-primary, #4a9eff);
+            box-shadow: 0 0 0 2px var(--lp-bg, #0d0d0d), 0 4px 20px color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent);
         }
-        .services-panel {
+        .services-panels .services-panel {
             display: none;
-            padding: 1rem 1.25rem;
-            background: var(--lp-block-bg, #1a1a1a);
-            border-radius: 8px;
-            font-size: 0.95rem;
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            border-left: 4px solid var(--lp-primary, #4a9eff);
         }
-        .services-panel p { margin: 0; }
-        .services-panel h3 { font-size: 1rem; margin: 0 0 0.5rem; color: var(--lp-heading, var(--lp-text, #fff)); }
-        /* Onglets : un seul panneau visible (celui dont le radio est coché) */
-        .services-panels .services-panel { display: none; }
+        .services-panels .services-panel h3 { font-size: 1.1rem; margin: 0 0 0.5rem; color: var(--lp-heading, #fff); }
+        .services-panels .services-panel p { margin: 0; }
+        .services-panels .about-me-content { margin: 0; }
         .services-tabs input:nth-of-type(1):checked ~ .services-panels .services-panel:nth-of-type(1),
         .services-tabs input:nth-of-type(2):checked ~ .services-panels .services-panel:nth-of-type(2),
         .services-tabs input:nth-of-type(3):checked ~ .services-panels .services-panel:nth-of-type(3),
@@ -156,84 +300,165 @@
         .services-tabs input:nth-of-type(5):checked ~ .services-panels .services-panel:nth-of-type(5),
         .services-tabs input:nth-of-type(6):checked ~ .services-panels .services-panel:nth-of-type(6),
         .services-tabs input:nth-of-type(7):checked ~ .services-panels .services-panel:nth-of-type(7),
-        .services-tabs input:nth-of-type(8):checked ~ .services-panels .services-panel:nth-of-type(8) { display: block; }
+        .services-tabs input:nth-of-type(8):checked ~ .services-panels .services-panel:nth-of-type(8),
+        .services-tabs input:nth-of-type(9):checked ~ .services-panels .services-panel:nth-of-type(9) { display: block; }
 
-        /* Expertise Stack : tags */
-        .stack-group { margin-bottom: 1rem; }
-        .stack-group:last-child { margin-bottom: 0; }
+        .stack-group { margin-bottom: 1.25rem; }
         .stack-group .stack-label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--lp-muted, #999);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--lp-primary, #4a9eff);
+            text-transform: uppercase; letter-spacing: 0.06em;
             margin-bottom: 0.5rem;
         }
-        .stack-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-        }
+        .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
         .stack-tag {
-            display: inline-block;
-            padding: 0.35rem 0.65rem;
-            background: var(--lp-block-bg, #1a1a1a);
-            border-radius: 6px;
-            font-size: 0.85rem;
+            padding: 0.45rem 0.85rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d));
             color: var(--lp-text, #e6e6e6);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent);
         }
 
-        /* Mission Flash : encadré CTA */
         .mission-flash {
-            padding: 1.25rem;
-            background: var(--lp-block-bg, #1a1a1a);
-            border-radius: 8px;
-            border: 1px solid var(--lp-primary, #4a9eff);
+            padding: 2rem;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--lp-primary, #4a9eff) 18%, var(--lp-bg, #0d0d0d)) 0%, color-mix(in srgb, var(--lp-secondary, #5ebeff) 12%, var(--lp-bg, #0d0d0d)) 50%, color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)) 100%);
+            border: 2px solid var(--lp-primary, #4a9eff);
+            border-radius: 20px;
+            box-shadow: 0 0 48px color-mix(in srgb, var(--lp-primary, #4a9eff) 25%, transparent), 0 0 24px color-mix(in srgb, var(--lp-secondary, #5ebeff) 15%, transparent);
         }
         .mission-flash p { margin: 0; }
+        .mission-flash .tag-line { font-size: 0.8rem; font-weight: 700; color: var(--lp-primary, #4a9eff); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
 
-        /* Pourquoi Growth Engineer : citation */
         .why-quote {
-            padding: 1rem 1.25rem;
+            padding: 1.5rem;
             border-left: 4px solid var(--lp-secondary, #5ebeff);
-            background: var(--lp-block-bg, #1a1a1a);
-            border-radius: 0 8px 8px 0;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 0 16px 16px 0;
             font-style: italic;
-            color: var(--lp-text, #e6e6e6);
+            font-size: 1.05rem;
         }
 
-        /* CTA final */
-        .cta-wrap { padding: 2rem 0; text-align: center; }
+        .cta-wrap {
+            padding: var(--lp-section-padding) 1.5rem;
+            text-align: center;
+        }
         .cta-wrap .cta {
             display: inline-block;
-            min-width: 44px;
-            min-height: 44px;
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2rem;
             background: var(--lp-primary, #4a9eff);
             color: var(--lp-cta-text, #fff);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 12px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
+            box-shadow: 0 4px 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
         }
-        .cta-wrap .cta:hover { opacity: 0.95; }
+        .cta-wrap .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
 
-        /* Desktop */
-        @media (min-width: 600px) {
-            body { padding: 1.5rem 2rem; }
-            .hero { padding: 2rem 0 1.5rem; }
-            .hero h1 { font-size: 1.75rem; }
-            .hero-logo img { max-height: 48px; }
-            .section { padding: 1.5rem 0; }
-            .section h2 { font-size: 1.2rem; }
+        /* ===== Responsive : tablette (768px) ===== */
+        @media (min-width: 768px) {
+            .nav { padding: 1rem 2rem; }
+            .nav-logo { max-height: 42px; }
+            .nav-links a { font-size: 1rem; }
+            .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; }
+            .hero { padding: 3rem 2rem 5rem; }
+            .hero h1 { font-size: clamp(2.25rem, 5.5vw, 3.5rem); max-width: 22ch; }
+            .hero .hero-sub { font-size: 1.15rem; max-width: 32ch; }
+            .hero-logo { margin-bottom: 2.25rem; }
+            .hero-logo img { max-height: 80px; }
+            .hero .cta { padding: 1.1rem 2.25rem; font-size: 1.1rem; }
+            .icebreaker { padding: 1.25rem 2rem; font-size: 1rem; max-width: 720px; margin-left: auto; margin-right: auto; }
+            .section { padding: var(--lp-section-padding) 2rem; max-width: 720px; }
+            .section-head { margin-bottom: 1.75rem; }
+            .section h2 { font-size: clamp(1.4rem, 3.2vw, 1.9rem); }
+            .card { padding: 1.75rem; }
+            .mission-flash { padding: 2.25rem; }
+            .cta-wrap { padding: var(--lp-section-padding) 2rem; }
+        }
+
+        /* ===== Responsive : desktop (1024px) ===== */
+        @media (min-width: 1024px) {
+            .nav { padding: 1.25rem 2.5rem; }
+            .nav-logo { max-height: 48px; }
+            .nav-links { gap: 0.75rem 1.5rem; }
+            .hero { padding: 4rem 2.5rem 6rem; }
+            .hero h1 { font-size: clamp(2.5rem, 4.5vw, 3.75rem); max-width: 24ch; }
+            .hero .hero-sub { font-size: 1.2rem; max-width: 36ch; }
+            .hero-logo { margin-bottom: 2.5rem; }
+            .hero-logo img { max-height: 88px; }
+            .hero .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
+            .icebreaker { padding: 1.5rem 2.5rem; max-width: 800px; }
+            .section { padding: var(--lp-section-padding) 2.5rem; max-width: 800px; }
+            .section-head { margin-bottom: 2rem; padding-left: 0.75rem; border-left-width: 5px; }
+            .section h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+            .section-num { font-size: 0.9rem; min-width: 2.25rem; }
+            .card { padding: 2rem; }
+            .services-tabs label { padding: 0.75rem 1.25rem; font-size: 1rem; }
+            .services-panels .services-panel { padding: 2rem; }
+            .stack-tag { padding: 0.5rem 1rem; font-size: 0.95rem; }
+            .mission-flash { padding: 2.5rem; }
+            .why-quote { padding: 2rem; font-size: 1.1rem; }
+            .cta-wrap { padding: var(--lp-section-padding) 2.5rem; }
+            .cta-wrap .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
+        }
+
+        /* ===== Responsive : HD (1440px) ===== */
+        @media (min-width: 1440px) {
+            body { font-size: 1.0625rem; }
+            .nav { padding: 1.5rem 3rem; }
+            .nav-logo { max-height: 52px; }
+            .nav-links a { font-size: 1.05rem; }
+            .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; }
+            .hero { padding: 5rem 3rem 7rem; }
+            .hero h1 { font-size: 3.75rem; max-width: 26ch; }
+            .hero .hero-sub { font-size: 1.25rem; max-width: 40ch; }
+            .hero-logo { margin-bottom: 3rem; }
+            .hero-logo img { max-height: 96px; }
+            .hero .cta { padding: 1.25rem 2.75rem; font-size: 1.2rem; }
+            .icebreaker { padding: 1.75rem 3rem; max-width: 880px; font-size: 1.05rem; }
+            .section { padding: clamp(4rem, 10vw, 6rem) 3rem; max-width: 880px; }
+            .section-head { margin-bottom: 2.25rem; }
+            .section h2 { font-size: 2rem; }
+            .section p { font-size: 1.05rem; }
+            .card { padding: 2.25rem; }
+            .mission-flash { padding: 3rem; font-size: 1.05rem; }
+            .cta-wrap { padding: clamp(4rem, 10vw, 6rem) 3rem; }
+            .cta-wrap .cta { padding: 1.25rem 2.75rem; font-size: 1.2rem; }
         }
     </style>
 </head>
-<body>
-    <div class="wrap">
-        <!-- 1. Hero : Le "Quoi" et le "Pour qui" -->
-        <section class="hero">
-            {% if content.theme and content.theme.logo_url %}
+<body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    <!-- Nav sticky (ancres style page perso) -->
+    <nav class="nav">
+        {% if content.theme and content.theme.logo_url %}
+        <a href="#top"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" class="nav-logo" loading="lazy"></a>
+        {% else %}
+        <span style="font-weight:700; color: var(--lp-text);">{{ landing_page.prospect_company|default:content.page_title|default:"Landing" }}</span>
+        {% endif %}
+        <div class="nav-links">
+            {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
+            {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
+            {% if content.services %}<a href="#services">Services</a>{% endif %}
+            {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
+            {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
+            {% if content.diagram_url or content.funnel_image_url %}<a href="#diagramme-funnel">En un coup d'œil</a>{% endif %}
+            {% if content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
+        </div>
+    </nav>
+
+    <main id="top">
+        <!-- Hero (Aérosection) : ton image en background 100 %, parallaxe (fixed), assombrissement 15 % — pas de scanlines -->
+        <section class="hero{% if content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
+            {% if content.theme and content.theme.logo_url and not content.hero_background_url %}
+            {% if not content.theme.background_image_url or content.theme.logo_url != content.theme.background_image_url %}
             <p class="hero-logo"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" loading="lazy"></p>
+            {% endif %}
             {% endif %}
             <h1>{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
             <p class="hero-sub">{{ content.hero_sub_headline|default:content.hero_subtitle|default:'' }}{% if not content.hero_sub_headline and not content.hero_subtitle and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
@@ -242,96 +467,82 @@
             {% endif %}
         </section>
 
-        {% if content.icebreaker %}
-        <p class="icebreaker">{{ content.icebreaker }}</p>
-        {% endif %}
+        {% if content.icebreaker %}<p class="icebreaker">{{ content.icebreaker }}</p>{% endif %}
+        {% if content.intro %}<p class="icebreaker">{{ content.intro }}</p>{% elif content.hero_title %}<p class="icebreaker">{{ content.hero_title }}</p>{% endif %}
 
-        {% if content.intro %}
-        <p class="icebreaker">{{ content.intro }}</p>
-        {% elif content.hero_title %}
-        <p class="icebreaker">{{ content.hero_title }}</p>
-        {% endif %}
-
-        <!-- 2. Pain Points : L'empathie -->
         {% if content.pain_points or content.activite_pain_points %}
-        <section class="section" id="pain-points">
-            <h2>Vos enjeux</h2>
+        <section class="section" id="enjeux">
+            <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             {% if content.pain_points %}
-                <ul class="pain-list">
-                    {% for item in content.pain_points|as_list %}
-                    <li>{{ item }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-            <p>{{ content.activite_pain_points }}</p>
-            {% endif %}
+            <ul class="pain-list">
+                {% for item in content.pain_points|as_list %}<li>{{ item }}</li>{% endfor %}
+            </ul>
+            {% else %}<p>{{ content.activite_pain_points }}</p>{% endif %}
         </section>
         {% endif %}
 
-        <!-- 3. Solution : Workflow technique (preuve) -->
         {% if content.solution_workflow or content.positionnement %}
         <section class="section" id="solution">
-            <h2>Comment je transforme le chaos en système</h2>
-            <p>{{ content.solution_workflow|default:content.positionnement }}</p>
-            {% if content.workflow_image_url %}
-            <figure class="workflow-figure">
-                <img src="{{ content.workflow_image_url }}" alt="Schéma workflow / gouvernance" loading="lazy">
-            </figure>
-            {% endif %}
+            <div class="section-head"><span class="section-num">02</span><h2>Comment je transforme le chaos en système</h2></div>
+            <div class="card">
+                <p>{{ content.solution_workflow|default:content.positionnement }}</p>
+                {% if content.workflow_image_url %}
+                <figure class="workflow-figure"><img src="{{ content.workflow_image_url }}" alt="Workflow" loading="lazy"></figure>
+                {% endif %}
+            </div>
         </section>
         {% endif %}
 
-        <!-- 4. Ce que j'offre / Mes services pour vous (onglets) -->
-        {% if content.services %}
-        <section class="section services-section" id="services">
-            <h2>Ce que j'offre — Mes services pour vous</h2>
+        {% if content.services or content.about_me %}
+        <section class="section" id="services">
+            <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             <div class="services-tabs">
+                {% if content.about_me %}
+                <input type="radio" name="services-tab" id="service-0" checked>
+                <label for="service-0">{{ content.about_me_title|default:"Qui je suis" }}</label>
+                {% endif %}
                 {% for service in content.services %}
-                <input type="radio" name="services-tab" id="service-{{ forloop.counter0 }}" {% if forloop.first %}checked{% endif %}>
-                <label for="service-{{ forloop.counter0 }}">{{ service.title }}</label>
+                <input type="radio" name="services-tab" id="service-{% if content.about_me %}{{ forloop.counter }}{% else %}{{ forloop.counter0 }}{% endif %}" {% if not content.about_me and forloop.first %}checked{% endif %}>
+                <label for="service-{% if content.about_me %}{{ forloop.counter }}{% else %}{{ forloop.counter0 }}{% endif %}">{{ service.title }}</label>
                 {% endfor %}
                 <div class="services-panels">
-                    {% for service in content.services %}
-                    <div class="services-panel" id="panel-{{ forloop.counter0 }}">
-                        <h3>{{ service.title }}</h3>
-                        <p>{{ service.description }}</p>
+                    {% if content.about_me %}
+                    <div class="services-panel">
+                        <h3>{{ content.about_me_title|default:"Qui je suis" }}</h3>
+                        <div class="about-me-content">{{ content.about_me|linebreaksbr }}</div>
                     </div>
+                    {% endif %}
+                    {% for service in content.services %}
+                    <div class="services-panel"><h3>{{ service.title }}</h3><p>{{ service.description }}</p></div>
                     {% endfor %}
                 </div>
             </div>
         </section>
         {% endif %}
 
-        <!-- 5. Expertise Stack -->
         {% if content.expertise_stack %}
-        <section class="section" id="expertise">
-            <h2>Stack technique</h2>
+        <section class="section" id="stack">
+            <div class="section-head"><span class="section-num">04</span><h2>Stack technique</h2></div>
             {% for key, labels in content.expertise_stack.items %}
             {% if labels %}
             <div class="stack-group">
                 <p class="stack-label">{{ key|capfirst }}</p>
-                <div class="stack-tags">
-                    {% for item in labels %}
-                    <span class="stack-tag">{{ item }}</span>
-                    {% endfor %}
-                </div>
+                <div class="stack-tags">{% for item in labels %}<span class="stack-tag">{{ item }}</span>{% endfor %}</div>
             </div>
-            {% endif %}
-            {% endfor %}
+            {% endif %}{% endfor %}
         </section>
         {% endif %}
 
-        <!-- 6. Mission Flash : offre irrésistible -->
         {% if content.mission_flash or content.produit_commercial %}
-        <section class="section" id="mission-flash">
-            <h2>Offre : Mission Flash</h2>
+        <section class="section" id="offre">
+            <div class="section-head"><span class="section-num">05</span><h2>Mission Flash</h2></div>
             <div class="mission-flash">
+                <p class="tag-line">Offre pour vous</p>
                 <p>{{ content.mission_flash|default:content.produit_commercial }}</p>
             </div>
         </section>
         {% endif %}
 
-        <!-- 7. Pourquoi un Growth Engineer et pas une Agence -->
         {% if content.why_growth_engineer %}
         <section class="section" id="why-ge">
             <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
@@ -339,12 +550,26 @@
         </section>
         {% endif %}
 
-        <!-- CTA final -->
+        {% comment %} Diagrammes / Funnels (optionnel) : graphiques et infographiques du projet perso (perso_ref_path). Pas utilisés systématiquement, gardés pour réutilisation. {% endcomment %}
+        {% if content.diagram_url or content.funnel_image_url %}
+        <section class="section" id="diagramme-funnel">
+            <div class="section-head"><span class="section-num">06</span><h2>En un coup d'œil</h2></div>
+            <div class="card workflow-figure">
+                {% if content.diagram_url %}
+                <figure><img src="{{ content.diagram_url }}" alt="Diagramme" loading="lazy" style="max-width:100%; height:auto; border-radius:12px;"></figure>
+                {% endif %}
+                {% if content.funnel_image_url %}
+                <figure><img src="{{ content.funnel_image_url }}" alt="Funnel" loading="lazy" style="max-width:100%; height:auto; border-radius:12px;"></figure>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
         {% if content.cta_text and content.cta_url %}
         <div class="cta-wrap">
             <a href="{{ content.cta_url }}" class="cta">{{ content.cta_text }}</a>
         </div>
         {% endif %}
-    </div>
+    </main>
 </body>
 </html>

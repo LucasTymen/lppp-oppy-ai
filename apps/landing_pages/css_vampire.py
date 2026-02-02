@@ -199,15 +199,23 @@ def _extract_logo(soup, page_url):
 
 
 def _extract_background_image(css_text, page_url):
-    """Extrait la première URL de background-image (pour ambiance)."""
+    """
+    Extrait la première URL de background-image qui ressemble à un vrai fond
+    (pas une icône UI : checkbox, checkmark, icon, etc.).
+    """
     pattern = re.compile(
         r"background(?:-image)?\s*:\s*url\s*\(\s*['\"]?([^)'\"]+)['\"]?\s*\)",
         re.IGNORECASE,
     )
+    skip_keywords = ("checkbox", "checkmark", "icon", "arrow", "close", "menu", "svg")
     for m in pattern.finditer(css_text):
         url = m.group(1).strip().strip("'\"").strip()
-        if url and not url.startswith("data:"):
-            return url
+        if not url or url.startswith("data:"):
+            continue
+        url_lower = url.lower()
+        if any(kw in url_lower for kw in skip_keywords):
+            continue
+        return url
     return None
 
 

@@ -4,6 +4,8 @@
 **Date** : 2025-01-30  
 **Sources** : site p4s-archi.com (pages Produits, Technologie, À propos, Contact), analyse marché cybersécurité industrielle.
 
+> **Rapport complet** : cette étude alimente le document unique [`rapport-complet-p4s.md`](./rapport-complet-p4s.md) (société + stratégie PESTEL/SWOT/Porter + rapport SEO).
+
 ---
 
 ## 1. La société
@@ -43,7 +45,7 @@
 | Produit | Description | Spécificités |
 |---------|-------------|--------------|
 | **SF-106-2 (CipherWall)** | Chiffreur / firewall hautes performances | Protection DoS/DDoS, suppression paquets corrompus, latence &lt; 3 µs, chiffrement AES-256 GCM 16, débit &gt; 18 Gbps |
-| **SF-106-8** | Contrôleur réseau cyber 10/100/1000 | 1 pare-feu indépendant par port, latence extrême, versatility |
+| **SF-106-8** (Network Controller) | Contrôleur réseau cyber 10/100/1000 « Secure by Design » | 1 pare-feu indépendant par port, latence extrême, versatility |
 
 ### Avantages techniques (site)
 
@@ -141,6 +143,7 @@ P4S est une **cible pertinente** pour un profil « Growth Engineer » ou positio
 
 ## Références
 
+- **Rapport complet P4S** (société + stratégie + SEO) : [`rapport-complet-p4s.md`](./rapport-complet-p4s.md)
 - **Site P4S** : https://www.p4s-archi.com/ (Produits, Technologie, À propos)
 - **Cadre Growth Analyst** : `docs/base-de-connaissances/growth-analyst-concurrentiel-marche-ads.md`
 - **Organisation contacts** : `docs/base-de-connaissances/organisation-donnees-contacts.md`

@@ -10,6 +10,7 @@ Liste de tâches (maintenue par le chef de projet / agent pilote).
 
 | Statut   | Tâche | Priorité |
 |----------|--------|----------|
+| **À faire immédiatement** | **Modifications landing visibles** : appliquer la procédure `procedure-modifications-landing-visible.md` — après édition du JSON lancer `create_landing_p4s --update` ; recharger sans cache (Ctrl+Shift+R). Headers anti-cache déjà ajoutés sur la vue landing. | **Urgent** |
 | Fait     | **Git init + premier commit + push** : Git initialisé, remotes SSH (origin GitHub, gitlab GitLab), commit 67a2055 (125 fichiers), push origin main et push gitlab main réussis. | — |
 | À faire  | **Montage projet** : Orchestrateur, Chef de Projet, Data Analyst, Dev Django, DevOps — écrans, concordance des routes back, logique métier ; segmentation `2025-01-30-montage-projet-ecrans-routes-logique.md`, doc `routes-back-lppp.md` | Haute |
 | À faire  | **Lancement stack** : DevOps + Dev Django + Pentester — réparer et lancer conteneur, backend, front, admin (localhost/127.0.0.1:8080 ou 8000) ; segmentation `2025-01-30-lancement-docker-projet.md` | Haute |

@@ -119,3 +119,11 @@ CELERY_TIMEZONE = TIME_ZONE
 # CORS (n8n / Flowise / front)
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
+
+# Style perso (fallback) : projet landing CV / page perso (graphiques, infographiques, style)
+# Chemin absolu Linux/WSL : /home/lucas/lucasTymenGraphx/landingpageCvPagePerso
+# Sous Windows (WSL) : \\wsl$\Ubuntu\home\lucas\lucasTymenGraphx\landingpageCvPagePerso
+LANDING_PERSO_REF_PATH = env(
+    "LANDING_PERSO_REF_PATH",
+    default="/home/lucas/lucasTymenGraphx/landingpageCvPagePerso",
+)

@@ -37,7 +37,9 @@ Nommage libre tant qu’il est **unique** et **stable** pour ce contact.
 |-------------------|--------------------|
 | `content_json.json` ou `landing-relance.json` | Contenu de landing pour ce contact (hero, CTA, etc.) |
 | `notes.md` | Notes, CR d’échanges, relances |
-| `rapport-seo.md` | Synthèse rapport SEO prospect (voir `rapport-seo-prospect.md`) |
+| `rapport-complet-<slug>.md` | **Rapport complet** : fiche société + concurrence + PESTEL/SWOT/Porter + rapport SEO. Utiliser le **template** `docs/base-de-connaissances/template-rapport-complet-prospect.md` (copier dans le dossier contact, renommer, remplir). Uniforme pour toutes les entreprises démarchées. |
+| `etude-concurrentielle-pestel-swot-porter.md` | Étude détaillée société, produits, concurrence, PESTEL, SWOT, Porter (peut alimenter le rapport complet). |
+| `rapport-seo.md` | Synthèse rapport SEO seul (voir `rapport-seo-prospect.md`) si pas de rapport complet. |
 | `pieces/` | Fichiers annexes (exports, docs) pour ce contact uniquement |
 
 Aucun fichier obligatoire : on crée ce dont on a besoin.
@@ -62,6 +64,7 @@ Un fichier **`docs/contacts/REGISTRE-CONTACTS.md`** liste les contacts ayant un 
 
 ## Références
 
+- **Template rapport complet** (fiche + stratégie + SEO, uniforme par entreprise) : `docs/base-de-connaissances/template-rapport-complet-prospect.md`
 - **Rapport SEO prospect** : `docs/base-de-connaissances/rapport-seo-prospect.md`
 - **Structure content_json** : `docs/base-de-connaissances/structure-content-json-relance-evenement.md`
 - **Ressources utilisateur** (CV, segments) : `docs/ressources-utilisateur/REGISTRE-RESSOURCES.md`

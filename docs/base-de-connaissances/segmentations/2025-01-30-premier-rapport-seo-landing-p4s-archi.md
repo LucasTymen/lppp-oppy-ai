@@ -48,7 +48,7 @@
 ### Expert SEO / AI-GEO
 
 - [ ] Lire les 5 CSV (ou chemin fourni par l’utilisateur).
-- [ ] Produire le **rapport SEO** (synthèse présentable, manque à gagner, coût SEO pourri) — voir `rapport-seo-prospect.md`.
+- [ ] Produire le **rapport SEO** (synthèse présentable, manque à gagner, coût SEO pourri) — voir `rapport-seo-prospect.md`. **Contenu minimal** : nombre de problèmes trouvés, impact qu’ils sous-tendent ; si prospects trouvés, **échantillon de 5**.
 - [ ] Réaliser une **analyse sémantique** (wording, copywriting, croisement avec le rapport) — voir `expert-seo-demarche-rapport-wording-copywriting.md`, `seo-semantique-outils-open-source.md`.
 - [ ] Étudier les **mots-clés des CTA** et proposer des variantes — voir `docs/contacts/p4s-archi/brief-seo-growth-designer-copywriting-cta.md`.
 - [ ] Livrable : `docs/contacts/p4s-archi/rapport-seo.md` (et partie lead magnet pour l’onglet landing).

@@ -70,6 +70,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Rôles et RACI** : `docs/base-de-connaissances/agents-roles-responsabilites.md`
 - **Démarche wording + copywriting, croisement SEO** : `docs/base-de-connaissances/expert-seo-demarche-rapport-wording-copywriting.md` — étude wording (wordpricing) + copywriting, croisement avec le rapport SEO fourni ; § 4 à discuter : niveau d’info + chiffrage pour protéger les idées.
 - **Rapport SEO prospect** : `docs/base-de-connaissances/rapport-seo-prospect.md` (données Screaming Frog, format rapport, croisement avec wording + copywriting).
+- **Template rapport complet prospect** : `docs/base-de-connaissances/template-rapport-complet-prospect.md` — rapport uniforme (fiche société + concurrence + PESTEL/SWOT/Porter + SEO) ; copier dans `docs/contacts/<slug>/rapport-complet-<slug>.md` et remplir. Voir `organisation-donnees-contacts.md`.
 - **SEO sémantique (outils open-source)** : `docs/base-de-connaissances/seo-semantique-outils-open-source.md` — stack Python (spaCy, Gensim, NLTK, Transformers), keyword-to-topic, topic modelling, clustering ; coordination DevOps / Dev Django.
 - **Dépendances optionnelles** : `requirements-seo.txt` (racine) — à intégrer dans l’env ou Docker en accord avec DevOps.
 - **Ressources utilisateur** : `docs/ressources-utilisateur/` (stats, données fournies par l’utilisateur pour l’analyse)
@@ -153,9 +154,12 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 | `intelligence-metier-algorithmes.md` | Scoring, qualité, matching — où brancher, stratégie d'implantation | Data Analyst, Dev Django |
 | `stack-frontend-nextjs-react.md` | **Stack frontend standard** : Next.js + React pour landings, effet waouh, déploiement Vercel — à appliquer systématiquement | Designer, Dev Django, DevOps |
 | `demarrage-projet-equipe-tech.md` | Checklist et diagnostic pour faire redémarrer le projet (Docker / Option B), voir les rendus des landings | DevOps, Dev Django |
+| `procedure-modifications-landing-visible.md` | **URGENT** : faire apparaître les modifications sur les landings — après édition du JSON lancer `create_landing_p4s --update` ; recharger sans cache ; headers anti-cache déjà sur la vue landing | **Dev Django, DevOps** |
 | `classification-landings-secteur-categorie.md` | Classer les landings par secteur et catégorie ; liste avec filtres pour voir les rendus par type | Chef de Projet, Dev Django, Designer |
 | `schema-landing-proposition.md` | **Structure Full-Stack Conversion** : champs content_json (hero, pain points, solution, services onglets, expertise stack, mission flash, why GE), template proposition, mobile-first, Google Fonts | Chef de Projet, Dev Django, Rédacteur, Designer |
+| `template-hero-aerosection.md` | **Hero réutilisable** : image fond 100 %, parallaxe, scanlines optionnelles — à appliquer aux autres landings et rapports | Dev Django, Designer |
 | `css-vampire.md` | **CSS Vampire** : extraction du style du site cible (polices, couleurs, logo, fond) ; commande `css_vampire <url> [--slug] [--apply]` ; thème injecté dans content_json | Dev Django, Designer |
+| `design-brief-landing-reference-cv.md` | **Brief design** : référence visuelle (landing CV / page perso Vercel) pour aligner la landing proposition sur ce niveau de design + style société (CSS Vampire) | **Designer** (priorité), Dev Django |
 | `formules-et-algorithmes-reference.md` | **Spec canonique** : formules mathématiques et algorithmes (score prospect, complétude, matching, normalisation) — s'en inspirer pour implémenter | Data Analyst (logique métier + algorithmes), Dev Django |
 | `osint_sources.py`, `proxy_manager.py` | Contrat de données, stratégies proxy | Expert Google Dorks, Pentester |
 | Tâches Celery : `enrich_prospect_decomposed`, `single_source`, `merge_and_save` | Flux décomposé recommandé | Pentester, orchestration |

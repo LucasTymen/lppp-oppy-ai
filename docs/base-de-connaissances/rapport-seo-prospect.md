@@ -23,6 +23,22 @@
 
 ---
 
+## 2b. Structure minimale du rapport (à intégrer partout)
+
+Chaque rapport SEO doit contenir **au minimum** :
+
+| Élément | Obligatoire | Description |
+|--------|-------------|-------------|
+| **Nombre de problèmes** | Oui | Indiquer clairement **combien** de problèmes ont été trouvés (ex. « 12 problèmes identifiés »). |
+| **Impact** | Oui | Pour chaque type de problème (ou en synthèse), expliquer **ce qu’ils sous-tendent comme impact** (visibilité, conversion, coût, risque technique, etc.). |
+| **Échantillon de 5 prospects** | Si trouvés | Si des **prospects** ont été identifiés (cibles, leads, entreprises pertinentes), en présenter un **échantillon de 5** dans le rapport (nom / entreprise / pertinence ou critère). |
+
+À appliquer à **tous les rapports SEO** et à toute livraison de type « rapport prospect ».
+
+**Rapport complet (fiche + stratégie + SEO)** : pour uniformiser le livrable par entreprise démarchée, utiliser le **template** `template-rapport-complet-prospect.md`. On copie le template dans le dossier contact (`docs/contacts/<slug>/rapport-complet-<slug>.md`), on remplit les sections (société, PESTEL/SWOT/Porter, SEO dont § 3.0 obligatoire). Voir `organisation-donnees-contacts.md` (contenu type d’un dossier contact).
+
+---
+
 ## 3. Croisement avec wording + copywriting (Expert SEO)
 
 - Le **rapport SEO** (données Screaming Frog, KPIs, visibilité) est **croisé** avec une **étude wording (wordpricing) + copywriting** pour produire un rapport unifié (pistes SEO + wording + copywriting). Voir `docs/base-de-connaissances/expert-seo-demarche-rapport-wording-copywriting.md`.

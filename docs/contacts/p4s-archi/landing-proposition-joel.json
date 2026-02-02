@@ -1,5 +1,6 @@
 {
   "page_title": "Optimisation Growth pour P4S Architecture",
+  "hero_background_url": "https://cdn.prod.website-files.com/66f985365375b390de87e273/66fa4fa81421b08ecc353183_Frame%203372347.avif",
   "hero_headline": "Automatisez 80% de votre Lead Gen Cyber sans recruter",
   "hero_sub_headline": "Infrastructure Python + Stratégie Growth",
   "hero_subtitle": "Pour P4S — Joël",
@@ -14,6 +15,8 @@
   ],
   "solution_workflow": "Votre force, c'est le produit : SOFTLESS, les SF-106, la latence, le Made in France. Le défi, à mon sens, c'est moins la techno que la diffusion. Je mets en place des pipelines de données (veille, ciblage, gouvernance) qui transforment le chaos en système : gouvernance claire, scalabilité, sécurité. Une logique de responsabilité (RACI) intégrée au code.",
   "workflow_image_url": "",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer : acquisition B2B, SEO, automatisation et data.\n\nJe construis des pipelines de données (veille, enrichissement, scoring) et des rapports actionnables pour que l’acquisition ne repose pas sur du vent. Python, Django, Make, n8n — et une logique de responsabilité (RACI) intégrée au code.\n\nTu peux remplacer ce bloc par le texte de présentation de ta landing page CV (référence design-brief-landing-reference-cv.md).",
   "services": [
     {
       "title": "Rapport SEO",

@@ -1,0 +1,44 @@
+{% comment %}
+Style perso (fallback) — landing CV / page perso : variables + animations.
+Référence projet : LANDING_PERSO_REF_PATH (voir style-perso-fallback.md).
+{% endcomment %}
+<style>
+/* Style perso (fallback) — variables + animations */
+body.lp-perso-style {
+    --lp-bg: #0a0a0f;
+    --lp-text: #e8e8ed;
+    --lp-heading: #ffffff;
+    --lp-muted: #9898a8;
+    --lp-primary: #6366f1;
+    --lp-secondary: #818cf8;
+    --lp-border: rgba(255, 255, 255, 0.08);
+    --lp-cta-text: #fff;
+    --lp-font-body: 'Inter', 'Roboto', system-ui, sans-serif;
+    --lp-font-heading: 'Inter', 'Open Sans', system-ui, sans-serif;
+}
+body.lp-perso-style .hero:not(.has-bg-image)::before {
+    background:
+        linear-gradient(165deg, #0a0a0f 0%, rgba(99, 102, 241, 0.12) 35%, #0a0a0f 70%),
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 80% at 85% 70%, rgba(129, 140, 248, 0.2) 0%, transparent 50%);
+}
+body.lp-perso-style .section:nth-of-type(odd) { background: rgba(99, 102, 241, 0.06); }
+body.lp-perso-style .section:nth-of-type(even) { background: rgba(129, 140, 248, 0.05); }
+@keyframes lp-fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes lp-slideInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes lp-glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+    50% { box-shadow: 0 0 32px rgba(99, 102, 241, 0.35); }
+}
+body.lp-perso-style .hero h1 { animation: lp-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; }
+body.lp-perso-style .hero .hero-sub { animation: lp-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both; }
+body.lp-perso-style .hero .cta { animation: lp-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both; }
+body.lp-perso-style .section { animation: lp-fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+body.lp-perso-style .mission-flash { animation: lp-glow-pulse 4s ease-in-out infinite; }
+</style>
