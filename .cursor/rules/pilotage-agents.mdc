@@ -38,6 +38,13 @@ alwaysApply: true
 - **Pas de scripts temporaires** : interdiction de créer des scripts « pour tester » ou « au cas où » qui restent dans le dépôt. Script utile → intégrer au bon endroit (commande Django, Makefile, ou dossier `scripts/` documenté) ; sinon supprimer.
 - **Organisation** : code métier dans `apps/<app>/`, doc dans `docs/`, config dans `lppp/` et `docker/`. Un fichier = un rôle clair ; pas de doublons ni de fichiers inutiles.
 
+## Fin de landing : repo au nom de la société et déploiement
+
+- À la **fin de chaque landing page** (contenu et design validés), les étapes suivantes sont **obligatoires** :
+  1. **Git init** (si besoin), **premier commit**, **push** vers un **nouveau repo au nom de la société** (ex. `landing-p4s-archi`) pour s'en rappeler et retrouver facilement le projet.
+  2. **S'assurer que le déploiement se fait** (ex. Vercel) et que **la page fonctionne** (URL accessible, pas d'erreur).
+- **C’est aux agents DevOps et Architecte réseau de se charger de ça et de tout créer et actionner** (repo, git init, commit, push, Vercel, vérification déploiement et page). Dev Django / Designer fournissent le code ; Chef de Projet valide la checklist. Référence : `docs/base-de-connaissances/procedure-fin-landing-repo-deploiement.md`, `agents-roles-responsabilites.md` (RACI, Phase 5).
+
 ## Orchestrateur et registre des ressources
 
 - L’**orchestrateur** (règle `.cursor/rules/orchestrateur.mdc`) maintient le **registre des agents et ressources** : `docs/base-de-connaissances/registre-agents-ressources.md`.

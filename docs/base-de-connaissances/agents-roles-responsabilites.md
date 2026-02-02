@@ -43,10 +43,12 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - Coordonner les agents (répartir les tâches)
 - Maintenir la documentation projet (TODO, logs, boîte à idées)
 - Valider les livrables avant mise en production
+- **Fin de landing** : s'assurer que la checklist « fin de landing » est accomplie (repo au nom de la société, git init, premier commit, push, déploiement OK, page vérifiée) ; chaque membre en charge (DevOps, Dev Django, Designer) s'en assure pour sa part. Voir `procedure-fin-landing-repo-deploiement.md`.
 
 **Outils** :
 - `docs/TODO.md`, `docs/boite-a-idees.md`
 - `docs/logs/log-projet.md`
+- **Fin de landing** : `docs/base-de-connaissances/procedure-fin-landing-repo-deploiement.md`
 - Veille : Dribbble, Awwwards, Product Hunt, TailwindUI
 
 ---
@@ -56,6 +58,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Responsabilités** :
 - Développer le **frontend Next.js/React** des landing pages (stack standard — voir `stack-frontend-nextjs-react.md`) ; déploiement Vercel
+- **Fin de landing** : fournir le code de la landing ; s'assurer avec DevOps que le repo au nom de la société et le déploiement sont faits (voir `procedure-fin-landing-repo-deploiement.md`).
 - Développer les modèles Django (apps.landing_pages, apps.campaigns)
 - Créer les vues, URLs, serializers
 - Implémenter les tâches Celery (enrichissement, génération)
@@ -182,6 +185,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Responsabilités** :
 - **Initialiser Git et configurer les remotes** (GitHub pilote = `origin`, GitLab miroir = `gitlab`) — voir `docs/base-de-connaissances/git-remotes-github-gitlab.md`
+- **Fin de landing (obligatoire)** : **c’est aux agents DevOps et Architecte réseau de se charger de ça et de tout créer et actionner** — à la fin de chaque landing : initialiser le dépôt Git (si besoin), premier commit, push vers un nouveau repo au nom de la société ; configurer le déploiement (ex. Vercel) ; s'assurer que le déploiement se fait et que la page fonctionne. Voir `procedure-fin-landing-repo-deploiement.md`. Architecte réseau (ou rôle assumé par DevOps) collabore avec DevOps pour tout créer et actionner.
 - Gérer les conteneurs Docker (build, orchestration)
 - Configurer les pipelines CI/CD (GitHub Actions, GitLab CI)
 - Déployer sur **Vercel** (frontend Next.js — voir `stack-frontend-nextjs-react.md`) et Contabo (back Django)
@@ -191,6 +195,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Outils** :
 - `docker-compose.yml`, `.env`, Makefile
+- **Fin de landing** : `docs/base-de-connaissances/procedure-fin-landing-repo-deploiement.md`
 - GitHub Actions, Vercel CLI, SSH (Contabo)
 
 **Dépendances** :
@@ -289,6 +294,8 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 | **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I | I | I |
 | **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I | C | I |
 | **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Fin de landing : initialiser repo au nom de la société (git init, 1er commit, push)** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Fin de landing : vérifier déploiement et page OK** | I | A | I | I | I | I | **R** | I | I | I | I |
 | **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I | I | I |
 | **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** | I | I |
 | **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** | I | I |
@@ -353,12 +360,14 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 2. Tester l'UX (mobile, desktop)
 3. Valider les contenus (orthographe, SEO)
 4. Approuver pour déploiement
+5. **Fin de landing** : s'assurer que la checklist repo + déploiement sera exécutée (voir `procedure-fin-landing-repo-deploiement.md`)
 
-### Phase 5 : Déploiement (DevOps)
-1. Pousser sur staging (Vercel/Contabo)
-2. Tester en environnement de prod
-3. Déployer en production
-4. Monitorer les logs et performances
+### Phase 5 : Déploiement et fin de landing (DevOps)
+1. **Fin de landing (obligatoire)** : créer un **nouveau repo au nom de la société** (ex. `landing-p4s-archi`) ; **git init** (si besoin), **premier commit**, **push** vers ce repo. S'assurer que le **déploiement se fait** (ex. Vercel) et que la **page fonctionne** (URL accessible, pas d'erreur). Chaque membre en charge s'en assure. Voir `procedure-fin-landing-repo-deploiement.md`.
+2. Pousser sur staging (Vercel/Contabo)
+3. Tester en environnement de prod
+4. Déployer en production
+5. Vérifier que la page s'affiche correctement ; monitorer les logs et performances
 
 ### Phase 6 : Analyse (Data Analyst + Chef de Projet)
 1. Analyser les KPIs (taux de conversion, temps de chargement)

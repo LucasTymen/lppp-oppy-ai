@@ -204,6 +204,8 @@ help:
 	@echo "  make shell        — Shell Django"
 	@echo "  make createsuperuser — Créer un superutilisateur"
 	@echo "  make landing-p4s  — Créer/mettre à jour la landing P4S en base (évite 404 /p/p4s-archi/)"
+	@echo "  make push-both    — Push sur origin main + gitlab main (WSL/Git Bash)"
+	@echo "  make commit-push MSG=\"...\" — add ., commit, push sur les deux remotes"
 	@echo "  make static       — Collecter les fichiers statiques"
 	@echo "  make check        — Vérifier la config Django"
 	@echo ""
@@ -479,3 +481,26 @@ clean:
 	@python -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]" 2>/dev/null || true
 	@python -Bc "import pathlib, shutil; p=pathlib.Path('.pytest_cache'); shutil.rmtree(p) if p.exists() else None" 2>/dev/null || true
 	@echo "Nettoyage terminé."
+
+# =============================================================================
+# Git — commit et push sur les deux remotes (origin + gitlab)
+# =============================================================================
+# À lancer depuis WSL ou Git Bash (git dans le PATH).
+# Exemple : make commit-push MSG="docs: DevOps + Architecte réseau, procédure fin de landing"
+# Ou : git add . && git commit -m "ton message" && make push-both
+
+.PHONY: push-both commit-push
+
+push-both:
+	git push origin main
+	git push gitlab main
+	@echo "$(GREEN)✅ Push origin main et gitlab main OK$(NC)"
+
+# commit-push — add ., commit avec MSG=..., push origin + gitlab
+# Usage : make commit-push MSG="docs: description du commit"
+commit-push:
+	@if [ -z "$(MSG)" ]; then echo "$(RED)Usage : make commit-push MSG=\"ton message\"$(NC)"; exit 1; fi
+	git add .
+	git status
+	git commit -m "$(MSG)"
+	$(MAKE) push-both

@@ -50,6 +50,15 @@ git push -u gitlab main
 
 Vérifier avant le commit qu’**aucun fichier sensible** n’est ajouté (`.env`, `secrets/`, etc.) — le `.gitignore` doit les exclure. En cas d’erreur sur GitLab (conflit), s’assurer que le dépôt GitLab est bien vide (sans README créé par défaut).
 
+**Commit + push sur les deux remotes (à lancer depuis WSL ou Git Bash)** :
+```bash
+git add .
+git status
+git commit -m "docs: DevOps + Architecte réseau, procédure fin de landing, fiche P4S"
+make push-both
+```
+Ou en une commande : `make commit-push MSG="docs: description du commit"`.
+
 ---
 
 ## 1. Stratégie

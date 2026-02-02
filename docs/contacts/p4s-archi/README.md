@@ -38,4 +38,21 @@ Les exports CSV utilisés pour générer le rapport SEO sont actuellement dans l
 
 **Landing complète (Qui je suis, rapport, services, liens)** : consulter l’URL **Django** `/p/p4s-archi/` (backend LPPP). Après toute modif du JSON, lancer `python manage.py create_landing_p4s --update` pour voir les changements.
 
+---
+
+## Repo landing P4S (déploiement)
+
+**Nom du repo** : **LPPP_P4S-Architecture** (au nom de la société, pour retrouver facilement).
+
+| Plateforme | URL | Remarque |
+|------------|-----|----------|
+| **GitHub** | `https://github.com/LucasTymen/LPPP_P4S-Architecture` | Repo créé **sans README** (prêt pour premier push). |
+| **GitLab** | `https://gitlab.com/LucasTymen/lppp_p4s-architecture` | Repo créé **sans README** (prêt pour premier push). |
+
+**Avis à l’équipe technique (déploiement)** : les repos **LPPP_P4S-Architecture** ont été créés sur GitHub et sur GitLab, **sans README**. Prochaines étapes (voir `procedure-fin-landing-repo-deploiement.md`) : initialiser le dépôt local (ou copier le code de la landing P4S dans un dossier dédié), premier commit, push vers `origin` (GitHub) et vers `gitlab` (GitLab si miroir configuré), configurer le déploiement Vercel sur ce repo, vérifier que le déploiement se fait et que la page fonctionne.
+
+**Vercel (import du repo LPPP_P4S-Architecture)** :
+- Projet Vercel : **lppp-p4-s-architecture** — [Overview](https://vercel.com/lucas-tymens-projects/lppp-p4-s-architecture). Si « No Production Deployment » : connecter le repo (Settings → Git → Connect) puis **pousser du code sur la branche `main`** ; Vercel déploiera au push.
+- Si le repo contient un dossier **`frontend/`** (monorepo) : **Root Directory** = `frontend`, **Framework Preset** = **Next.js**. Sinon build à la racine → échec ou 404.
+
 **Règle** : un contact = un dossier — `docs/base-de-connaissances/organisation-donnees-contacts.md`.
