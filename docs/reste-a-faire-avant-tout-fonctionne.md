@@ -11,6 +11,7 @@ Document de synthèse (Chef de Projet / Orchestrateur). Mis à jour à partir du
 | Reste à faire | Qui | Référence |
 |---------------|-----|-----------|
 | **Git init + remotes** : **fait** (GitHub origin + GitLab gitlab, SSH SquidResearch). (GitHub, GitLab) : fait (voir log-projet) par l’utilisateur. | — | `git-remotes-github-gitlab.md` |
+| **Projet ne démarre plus** : diagnostic et redémarrage — checklist, causes fréquentes, Option A (Docker) / Option B (runserver). Voir les rendus des landings. | DevOps, Dev Django | **`demarrage-projet-equipe-tech.md`** |
 | **Vérifier** : admin et /essais/ accessibles (Docker web sur 127.0.0.1:8000 ou runserver 8080 en dépannage), migrations à jour, pas de régression. | DevOps, Dev Django | `lancement-docker-projet.md` |
 
 ---

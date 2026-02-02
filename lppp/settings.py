@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -100,6 +101,9 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Connexion : redirection vers l'admin (pas de page /accounts/login/)
+LOGIN_URL = "/admin/login/"
 
 # Redis (broker + app data : résultats partiels enrichissement)
 REDIS_URL = env("REDIS_URL", default="redis://redis:6379/0")

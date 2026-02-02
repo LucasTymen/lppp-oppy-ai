@@ -38,6 +38,7 @@ Toute commande opérationnelle passe par `make` — les agents et l'utilisateur 
 
 | Commande | Rôle | Description | Pilote |
 |----------|------|-------------|--------|
+| `make start` | **Lancer tout en une commande** | Démarrage séquentiel, attente Django, migrate, health-check, URLs. Usage quotidien recommandé. Pas de venv requis. | DevOps |
 | `make go` | **Démarrage à froid complet** | down -v, build, démarrage séquentiel (db→redis→web→celery→n8n,flowise), attente Django, migrate, collectstatic, health-check, affichage URLs | DevOps |
 | `make relance` | Redémarrer sans rebuild | Redémarrage séquentiel des services (containers déjà construits) | DevOps |
 | `make full-setup` | Configuration complète initiale | build + up + migrate + static + health-check | DevOps |

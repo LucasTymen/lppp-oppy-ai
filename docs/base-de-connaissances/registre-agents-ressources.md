@@ -152,6 +152,10 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 | `info-automatizer-pour-equipe.md` | Briefing : qui est l’Automatizer, quand le solliciter, quelles ressources (pour Growth, DevOps, Dev Django, Pentester, Chef de Projet, Data Analyst) | Growth, DevOps, Dev Django, Pentester, Chef de Projet, Data Analyst |
 | `intelligence-metier-algorithmes.md` | Scoring, qualité, matching — où brancher, stratégie d'implantation | Data Analyst, Dev Django |
 | `stack-frontend-nextjs-react.md` | **Stack frontend standard** : Next.js + React pour landings, effet waouh, déploiement Vercel — à appliquer systématiquement | Designer, Dev Django, DevOps |
+| `demarrage-projet-equipe-tech.md` | Checklist et diagnostic pour faire redémarrer le projet (Docker / Option B), voir les rendus des landings | DevOps, Dev Django |
+| `classification-landings-secteur-categorie.md` | Classer les landings par secteur et catégorie ; liste avec filtres pour voir les rendus par type | Chef de Projet, Dev Django, Designer |
+| `schema-landing-proposition.md` | **Structure Full-Stack Conversion** : champs content_json (hero, pain points, solution, services onglets, expertise stack, mission flash, why GE), template proposition, mobile-first, Google Fonts | Chef de Projet, Dev Django, Rédacteur, Designer |
+| `css-vampire.md` | **CSS Vampire** : extraction du style du site cible (polices, couleurs, logo, fond) ; commande `css_vampire <url> [--slug] [--apply]` ; thème injecté dans content_json | Dev Django, Designer |
 | `formules-et-algorithmes-reference.md` | **Spec canonique** : formules mathématiques et algorithmes (score prospect, complétude, matching, normalisation) — s'en inspirer pour implémenter | Data Analyst (logique métier + algorithmes), Dev Django |
 | `osint_sources.py`, `proxy_manager.py` | Contrat de données, stratégies proxy | Expert Google Dorks, Pentester |
 | Tâches Celery : `enrich_prospect_decomposed`, `single_source`, `merge_and_save` | Flux décomposé recommandé | Pentester, orchestration |

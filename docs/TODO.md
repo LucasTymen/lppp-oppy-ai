@@ -15,7 +15,7 @@ Liste de tâches (maintenue par le chef de projet / agent pilote).
 | À faire  | **Lancement stack** : DevOps + Dev Django + Pentester — réparer et lancer conteneur, backend, front, admin (localhost/127.0.0.1:8080 ou 8000) ; segmentation `2025-01-30-lancement-docker-projet.md` | Haute |
 | À faire  | **Premier rapport SEO P4S-archi** : Expert SEO — rapport à partir des 5 CSV Screaming Frog + analyse sémantique ; livrable `docs/contacts/p4s-archi/rapport-seo.md` | Haute |
 | À faire  | **Étude Growth P4S-archi** : Growth — étude poussée KPIs + funnel d'acquisition ; livrable `docs/contacts/p4s-archi/etude-growth-funnel-kpis.md` | Haute |
-| À faire  | **Première landing P4S-archi** : Chef de Projet, Rédacteur, Designer, Dev Django, etc. — première landing ; segmentation `2025-01-30-premier-rapport-seo-landing-p4s-archi.md` | Haute |
+| Fait     | **Template proposition + landing P4S** : structure Full-Stack Conversion (hero, pain points, solution, services onglets, expertise stack, mission flash, why GE), CSS Vampire, Google Fonts, liste landings par secteur/société ; commande create_landing_p4s ; doc schema-landing-proposition.md, css-vampire.md | — |
 | —        | *(Git init : voir tâche « Git init + premier commit + push » en tête)* | — |
 | À faire  | Relance événements : template landing relance salon + structure content_json (hero, CTA, positionnement freelance/alternant) | Haute |
 | À faire  | Interface landingsgenerator : app Django /essais/, mobile-first, dark + switch clair/sombre, premier écran présentation relance salon | Haute |

@@ -8,19 +8,12 @@
 
 ## content_json
 
-À copier dans le champ `content_json` de la landing (ou dans un fichier JSON dédié selon l’implémentation).
+Schéma template **proposition** : `docs/base-de-connaissances/schema-landing-proposition.md`.  
+Fichier source : `landing-proposition-joel.json`.
 
-```json
-{
-  "hero_title": "Joël, suite à notre échange — ce que je peux faire pour P4S",
-  "hero_subtitle": "Pour P4S — Joël",
-  "cta_text": "Reprendre la conversation",
-  "cta_url": "mailto:contact@p4s-archi.com?subject=Suite à notre échange — proposition P4S",
-  "positionnement": "Je me positionne en Growth Engineer : acquisition B2B, automatisation des pipelines de données et évangélisation. J’ai une idée assez précise de ce que P4S apporte — une techno disruptive, souveraine, avec un vrai gap par rapport aux solutions logicielles — et je vois bien où je pourrais vous être utile.",
-  "activite_pain_points": "Votre force, c’est le produit : SOFTLESS, les SF-106, la latence, le Made in France. Le défi, à mon sens, c’est moins la techno que la diffusion : identifier les bons décideurs (industrie, médical, gouvernement), les sensibiliser aux incidents cyber récents qui les concernent, et automatiser une partie de la veille et du ciblage. C’est exactement le type de travail sur lequel je peux embarquer.",
-  "produit_commercial": "J’ai préparé une petite étude (concurrence, PESTEL, SWOT, Porter) pour cadrer le contexte. Si l’angle vous parle, je serais ravi d’en discuter autour d’un café ou d’un appel — sans engagement, juste pour voir si on peut avancer ensemble sur la partie acquisition et évangélisation."
-}
-```
+- **page_title** : titre de la page (pas la phrase d’accroche).
+- **intro** : phrase d’accroche comme texte d’intro.
+- **icebreaker** : à personnaliser selon ton contexte de prospection (événement, échange, post, etc.).
 
 ---
 

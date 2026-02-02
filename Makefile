@@ -24,7 +24,7 @@ RED    = \033[0;31m
 CYAN   = \033[0;36m
 NC     = \033[0m
 
-.PHONY: help go relance full-setup services-urls info backup restore backup-clean
+.PHONY: help start go relance full-setup services-urls info backup restore backup-clean
 .PHONY: up down stop restart full build build-no-cache pull update
 .PHONY: migrate migrate-wait makemigrations showmigrations dbshell
 .PHONY: shell createsuperuser static check
@@ -78,6 +78,19 @@ go:
 	@echo "$(GREEN)🎉 DÉMARRAGE TERMINÉ !$(NC)"
 	@$(MAKE) services-urls
 
+# start — Lancer tout le stack en une commande (démarrer ou redémarrer)
+# Usage quotidien recommandé. Pas de venv requis : tout tourne dans Docker.
+start: docker-up-seq
+	@echo "$(CYAN)⏳ Attente que Django soit prêt...$(NC)"
+	@until $(DOCKER) exec web python manage.py check >/dev/null 2>&1; do \
+		echo "  Django pas encore prêt, attente 5s..."; sleep 5; \
+	done
+	@echo "$(GREEN)✅ Django prêt$(NC)"
+	@$(MAKE) migrate
+	@$(MAKE) health-check
+	@echo ""
+	@$(MAKE) services-urls
+
 # relance — Redémarrer sans rebuild (containers déjà construits)
 relance: docker-restart-seq health-check
 	@echo "$(GREEN)✅ Application relancée$(NC)"
@@ -106,16 +119,15 @@ docker-up-seq:
 	$(DOCKER) up -d n8n flowise
 	@echo "$(GREEN)✅ Services démarrés$(NC)"
 
-# Redémarrage séquentiel
+# Redémarrage séquentiel (up -d redémarre aussi les conteneurs Exited)
 docker-restart-seq:
-	@echo "$(CYAN)🔄 Redémarrage séquentiel...$(NC)"
-	-$(DOCKER) restart db redis 2>/dev/null || $(DOCKER) up -d db redis
+	@echo "$(CYAN)🔄 Démarrage/redémarrage séquentiel...$(NC)"
+	$(DOCKER) up -d db redis
 	@sleep 8
-	-$(DOCKER) restart web 2>/dev/null || $(DOCKER) up -d web
+	$(DOCKER) up -d web
 	@sleep 12
-	-$(DOCKER) restart celery celery-beat 2>/dev/null || $(DOCKER) up -d celery celery-beat
-	-$(DOCKER) restart n8n flowise 2>/dev/null || $(DOCKER) up -d n8n flowise
-	@echo "$(GREEN)✅ Services redémarrés$(NC)"
+	$(DOCKER) up -d celery celery-beat n8n flowise
+	@echo "$(GREEN)✅ Services démarrés$(NC)"
 
 # =============================================================================
 # Aide et informations (stratégie SquidResearch)
@@ -145,15 +157,17 @@ info:
 help:
 	@echo "$(GREEN)$(PROJECT_NAME) — Landings Pages Pour Prospections$(NC)"
 	@echo ""
-	@echo "$(CYAN)🚀 Commandes principales (stratégie SquidResearch):$(NC)"
-	@echo "  make go           — DÉMARRAGE À FROID COMPLET (recommandé première fois)"
+	@echo "$(CYAN)🚀 Commandes principales:$(NC)"
+	@echo "  make start        — LANCER TOUT en une commande (usage quotidien, pas de venv)"
+	@echo "  make go           — DÉMARRAGE À FROID COMPLET (première fois ou reset)"
 	@echo "  make relance      — Redémarrer sans rebuild"
 	@echo "  make full-setup   — Configuration complète initiale"
 	@echo "  make services-urls — Afficher les URLs des services"
 	@echo "  make info         — Informations du projet"
 	@echo ""
 	@echo "$(CYAN)Lancement et arrêt:$(NC)"
-	@echo "  make up           — Lancer le stack"
+	@echo "  make start        — Lancer tout (séquentiel, attente Django, migrate)"
+	@echo "  make up           — Lancer le stack (sans attente)"
 	@echo "  make down         — Arrêter le stack"
 	@echo "  make stop         — Arrêter sans supprimer"
 	@echo "  make restart      — Redémarrer"

@@ -41,10 +41,10 @@ Idéal pour avoir PostgreSQL, Redis, Celery, n8n, Flowise et tester l’admin co
 copy .env.example .env
 # Éditer .env si besoin (SECRET_KEY, mots de passe).
 
-# 2. Construire et lancer les conteneurs (Linux/WSL : make go pour démarrage complet)
-make build
-make up
-# Ou : make go   (démarrage à froid, inclut migrate + collectstatic)
+# 2. Lancer les conteneurs
+make start
+# Ou : make go   (démarrage à froid complet, inclut build + migrate + collectstatic)
+# make start = une seule commande pour tout lancer (pas de venv requis)
 
 # 3. Les migrations sont appliquées au démarrage du service web.
 # Créer un superutilisateur pour l’admin :
@@ -123,9 +123,11 @@ Tu peux créer une campagne, un prospect, puis une landing page associée pour p
 
 ---
 
-## 5. Dépannage : localhost / admin ne répond pas (ERR_EMPTY_RESPONSE)
+## 5. Dépannage : localhost / admin ne répond pas (connexion réinitialisée, ERR_EMPTY_RESPONSE)
 
-**Sous Windows natif** (hors WSL), le port forward Docker vers le conteneur web peut provoquer une connexion réinitialisée (ERR_EMPTY_RESPONSE) alors que Django répond correctement dans le conteneur.
+**Environnement virtuel** : avec Docker (`make start`, `make go`), aucun venv n'est requis — tout tourne dans les conteneurs. Le venv sert uniquement à l'Option B (runserver local).
+
+**Sous Windows** (Docker Desktop), le port forward vers le conteneur web peut provoquer une **connexion réinitialisée** (« La connexion avec le serveur a été réinitialisée ») alors que Django répond dans le conteneur.
 
 **Solution recommandée** : utiliser l’**Option B (dev local)** pour accéder à l’admin et à /essais/ depuis le navigateur :
 

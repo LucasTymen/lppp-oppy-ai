@@ -3,19 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing pages — Prospection</title>
+    <title>Toutes les landing pages — par secteur et société</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 1rem; background: #0d0d0d; color: #e6e6e6; }
+        a { color: #4a9eff; }
+        .filters { margin-bottom: 1rem; padding: 0.75rem; background: #1a1a1a; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        .filters label { margin-right: 0.25rem; }
+        .filters select { padding: 0.35rem; border-radius: 4px; background: #2a2a2a; color: #e6e6e6; border: 1px solid #444; }
+        .filters button { padding: 0.35rem 0.75rem; background: #4a9eff; color: #0d0d0d; border: none; border-radius: 4px; cursor: pointer; }
+        .sector-block { margin-bottom: 1.5rem; }
+        .sector-title { font-size: 1.1rem; font-weight: 600; color: #4a9eff; margin-bottom: 0.5rem; padding-bottom: 0.25rem; border-bottom: 1px solid #2a2a2a; }
+        .page-list { list-style: none; padding: 0; margin: 0; }
+        .page-list li { padding: 0.5rem 0; padding-left: 1rem; border-bottom: 1px solid #1a1a1a; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        .page-list li:hover { background: #1a1a1a; }
+        .company { font-weight: 500; min-width: 10rem; }
+        .badge { font-size: 0.75rem; padding: 0.2rem 0.4rem; border-radius: 4px; background: #2a2a2a; }
+        .badge-draft { background: #3a2a2a; color: #e6a; }
+        .nav-links { margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid #2a2a2a; }
+    </style>
 </head>
 <body>
-    <h1>Landing pages</h1>
-    <ul>
-        {% for lp in landing_pages %}
-        <li>
-            <a href="{% url 'landing_public' lp.slug %}">{{ lp.title }}</a>
-            — {{ lp.prospect_company|default:"—" }} ({{ lp.is_published|yesno:"publiée,brouillon" }})
-        </li>
-        {% empty %}
-        <li>Aucune landing page.</li>
-        {% endfor %}
-    </ul>
+    <h1>Toutes les landing pages</h1>
+    <p>Classées par <strong>secteur</strong> puis <strong>nom de société</strong>.</p>
+    <form class="filters" method="get" action="">
+        <label for="sector">Secteur</label>
+        <select name="sector" id="sector">
+            <option value="">Tous</option>
+            {% for value, label in sector_choices %}
+            <option value="{{ value }}" {% if sector_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <label for="category">Catégorie</label>
+        <select name="category" id="category">
+            <option value="">Toutes</option>
+            {% for value, label in category_choices %}
+            <option value="{{ value }}" {% if category_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+
+    {% for block in sectors_with_pages %}
+    <section class="sector-block" aria-label="Secteur {{ block.sector_label }}">
+        <h2 class="sector-title">{{ block.sector_label }}</h2>
+        <ul class="page-list">
+            {% for lp in block.pages %}
+            <li>
+                <span class="company">{{ lp.prospect_company|default:"—" }}</span>
+                <a href="{% url 'landing_public' lp.slug %}">{% if lp.is_published %}Voir{% else %}Prévisualiser{% endif %} : {{ lp.title }}</a>
+                <span class="badge">{{ lp.get_category_display }}</span>
+                {% if not lp.is_published %}<span class="badge badge-draft">brouillon</span>{% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% empty %}
+    <p>Aucune landing page. Créez-en une depuis l’<a href="/admin/landing_pages/landingpage/">admin</a>.</p>
+    {% endfor %}
+
+    <p class="nav-links"><a href="/admin/">Admin</a> · <a href="/admin/landing_pages/landingpage/">Landing pages (admin)</a> · <a href="/essais/">Essais</a> · <a href="/campaigns/">Campagnes</a></p>
 </body>
 </html>

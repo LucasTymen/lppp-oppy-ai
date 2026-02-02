@@ -24,7 +24,7 @@
 
 | Route | Vue | Nom | Usage |
 |-------|-----|-----|--------|
-| `""` | `views.landing_list` | — | Liste des landing pages (racine `/`) |
+| `""` | `views.landing_list` | — | Liste des landing pages (racine `/`) avec filtres `?sector=` et `?category=` |
 | `p/<slug:slug>/` | `views.landing_public` | `landing_public` | Page publique d’une landing (`/p/<slug>/`) |
 
 ### `apps.landingsgenerator`

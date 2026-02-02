@@ -1,6 +1,7 @@
 # LandingsPagesPourProspections — Python deps (Django, Celery, scraping, données)
 Django>=5.0,<6
 gunicorn>=21,<23
+whitenoise>=6.6,<7
 psycopg[binary]>=3.1
 redis>=5.0
 celery[redis]>=5.3
