@@ -3,6 +3,8 @@
 **Pour** : Équipe technique (Dev Django, DevOps).  
 **Contexte** : Les modifications apportées aux landing pages (contenu, style, fond hero) ne s'affichent pas tant que le **contenu n'est pas en base** et que le **navigateur ne recharge pas sans cache**. Cette procédure est à appliquer immédiatement.
 
+**Important** : Cette procédure concerne **Django** (URL `/p/<slug>/`, ex. `/p/p4s-archi/`). La landing P4S sur **Vercel** est une **version Next.js** distincte, à l’URL `/p4s-archi` sur le domaine Vercel du projet ; voir `deploiement-vercel-frontend.md` (§ 6 « Où voir la landing P4S sur Vercel »).
+
 ---
 
 ## 1. Pourquoi les changements ne s'affichent pas
