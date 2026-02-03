@@ -1,0 +1,6 @@
+{
+  "name": "Assistant Maisons-Alfort",
+  "flowData": "{\"nodes\":[{\"id\":\"agent-1\",\"type\":\"Agent\",\"position\":{\"x\":400,\"y\":200},\"data\":{\"label\":\"Agent\"}},{\"id\":\"openai-1\",\"type\":\"ChatOpenAI\",\"position\":{\"x\":200,\"y\":400},\"data\":{\"label\":\"OpenAI\"}}],\"edges\":[{\"id\":\"e1\",\"source\":\"openai-1\",\"target\":\"agent-1\"}]}",
+  "deployed": false,
+  "type": "CHATFLOW"
+}

@@ -39,6 +39,7 @@ Catégorie = type d’offre / d’angle de la landing.
 | `relance-evenement` | Relance après salon / événement |
 | `proposition` | Proposition de mission (ex. Growth Engineer pour P4S) |
 | `lead-magnet` | Lead magnet, contenu à télécharger |
+| `lowtech` | Boîtes low tech / sans tech (prospection commando) |
 | `autre` | Autre |
 
 **Implémentation** : champ `category` (CharField avec choices), aligné avec les `template_key` existants (relance-evenement, default, etc.) si besoin.

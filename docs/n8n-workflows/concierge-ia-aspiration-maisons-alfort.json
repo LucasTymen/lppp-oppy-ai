@@ -1,0 +1,87 @@
+{
+  "name": "Concierge IA – Aspiration Maisons-Alfort",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "trigger-manual",
+      "name": "Déclencher",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "http://web:8000/api/concierge/scrape",
+        "options": {}
+      },
+      "id": "http-scrape",
+      "name": "Scrape Maisons-Alfort (Django)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300],
+      "notesInFlow": true,
+      "notes": "Docker LPPP : http://web:8000. En local (n8n hors Docker) : http://localhost:8000"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json;\nif (!body.pages || !Array.isArray(body.pages)) {\n  throw new Error('Scrape a échoué ou pages absent');\n}\nreturn [{ json: { pages: body.pages } }];"
+      },
+      "id": "code-build-body",
+      "name": "Préparer body save-content",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://web:8000/api/concierge/save-content",
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "http-save",
+      "name": "Save content (Django)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [900, 300],
+      "notesInFlow": true,
+      "notes": "Écrit data/flowise/maisons-alfort-contenu.txt"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://web:8000/api/concierge/push-to-flowise",
+        "options": {}
+      },
+      "id": "http-push",
+      "name": "Push to Flowise (Django)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1120, 300],
+      "notesInFlow": true,
+      "notes": "Pousse le fichier vers Document Store (FLOWISE_DOCUMENT_STORE_ID)"
+    }
+  ],
+  "connections": {
+    "Déclencher": {
+      "main": [[{"node": "Scrape Maisons-Alfort (Django)", "type": "main", "index": 0}]]
+    },
+    "Scrape Maisons-Alfort (Django)": {
+      "main": [[{"node": "Préparer body save-content", "type": "main", "index": 0}]]
+    },
+    "Préparer body save-content": {
+      "main": [[{"node": "Save content (Django)", "type": "main", "index": 0}]]
+    },
+    "Save content (Django)": {
+      "main": [[{"node": "Push to Flowise (Django)", "type": "main", "index": 0}]]
+    }
+  },
+  "meta": {"templateCredsSetupCompleted": true},
+  "settings": {},
+  "staticData": null,
+  "tags": []
+}

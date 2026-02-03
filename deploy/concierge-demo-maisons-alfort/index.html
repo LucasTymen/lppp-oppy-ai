@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assistant Ville de Maisons-Alfort</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --maisons-bleu: #0055a4;
+      --maisons-bleu-clair: #e8f1f8;
+      --maisons-blanc: #ffffff;
+      --maisons-texte: #1a1a1a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--maisons-blanc);
+      color: var(--maisons-texte);
+    }
+    .header {
+      background: var(--maisons-bleu);
+      color: var(--maisons-blanc);
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .logo {
+      width: 48px;
+      height: 48px;
+      background: var(--maisons-blanc);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: var(--maisons-bleu);
+      font-size: 1rem;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+    .intro {
+      background: var(--maisons-bleu-clair);
+      border-left: 4px solid var(--maisons-bleu);
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .chat-embed {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 500px;
+      background: #fafafa;
+    }
+    .chat-embed iframe {
+      width: 100%;
+      height: 600px;
+      border: 0;
+    }
+    .placeholder {
+      padding: 3rem 2rem;
+      text-align: center;
+      color: #666;
+      font-size: 0.95rem;
+    }
+    .placeholder code {
+      background: #eee;
+      padding: 0.2em 0.5em;
+      border-radius: 4px;
+      font-size: 0.9em;
+    }
+    .footer {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo" aria-hidden="true">MA</div>
+    <h1>Assistant Ville de Maisons-Alfort</h1>
+  </header>
+  <main class="container">
+    <p class="intro">
+      Posez votre question sur les démarches, horaires, déchets, état civil ou les services de la ville. 
+      L’assistant répond 24h/24 en s’appuyant uniquement sur les informations officielles du site de la mairie.
+    </p>
+    <div class="chat-embed" id="chat-embed">
+      <!-- Remplacer FLOWISE_CHAT_URL par l’URL du chatflow Flowise une fois configuré -->
+      <div class="placeholder" id="placeholder">
+        <p><strong>Démo Concierge IA</strong></p>
+        <p>Pour afficher le chat : configurez le Chatflow RAG dans Flowise, puis remplacez dans ce fichier (ou via une variable) l’URL du chat par <code>FLOWISE_CHAT_URL</code>.</p>
+        <p>Exemple : <code>https://votre-flowise.com/api/v1/prediction/xxx</code> ou l’URL d’embed fournie par Flowise.</p>
+      </div>
+      <!-- Décommenter et remplacer YOUR_FLOWISE_CHAT_EMBED_URL pour activer l’iframe :
+      <iframe src="YOUR_FLOWISE_CHAT_EMBED_URL" title="Chat assistant Maisons-Alfort"></iframe>
+      -->
+    </div>
+    <footer class="footer">
+      Prototype d’assistant intelligent — données issues du site officiel de la Ville de Maisons-Alfort.
+      Réduit les appels répétitifs à l’accueil et améliore le service aux Alfortais.
+    </footer>
+  </main>
+  <script>
+    // Option : charger l’URL du chat depuis une variable d’environnement ou un paramètre
+    // Ex. en déployant sur Vercel : env FLOWISE_CHAT_URL → injecté au build
+    var flowiseUrl = typeof FLOWISE_CHAT_URL !== 'undefined' ? FLOWISE_CHAT_URL : null;
+    if (flowiseUrl) {
+      document.getElementById('placeholder').innerHTML = '';
+      var iframe = document.createElement('iframe');
+      iframe.src = flowiseUrl;
+      iframe.title = 'Chat assistant Maisons-Alfort';
+      document.getElementById('chat-embed').appendChild(iframe);
+    }
+  </script>
+</body>
+</html>

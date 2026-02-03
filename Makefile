@@ -15,6 +15,8 @@ export PYTHONPATH
 # Variables (stratégie SquidResearch)
 PROJECT_NAME = LPPP
 DOCKER = docker compose
+# Windows : port 8080 au lieu de 8000 pour éviter ERR_CONNECTION_RESET (voir docker-compose.windows.yml)
+DOCKER_WIN = docker compose -f docker-compose.yml -f docker-compose.windows.yml
 SERVICES = db redis web celery celery-beat n8n flowise
 
 # Couleurs pour les messages (stratégie SquidResearch)
@@ -29,7 +31,7 @@ NC     = \033[0m
 .PHONY: migrate migrate-wait makemigrations showmigrations dbshell
 .PHONY: shell createsuperuser landing-p4s static check
 .PHONY: test test-docker lint lint-fix validate prod-check release-checklist
-.PHONY: ps logs logs-web logs-celery logs-n8n logs-flowise health health-check
+.PHONY: start-win services-urls-win ps logs logs-web logs-celery logs-n8n logs-flowise health health-check
 .PHONY: celery-restart celery-beat-restart
 .PHONY: venv venv-install runserver dev docker-up-seq ensure-env
 .PHONY: secret-key clean security-check
@@ -203,9 +205,11 @@ help:
 	@echo "$(CYAN)Django:$(NC)"
 	@echo "  make shell        — Shell Django"
 	@echo "  make createsuperuser — Créer un superutilisateur"
-	@echo "  make landing-p4s  — Créer/mettre à jour la landing P4S en base (évite 404 /p/p4s-archi/)"
+	@echo "  make landing-p4s     — Créer/mettre à jour la landing P4S en base (évite 404 /p/p4s-archi/)"
+	@echo "  make sync-landing-p4s — Copier landing-proposition-joel.json vers standalone + frontend"
 	@echo "  make push-both    — Push sur origin main + gitlab main (WSL/Git Bash)"
 	@echo "  make commit-push MSG=\"...\" — add ., commit, push sur les deux remotes"
+	@echo "  make push-standalone-p4s — push landing P4S vers LPPP_P4S-Architecture (GitHub + GitLab)"
 	@echo "  make static       — Collecter les fichiers statiques"
 	@echo "  make check        — Vérifier la config Django"
 	@echo ""
@@ -324,6 +328,13 @@ createsuperuser:
 landing-p4s:
 	$(DOCKER) exec web python manage.py create_landing_p4s --update --publish
 	@echo "$(GREEN)✅ Landing P4S à jour. URL : http://localhost:8000/p/p4s-archi/$(NC)"
+
+# Synchroniser le contenu P4S (source unique JSON) vers standalone et frontend Next.js
+# Après édition de docs/contacts/p4s-archi/landing-proposition-joel.json
+sync-landing-p4s:
+	@cp docs/contacts/p4s-archi/landing-proposition-joel.json deploy/standalone-p4s/src/content/landing.json && \
+	cp docs/contacts/p4s-archi/landing-proposition-joel.json frontend/src/app/p4s-archi/landing.json && \
+	echo "$(GREEN)✅ Contenu P4S synchronisé vers standalone + frontend$(NC)"
 
 static:
 	$(DOCKER) exec web python manage.py collectstatic --noinput
@@ -489,7 +500,7 @@ clean:
 # Exemple : make commit-push MSG="docs: DevOps + Architecte réseau, procédure fin de landing"
 # Ou : git add . && git commit -m "ton message" && make push-both
 
-.PHONY: push-both commit-push
+.PHONY: push-both commit-push push-standalone-p4s
 
 push-both:
 	git push origin main
@@ -504,3 +515,15 @@ commit-push:
 	git status
 	git commit -m "$(MSG)"
 	$(MAKE) push-both
+
+# push-standalone-p4s — clone LPPP_P4S-Architecture, copie deploy/standalone-p4s, commit, push GitHub + GitLab.
+# WSL/Git Bash. Vercel (lppp-p4-s-architecture) build au push. Autres landings : deploy/README-standalone.md.
+push-standalone-p4s:
+	@echo "$(CYAN)Push landing P4S standalone...$(NC)"
+	@rm -rf deploy/repo-p4s
+	@git clone git@github.com:LucasTymen/LPPP_P4S-Architecture.git deploy/repo-p4s
+	@cp -r deploy/standalone-p4s/. deploy/repo-p4s/
+	@cp deploy/standalone-p4s/.gitignore deploy/repo-p4s/ 2>/dev/null || true
+	@(cd deploy/repo-p4s && git add . && git status && git commit -m "Landing P4S standalone — page unique, pas de hub" && git push -u origin main)
+	@(cd deploy/repo-p4s && (git remote get-url gitlab 2>/dev/null && git push gitlab main || (git remote add gitlab git@gitlab.com:LucasTymen/lppp_p4s-architecture.git && git push -u gitlab main)))
+	@echo "$(GREEN)Push OK. Vercel (lppp-p4-s-architecture) va builder.$(NC)"

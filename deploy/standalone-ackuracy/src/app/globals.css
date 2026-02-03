@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0b12;
+  --foreground: #e6e6e6;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), "Inter", system-ui, sans-serif;
+}
+
+/* Hero ACKURACY: fond, parallax, overlay, scanlines */
+.hero-ackuracy {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-ackuracy__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://cdn.prod.website-files.com/6797c4b65039d9b51b032ae0/688c8ec596bba036056db3a1_DefaultCorrected.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+.hero-ackuracy__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 11, 18, 0.7) 0%,
+    rgba(10, 11, 18, 0.92) 100%
+  );
+}
+.hero-ackuracy__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+}
+.hero-ackuracy__content {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .hero-ackuracy__bg {
+    background-attachment: scroll;
+  }
+}
+
+/* Nav sticky (qualité P4S) */
+.nav-ackuracy {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(10, 11, 18, 0.92);
+  border-bottom: 1px solid rgba(229, 0, 65, 0.25);
+  backdrop-filter: blur(8px);
+}
+.nav-ackuracy__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+.nav-ackuracy__links a,
+.nav-ackuracy__links button {
+  color: #CCCCCC;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.nav-ackuracy__links a:hover,
+.nav-ackuracy__links button:hover {
+  color: #5a5eff;
+}
+.nav-ackuracy__cta {
+  color: #ff0055 !important;
+}
+.section-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #5a5eff;
+  margin-right: 0.5rem;
+}
+
+/* Popup contact (qualité P4S — fallback quand mailto ne fonctionne pas) */
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+.contact-modal-content {
+  max-width: 420px;
+  width: 100%;
+  background: #0a0b12;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 9999;
+}
+.contact-modal-content p {
+  margin: 0 0 1rem;
+  color: #e6e6e6;
+  line-height: 1.5;
+}
+.contact-modal-email {
+  font-weight: 600;
+  color: #5a5eff;
+  user-select: all;
+}
+.contact-modal-close {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #5a5eff;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  padding: 0;
+}
+.contact-modal-close:hover {
+  text-decoration: underline;
+}

@@ -4,6 +4,8 @@
 **Chef de Projet** : [Nom]  
 **Statut** : 🟡 En cours / 🟢 Terminé / 🔴 Bloqué
 
+**Règle Git (important, à faire tout le temps)** : En clôture de feature ou livraison, **penser à installer/vérifier Git** (WSL ou Git Bash si besoin) et faire **commit + push sur les deux remotes** (origin + gitlab) : `make push-both` ou `make commit-push MSG="..."`. Réf. `git-remotes-github-gitlab.md`.
+
 ---
 
 ## 📋 User Story
@@ -148,11 +150,13 @@
 - [ ] Tâche 2 : [ex: Déployer sur staging (Vercel/Contabo)]
 - [ ] Tâche 3 : [ex: Tester les performances (temps de chargement)]
 - [ ] Tâche 4 : [ex: Déployer en production]
+- [ ] **Tâche 5 (obligatoire)** : **Penser à installer/vérifier Git** (important — WSL ou Git Bash si besoin). **Commit + push sur les deux remotes** (origin + gitlab) : `make push-both` ou `make commit-push MSG="..."`. À faire **tout le temps** en clôture. Voir `git-remotes-github-gitlab.md`.
 
 **Livrables** :
 - URL de staging
 - Rapport de performances (Lighthouse)
 - URL de production
+- Code poussé sur GitHub (origin) et GitLab (gitlab)
 
 **Dépendances** :
 - Attend la validation du Chef de Projet
@@ -199,6 +203,7 @@
 8. **DevOps** → Déployer sur staging
 9. **Chef de Projet** → Valider sur staging
 10. **DevOps** → Déployer en production
+11. **DevOps / équipe** → **Vérifier Git installé** (WSL ou Git Bash) ; **commit + push sur origin et gitlab** (`make push-both` ou `make commit-push MSG="..."`). **À faire tout le temps** en clôture. Réf. `git-remotes-github-gitlab.md`.
 
 **Durée totale estimée** : [ex: 3-5 jours] (avec parallélisation)
 
@@ -221,6 +226,7 @@
 - [ ] Tests unitaires passent (couverture > 80%)
 - [ ] Pas de linter errors (flake8, black)
 - [ ] Documentation à jour (README, base de connaissances)
+- [ ] **Git (obligatoire)** : Git installé/vérifié ; **commit et push effectués sur origin et gitlab** (`make push-both`). À faire **tout le temps** en clôture. Réf. `git-remotes-github-gitlab.md`.
 - [ ] **Definition of Done** : tâche considérée « done » selon `docs/base-de-connaissances/definition-of-done.md` (livrable livré, pas de régression, doc à jour, validation Chef de Projet)
 
 ### Éditorial

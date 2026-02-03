@@ -42,13 +42,20 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - Arbitrer entre fonctionnalités (ROI vs risque)
 - Coordonner les agents (répartir les tâches)
 - Maintenir la documentation projet (TODO, logs, boîte à idées)
+- **S'assurer que les logs** (`log-projet.md`, `log-ia.md`) **et le registre erreurs/solutions** (`erreurs-et-solutions.md`) **sont mis à jour** après chaque correction ou session — pour éviter de reproduire les erreurs ; l'agent qui assiste le chef de projet peut effectuer ces mises à jour.
 - Valider les livrables avant mise en production
-- **Fin de landing** : s'assurer que la checklist « fin de landing » est accomplie (repo au nom de la société, git init, premier commit, push, déploiement OK, page vérifiée) ; chaque membre en charge (DevOps, Dev Django, Designer) s'en assure pour sa part. Voir `procedure-fin-landing-repo-deploiement.md`.
+- **Piloter la checklist pré-prod** : s'assurer qu'avant chaque push en prod la checklist qualité / intégrité / fonctionnel est passée (voir `checklist-pre-prod-integrite.md`) ; ne fait pas toutes les vérifications lui-même mais s'assure que chaque rôle (Dev Django, DevOps, Pentester) a validé sa branche ; arbitre en cas d'exception (hotfix, risque assumé).
+- **Veiller à ne pas produire de scripts ou de docs inutiles** : avec l'Orchestrateur (coordinateur), contrôler en temps réel qu'aucun agent ne crée de contenu « pour le plaisir d'écrire » ; tout script ou doc doit répondre à un besoin explicite (voir pilotage-agents.mdc § Ne pas écrire pour écrire).
+- **Fin de landing** : s'assurer que la checklist « fin de landing » est accomplie (repo au nom de la société, git init, premier commit, push, déploiement OK, page vérifiée) ; chaque membre en charge (DevOps, Dev Django, Designer) s'en assure pour sa part. Pour les landings Next.js : contenu depuis JSON contact, hero avec image/parallax/scanlines par défaut — voir `generation-landing-nextjs-contenu-hero.md` et `procedure-fin-landing-repo-deploiement.md`.
+- **Stratégie qualité contenu** : appliquer la barre « qualité P4S » pour tous les templates (contenu complet, pas de squelette, contact utilisable, rapport si applicable) ; **contenu 100 % dynamique** : jamais le même contenu pour deux contacts (un prospect = un jeu de données unique). Voir `strategie-qualite-contenu-landings.md` et checklist avant livraison.
 
 **Outils** :
 - `docs/TODO.md`, `docs/boite-a-idees.md`
-- `docs/logs/log-projet.md`
+- `docs/logs/log-projet.md`, `docs/logs/log-ia.md`
+- **Registre erreurs et solutions** : `docs/base-de-connaissances/erreurs-et-solutions.md` (consulter en cas de blocage ; mettre à jour après chaque correction)
+- **Stratégie qualité contenu landings** : `docs/base-de-connaissances/strategie-qualite-contenu-landings.md` (qualité P4S, contenu dynamique, checklist)
 - **Fin de landing** : `docs/base-de-connaissances/procedure-fin-landing-repo-deploiement.md`
+- **Checklist pré-prod** : `docs/base-de-connaissances/checklist-pre-prod-integrite.md` (qualité, intégrité, fonctionnel avant push prod ; Chef de Projet pilote)
 - Veille : Dribbble, Awwwards, Product Hunt, TailwindUI
 
 ---
@@ -83,6 +90,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Responsabilités** :
 - Créer les **composants et pages Next.js/React** des landing pages (stack frontend standard — voir `stack-frontend-nextjs-react.md`)
+- **Qualité contenu** : les templates doivent afficher toutes les sections à partir des données (content / content_json) ; pas de texte en dur lié à un prospect ; popup contact et liens conditionnels (rapport) intégrés. Voir `strategie-qualite-contenu-landings.md`.
 - **Thématisation prospect** : reprendre le style (CSS, polices, couleurs, thème) de la société contactée ; fallback charte graphique SquidResearch si trop moche (voir `docs/base-de-connaissances/theming-landing-prospect.md`)
 - Développer les composants React réutilisables (hero, CTA, formulaires) pour l'effet « waouh »
 - Implémenter le design system (couleurs, typographie, espacements)
@@ -156,29 +164,6 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ---
 
-### 5b. **Growth Analyst (concurrentiel, marché, funnel, Ads)**
-**Expertise** : Études concurrentielles, SWOT, funnel de conversion, positionnement concurrence, analyse du marché, KPIs et leviers de croissance ; performances des campagnes Ads, optimisation Ads, pistes pour de nouveaux marchés.
-
-**Responsabilités** :
-- Réaliser des **études concurrentielles** (acteurs, offres, positionnement, forces/faiblesses).
-- Produire des **analyses SWOT** (porteurs de SWOT) pour un prospect, un segment ou un marché.
-- Analyser le **funnel de conversion** (étapes, fuites, leviers d’optimisation) en lien avec le Growth.
-- Évaluer le **positionnement par rapport à la concurrence** et proposer des axes de différenciation.
-- Réaliser des **analyses de marché** (taille, tendances, segments, opportunités).
-- Définir et suivre les **KPIs** pertinents ; identifier les **leviers de croissance** (canaux, messages, automatisation).
-- **À terme** : analyser les **performances des campagnes Ads** (Google Ads, Meta, etc.), proposer des **optimisations** (enchères, créatifs, ciblage), et proposer des **pistes pour de nouveaux marchés** (segments, géographies, offres).
-
-**Outils** :
-- `docs/base-de-connaissances/growth-analyst-concurrentiel-marche-ads.md` — cadre et périmètre des livrables.
-- `docs/base-de-connaissances/growth-etude-funnel-kpis.md` — croisement avec l’étude funnel/KPIs du Growth.
-- `docs/contacts/<slug>/` — dossiers contact pour les livrables (études, SWOT, positionnement, Ads, nouveaux marchés).
-- `.cursor/rules/growth-analyst.mdc`
-
-**Dépendances** :
-- Placé sous la responsabilité du **Growth Hacker / OSINT** ; le Growth délègue les tâches du périmètre concurrentiel / marché / funnel / Ads / nouveaux marchés.
-- Collabore avec le **Chef de Projet** (validation, priorisation), le **Data Analyst** (données, scoring), l’**Expert SEO** (cohérence funnel et visibilité).
-
----
 
 ### 6. **DevOps / Infrastructure**
 **Expertise** : Docker, CI/CD, GitHub Actions, GitLab, Vercel, Contabo, secrets management
@@ -210,11 +195,11 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Responsabilités** :
 - Rédiger les contenus des landing pages (titres, CTA, body)
+- **Contenu 100 % dynamique** : un contact = un jeu de données unique ; ne jamais réutiliser le même texte pour deux profils/activités/personnes. Déposer chaque contenu dans `docs/contacts/<slug>/landing-proposition-*.json`. Voir `strategie-qualite-contenu-landings.md` et `organisation-donnees-contacts.md`.
 - **Adapter le discours et le dialogue** selon le contexte (poste, secteur, type de prospect) en s'appuyant sur les CV et segments (voir `docs/ressources-utilisateur/REGISTRE-RESSOURCES.md` et `docs/base-de-connaissances/fonction-premiere-et-segments-prospection.md`) — rôle « agent RH » pour le positionnement.
 - Appliquer les bonnes pratiques éditoriales (`docs/bonnes-pratiques.md`)
 - Optimiser pour le SEO (mots-clés, meta descriptions)
-- Personnaliser les contenus par prospect (variables dynamiques)
-- Créer des templates de contenu réutilisables
+- Créer des structures/types de contenu réutilisables (schéma des champs), tout en rédigeant un contenu **distinct** par contact
 - Valider l'orthographe et la grammaire
 
 **Outils** :
@@ -285,36 +270,38 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ## 📊 Matrice de responsabilité (RACI)
 
-| Tâche | Conseiller | Chef Projet | Dev Django | Designer | Data Analyst | Growth | DevOps | Rédacteur | Expert SEO | Automatizer | Growth Analyst |
-|-------|------------|-------------|------------|----------|--------------|--------|--------|-----------|------------|-------------|----------------|
+| Tâche | Conseiller | Chef Projet | Dev Django | Designer | Data Analyst | Growth | DevOps | Rédacteur | Expert SEO | Automatizer |
+|-------|------------|-------------|------------|----------|--------------|--------|--------|-----------|------------|-------------|
 | **Définir stratégie feature (accord avant code)** | **R** | A | C | C | C | C | I | I | I | I | I |
-| **Définir features prioritaires** | C | **R** | C | C | C | C | I | I | C | I | I |
+| **Définir features prioritaires** | C | **R** | C | C | C | C | I | I | C | I |
 | **Créer modèles Django** | I | I | **R** | I | C | I | I | I | I | I | I |
-| **Designer templates landing** | I | A | I | **R** | I | I | I | C | I | I | I |
-| **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I | I | I |
-| **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I | C | I |
-| **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I | I | I |
-| **Fin de landing : initialiser repo au nom de la société (git init, 1er commit, push)** | I | A | C | I | I | I | **R** | I | I | I | I |
-| **Fin de landing : vérifier déploiement et page OK** | I | A | I | I | I | I | **R** | I | I | I | I |
-| **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I | I | I |
-| **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** | I | I |
-| **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** | I | I |
-| **Recommandations visibilité robots / IA** | I | A | I | I | I | I | I | C | **R** | I | I |
-| **Intégrer / maintenir stack SEO sémantique (Python)** | I | A | C | I | I | I | C | I | **R** | I | I |
-| **Intégrer Tailwind CSS** | I | I | C | **R** | I | I | I | I | I | I | I |
-| **Créer tâches Celery enrichissement** | I | I | **R** | I | I | C | I | I | I | C | I |
-| **Développer / maintenir workflows N8N/Flowise/MCP** | I | A | C | I | I | C | C | I | I | **R** | I |
-| **Optimiser tokens et traces performances (workflows)** | I | A | I | I | C | C | I | I | I | **R** | I |
-| **Analyser taux de conversion** | I | A | I | I | **R** | C | I | C | I | I | C |
-| **Configurer CI/CD GitHub Actions** | I | A | C | I | I | I | **R** | I | I | I | I |
-| **Documenter base de connaissances** | C | **R** | C | C | C | C | C | C | C | C | C |
-| **Études concurrentielles** | I | A | I | I | C | C | I | I | I | I | **R** |
-| **Analyses SWOT (porteurs de SWOT)** | I | A | I | I | C | C | I | I | I | I | **R** |
-| **Analyse funnel conversion (concurrence/marché)** | I | A | I | I | C | C | I | I | I | I | **R** |
-| **Positionnement concurrence / analyse marché** | I | A | I | I | C | C | I | I | I | I | **R** |
-| **KPIs et leviers croissance (analyse)** | I | A | I | I | C | C | I | I | I | I | **R** |
-| **Performances campagnes Ads / optimisation** | I | A | I | I | C | C | I | I | I | I | **R** |
-| **Pistes nouveaux marchés** | I | A | I | I | C | C | I | I | I | I | **R** |
+| **Designer templates landing** | I | A | I | **R** | I | I | I | C | I | I |
+| **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I | I |
+| **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I | C |
+| **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I | I |
+| **Fin de landing : initialiser repo au nom de la société (git init, 1er commit, push)** | I | A | C | I | I | I | **R** | I | I | I |
+| **Fin de landing : vérifier déploiement et page OK** | I | A | I | I | I | I | **R** | I | I | I |
+| **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I | I |
+| **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** | I |
+| **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** | I |
+| **Recommandations visibilité robots / IA** | I | A | I | I | I | I | I | C | **R** | I |
+| **Intégrer / maintenir stack SEO sémantique (Python)** | I | A | C | I | I | I | C | I | **R** | I |
+| **Intégrer Tailwind CSS** | I | I | C | **R** | I | I | I | I | I | I |
+| **Créer tâches Celery enrichissement** | I | I | **R** | I | I | C | I | I | I | C |
+| **Développer / maintenir workflows N8N/Flowise/MCP** | I | A | C | I | I | C | C | I | I | **R** |
+| **Optimiser tokens et traces performances (workflows)** | I | A | I | I | C | C | I | I | I | **R** |
+| **Analyser taux de conversion** | I | A | I | I | **R** | C | I | C | I | I |
+| **Configurer CI/CD GitHub Actions** | I | A | C | I | I | I | **R** | I | I | I |
+| **Documenter base de connaissances** | C | **R** | C | C | C | C | C | C | C | C |
+| **Documenter erreurs et solutions / Mettre à jour logs après correction** | I | **R** | I | I | I | I | I | I | I | I | I |
+| **Checklist pré-prod / qualité et intégrité avant push prod (piloter)** | I | **A** | R (qualité) | I | I | I | R (intégrité + fonctionnel) | I | I | I |
+| **Études concurrentielles** | I | A | I | I | C | **R** | I | I | I | I |
+| **Analyses SWOT (porteurs de SWOT)** | I | A | I | I | C | **R** | I | I | I | I |
+| **Analyse funnel conversion (concurrence/marché)** | I | A | I | I | C | **R** | I | I | I | I |
+| **Positionnement concurrence / analyse marché** | I | A | I | I | C | **R** | I | I | I | I |
+| **KPIs et leviers croissance (analyse)** | I | A | I | I | C | **R** | I | I | I | I |
+| **Performances campagnes Ads / optimisation** | I | A | I | I | C | **R** | I | I | I | I |
+| **Pistes nouveaux marchés** | I | A | I | I | C | **R** | I | I | I | I |
 
 **Légende** :
 - **R** = Responsible (réalise la tâche)
@@ -343,8 +330,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 **Designer** → Crée les templates HTML/CSS
 **Développeur Django** → Développe les modèles et vues
 **Data Analyst** → Implémente les algorithmes de scoring
-**Growth Hacker** → Configure les pipelines OSINT ; délègue au **Growth Analyst** (concurrentiel, SWOT, marché, funnel, Ads, nouveaux marchés) les études et analyses de ce périmètre.
-**Growth Analyst** → Études concurrentielles, SWOT, funnel, positionnement, marché, KPIs/leviers, campagnes Ads, pistes nouveaux marchés (sous-assistant du Growth).
+**Growth Hacker** → Configure les pipelines OSINT ; délègue au **Growth Analyst** (sous-assistant, règle `growth-analyst.mdc`) les études concurrentielles, SWOT, marché, funnel, Ads, nouveaux marchés.
 **Automatizer** → Développe et maintient les workflows (N8N, Flowise, MCP, API Django) ; optimise les tokens et garde les traces de performances pour les rapports data-driven.
 **Rédacteur** → Rédige les contenus
 **Expert SEO / AI-GEO** → Analyse les stats fournies et produit le rapport lead magnet (SEO + visibilité IA) ; collabore avec Chef de Projet et Rédacteur pour l’intégration
@@ -434,6 +420,8 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - À chaque création d’agent ou de règle : mettre à jour le registre et aligner la stratégie (rôles, RACI, segmentations).
 - S’assurer que Chef de Projet, agent stratégie et DevOps ont partout les références vers les ressources à leur disposition.
 
+- **Veiller à ne pas produire de scripts ou de docs inutiles** : avec le Chef de Projet (responsable rédaction / validation), contrôler en temps réel qu'aucun agent ne crée de contenu « pour le plaisir d'écrire » ; tout fichier doit répondre à un besoin explicite (voir pilotage-agents.mdc § Ne pas écrire pour écrire).
+
 **Règle** : `.cursor/rules/orchestrateur.mdc`. Référence : `registre-agents-ressources.md` (section 5 : procédure d’ajout d’un nouvel agent).
 
 ---
@@ -451,6 +439,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 2. **Documenter les décisions** dans `docs/base-de-connaissances/decisions.md`
 3. **Mettre à jour le TODO** après chaque tâche terminée
 4. **Consulter les agents concernés** avant une décision impactante (voir matrice RACI)
+5. **Après une correction d’erreur** : mettre à jour les logs (`log-projet.md` ou `log-ia.md`) et le registre erreurs/solutions (`erreurs-et-solutions.md`) pour que l’équipe ne reproduise pas l’erreur ; l’agent qui assiste le chef de projet s’en charge, tout agent peut y contribuer.
 
 ---
 
@@ -462,4 +451,4 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ---
 
-*Document maintenu par le Chef de Projet. Dernière mise à jour : 2025-01-30. Ajout Expert SEO / AI-GEO (rôle 8), RACI et workflow.*
+*Document maintenu par le Chef de Projet. Dernière mise à jour : 2025-01-30. Annulation agent 5b Growth Analyst (standalone) — reste sous-assistant du Growth uniquement ; colonne RACI et section 5b supprimées.*

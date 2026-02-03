@@ -1,0 +1,35 @@
+{
+  "page_title": "Optimisation Growth pour GREEN COMMUNICATIONS",
+  "hero_headline": "Mariam, et si vos offres innovation convertissaient sans perdre de leads en route ?",
+  "hero_sub_headline": "Infrastructure Python + Stratégie Growth",
+  "hero_subtitle": "Pour GREEN COMMUNICATIONS — Mariam",
+  "intro": "Suite à notre échange au Cyber Show Paris — ce que je peux faire pour Green Communications.",
+  "icebreaker": "Nous nous sommes croisés au Cyber Show Paris. En tant que Growth Engineer, j'accompagne les acteurs innovation et télécom sur le SEO multi-local et l'optimisation du tunnel de conversion.",
+  "enjeux_lead": "Pour Green Communications, j'ai identifié des enjeux côté conversion :",
+  "pain_points": [
+    "Le tunnel de conversion des offres innovation peut perdre des leads qualifiés.",
+    "SEO multi-local et edge computing : visibilité sans sacrifier la performance.",
+    "Aligner le discours Business Development avec les signaux d'achat réels."
+  ],
+  "solution_workflow": "J'automatise la mesure des frictions (parcours, formulaires, contenus) et je propose des livrables actionnables : audit du funnel, scripts de tracking, optimisation des pages clés. Livrable = code ou intégration à votre stack.",
+  "cta_text": "Reprendre la conversation",
+  "cta_url": "mailto:mariam.marechal@green-communications.fr?subject=Suite Cyber Show Paris — Green Communications",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Suite GREEN COMMUNICATIONS — Cyber Show Paris",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "rapport_url": "",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer orienté B2B : SEO, data, automatisation. Je livre du code (Python, Make, n8n) et des livrables actionnables — audits funnel, rapports SEO, scripts que vous gardez.",
+  "prestations_headline": "Des livrables concrets pour votre croissance innovation",
+  "services": [
+    {"title": "Audit tunnel de conversion", "description": "Analyse des frictions sur vos offres innovation et recommandations actionnables (parcours, formulaires, tracking)."},
+    {"title": "Rapport SEO", "description": "Visibilité multi-local et opportunités techniques (réseaux privés, edge)."},
+    {"title": "Échantillon de prospects", "description": "Liste qualifiée de décideurs innovation/télécom pour tester votre message."},
+    {"title": "Automatisations", "description": "Pipelines de données et workflows pour qualifier les leads sans effort manuel."}
+  ],
+  "expertise_stack": {"langages": ["Python", "Django"], "automation": ["Make", "n8n", "LangGraph"], "data": ["SQL", "Scrapy"]},
+  "mission_flash": "J'ai une approche concrète pour optimiser le tunnel de conversion des offres innovation. On en parle ?",
+  "why_growth_engineer": "Une agence vous vend des rapports. Moi : du code propriétaire que vous gardez, des scripts que vous lancez quand vous voulez."
+}

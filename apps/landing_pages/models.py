@@ -16,6 +16,7 @@ class LandingPage(models.Model):
         ("relance-evenement", "Relance événement"),
         ("proposition", "Proposition / Mission"),
         ("lead-magnet", "Lead magnet"),
+        ("lowtech", "Low tech / Sans tech"),
         ("autre", "Autre"),
     ]
 
@@ -32,6 +33,8 @@ class LandingPage(models.Model):
     template_key = models.CharField(max_length=80, default="default")
     content_json = models.JSONField(default=dict, blank=True)
     is_published = models.BooleanField(default=False)
+    # URL du déploiement standalone (Vercel) — pour traçage et console
+    deploy_url = models.URLField(max_length=500, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(

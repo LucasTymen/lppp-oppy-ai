@@ -1,0 +1,35 @@
+{
+  "page_title": "Optimisation Growth pour KNS",
+  "hero_headline": "Dorine, et si vos leads cyber se qualifiaient tout seuls avant d'arriver en commercial ?",
+  "hero_sub_headline": "Automatisation + Stratégie Growth Cyber",
+  "hero_subtitle": "Pour KNS — Dorine",
+  "intro": "Suite au Cyber Show Paris — ce que je peux faire pour KNS côté acquisition cyber.",
+  "icebreaker": "Nous nous sommes croisés au Cyber Show Paris. En tant que Growth Engineer, j'accompagne les acteurs cyber sur la qualification des leads et la simplification du parcours client (audit sécurité).",
+  "enjeux_lead": "Pour KNS, j'ai identifié des enjeux côté acquisition :",
+  "pain_points": [
+    "Qualifier automatiquement les leads cyber sans surcharger l'équipe commerciale.",
+    "Simplifier le parcours client (demande d'audit sécurité) pour réduire l'abandon.",
+    "Capturer les signaux d'achat (recrutement, NIS 2, incidents) au bon moment."
+  ],
+  "solution_workflow": "Je conçois des parcours et des formulaires intelligents (pré-qualification, scoring) et j'automatise la mise en forme des leads pour votre CRM. Livrable : flux n8n/Make + champs structurés.",
+  "cta_text": "Reprendre la conversation",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Suite KNS — Cyber Show Paris",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "rapport_url": "",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer orienté cyber et B2B : qualification de leads, automatisation, pipelines de données. Je livre du code et des workflows que vous gardez.",
+  "prestations_headline": "Des livrables concrets pour votre acquisition cyber",
+  "services": [
+    {"title": "Formulaires intelligents", "description": "Pré-qualification des leads (audit, typologie) et envoi structuré vers votre outil de vente."},
+    {"title": "Parcours client simplifié", "description": "Audit du parcours demande d'audit sécurité et recommandations pour réduire les frictions."},
+    {"title": "Échantillon de prospects", "description": "Liste qualifiée de décideurs cyber pour tester votre message."},
+    {"title": "Automatisations", "description": "Workflows de qualification et synchronisation CRM (n8n, Make)."}
+  ],
+  "expertise_stack": {"langages": ["Python"], "automation": ["n8n", "Make"], "data": ["SQL"]},
+  "mission_flash": "J'ai une approche concrète pour qualifier vos leads cyber sans effort manuel. On en parle ?",
+  "why_growth_engineer": "Une agence vous vend des rapports. Moi : des workflows que vous gardez et que vous pilotez."
+}

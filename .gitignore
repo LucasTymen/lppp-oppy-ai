@@ -1,6 +1,7 @@
 # LPPP — Ne jamais committer de données sensibles (cf. docs/base-de-connaissances/infra-devops.md)
 
 # ---- Secrets et credentials ----
+# .env : Django + Flowise (FLOWISE_USERNAME, FLOWISE_PASSWORD, FLOWISE_URL, FLOWISE_DOCUMENT_STORE_ID, etc.) — ne jamais committer
 .env
 .env.local
 .env.*.local
@@ -20,6 +21,15 @@ credentials/
 *.credentials
 *.token
 .vercel
+
+# ---- Flowise (contenu à ingérer : généré / scrapé, ne pas versionner) ----
+data/flowise/*.txt
+# Index FAISS (binaires, générés par Flowise) — un dossier par RAG sous data/flowise/faiss/<projet>
+data/flowise/faiss/*/
+
+# ---- Deploy (clones temporaires) ----
+deploy/repo-p4s/
+deploy/repo-*/
 
 # ---- Python ----
 __pycache__/

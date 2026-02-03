@@ -3,7 +3,7 @@
 **Pour** : Équipe technique (DevOps, Architecte réseau, Dev Django, Designer, Chef de Projet).  
 **Objectif** : À la fin de chaque landing page, s’assurer que le dépôt Git est initialisé et poussé vers un **nouveau repo au nom de la société**, puis que le déploiement a bien lieu et que la page fonctionne. **C’est aux agents DevOps et Architecte réseau de se charger de ça et de tout créer et actionner** (repo, git init, commit, push, configuration Vercel, vérification déploiement et page). Chaque membre en charge s’en assure.
 
-**Référence** : `strategie-landings-standalone-vs-hub.md`, `deploiement-vercel-frontend.md`, `agents-roles-responsabilites.md` (RACI, workflow Phase 4–5).
+**Référence** : `strategie-landings-standalone-vs-hub.md`, `deploiement-vercel-frontend.md`, `agents-roles-responsabilites.md` (RACI, workflow Phase 4–5). **Checklist pré-prod** : pour la qualité, l'intégrité et le fonctionnel avant tout push prod (y compris fin de landing), voir `checklist-pre-prod-integrite.md` (Chef de Projet pilote, Dev Django / DevOps / Pentester par branche).
 
 ---
 
@@ -13,7 +13,8 @@ Quand une landing page est **terminée** (contenu et design validés, prête à 
 
 1. **Repo au nom de la société** : le code de la landing doit être dans un dépôt Git **initialisé** avec un **premier commit** et **poussé sur un nouveau repo nommé après la société** (ex. `landing-p4s-archi`, `p4s-archi-landing`) pour pouvoir s’en rappeler et retrouver facilement le projet.
 2. **Déploiement et page OK** : le déploiement (ex. Vercel) doit être configuré et exécuté ; la page doit être **vérifiée** (URL accessible, contenu correct, pas d’erreur).
-3. **DevOps et Architecte réseau** : chargés de **tout créer et actionner** (création/config repo, git init, premier commit, push, configuration Vercel, vérification que le déploiement se fait et que la page fonctionne). Dev Django / Designer fournissent le code ; Chef de Projet valide la checklist.
+3. **Contenu et hero** : pour les landings Next.js, le contenu doit venir du JSON du contact (`docs/contacts/<slug>/landing-proposition-*.json` → `src/content/landing.json`) et la hero doit avoir image de fond (JSON ou défaut), **parallax** et **scanlines** actifs par défaut. Voir **`generation-landing-nextjs-contenu-hero.md`** — à appliquer dès la génération de la landing.
+4. **DevOps et Architecte réseau** : chargés de **tout créer et actionner** (création/config repo, git init, premier commit, push, configuration Vercel, vérification que le déploiement se fait et que la page fonctionne). Dev Django / Designer fournissent le code ; Chef de Projet valide la checklist.
 
 ---
 
@@ -53,12 +54,21 @@ Quand le Chef de Projet (ou l’utilisateur) **crée lui-même les repos** (GitH
 
 - **Documenter** dans la fiche contact (ex. `docs/contacts/p4s-archi/README.md`) : nom du repo, URLs GitHub et GitLab, et préciser « sans README ».
 - **Avis à l’équipe technique** : « Repos [nom] créés sur GitHub et GitLab, sans README. **C’est aux agents DevOps et Architecte réseau de se charger de ça et de tout créer et actionner** : git init (ou copier le code landing), premier commit, push vers origin (GitHub) et gitlab (GitLab), configurer Vercel sur ce repo, vérifier déploiement et page OK. » Voir checklist § 2 (étapes 2–8).
-- **Exemple (P4S)** : repo **LPPP_P4S-Architecture** — GitHub `LucasTymen/LPPP_P4S-Architecture`, GitLab `LucasTymen/lppp_p4s-architecture`, sans README. Fiche : `docs/contacts/p4s-archi/README.md` § « Repo landing P4S ».
+- **Exemple (P4S)** : repo **LPPP_P4S-Architecture** — GitHub `LucasTymen/LPPP_P4S-Architecture`, GitLab `LucasTymen/lppp_p4s-architecture`. Contenu préparé dans `deploy/standalone-p4s/` (app Next.js, page unique à `/`). Push effectué ; Vercel (lppp-p4-s-architecture) build au push. Pour refaire : `make push-standalone-p4s` (WSL/Git Bash) ou voir `deploy/README-standalone.md`. Fiche : `docs/contacts/p4s-archi/README.md` § « Repo landing P4S ».
 
 ---
 
-## 6. Références croisées
+## 6. Stratégie fluide Git + Vercel (réutilisable pour 10+ projets)
 
+Pour appliquer **sans erreur** à chaque nouveau projet : suivre la **checklist unique** dans **`strategie-deploiement-git-vercel.md`** (ordre des étapes, pièges à éviter, push sur les deux remotes, Root Directory Vercel). En cas de blocage (404, push oublié, conflit repo) : **`erreurs-et-solutions.md`**.
+
+---
+
+## 7. Références croisées
+
+- **Génération landing (contenu + hero)** : `generation-landing-nextjs-contenu-hero.md` — contenu depuis JSON contact, hero image/parallax/scanlines par défaut ; à appliquer dès la création de la landing.
+- **Stratégie fluide** : `strategie-deploiement-git-vercel.md` — checklist par projet, réutilisable pour 1, 2, … 10+ landings.
+- **Erreurs connues** : `erreurs-et-solutions.md` (Vercel 404, push GitLab, conflit README).
 - **RACI** : `agents-roles-responsabilites.md` — tâches « Initialiser repo landing par société », « Vérifier déploiement et page OK » (DevOps R, Chef de Projet A).
 - **Workflow** : Phase 4 (Validation) et Phase 5 (Déploiement) incluent cette procédure ; Phase 5 étendue avec repo au nom de la société + vérification page.
 - **Règles** : `.cursor/rules/devops.mdc`, `.cursor/rules/pilotage-agents.mdc` — étape « fin de landing » rappelée.

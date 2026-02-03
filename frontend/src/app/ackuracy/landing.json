@@ -1,0 +1,58 @@
+{
+  "page_title": "Optimisation Growth pour ACKURACY",
+  "hero_background_url": "",
+  "hero_headline": "Alexis, et si vos leads RSSI tombaient directement dans votre CRM chaque matin ?",
+  "hero_sub_headline": "Infrastructure Python + Stratégie Growth",
+  "hero_subtitle": "Pour ACKURACY — Alexis",
+  "intro": "Alexis, suite à notre échange au Cyber Show Paris — ce que je peux faire pour ACKURACY",
+  "icebreaker": "Nous nous sommes croisés au Cyber Show Paris. J'ai analysé le funnel de prospection d'Ackuracy. En tant que Growth Engineer, j'ai codé un pool d'agents qui automatise le sourcing des RSSI « chauds » sur LinkedIn.",
+  "cta_text": "Reprendre la conversation",
+  "cta_url": "",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Suite ACKURACY — Cyber Show Paris",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "pain_points": [
+    "Scroller LinkedIn manuellement pour trouver des cibles Red Team est une perte de temps pour un Sales Senior.",
+    "Contacter le décideur au moment exact où il prévoit son prochain audit.",
+    "Être le premier à contacter le client avant les gros cabinets."
+  ],
+  "solution_workflow": "J'automatise la détection des signaux d'achat (recrutement RSSI, NIS 2, changements d'infra) et j'alimente votre CRM avec des leads qualifiés. Une logique Red / Blue / Purple Team appliquée à la croissance commerciale.",
+  "workflow_image_url": "",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer orienté acquisition B2B, avec un socle SEO + Paid + Data + automatisation. J'aide les boîtes cyber à transformer leur expertise technique en avantage commercial : pipelines de détection d'opportunités, gouvernance RACI intégrée au code.",
+  "services": [
+    {
+      "title": "Machine à leads RSSI",
+      "description": "Script Python qui extrait les profils ayant posté sur la cyber ces 30 derniers jours, enrichit les emails directs, et envoie les leads qualifiés dans votre CRM."
+    },
+    {
+      "title": "Rapport SEO",
+      "description": "Analyse de votre visibilité et opportunités techniques (diagnostic Screaming Frog disponible pour ACKURACY)."
+    },
+    {
+      "title": "Échantillon de prospects",
+      "description": "Liste de 50 leads Red Team qualifiés pour Ackuracy. On en parle ?"
+    },
+    {
+      "title": "Automatisations et workflows",
+      "description": "Pipelines OSINT, détection CVE liées aux technos de vos prospects, orchestration RACI des agents."
+    }
+  ],
+  "expertise_stack": {
+    "langages": ["Python", "Django"],
+    "automation": ["LangGraph", "CrewAI", "Make", "n8n"],
+    "data": ["Selenium", "Scrapy", "SQL"]
+  },
+  "mission_flash": "J'ai un prototype de workflow Python qui automatise le sourcing des RSSI « chauds ». Ça te dit de gagner 10h de prospection par semaine ? Je te montre ça quand tu veux.",
+  "why_growth_engineer": "Une agence vous vend du vent et des rapports PDF. Je vous vends du code propriétaire que vous gardez, une infrastructure qui tourne 24/7, et une logique de responsabilité (RACI) intégrée.",
+  "theme": {
+    "background": "#0a0b12",
+    "accent_red": "#e50041",
+    "accent_red_glow": "#ff0055",
+    "accent_blue": "#3a7bd5",
+    "accent_purple": "#5a5eff",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#CCCCCC"
+  }
+}

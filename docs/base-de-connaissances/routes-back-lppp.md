@@ -25,6 +25,7 @@
 | Route | Vue | Nom | Usage |
 |-------|-----|-----|--------|
 | `""` | `views.landing_list` | — | Liste des landing pages (racine `/`) avec filtres `?sector=` et `?category=` |
+| `console/` | `views.console_landings` | `console_landings` | Console landings : tableau URL Django + URL déployée (Vercel), filtres secteur/catégorie |
 | `p/<slug:slug>/` | `views.landing_public` | `landing_public` | Page publique d’une landing (`/p/<slug>/`) |
 
 | `p/<slug:slug>/rapport/` | `views.landing_rapport` | `landing_rapport` | Page « Consulter le rapport » : rendu Markdown depuis `docs/contacts/<slug>/rapport-complet*.md` |
@@ -51,6 +52,7 @@
 |-------|-----|-----|--------|
 | `enriched/enrich` | `EnrichWebhookView` | `enrich_webhook` | Webhook enrichissement (n8n/Flowise) |
 | `enriched/enrich-one` | `enrich_single_sync_view` | `enrich_one` | Enrichissement synchrone single |
+| `concierge/scrape` | `ConciergeScrapeView` | `concierge_scrape` | Scrape pages web pour RAG Concierge IA (GET = URLs défaut Maisons-Alfort, POST = `{"urls": ["..."]}`) |
 
 ---
 
@@ -60,12 +62,16 @@
 |--------------|---------|--------|
 | `/admin/` | GET | Admin Django |
 | `/` | GET | Liste des landing pages |
+| `/console/` | GET | Console landings (URL Django + URL déployée) |
 | `/p/<slug>/` | GET | Page publique landing |
 | `/essais/` | GET | Index essais (relance salon) |
 | `/campaigns/` | GET | Liste des campagnes (authentifié) |
 | `/campaigns/<slug>/` | GET | Détail campagne (authentifié) |
 | `/api/enriched/enrich` | POST | Webhook enrichissement |
 | `/api/enriched/enrich-one` | POST | Enrichissement un par un |
+| `/api/concierge/scrape` | GET, POST | Scrape pages (Concierge IA Maisons-Alfort) |
+| `/api/concierge/save-content` | POST | Écrit le contenu scrapé dans data/flowise (body: pages ou content) |
+| `/api/concierge/push-to-flowise` | POST | Pousse le fichier data/flowise vers Document Store Flowise |
 
 ---
 

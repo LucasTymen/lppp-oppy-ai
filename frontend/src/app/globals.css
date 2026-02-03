@@ -24,3 +24,52 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Hero ACKURACY: fond, parallax, overlay, scanlines */
+.hero-ackuracy {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.hero-ackuracy__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://cdn.prod.website-files.com/6797c4b65039d9b51b032ae0/688c8ec596bba036056db3a1_DefaultCorrected.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+.hero-ackuracy__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 11, 18, 0.7) 0%,
+    rgba(10, 11, 18, 0.92) 100%
+  );
+}
+.hero-ackuracy__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+}
+.hero-ackuracy__content {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .hero-ackuracy__bg {
+    background-attachment: scroll;
+  }
+}

@@ -41,6 +41,7 @@ Une **segmentation** (feature) est **done** quand :
 - **Template segmentation** : `docs/base-de-connaissances/segmentations/TEMPLATE.md` (critères de validation).
 - **Coordination** : `.cursor/rules/coordination-agents.mdc`.
 - **RACI** : `docs/base-de-connaissances/agents-roles-responsabilites.md`.
+- **Checklist pré-prod** : `docs/base-de-connaissances/checklist-pre-prod-integrite.md` (qualité, intégrité, fonctionnel avant push prod ; Chef de Projet pilote).
 
 ---
 

@@ -1,0 +1,2 @@
+# Scripts shell : toujours LF pour que bash (WSL/Git Bash) fonctionne
+deploy/*.sh text eol=lf

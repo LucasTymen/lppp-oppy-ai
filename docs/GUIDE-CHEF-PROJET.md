@@ -32,6 +32,9 @@ Vous êtes le **chef de projet** avec expertise en **UX/UI design** et **veille 
 - **`log-projet.md`** : Historique des actions et décisions
 - **`log-ia.md`** : Logs des interactions avec les agents IA
 
+### Registre erreurs et solutions
+- **`docs/base-de-connaissances/erreurs-et-solutions.md`** : Répertoire des erreurs rencontrées et des solutions trouvées — à consulter en cas de blocage ; à mettre à jour après chaque correction (vous ou l’agent qui vous assiste). Les autres agents peuvent y contribuer en ajoutant une entrée après résolution.
+
 ### Règles agents (`.cursor/rules/`)
 - **`pilotage-agents.mdc`** : Anti-hallucination, data-driven, éditorial
 - **`coordination-agents.mdc`** : Workflow de segmentation, RACI

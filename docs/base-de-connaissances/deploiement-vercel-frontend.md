@@ -3,6 +3,8 @@
 **Rôle** : Procédure pour déployer le frontend (landing pages) sur Vercel.  
 **Référence** : `stack-frontend-nextjs-react.md`, `infra-devops.md`.
 
+**Stratégie fluide (Git + Vercel, 10+ projets)** : pour une checklist unique sans erreur, voir **`strategie-deploiement-git-vercel.md`**. En cas de 404 ou de galère déploiement : **`erreurs-et-solutions.md`**.
+
 ---
 
 ## 1. Prérequis
@@ -32,7 +34,7 @@ Vercel utilise **Node 20** par défaut (ou via `engines` dans `package.json`). L
 2. Le frontend contient :
    - `frontend/` — app Next.js
    - `frontend/src/app/p4s-archi/page.tsx` — page P4S
-   - `vercel.json` (racine) — `rootDirectory: "frontend"` pour le monorepo
+   - **Root Directory** : à configurer dans **Vercel Dashboard** → Project Settings → Build and Deployment → **Root Directory** = `frontend` (le schéma Vercel n’accepte plus `rootDirectory` dans `vercel.json`).
 
 ---
 
@@ -98,6 +100,10 @@ C’est en général parce que Vercel build depuis la **racine du dépôt** au l
 - **Route** : la page est définie par `frontend/src/app/p4s-archi/page.tsx` ; Next.js expose automatiquement `/p4s-archi` une fois le build fait depuis `frontend/`.
 
 **Landings standalone (un projet, pas de hub)** : la page d'accueil `/` est neutralisée (aucun lien vers les landings). Chaque prospect n'arrive que par lien direct (ex. `...vercel.app/p4s-archi`). Pas de lien « Accueil » sur les landings. Voir `strategie-landings-standalone-vs-hub.md`.
+
+**Important — quelle page tu veux déployer** :
+- **Page P4S standalone (pas de hub)** : repo **LPPP_P4S-Architecture**, projet Vercel **lppp-p4-s-architecture**. C’est ce dépôt et ce projet qu’il faut pousser et déployer pour la landing P4S dédiée. Ne pas utiliser le projet « landing-page-creator-for-prospection » pour la page P4S si tu veux du standalone.
+- **Repo principal LPPP** (landingPageCreatorForProspection) : lié au projet Vercel « landing-page-creator-for-prospection » ; les push sur ce repo déclenchent ce projet (ancien setup). Pour éviter le hub, privilégier un repo + projet Vercel par prospect (ex. LPPP_P4S-Architecture → lppp-p4-s-architecture).
 
 **Deux déploiements distincts :**
 

@@ -61,6 +61,20 @@ Objectif : les textes ne doivent pas sonner « générés par IA » (détecteurs
 
 ---
 
+## 2 bis. Image pratique — éviter le vent
+
+**Objectif** : se positionner de façon **pratique et concrète**, pas théorique ; éviter de vendre du rêve ou de « brasser du vent ».
+
+- **Livrables avant promesses** : privilégier « je livre un script qui fait X », « livrable : CSV ou intégration CRM », « 50 leads qualifiés » plutôt que « je transforme votre expertise en avantage commercial » sans précision.
+- **Ancrage technique** : nommer la stack (Python, Scrapy, Make, etc.) et le format de sortie (CSV, API, rapport) quand c'est pertinent.
+- **Éviter les formules vagues** : « infrastructure qui tourne 24/7 », « logique Red/Blue/Purple appliquée à la croissance » sans explication courte ; préférer « un script que vous lancez quand vous voulez » ou une phrase qui décrit le résultat concret.
+- **Chiffres et délais** : si on cite un gain (ex. heures gagnées, nombre de leads), rester crédible ; sinon formuler en « gain de temps sur la prospection » plutôt qu'un chiffre non mesuré.
+- **Différenciation factuelle** : « code propriétaire que vous gardez » vs « rapports PDF » = OK ; ajouter un élément concret (ex. « livrable = repo ou script livré ») renforce l'image pratique.
+
+**Pilotes** : Rédacteur (contenus par contact), Chef de Projet (validation). Référence positionnement : `positionnement-freelance-offres.md` (ne pas survendre).
+
+---
+
 ## 3. Data-driven et anti-hallucination
 
 - **Aucune affirmation sans source** : chiffres, fonctionnalités, stack → document ou base de connaissances (`docs/base-de-connaissances/`).
@@ -97,6 +111,7 @@ Chaque agent nettoie derrière lui et ne crée rien d'inutile. Organisation prop
 
 ### Règles de maintenance
 
+- **Ne pas écrire pour écrire** : tout script ou document doit répondre à un besoin explicite (tâche, décision, référence, erreur documentée). L'Orchestrateur (coordinateur) et le Chef de Projet (responsable rédaction) veillent en temps réel à ce qu'aucun agent ne produise de contenu inutile. Voir `.cursor/rules/pilotage-agents.mdc` § Ne pas écrire pour écrire.
 - **Un fichier = un rôle clair** : pas de doublons, pas de fichiers « au cas où ».
 - **Nommage explicite** : noms de fichiers et dossiers qui décrivent leur contenu.
 - **Cohérence** : respecter la structure existante (apps/, docs/, etc.) ; en cas de doute, vérifier dans `docs/base-de-connaissances/` ou demander.

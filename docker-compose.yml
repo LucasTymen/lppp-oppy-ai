@@ -116,6 +116,8 @@ services:
       FLOWISE_PASSWORD: ${FLOWISE_PASSWORD:-}
     volumes:
       - flowise_data:/root/.flowise
+      # Répertoire de travail : les fichiers déposés ici sont visibles dans le conteneur (et poussés via API par les agents)
+      - ./data/flowise:/data/flowise
     ports:
       - "3000:3000"
     restart: unless-stopped

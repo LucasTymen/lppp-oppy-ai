@@ -84,6 +84,8 @@ Toute commande opérationnelle passe par `make` — les agents et l'utilisateur 
 | `make dbshell` | Shell PostgreSQL | `docker compose exec db psql -U ${DB_USER} -d ${DB_NAME}` | DevOps / Dev Django |
 | `make reset-db` | Réinitialiser la DB (⚠️ destructif) | Drop + create + migrate | Dev Django (dev uniquement) |
 
+**Avant migrations / relance** : sauvegarder l’état (commit + push) puis migrations puis relance. Voir **`procedure-avant-migrations-relance.md`** (Architecte, DevOps, Dev Django).
+
 ### 3.4 Django : administration et maintenance
 
 | Commande | Rôle | Description | Pilote |

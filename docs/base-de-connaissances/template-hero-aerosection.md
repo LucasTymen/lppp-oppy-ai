@@ -20,6 +20,7 @@
 - **Template Django** : `templates/landing_pages/proposition.html` (section `.hero.has-bg-image`).
 - **Contenu** : `content_json.hero_background_url` ou `content_json.theme.background_image_url`.
 - **Schéma** : `schema-landing-proposition.md` (champ `hero_background_url`).
+- **Landings Next.js standalone** : `deploy/standalone-ackuracy/` — référence. Hero pleine largeur avec `.hero-ackuracy__bg` (image), overlay, **parallax** et **scanlines actifs par défaut**. Contenu depuis `src/content/landing.json` ; image depuis `hero_background_url` du JSON ou image par défaut (voir § 4 et `generation-landing-nextjs-contenu-hero.md`).
 
 ---
 
@@ -34,10 +35,21 @@
 
 ---
 
-## 4. Fichiers à aligner
+## 4. Image par défaut (landings Next.js)
 
-- `templates/landing_pages/proposition.html` (référence)
+- Si `hero_background_url` est vide dans le JSON du contact, utiliser une **image par défaut** pour que la hero ne soit pas vide.
+- **URL par défaut** (visuel cyber / aérosection, utilisée pour ACKURACY) :  
+  `https://cdn.prod.website-files.com/6797c4b65039d9b51b032ae0/688c8ec596bba036056db3a1_DefaultCorrected.png`
+- Documentée dans `sources.md` ou ici ; à appliquer à chaque nouvelle landing Next.js si le contact ne fournit pas d’image (voir `generation-landing-nextjs-contenu-hero.md`).
+
+---
+
+## 5. Fichiers à aligner
+
+- `templates/landing_pages/proposition.html` (référence Django)
+- `deploy/standalone-ackuracy/` (référence Next.js : hero + parallax + scanlines par défaut)
 - `docs/base-de-connaissances/schema-landing-proposition.md`
+- `docs/base-de-connaissances/generation-landing-nextjs-contenu-hero.md` (procédure génération)
 - Tout nouveau template de landing ou de rapport avec hero : reprendre ce pattern.
 
 ---

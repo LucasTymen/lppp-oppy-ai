@@ -10,6 +10,9 @@ Dépôt des **faits vérifiés**, **sources** et **décisions** du projet. Toute
   - `registre-agents-ressources.md` : **registre temps réel** — tous les agents, règles Cursor, ressources par pilote (maintenu par l’orchestrateur ; à consulter pour savoir quelles ressources sont à disposition).
   - `decisions.md` : décisions d’architecture, de stack, de process.
   - `sources.md` : liens et refs (SquidResearch, Django, etc.).
+  - `presentation-stack-et-objectifs-partenaires.md` : **document partenaire** — stack technique, objectifs métier et techniques, architecture ; pour lecteurs externes (ex. Achat GPT, partenaires).
+  - `concordance-stack-doc.md` : **état réel vs prévu** — ce qui existe dans le code vs ce qui est à prévoir (API, modèles, tracking, workflows) ; à consulter avant de coder.
+  - `roadmap-technique-et-workflows.md` : **roadmap exécutable** — phases 0–6, workflows n8n (existant vs à prévoir), spécifications « oubliées » (state machine, temporalité, confidence, etc.).
   - `agents-roles-responsabilites.md` : 7 rôles, matrice RACI, workflow.
   - `intelligence-metier-algorithmes.md` : stratégie matching, scoring, qualité données, implantation des algorithmes (app `apps.intelligence`).
 

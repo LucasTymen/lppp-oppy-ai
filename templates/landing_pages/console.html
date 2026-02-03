@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console — Landings générées</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 1rem; background: #0d0d0d; color: #e6e6e6; }
+        a { color: #4a9eff; }
+        h1 { margin-bottom: 0.25rem; }
+        .subtitle { color: #888; margin-bottom: 1rem; }
+        .filters { margin-bottom: 1rem; padding: 0.75rem; background: #1a1a1a; border-radius: 8px; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        .filters label { margin-right: 0.25rem; }
+        .filters select { padding: 0.35rem; border-radius: 4px; background: #2a2a2a; color: #e6e6e6; border: 1px solid #444; }
+        .filters button { padding: 0.35rem 0.75rem; background: #4a9eff; color: #0d0d0d; border: none; border-radius: 4px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #2a2a2a; }
+        th { background: #1a1a1a; color: #4a9eff; font-weight: 600; }
+        tr:hover { background: #1a1a1a; }
+        .url-cell { max-width: 18rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .badge { font-size: 0.75rem; padding: 0.2rem 0.4rem; border-radius: 4px; background: #2a2a2a; }
+        .badge-draft { background: #3a2a2a; color: #e6a; }
+        .badge-deploy { background: #2a3a2a; color: #8e8; }
+        .nav-links { margin-top: 1.5rem; padding-top: 0.75rem; border-top: 1px solid #2a2a2a; }
+    </style>
+</head>
+<body>
+    <h1>Console — Landings générées</h1>
+    <p class="subtitle">Traçage des landing pages : URL Django (backend) et URL déployée (Vercel standalone).</p>
+    <form class="filters" method="get" action="">
+        <label for="sector">Secteur</label>
+        <select name="sector" id="sector">
+            <option value="">Tous</option>
+            {% for value, label in sector_choices %}
+            <option value="{{ value }}" {% if sector_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <label for="category">Catégorie</label>
+        <select name="category" id="category">
+            <option value="">Toutes</option>
+            {% for value, label in category_choices %}
+            <option value="{{ value }}" {% if category_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Société / Titre</th>
+                <th>Slug</th>
+                <th>Secteur</th>
+                <th>Catégorie</th>
+                <th>Statut</th>
+                <th>URL Django</th>
+                <th>URL déployée (Vercel)</th>
+                <th>Créée le</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr>
+                <td>
+                    <strong>{{ row.landing.prospect_company|default:row.landing.title }}</strong>
+                    {% if row.landing.prospect_company and row.landing.title != row.landing.prospect_company %}
+                    <br><span style="color:#888; font-size:0.85rem;">{{ row.landing.title }}</span>
+                    {% endif %}
+                </td>
+                <td><code>{{ row.landing.slug }}</code></td>
+                <td>{{ row.landing.get_sector_display|default:"—" }}</td>
+                <td>{{ row.landing.get_category_display|default:"—" }}</td>
+                <td>
+                    {% if row.landing.is_published %}<span class="badge">publiée</span>{% else %}<span class="badge badge-draft">brouillon</span>{% endif %}
+                    {% if row.url_deploy %}<span class="badge badge-deploy">déployée</span>{% endif %}
+                </td>
+                <td class="url-cell"><a href="{{ row.url_django }}" target="_blank" rel="noopener">Ouvrir</a> — <code title="{{ row.url_django }}">{{ row.url_django|truncatechars:40 }}</code></td>
+                <td class="url-cell">
+                    {% if row.url_deploy %}
+                    <a href="{{ row.url_deploy }}" target="_blank" rel="noopener">Ouvrir</a> — <code title="{{ row.url_deploy }}">{{ row.url_deploy|truncatechars:40 }}</code>
+                    {% else %}
+                    <span style="color:#666">—</span>
+                    {% endif %}
+                </td>
+                <td>{{ row.landing.created_at|date:"d/m/Y H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8">Aucune landing page. Créez-en une depuis l’<a href="/admin/landing_pages/landingpage/">admin</a>.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p class="nav-links">
+        <a href="/">Liste par secteur</a> ·
+        <a href="/admin/">Admin</a> ·
+        <a href="/admin/landing_pages/landingpage/">Landing pages (admin)</a> ·
+        <a href="/essais/">Essais</a> ·
+        <a href="/campaigns/">Campagnes</a>
+    </p>
+</body>
+</html>

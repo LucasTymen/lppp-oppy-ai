@@ -5,6 +5,14 @@ alwaysApply: true
 
 # Pilotage des agents LPPP
 
+## Agir en équipe (interface, pas tout faire soi-même)
+
+- **L’agent en conversation est l’interface** avec l’utilisateur, pas le seul exécutant. Il coordonne l’équipe au lieu de prendre toutes les initiatives lui-même.
+- **Avant d’agir** : identifier le **rôle responsable** (registre `registre-agents-ressources.md`, RACI `agents-roles-responsabilites.md`). Si la tâche relève de DevOps, Chef de Projet, Rédacteur, Designer, Dev Django, etc., **déléguer** : produire une demande claire ou une segmentation pour l’agent concerné, ou indiquer à l’utilisateur quoi lui demander / quoi faire exécuter par qui.
+- **Éviter** : enchaîner seul des modifications multi-fichiers ou multi-rôles (infra + code + doc + contenu) sans passer par la coordination ou les rôles dédiés. Cela fait perdre du temps (oublis, incohérences, corrections en cascade).
+- **Préférer** : (1) consulter le registre et le RACI ; (2) proposer un plan qui associe les rôles concernés ; (3) faire soi-même uniquement ce qui relève de son périmètre ou de la demande explicite de l’utilisateur ; (4) pour le reste, documenter la tâche (segmentation, TODO) ou donner à l’utilisateur les instructions pour solliciter le bon agent.
+- **Décisions transverses** (ports, infra, stratégie contenu, déploiement) : s’appuyer sur la doc existante (infra-devops, stratégie qualité, erreurs-et-solutions) et, si besoin, **demander** au Chef de Projet ou au DevOps (via leurs règles et docs) plutôt que d’inventer une solution seul.
+
 ## Anti-hallucination
 
 - Ne jamais inventer de fichiers, d’API, de variables ou de fonctionnalités qui n’existent pas dans le dépôt.
@@ -16,11 +24,13 @@ alwaysApply: true
 - S’appuyer sur les données du projet : modèles, templates, `docs/`, `README.md`.
 - Toute décision ou fait documenté doit être enregistré dans `docs/base-de-connaissances/` (decisions.md, sources.md).
 - Le chef de projet / agent pilote met à jour les logs (`docs/logs/log-projet.md`, `docs/logs/log-ia.md`), la base de connaissances, `docs/TODO.md` et `docs/boite-a-idees.md` après les sessions.
+- **Lors d’une correction d’erreur** : mettre à jour les logs et le **registre erreurs/solutions** (`docs/base-de-connaissances/erreurs-et-solutions.md`) pour éviter de reproduire l’erreur. L’agent qui assiste le chef de projet s’en charge ; tout agent peut y contribuer en ajoutant une entrée après résolution.
 
 ## Terminal — WSL par défaut
 
 - **Par défaut** : exécuter les commandes terminal (git, make, python, pip, etc.) dans **WSL** (Ubuntu), pas dans PowerShell Windows. Chemin projet WSL : `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`. Voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
 - Si l’utilisateur demande explicitement PowerShell ou Windows, utiliser alors le shell Windows.
+- **Git** : **penser à l'installer ou à le rendre disponible** (WSL, Git Bash) pour les commit et push. En clôture de livraison ou de feature : **commit + push sur les deux remotes** (origin + gitlab), **tout le temps**. Commandes : `make push-both` ou `make commit-push MSG="..."`. Réf. `git-remotes-github-gitlab.md`, template de segmentation § Règle Git.
 
 ## Référence éditoriale
 
@@ -30,6 +40,12 @@ alwaysApply: true
 
 - **Rien de sensible committé** : pas de secrets, mots de passe, clés privées ou tokens dans le dépôt. Respecter le `.gitignore` (cf. `docs/base-de-connaissances/infra-devops.md` § Conventions).
 - **Règles de sécurité** : appliquer les règles dans `docs/base-de-connaissances/regles-securite.md` (Django prod, CSRF/XSS/injection, auth, API, checklist prod). En cas de modification de config ou d’API, vérifier l’impact sécurité.
+
+## Ne pas écrire pour écrire (contrôle en temps réel)
+
+- **Aucun script ni document « pour le plaisir d'écrire »** : tout script, toute doc ou tout fichier doit répondre à un **besoin explicite** (tâche, décision, référence partenaire, erreur documentée). Créer du contenu sans besoin identifié est **contraire aux bonnes pratiques**.
+- **Contrôle en temps réel** : l'**Orchestrateur** (coordinateur) et le **Chef de Projet** (responsable validation / rédaction projet) veillent à ce qu'aucun agent ne produise de scripts ou de docs inutiles. Avant de créer un fichier : se demander « à quoi ça sert ? » ; si pas de réponse claire, ne pas créer.
+- **Règle d'or** : pas de script one-shot, pas de doc redondante, pas de fichier « au cas où ». Script utile → intégrer au bon endroit (commande Django, Makefile, `scripts/` documenté) ; doc utile → répondre à une décision, une source ou un public identifié ; sinon ne pas écrire.
 
 ## Rangement, nettoyage et organisation
 

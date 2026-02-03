@@ -4,7 +4,9 @@
 **Rôle** : Configuration Git LPPP avec deux remotes ; **GitHub pilote** (principal), **GitLab** en miroir.  
 **Référence** : `docs/base-de-connaissances/infra-devops.md` (secrets, flux).
 
-> **À exécuter sur ta machine** : les commandes ci-dessous doivent être lancées dans un terminal où Git est installé (PowerShell, CMD, ou Git Bash).  
+**Règle (important, tout le temps)** : **Penser à installer/vérifier Git** (WSL ou Git Bash) en clôture de feature ou livraison, puis **commit + push sur les deux remotes** (origin + gitlab). Voir Makefile `push-both` / `commit-push`, template de segmentation § Règle Git.
+
+> **À exécuter sur ta machine** : les commandes ci-dessous doivent être lancées dans un terminal où **Git est installé** (WSL, Git Bash, ou PowerShell avec Git dans le PATH).  
 > **Premier commit et push** : réalisés le 2025-01-30 (commit 67a2055, 125 fichiers ; push origin main et push gitlab main OK).
 
 ---

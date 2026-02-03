@@ -105,6 +105,17 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 3. Déploiement déclenché par tag, merge ou manuel, selon la stratégie choisie.
 4. En prod : pas de `DEBUG=True`, `SECRET_KEY` fort, `ALLOWED_HOSTS` explicite, base et Redis sécurisés.
 
+### 3.4 Ports (référence — ne pas confondre)
+
+| Port | Service | Contexte |
+|------|---------|----------|
+| **3000** | **Flowise** | Réservé. En local : http://localhost:3000. Ne pas utiliser 3000 pour les landings Next.js. |
+| **3001** | Landings Next.js (standalone-ackuracy, etc.) | En local : `cd deploy/standalone-ackuracy && npm run dev` → http://localhost:3001. Script `dev` avec `-p 3001` dans `package.json`. |
+| 5678 | n8n | Workflows, API. |
+| 8000 | Django (conteneur web) | Option A Docker. Option B runserver : 8080 (voir `erreurs-et-solutions.md` § localhost:8000). |
+
+**Règle** : ne jamais indiquer http://localhost:3000 pour une landing Next.js ; le port 3000 est celui de Flowise.
+
 ---
 
 ## 4. Variables d’environnement LPPP (référence)

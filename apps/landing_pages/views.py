@@ -57,6 +57,46 @@ def landing_public(request, slug):
     return response
 
 
+def console_landings(request):
+    """
+    Console : toutes les landing pages avec URLs Django et URL déployée (Vercel).
+    Permet de consulter et traquer les landings générées (Django + standalone).
+    Réservé aux utilisateurs connectés (staff pour voir toutes, sinon seulement les siennes).
+    """
+    if not request.user.is_authenticated:
+        from django.contrib.auth.views import redirect_to_login
+        return redirect_to_login(request.get_full_path())
+    pages = LandingPage.objects.all().order_by("-created_at")
+    if not request.user.is_staff:
+        pages = pages.filter(created_by=request.user)
+    sector = request.GET.get("sector", "").strip()
+    category = request.GET.get("category", "").strip()
+    if sector:
+        pages = pages.filter(sector=sector)
+    if category:
+        pages = pages.filter(category=category)
+    # URL Django (base du site) pour chaque landing
+    base_url = request.build_absolute_uri("/").rstrip("/")
+    rows = []
+    for lp in pages:
+        rows.append({
+            "landing": lp,
+            "url_django": f"{base_url}/p/{lp.slug}/",
+            "url_deploy": lp.deploy_url or "",
+        })
+    return render(
+        request,
+        "landing_pages/console.html",
+        {
+            "rows": rows,
+            "sector_filter": sector,
+            "category_filter": category,
+            "sector_choices": LandingPage.SECTOR_CHOICES,
+            "category_choices": LandingPage.CATEGORY_CHOICES,
+        },
+    )
+
+
 def landing_list(request):
     """Liste de toutes les landing pages, classées par secteur puis nom de société."""
     if not request.user.is_authenticated:

@@ -1,0 +1,35 @@
+{
+  "page_title": "Optimisation Growth pour ABSOLOOTE",
+  "hero_headline": "Zoubida, et si l'onboarding de vos utilisateurs devenait un levier de rétention mesurable ?",
+  "hero_sub_headline": "Product-Led Growth + Data",
+  "hero_subtitle": "Pour ABSOLOOTE — Zoubida",
+  "intro": "Suite au Cyber Show Paris — ce que je peux faire pour Absoloote côté produit et croissance.",
+  "icebreaker": "Nous nous sommes croisés au Cyber Show Paris. En tant que Growth Engineer, j'accompagne les éditeurs logiciel sur le Product-Led Growth et l'automatisation (onboarding, Python, JS).",
+  "enjeux_lead": "Pour Absoloote, j'ai identifié des enjeux côté produit :",
+  "pain_points": [
+    "Identifier les frictions UX qui font décrocher les utilisateurs.",
+    "Automatiser des parties de l'onboarding (scripts, intégrations) sans tout refaire en no-code.",
+    "Mesurer la rétention et les signaux d'activation de façon actionnable."
+  ],
+  "solution_workflow": "J'analyse les parcours (funnel d'onboarding, événements clés) et je propose des livrables techniques : scripts d'onboarding, tracking structuré, recommandations UX data-driven.",
+  "cta_text": "Reprendre la conversation",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Suite ABSOLOOTE — Cyber Show Paris",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "rapport_url": "",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer orienté produit et data : PLG, onboarding, automatisation Python/JS. Je livre du code et des analyses actionnables.",
+  "prestations_headline": "Des livrables concrets pour votre croissance produit",
+  "services": [
+    {"title": "Analyse frictions UX", "description": "Audit du parcours onboarding et recommandations pour améliorer la rétention (data + parcours)."},
+    {"title": "Onboarding automatisé", "description": "Scripts ou intégrations (Python, JS) pour automatiser des étapes d'onboarding."},
+    {"title": "Tracking et activation", "description": "Mise en place d'événements et de métriques d'activation actionnables."},
+    {"title": "Automatisations", "description": "Workflows (n8n, Make) pour synchroniser données produit et marketing."}
+  ],
+  "expertise_stack": {"langages": ["Python", "JavaScript"], "automation": ["n8n", "Make"], "data": ["SQL"]},
+  "mission_flash": "J'ai une approche concrète pour transformer l'onboarding en levier de croissance. On en parle ?",
+  "why_growth_engineer": "Une agence vous vend des audits. Moi : du code et des scripts que vous gardez."
+}

@@ -20,6 +20,7 @@
 - [ ] Sélection du template dans l'admin Django (champ `template_key`)
 - [ ] Chaque template est responsive (mobile-first)
 - [ ] Les contenus dynamiques (`content_json`) s'adaptent à chaque template
+- [ ] **Qualité contenu** : chaque template atteint la barre « qualité P4S » (contenu complet, pas de squelette, contact utilisable) ; contenu **100 % dynamique** (un contact = un jeu de données unique). Voir `strategie-qualite-contenu-landings.md`.
 - [ ] Temps de chargement < 2s (Lighthouse)
 - [ ] Score accessibilité > 90 (WCAG 2.1)
 

@@ -35,7 +35,24 @@ Objectif : que la landing proposition (Django ou Next.js) atteigne le même nive
 
 ---
 
-## 5. Références projet
+## 5. Section « Propositions de valeur » (wireframe de référence)
+
+Pour présenter les **prestations / valeur** (services) de façon claire et pratique, s’inspirer du wireframe suivant :
+
+- **Titre de section** : une accroche **orientée bénéfice** (ex. « Des livrables concrets pour votre prospection »), pas uniquement « Prestations ».
+- **Grille** : blocs en **grille 2×2** (4 propositions), avec beaucoup d’air entre les blocs.
+- **Chaque bloc** :
+  - **Sous-titre** (nom du service / de la proposition),
+  - **Paragraphe court** (3–5 lignes, concret, pas de vent),
+  - **CTA** type « En savoir plus » ou « En discuter » (lien vers contact ou ouverture du modal contact).
+
+Objectif : contenu **digeste**, **pratique**, avec une sortie claire vers l’échange (« Learn more » → contact). Appliqué sur la landing Ackuracy (section Prestations en grille de cartes) ; à répliquer sur les autres templates (Django `proposition.html`, futurs standalones).
+
+Référence visuelle : wireframe « Snap photos and share like never before » (titre + 4 blocs avec sous-titre, texte, bouton Learn more). Image conservée dans le workspace si fournie.
+
+---
+
+## 6. Références projet
 
 - **Schéma contenu** : `schema-landing-proposition.md`
 - **CSS Vampire** : `css-vampire.md` (thème société)

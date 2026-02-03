@@ -1,0 +1,681 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Optimisation Growth pour P4S Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+<style>
+/* Style perso (fallback) — variables + animations */
+body.lp-perso-style {
+    --lp-bg: #0a0a0f;
+    --lp-text: #e8e8ed;
+    --lp-heading: #ffffff;
+    --lp-muted: #9898a8;
+    --lp-primary: #6366f1;
+    --lp-secondary: #818cf8;
+    --lp-border: rgba(255, 255, 255, 0.08);
+    --lp-cta-text: #fff;
+    --lp-font-body: 'Inter', 'Roboto', system-ui, sans-serif;
+    --lp-font-heading: 'Inter', 'Open Sans', system-ui, sans-serif;
+}
+body.lp-perso-style .hero:not(.has-bg-image)::before {
+    background:
+        linear-gradient(165deg, #0a0a0f 0%, rgba(99, 102, 241, 0.12) 35%, #0a0a0f 70%),
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(99, 102, 241, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 70% 80% at 85% 70%, rgba(129, 140, 248, 0.2) 0%, transparent 50%);
+}
+body.lp-perso-style .section:nth-of-type(odd) { background: rgba(99, 102, 241, 0.06); }
+body.lp-perso-style .section:nth-of-type(even) { background: rgba(129, 140, 248, 0.05); }
+@keyframes lp-fadeInUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes lp-slideInLeft {
+    from { opacity: 0; transform: translateX(-24px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes lp-glow-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.2); }
+    50% { box-shadow: 0 0 32px rgba(99, 102, 241, 0.35); }
+}
+body.lp-perso-style .hero h1 { animation: lp-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) both; }
+body.lp-perso-style .hero .hero-sub { animation: lp-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both; }
+body.lp-perso-style .hero .cta { animation: lp-fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both; }
+body.lp-perso-style .section { animation: lp-fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both; }
+body.lp-perso-style .mission-flash { animation: lp-glow-pulse 4s ease-in-out infinite; }
+</style>
+
+    
+    <style>
+        
+        :root {
+            --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --lp-section-padding: clamp(3rem, 8vw, 5rem);
+            /* Breakpoints (équipe style : déclinaisons tablette / desktop / HD) */
+            --lp-bp-tablet: 768px;
+            --lp-bp-desktop: 1024px;
+            --lp-bp-hd: 1440px;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif);
+            margin: 0;
+            min-height: 100vh;
+            background: var(--lp-bg, #0d0d0d);
+            color: var(--lp-text, #e6e6e6);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* ===== Nav sticky — bordure couleur société ===== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent);
+        }
+        .nav-logo { max-height: 36px; width: auto; display: block; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--lp-muted, #999);
+            text-decoration: none;
+            transition: color 0.2s var(--lp-ease);
+        }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-cta {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: transform 0.2s var(--lp-ease), box-shadow 0.2s var(--lp-ease);
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent); }
+
+        /* ===== Hero pleine hauteur (effet waouh) ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Hero (Aérosection) : ton image en background 100 %, parallaxe, assombrissement léger uniquement */
+        .hero.has-bg-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .hero.has-bg-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            pointer-events: none;
+        }
+        /* Scanlines légères (texture, pas forme dominante) */
+        .hero.has-bg-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                rgba(0, 0, 0, 0.12) 2px,
+                rgba(0, 0, 0, 0.12) 4px
+            );
+            pointer-events: none;
+        }
+        /* Fond hero sans image : fond uni (pas de V ni forme blanche) */
+        .hero:not(.has-bg-image)::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--lp-bg, #0d0d0d);
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 1; }
+        .hero-logo { margin-bottom: 2rem; }
+        .hero-logo img {
+            max-height: 64px;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 2px 12px rgba(0,0,0,0.4));
+        }
+        .hero h1 {
+            font-family: var(--lp-font-heading, 'Open Sans', var(--lp-font-body, inherit));
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 0 0 1rem;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.02em;
+            max-width: 20ch;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s var(--lp-ease) both;
+        }
+        .hero .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--lp-muted, rgba(255,255,255,0.75));
+            margin: 0 0 2rem;
+            max-width: 28ch;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s var(--lp-ease) 0.1s both;
+        }
+        .hero .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+            animation: fadeInUp 0.8s var(--lp-ease) 0.2s both;
+        }
+        .hero .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+        .hero .cta { animation: fadeInUp 0.8s var(--lp-ease) 0.2s both; }
+        .hero .cta:hover { animation: none; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Sections (style page perso : aérées, couleurs, effets) ===== */
+        .section {
+            padding: var(--lp-section-padding) 1.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+            animation: sectionReveal 0.7s var(--lp-ease) both;
+        }
+        .section:nth-of-type(2) { animation-delay: 0.05s; }
+        .section:nth-of-type(3) { animation-delay: 0.12s; }
+        .section:nth-of-type(4) { animation-delay: 0.19s; }
+        .section:nth-of-type(5) { animation-delay: 0.26s; }
+        .section:nth-of-type(6) { animation-delay: 0.33s; }
+        .section:nth-of-type(7) { animation-delay: 0.4s; }
+        .section:nth-of-type(8) { animation-delay: 0.47s; }
+        @keyframes sectionReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section:nth-of-type(odd) {
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section:nth-of-type(even) {
+            background: color-mix(in srgb, var(--lp-secondary, #5ebeff) 5%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+        }
+        .section:nth-of-type(even) .section-head { border-left-color: var(--lp-secondary, #5ebeff); }
+        .section-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--lp-primary, #4a9eff);
+            min-width: 2rem;
+        }
+        .section:nth-of-type(even) .section-num { color: var(--lp-secondary, #5ebeff); }
+        .section h2 {
+            font-family: var(--lp-font-heading, inherit);
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 700;
+            margin: 0;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.02em;
+        }
+        .section p { margin: 0 0 0.75rem; }
+        .section p:last-child { margin-bottom: 0; }
+
+        .icebreaker {
+            max-width: 720px;
+            margin: 0 auto 1rem;
+            padding: 1rem 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d));
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+            border-radius: 0 12px 12px 0;
+            font-size: 0.95rem;
+        }
+
+        .pain-list { margin: 0; padding-left: 1.35rem; }
+        .pain-list li { margin-bottom: 0.5rem; }
+
+        .card {
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border: 1px solid var(--lp-border, rgba(255,255,255,0.08));
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: border-color 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+        }
+        .card:hover {
+            border-color: color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 0 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, transparent);
+        }
+        .card:last-child { margin-bottom: 0; }
+
+        .workflow-figure { margin: 1.5rem 0 0; text-align: center; }
+        .workflow-figure img { max-width: 100%; height: auto; border-radius: 12px; }
+
+        /* Services onglets */
+        .services-annexes {
+            margin: 0 0 1rem;
+            font-size: 0.95rem;
+        }
+        .services-annexes a {
+            color: var(--lp-primary, #4a9eff);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .services-annexes a:hover { text-decoration: underline; }
+        .services-annexes .sep { color: var(--lp-muted, #999); margin: 0 0.35rem; }
+        .services-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .services-tabs input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+        .services-tabs label {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.65rem 1.1rem;
+            font-size: 0.9rem; font-weight: 600;
+            color: var(--lp-muted, #999);
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d));
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s var(--lp-ease);
+        }
+        .services-tabs label:hover { color: var(--lp-text, #e6e6e6); }
+        .services-tabs input:checked + label {
+            color: var(--lp-cta-text, #fff);
+            background: var(--lp-primary, #4a9eff);
+            border-color: var(--lp-primary, #4a9eff);
+            box-shadow: 0 0 0 2px var(--lp-bg, #0d0d0d), 0 4px 20px color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent);
+        }
+        .services-panels .services-panel {
+            display: none;
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+        }
+        .services-panels .services-panel h3 { font-size: 1.1rem; margin: 0 0 0.5rem; color: var(--lp-heading, #fff); }
+        .services-panels .services-panel p { margin: 0; }
+        .services-panels .about-me-content { margin: 0; }
+        .services-tabs input:nth-of-type(1):checked ~ .services-panels .services-panel:nth-of-type(1),
+        .services-tabs input:nth-of-type(2):checked ~ .services-panels .services-panel:nth-of-type(2),
+        .services-tabs input:nth-of-type(3):checked ~ .services-panels .services-panel:nth-of-type(3),
+        .services-tabs input:nth-of-type(4):checked ~ .services-panels .services-panel:nth-of-type(4),
+        .services-tabs input:nth-of-type(5):checked ~ .services-panels .services-panel:nth-of-type(5),
+        .services-tabs input:nth-of-type(6):checked ~ .services-panels .services-panel:nth-of-type(6),
+        .services-tabs input:nth-of-type(7):checked ~ .services-panels .services-panel:nth-of-type(7),
+        .services-tabs input:nth-of-type(8):checked ~ .services-panels .services-panel:nth-of-type(8),
+        .services-tabs input:nth-of-type(9):checked ~ .services-panels .services-panel:nth-of-type(9) { display: block; }
+
+        .stack-group { margin-bottom: 1.25rem; }
+        .stack-group .stack-label {
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--lp-primary, #4a9eff);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+        .coordonnees-intro { margin-top: 0; margin-bottom: 1rem; }
+        .coordonnees-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+        .coordonnees-list a { color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; }
+        .coordonnees-list a:hover { text-decoration: underline; }
+        .coordonnees-email-trigger { color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; cursor: pointer; }
+        .coordonnees-email-trigger:hover { text-decoration: underline; }
+
+        /* Popup contact email (fallback quand mailto: ne fonctionne pas) — affichage via :target */
+        .contact-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 1.5rem; box-sizing: border-box; }
+        .contact-modal:target { display: flex; }
+        .contact-modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.65); }
+        .contact-modal-content {
+            position: relative; max-width: 420px; width: 100%;
+            background: var(--lp-bg, #0d0d0d);
+            border: 1px solid var(--lp-border, rgba(255,255,255,0.12));
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+        }
+        .contact-modal-content p { margin: 0 0 1rem; color: var(--lp-text, #e6e6e6); line-height: 1.5; }
+        .contact-modal-email { font-weight: 600; color: var(--lp-primary, #4a9eff); user-select: all; }
+        .contact-modal-close { display: inline-block; margin-top: 0.5rem; color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; }
+        .contact-modal-close:hover { text-decoration: underline; }
+
+        .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .stack-tag {
+            padding: 0.45rem 0.85rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d));
+            color: var(--lp-text, #e6e6e6);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent);
+        }
+
+        .mission-flash {
+            padding: 2rem;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--lp-primary, #4a9eff) 18%, var(--lp-bg, #0d0d0d)) 0%, color-mix(in srgb, var(--lp-secondary, #5ebeff) 12%, var(--lp-bg, #0d0d0d)) 50%, color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)) 100%);
+            border: 2px solid var(--lp-primary, #4a9eff);
+            border-radius: 20px;
+            box-shadow: 0 0 48px color-mix(in srgb, var(--lp-primary, #4a9eff) 25%, transparent), 0 0 24px color-mix(in srgb, var(--lp-secondary, #5ebeff) 15%, transparent);
+        }
+        .mission-flash p { margin: 0; }
+        .mission-flash .tag-line { font-size: 0.8rem; font-weight: 700; color: var(--lp-primary, #4a9eff); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+
+        .why-quote {
+            padding: 1.5rem;
+            border-left: 4px solid var(--lp-secondary, #5ebeff);
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 0 16px 16px 0;
+            font-style: italic;
+            font-size: 1.05rem;
+        }
+
+        .cta-wrap {
+            padding: var(--lp-section-padding) 1.5rem;
+            text-align: center;
+        }
+        .cta-wrap .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+        }
+        .cta-wrap .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+
+        /* ===== Responsive : tablette (768px) ===== */
+        @media (min-width: 768px) {
+            .nav { padding: 1rem 2rem; }
+            .nav-logo { max-height: 42px; }
+            .nav-links a { font-size: 1rem; }
+            .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; }
+            .hero { padding: 3rem 2rem 5rem; }
+            .hero h1 { font-size: clamp(2.25rem, 5.5vw, 3.5rem); max-width: 22ch; }
+            .hero .hero-sub { font-size: 1.15rem; max-width: 32ch; }
+            .hero-logo { margin-bottom: 2.25rem; }
+            .hero-logo img { max-height: 80px; }
+            .hero .cta { padding: 1.1rem 2.25rem; font-size: 1.1rem; }
+            .icebreaker { padding: 1.25rem 2rem; font-size: 1rem; max-width: 720px; margin-left: auto; margin-right: auto; }
+            .section { padding: var(--lp-section-padding) 2rem; max-width: 720px; }
+            .section-head { margin-bottom: 1.75rem; }
+            .section h2 { font-size: clamp(1.4rem, 3.2vw, 1.9rem); }
+            .card { padding: 1.75rem; }
+            .mission-flash { padding: 2.25rem; }
+            .cta-wrap { padding: var(--lp-section-padding) 2rem; }
+        }
+
+        /* ===== Responsive : desktop (1024px) ===== */
+        @media (min-width: 1024px) {
+            .nav { padding: 1.25rem 2.5rem; }
+            .nav-logo { max-height: 48px; }
+            .nav-links { gap: 0.75rem 1.5rem; }
+            .hero { padding: 4rem 2.5rem 6rem; }
+            .hero h1 { font-size: clamp(2.5rem, 4.5vw, 3.75rem); max-width: 24ch; }
+            .hero .hero-sub { font-size: 1.2rem; max-width: 36ch; }
+            .hero-logo { margin-bottom: 2.5rem; }
+            .hero-logo img { max-height: 88px; }
+            .hero .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
+            .icebreaker { padding: 1.5rem 2.5rem; max-width: 800px; }
+            .section { padding: var(--lp-section-padding) 2.5rem; max-width: 800px; }
+            .section-head { margin-bottom: 2rem; padding-left: 0.75rem; border-left-width: 5px; }
+            .section h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+            .section-num { font-size: 0.9rem; min-width: 2.25rem; }
+            .card { padding: 2rem; }
+            .services-tabs label { padding: 0.75rem 1.25rem; font-size: 1rem; }
+            .services-panels .services-panel { padding: 2rem; }
+            .stack-tag { padding: 0.5rem 1rem; font-size: 0.95rem; }
+            .mission-flash { padding: 2.5rem; }
+            .why-quote { padding: 2rem; font-size: 1.1rem; }
+            .cta-wrap { padding: var(--lp-section-padding) 2.5rem; }
+            .cta-wrap .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
+        }
+
+        /* ===== Responsive : HD (1440px) ===== */
+        @media (min-width: 1440px) {
+            body { font-size: 1.0625rem; }
+            .nav { padding: 1.5rem 3rem; }
+            .nav-logo { max-height: 52px; }
+            .nav-links a { font-size: 1.05rem; }
+            .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; }
+            .hero { padding: 5rem 3rem 7rem; }
+            .hero h1 { font-size: 3.75rem; max-width: 26ch; }
+            .hero .hero-sub { font-size: 1.25rem; max-width: 40ch; }
+            .hero-logo { margin-bottom: 3rem; }
+            .hero-logo img { max-height: 96px; }
+            .hero .cta { padding: 1.25rem 2.75rem; font-size: 1.2rem; }
+            .icebreaker { padding: 1.75rem 3rem; max-width: 880px; font-size: 1.05rem; }
+            .section { padding: clamp(4rem, 10vw, 6rem) 3rem; max-width: 880px; }
+            .section-head { margin-bottom: 2.25rem; }
+            .section h2 { font-size: 2rem; }
+            .section p { font-size: 1.05rem; }
+            .card { padding: 2.25rem; }
+            .mission-flash { padding: 3rem; font-size: 1.05rem; }
+            .cta-wrap { padding: clamp(4rem, 10vw, 6rem) 3rem; }
+            .cta-wrap .cta { padding: 1.25rem 2.75rem; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body class="lp-perso-style">
+    <!-- Nav sticky (ancres style page perso) -->
+    <nav class="nav">
+        
+        <span style="font-weight:700; color: var(--lp-text);">P4S Architecture</span>
+        
+        <div class="nav-links">
+            <a href="#enjeux">Enjeux</a>
+            <a href="#solution">Solution</a>
+            <a href="#services">Services</a>
+            <a href="#stack">Stack</a>
+            <a href="#offre">Offre</a>
+            
+            <a href="rapport.html" target="_blank" rel="noopener noreferrer">Consulter le rapport</a>
+            <a href="#coordonnees">Me contacter</a>
+        </div>
+    </nav>
+
+    <main id="top">
+        <!-- Hero (Aérosection) : ton image en background 100 %, parallaxe (fixed), assombrissement 15 % — pas de scanlines -->
+        <section class="hero has-bg-image" style="background-image: url('https://cdn.prod.website-files.com/66f985365375b390de87e273/66fa4fa81421b08ecc353183_Frame%203372347.avif');">
+            
+            <h1>Joël, suite à notre échange — ce que je peux faire pour P4S</h1>
+            <p class="hero-sub">Pour P4S — Joël</p>
+            
+            
+            <a href="#contact-email-modal" class="cta">Reprendre la conversation</a>
+            
+            
+        </section>
+
+        
+        
+
+        
+        <section class="section" id="enjeux">
+            <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
+            
+            <ul class="pain-list">
+                <li>Le cycle de vente industriel est trop long ?</li><li>Identifier les bons décideurs (industrie, médical, gouvernement) sans y passer des mois ?</li><li>Sensibiliser aux incidents cyber récents sans noyer sous les rapports ?</li>
+            </ul>
+            
+        </section>
+        
+
+        
+        <section class="section" id="solution">
+            <div class="section-head"><span class="section-num">02</span><h2>Comment je transforme le chaos en système</h2></div>
+            <div class="card">
+                <p>Votre force, c&#x27;est le produit : SOFTLESS, les SF-106, la latence, le Made in France. Le défi, à mon sens, c&#x27;est moins la techno que la diffusion. Je mets en place des pipelines de données (veille, ciblage, gouvernance) qui transforment le chaos en système : gouvernance claire, scalabilité, sécurité. Une logique de responsabilité (RACI) intégrée au code.</p>
+                
+            </div>
+        </section>
+        
+
+        
+        <section class="section" id="services">
+            <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
+            
+            <div class="rapport-cta-block">
+                <a href="rapport.html" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
+            </div>
+            
+            <div class="services-tabs">
+                
+                <input type="radio" name="services-tab" id="service-0" checked>
+                <label for="service-0">Rapport SEO</label>
+                
+                <input type="radio" name="services-tab" id="service-1" >
+                <label for="service-1">Paid Media (Google Ads, Meta Ads)</label>
+                
+                <input type="radio" name="services-tab" id="service-2" >
+                <label for="service-2">Échantillon de prospects</label>
+                
+                <input type="radio" name="services-tab" id="service-3" >
+                <label for="service-3">Automatisations et workflows</label>
+                
+                <div class="services-panels">
+                    
+                    <div class="services-panel"><h3>Rapport SEO</h3><p>Analyse de votre visibilité et de celle de vos concurrents (mots-clés, backlinks, opportunités). Livrable actionnable pour prioriser les actions acquisition.</p></div>
+                    
+                    <div class="services-panel"><h3>Paid Media (Google Ads, Meta Ads)</h3><p>Acquisition payante B2B : structuration de comptes, mots-clés, annonces, pilotage CPC / CPA / ROAS. Proposition en prix récupérateur adaptée à vos besoins.</p></div>
+                    
+                    <div class="services-panel"><h3>Échantillon de prospects</h3><p>Liste qualifiée de décideurs (industrie, médical, gouvernement) alignée sur votre cible. Pour tester votre message sans déployer une campagne complète.</p></div>
+                    
+                    <div class="services-panel"><h3>Automatisations et workflows</h3><p>Pipelines de données (veille cyber, enrichissement, scoring) adaptés à vos besoins. Gouvernance et scalabilité intégrées.</p></div>
+                    
+                </div>
+            </div>
+        </section>
+        
+
+        
+        <section class="section" id="stack">
+            <div class="section-head"><span class="section-num">04</span><h2>Stack technique</h2></div>
+            
+            
+            <div class="stack-group">
+                <p class="stack-label">Data</p>
+                <div class="stack-tags"><span class="stack-tag">Selenium</span><span class="stack-tag">Scrapy</span><span class="stack-tag">SQL</span></div>
+            </div>
+            
+            
+            <div class="stack-group">
+                <p class="stack-label">Langages</p>
+                <div class="stack-tags"><span class="stack-tag">Python</span><span class="stack-tag">Django</span></div>
+            </div>
+            
+            
+            <div class="stack-group">
+                <p class="stack-label">Automation</p>
+                <div class="stack-tags"><span class="stack-tag">LangGraph</span><span class="stack-tag">CrewAI</span><span class="stack-tag">Make</span><span class="stack-tag">n8n</span></div>
+            </div>
+            
+        </section>
+        
+
+        
+        <section class="section" id="offre">
+            <div class="section-head"><span class="section-num">05</span><h2>Mission Flash</h2></div>
+            <div class="mission-flash">
+                <p class="tag-line">Offre pour vous</p>
+                <p>J&#x27;ai préparé une petite étude (concurrence, PESTEL, SWOT, Porter) pour cadrer le contexte. Si l&#x27;angle vous parle, je serais ravi d&#x27;en discuter autour d&#x27;un café ou d&#x27;un appel — sans engagement, juste pour voir si on peut avancer ensemble sur la partie acquisition et évangélisation.</p>
+            </div>
+        </section>
+        
+
+        
+        <section class="section" id="why-ge">
+            <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
+            <blockquote class="why-quote">Une agence vous vend du vent et des rapports PDF. Je vous vends du code propriétaire que vous gardez, une infrastructure qui tourne 24/7, et une logique de responsabilité (RACI) intégrée.</blockquote>
+        </section>
+        
+
+        
+        
+
+        
+        <section class="section" id="coordonnees">
+            <div class="section-head"><span class="section-num">07</span><h2>Coordonnées</h2></div>
+            <div class="card">
+                <p class="coordonnees-intro">Pour échanger ou planifier un Diagnostic Flash, retrouvez mes coordonnées ci-dessous.</p>
+                <ul class="coordonnees-list">
+                    <li>Gmail : <span class="coordonnees-email" style="user-select:all">lucas.tymen@gmail.com</span></li>
+                    <li><a href="https://www.linkedin.com/in/lucas-tymen-310255123/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    <li><a href="https://github.com/LucasTymen" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                    <li><a href="https://linktr.ee/lucas.tymen" target="_blank" rel="noopener noreferrer">Linktree</a></li>
+                </ul>
+            </div>
+        </section>
+        
+
+        
+        
+        <div class="cta-wrap">
+            <a href="#contact-email-modal" class="cta">Reprendre la conversation</a>
+        </div>
+        
+        
+    </main>
+
+    
+    <div id="contact-email-modal" class="contact-modal" aria-hidden="true">
+        <a href="#" class="contact-modal-overlay" aria-label="Fermer"></a>
+        <div class="contact-modal-content">
+            <p>Vous pouvez me contacter par Mail à cette adresse : <span class="contact-modal-email">lucas.tymen@gmail.com</span></p>
+            <a href="#" class="contact-modal-close">Fermer</a>
+        </div>
+    </div>
+    
+</body>
+</html>

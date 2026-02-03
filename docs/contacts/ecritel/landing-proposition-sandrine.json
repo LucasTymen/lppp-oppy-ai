@@ -1,0 +1,35 @@
+{
+  "page_title": "Optimisation Growth pour ECRITEL",
+  "hero_headline": "Sandrine, et si chaque visite Cloud managé se transformait en lead qualifié ?",
+  "hero_sub_headline": "Data + Stratégie Growth B2B",
+  "hero_subtitle": "Pour ECRITEL — Sandrine",
+  "intro": "Suite au Cyber Show Paris — ce que je peux faire pour Ecritel côté acquisition B2B.",
+  "icebreaker": "Nous nous sommes croisés au Cyber Show Paris. En tant que Growth Engineer, j'accompagne les acteurs infra et cloud sur le tracking des conversions et l'audit du funnel d'acquisition.",
+  "enjeux_lead": "Pour Ecritel, j'ai identifié des enjeux côté acquisition :",
+  "pain_points": [
+    "Mesurer précisément les conversions sur les offres Cloud managé.",
+    "Qualifier les leads B2B avant qu'ils n'atterrissent dans le tunnel.",
+    "Réduire les fuites dans le funnel d'acquisition services managés."
+  ],
+  "solution_workflow": "J'audite votre funnel (landing, formulaires, attribution) et je mets en place du tracking actionnable. Livrable : scripts de mesure, dashboards, recommandations pour aligner marketing et ventes.",
+  "cta_text": "Reprendre la conversation",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Suite ECRITEL — Cyber Show Paris",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "rapport_url": "",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer B2B : data, tracking, automatisation. Je livre du code et des livrables actionnables — audits funnel, pipelines de données, intégrations CRM.",
+  "prestations_headline": "Des livrables concrets pour votre acquisition B2B",
+  "services": [
+    {"title": "Audit funnel d'acquisition", "description": "Analyse du parcours B2B (offres Cloud managé) et recommandations pour augmenter les conversions."},
+    {"title": "Tracking et attribution", "description": "Mise en place de la mesure avancée (événements, sources, parcours) sans dépendre uniquement des outils no-code."},
+    {"title": "Échantillon de prospects", "description": "Liste qualifiée de décideurs infra/cloud pour tester votre message."},
+    {"title": "Automatisations", "description": "Workflows de qualification et synchronisation avec votre outil de vente."}
+  ],
+  "expertise_stack": {"langages": ["Python"], "automation": ["n8n", "Make"], "data": ["SQL", "GA4", "GTM"]},
+  "mission_flash": "J'ai une méthodologie pour auditer le funnel d'acquisition B2B et proposer des leviers concrets. On en parle ?",
+  "why_growth_engineer": "Une agence vous livre des slides. Moi : du code et des scripts que vous gardez, une base de mesure que vous maîtrisez."
+}
