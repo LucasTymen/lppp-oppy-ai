@@ -4,7 +4,7 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 
 **Règles de sécurité** : voir `docs/base-de-connaissances/regles-securite.md` (secrets, Django prod, CSRF/XSS/injection, auth, API, checklist prod).
 
-**Environnement préféré** : Windows + WSL (travail dans WSL, bash) — voir `docs/base-de-connaissances/environnement-wsl-linux.md`. PowerShell en secours seulement.
+**Environnement préféré** : **Linux Ubuntu, dernier LTS en cours** (natif ou WSL ; travail en bash) — voir `docs/base-de-connaissances/environnement-wsl-linux.md`. PowerShell en secours seulement.
 
 ---
 
@@ -107,16 +107,20 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 3. Déploiement déclenché par tag, merge ou manuel, selon la stratégie choisie.
 4. En prod : pas de `DEBUG=True`, `SECRET_KEY` fort, `ALLOWED_HOSTS` explicite, base et Redis sécurisés.
 
-### 3.4 Ports (référence — ne pas confondre)
+### 3.4 Ports (référence — stack LPPP autonome, log commun § 5.3)
 
-| Port | Service | Contexte |
-|------|---------|----------|
-| **3000** | **Flowise** | Réservé. En local : http://localhost:3000. Ne pas utiliser 3000 pour les landings Next.js. |
-| **3001** | Landings Next.js (standalone-ackuracy, etc.) | En local : `cd deploy/standalone-ackuracy && npm run dev` → http://localhost:3001. Script `dev` avec `-p 3001` dans `package.json`. |
-| 5678 | n8n | Workflows, API. |
-| 8000 | Django (conteneur web) | Option A Docker. Option B runserver : 8080 (voir `erreurs-et-solutions.md` § localhost:8000). |
+**LPPP** utilise des **ports dédiés** pour une stack hermétique (aucune URL vers SquidResearch). Réf. `log-commun-lppp-squidresearch.md`, `avis-et-solutions-routage-lppp-reference.md`.
 
-**Règle** : ne jamais indiquer http://localhost:3000 pour une landing Next.js ; le port 3000 est celui de Flowise.
+| Port LPPP | Service | Contexte |
+|-----------|---------|----------|
+| **8010** | Django (conteneur web) | http://localhost:8010 (admin, essais, landings). Option B runserver : 8080. |
+| **5433** | PostgreSQL (lppp_db) | Connexion depuis l’hôte (Option B) : DB_HOST=localhost, DB_PORT=5433. SquidResearch utilise 5432. |
+| **6380** | Redis (lppp_redis) | REDIS_URL=redis://127.0.0.1:6380/0 depuis l’hôte. SquidResearch utilise 6379. |
+| **3010** | Flowise (lppp_flowise) | http://localhost:3010. FLOWISE_URL=http://localhost:3010. SquidResearch 3000/3001. |
+| **5681** | n8n (lppp_n8n) | http://localhost:5681. N8N_WEBHOOK_URL=http://localhost:5681/. SquidResearch 5679. |
+| **3001** | Landings Next.js (standalone) | En local : `cd deploy/standalone-ackuracy && npm run dev` → http://localhost:3001. |
+
+**Règle** : stack LPPP autonome (lppp_web, lppp_n8n, lppp_flowise, lppp_db, lppp_redis). Aucun .env ni config LPPP ne doit pointer vers les ports SquidResearch (8000, 5679, 3000/3001, 5432, 6379).
 
 ---
 

@@ -126,7 +126,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 
 - **Log commun LPPP ↔ SquidResearch** : **consulter systématiquement** `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` avant toute action ou recommandation sur Docker, ports, .env ou coexistence des deux stacks.
 - **Stratégie fluide Git + Vercel** : `docs/base-de-connaissances/strategie-deploiement-git-vercel.md` — checklist par projet (GitHub + GitLab + Vercel), réutilisable pour 10+ landings ; pièges : `erreurs-et-solutions.md`.
-- **Environnement WSL/Linux** : `docs/base-de-connaissances/environnement-wsl-linux.md` — **LPPP = Windows + WSL** (travail dans WSL) ; **WSL (bash) par défaut**, PowerShell en secours seulement (utilisateur préfère beaucoup moins PowerShell). Privilégier les commandes bash/WSL dans les procédures et la doc.
+- **Environnement** : `docs/base-de-connaissances/environnement-wsl-linux.md` — **Linux Ubuntu, dernier LTS en cours** (ex. 24.04 LTS), natif ou WSL ; bash par défaut, PowerShell en secours.
 - **Infra et secrets** : `docs/base-de-connaissances/infra-devops.md`
 - **Stratégie opérationnelle Make** : `docs/base-de-connaissances/strategie-operationnelle-make.md` — catalogue des commandes `make`, workflows (lancement, migrations, mise à jour, contrôle), répartition des responsabilités (DevOps, Dev Django, Chef de Projet). `make help` pour l'aide.
 - **Tâche prioritaire (mobilisation système et connexions)** : `docs/base-de-connaissances/segmentations/2025-01-30-lancement-docker-projet.md` — réparer et lancer conteneur, backend, front, admin (avec Dev Django, Pentester) ; Option B runserver si ERR_EMPTY_RESPONSE sous Windows.

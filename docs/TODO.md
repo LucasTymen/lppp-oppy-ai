@@ -4,7 +4,7 @@ Liste de tâches (maintenue par le chef de projet / agent pilote).
 
 **Environnement choisi** : **Docker web** (conteneur web, pas runserver local). **Git init + premier commit + push** : fait (GitHub origin + GitLab gitlab, SSH SquidResearch).
 
-**Sprint en cours** : **Relance projet pour démo + Chatbot Flowise/n8n opérationnel (LPP agents municipaux)** — voir `docs/base-de-connaissances/segmentations/2026-02-05-relance-projet-demo-chatbot-agents-municipaux.md`. Coordination : DevOps (relance stack, Flowise, .env), Automatizer (Flowise + n8n), Dev Django (embed, vue, template), Architecte, Designer, Chef de Projet.
+**Sprint en cours** : **URGENT — Revoir les routages des conteneurs** (toute l’équipe) — `segmentations/2026-02-05-sprint-urgent-routage-conteneurs.md`. Consulter le log commun SquidResearch et appliquer sa recommandation ; étude d’impact : `etude-impact-risques-routage-conteneurs-lppp.md`. En parallèle : relance démo + chatbot LPP agents municipaux. — voir `docs/base-de-connaissances/segmentations/2026-02-05-relance-projet-demo-chatbot-agents-municipaux.md`. Coordination : DevOps (relance stack, Flowise, .env), Automatizer (Flowise + n8n), Dev Django (embed, vue, template), Architecte, Designer, Chef de Projet.
 
 **Mobilisation agents système et connexions** : **DevOps, Dev Django, Pentester** sont mobilisés pour **réparer et lancer** le conteneur, le backend, le front et l’admin. Voir `2025-01-30-lancement-docker-projet.md`. **Montage du projet** : Orchestrateur, Chef de Projet, Data Analyst, Dev Django, DevOps — écrans, concordance des routes back, logique métier. Voir `2025-01-30-montage-projet-ecrans-routes-logique.md` et `routes-back-lppp.md`.
 

@@ -2,19 +2,21 @@
 
 Programme de **prospection et démarchage** via des **landing pages personnalisées**, avec **scraping** pour la recherche et l’ajustement des données. Architecture reprise de **SquidResearch** (conteneurs, monorepo `apps/`, Django, Celery, n8n, Flowise, Enriched, Kali Linux).
 
-**Environnement préféré** : WSL ou Linux — voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+**Environnement préféré** : **Linux Ubuntu, dernier LTS en cours** (ex. 24.04 LTS), natif ou via WSL — voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+
+**Stack LPPP autonome** : LPPP utilise **uniquement sa propre stack** (conteneurs `lppp_*`) : Django = **lppp_web** (port **8010**), n8n = **lppp_n8n** (5681), Flowise = **lppp_flowise** (3010), DB = **lppp_db** (5433), Redis = **lppp_redis** (6380). Aucune URL LPPP ne doit pointer vers SquidResearch (8000, 5679, 3000/3001, etc.). Réf. `docs/base-de-connaissances/log-commun-lppp-squidresearch.md`, `infra-devops.md` § 3.4.
 
 ## Stack (conteneurs)
 
-| Service      | Rôle                          | Port |
-|-------------|--------------------------------|------|
-| **db**      | PostgreSQL 16                 | 5432 (exposé pour dev local) |
-| **redis**   | Broker Celery + cache         | 6379 (exposé pour dev local) |
-| **web**     | Django (Gunicorn)             | 8000 |
+| Service      | Rôle                          | Port exposé (hôte) |
+|-------------|--------------------------------|---------------------|
+| **db**      | PostgreSQL 16 (lppp_db)       | 5433 |
+| **redis**   | Broker Celery + cache (lppp_redis) | 6380 |
+| **web**     | Django Gunicorn (**lppp_web** — **Django LPPP**) | **8010** |
 | **celery**  | Worker Celery                 | —    |
 | **celery-beat** | Planificateur Celery      | —    |
-| **n8n**     | Automatisation workflows      | 5678 |
-| **flowise** | LLM / chatbots                | 3000 |
+| **n8n**     | Automatisation (lppp_n8n)     | 5681 |
+| **flowise** | LLM / chatbots (lppp_flowise) | 3010 |
 | **enriched**| Scraping / enrichment (queue) | —    |
 | **kalilinux** | **Conteneur quali** : outils OSINT / sécurité (central à la stratégie d'enrichissement) | — |
 
@@ -57,10 +59,10 @@ python3 manage.py createsuperuser
 make runserver
 ```
 
-- **Admin** : http://127.0.0.1:8000/admin/  
+- **Admin** : http://127.0.0.1:8000/admin/ (runserver par défaut sur 8000)  
 - **Interface essais** : http://127.0.0.1:8000/essais/  
 
-**PostgreSQL uniquement** (dev et tests). Pas de SQLite (incompatible avec Postgres).  
+En **Option Docker**, utiliser **8010** (Django LPPP = lppp_web). **PostgreSQL uniquement** (dev et tests). Pas de SQLite (incompatible avec Postgres).  
 
 ## Structure (stratégie SquidResearch)
 

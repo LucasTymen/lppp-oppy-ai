@@ -86,6 +86,31 @@ git push -u gitlab main
 
 ---
 
+## Submodules : landings = projets à part entière
+
+**Décision** : chaque landing déployée en standalone est un **projet à part entière** (repo dédié). Dans LPPP, on la référence via un **submodule Git** (ex. `deploy/static-0flow-vercel`, `deploy/static-orsys-vercel`) pour figer une version sans dupliquer l’historique. Réf. `docs/base-de-connaissances/decisions.md` (2026-02-05).
+
+**Après avoir créé le repo et poussé la landing** : ajouter le submodule dans LPPP (une seule fois) :
+
+```bash
+# Depuis la racine LPPP
+git submodule add git@github.com:LucasTymen/LPPP_NomSociete.git deploy/static-<slug>-vercel
+git add .gitmodules deploy/static-<slug>-vercel
+git commit -m "chore: ajout submodule landing <slug>"
+git push origin main && git push gitlab main
+```
+
+**Clone frais de LPPP** (récupérer aussi le contenu des submodules) :
+
+```bash
+git clone --recurse-submodules <url_lppp>   # ou après clone :
+git submodule update --init --recursive
+```
+
+**Mettre à jour la référence** (après modif dans le repo de la landing) : aller dans le dossier du submodule, pull, puis dans LPPP commit la nouvelle référence (hash).
+
+---
+
 ## Récap
 
 | Étape | Action | Qui |

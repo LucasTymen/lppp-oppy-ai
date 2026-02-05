@@ -16,11 +16,11 @@
 
 ## Contenu du log commun (résumé)
 
-- **§ 1** — Adresses (LPPP : 8000, 5678, 3000, 5432, 6379 ; SquidResearch : 8000, 3000, 5679, 3001, 5432, 5555, etc.) et conflits de ports si les deux stacks tournent en même temps.
+- **§ 1** — Adresses et conflits de ports ; référence au doc **AVIS_SOLUTIONS_AGENTS_LPPP_ROUTAGE.md** (voir § 4.2).
 - **§ 2** — Variables d’environnement (.env LPPP à la racine LPPP ; .env SquidResearch dans `/home/lucas/tools/squidResearch` ; ne pas mélanger).
 - **§ 3** — Chemins des deux dépôts ; aucun chemin SquidResearch n’est monté dans le docker-compose LPPP.
-- **§ 4** — Fichiers / logs à tenir à jour (côté LPPP et SquidResearch).
-- **§ 5** — Avis et recommandations (coexistence, hermeticité).
+- **§ 4** — Fichiers / logs à tenir à jour (côté LPPP et SquidResearch) ; **§ 4.2** référence **AVIS_SOLUTIONS_AGENTS_LPPP_ROUTAGE.md** (avis et solutions par rôle).
+- **§ 5** — Avis et recommandations. **§ 5.3 Stack propre LPPP** : LPPP doit utiliser uniquement sa propre stack (lppp_web, lppp_n8n, lppp_flowise, lppp_db, lppp_redis). Aucune URL/host/port dans le .env ou les configs LPPP ne doit pointer vers SquidResearch (8000, 5679, 3001, etc.). Ports LPPP dédiés : 8010, 5433, 6380, 3010, 5678/5681. **§ 5.4 Herméticité** : utiliser exclusivement lppp_web, lppp_n8n, lppp_flowise, lppp_db, lppp_redis ; stack LPPP autonome. **§ 5.5** — Compléments.
 - **§ 6** — Résumé pour relecture rapide.
 - **§ 7** — État des projets Docker (snapshot : projets Compose et conteneurs LPPP vs SquidResearch).
 
@@ -32,4 +32,10 @@ Dès qu’un port, un chemin ou une décision d’infra change côté LPPP ou Sq
 
 ---
 
-*Dernière synchro de ce pointeur : 2026-02-04. Source : dépôt SquidResearch.*
+## Document Avis / Solutions (SquidResearch)
+
+Dans le dépôt SquidResearch : **`docs/infrastructure/AVIS_SOLUTIONS_AGENTS_LPPP_ROUTAGE.md`** — synthèse retours LPPP (sprint urgent, étude d’impact) et avis/solutions par rôle (Chef de Projet, Architecte, DevOps, Pentester). Les agents LPPP s’y réfèrent pour le détail des actions et des risques.
+
+---
+
+*Dernière synchro de ce pointeur : 2026-02-05. Source : dépôt SquidResearch (log commun § 5.3, § 5.4, AVIS_SOLUTIONS).*

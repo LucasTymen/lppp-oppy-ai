@@ -12,7 +12,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - "5433:5432"  # LPPP dédié (SquidResearch 5432) — stack autonome § 5.3 log commun
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-lpppuser} -d ${DB_NAME:-lppp}"]
       interval: 5s
@@ -27,7 +27,7 @@ services:
     volumes:
       - redis_data:/data
     ports:
-      - "6379:6379"
+      - "6380:6379"  # LPPP dédié (SquidResearch 6379) — stack autonome § 5.3 log commun
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
@@ -51,7 +51,7 @@ services:
       - static_volume:/app/static
       - media_volume:/app/media
     ports:
-      - "8000:8000"
+      - "8010:8000"  # LPPP dédié (SquidResearch 8000) — stack autonome § 5.3 log commun
     depends_on:
       db: { condition: service_healthy }
       redis: { condition: service_healthy }
@@ -99,7 +99,7 @@ services:
       N8N_PORT: 5678
       N8N_PROTOCOL: http
       NODE_ENV: production
-      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5678/}
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://localhost:5681/}
       GENERIC_TIMEZONE: ${TZ:-Europe/Paris}
       N8N_BASIC_AUTH_ACTIVE: ${N8N_BASIC_AUTH_ACTIVE:-false}
       N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER:-}
@@ -107,7 +107,7 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
     ports:
-      - "5678:5678"
+      - "5681:5678"  # LPPP dédié (SquidResearch 5679) — stack autonome § 5.3 log commun
     restart: unless-stopped
 
   flowise:
@@ -122,7 +122,7 @@ services:
       # Répertoire de travail : les fichiers déposés ici sont visibles dans le conteneur (et poussés via API par les agents)
       - ./data/flowise:/data/flowise
     ports:
-      - "3000:3000"
+      - "3010:3000"  # LPPP dédié (SquidResearch 3000/3001) — stack autonome § 5.3 log commun
     restart: unless-stopped
 
   enriched:

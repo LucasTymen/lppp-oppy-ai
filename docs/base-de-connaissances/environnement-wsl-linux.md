@@ -1,8 +1,8 @@
-# Environnement WSL / Linux — LPPP
+# Environnement Linux Ubuntu — LPPP
 
 **Contexte LPPP (contrairement à SquidResearch)** : on est sur un **environnement Windows avec WSL installé**, et le travail se fait **notamment dans WSL**. PowerShell est possible mais personnellement beaucoup moins prisé.
 
-**Environnement préféré (par défaut)** : **WSL** (Ubuntu) — préférence explicite de l’utilisateur. Tous les scripts, le Makefile et la documentation privilégient WSL. Les commandes et procédures sont données en **bash / WSL** en premier.
+**Environnement préféré** : **Linux Ubuntu, dernier LTS en cours** (ex. Ubuntu 24.04 LTS), en machine native ou via WSL — préférence explicite de l’utilisateur. Tous les scripts, le Makefile et la documentation privilégient WSL. Les commandes et procédures sont données en **bash / WSL** en premier.
 
 **PowerShell** : documenté en fallback si besoin ; à éviter comme canal principal pour le dev LPPP (l’utilisateur préfère WSL).
 
@@ -51,9 +51,9 @@ LPPP **réutilise les clés et la stratégie SSH de SquidResearch** : même `~/.
 
 ---
 
-## 2. Prérequis WSL / Linux
+## 2. Prérequis (Ubuntu LTS)
 
-- **WSL 2** avec Ubuntu (ex. Ubuntu 22.04)
+- **Ubuntu** : dernier LTS en cours (ex. **24.04 LTS**). Sous Windows : WSL 2 avec distribution Ubuntu
 - **Docker** : Docker Engine dans WSL ou Docker Desktop avec intégration WSL
 - **Make** : `sudo apt install build-essential`
 - **Python 3.12** : pour tests locaux et venv (Django dans Docker utilise l’image Python)
@@ -94,7 +94,7 @@ make build && make up
 make migrate
 make createsuperuser
 
-# Ouvrir http://localhost:8000/admin/
+# Ouvrir http://localhost:8010/admin/  (Django LPPP = lppp_web sur 8010)
 make services-urls   # Afficher toutes les URLs
 ```
 
@@ -104,7 +104,7 @@ make services-urls   # Afficher toutes les URLs
 make dev
 make venv-install   # Crée .venv + installe toutes les deps (dont django-environ)
 make runserver      # Utilise automatiquement .venv/bin/python si présent
-# Ouvrir http://127.0.0.1:8000/admin/
+# Ouvrir http://127.0.0.1:8000/admin/ (runserver) ou 8010 en Docker
 # Migrations / superuser : make migrate (dans Docker) ou .venv/bin/python manage.py migrate
 ```
 
@@ -190,4 +190,4 @@ En WSL, le projet doit résider dans le système de fichiers Linux (`/home/lucas
 
 ---
 
-*Document créé pour intégrer WSL/Linux comme environnement cible. LPPP = Windows + WSL (travail dans WSL) ; PowerShell en secours seulement. Dernière mise à jour : 2026-01-30.*
+*Environnement cible : **Ubuntu (dernier LTS)** — natif ou WSL. PowerShell en secours seulement. Dernière mise à jour : 2026-02-05.*

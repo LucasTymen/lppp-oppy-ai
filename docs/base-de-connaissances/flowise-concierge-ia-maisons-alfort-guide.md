@@ -29,7 +29,7 @@ La **seule** commande qui supprime les volumes (et donc réinitialise la base, n
 
 **Landing publique équipes municipales** : la page **`/maisons-alfort/`** affiche le même chatbot en mode public (sans connexion). Pour qu’il s’affiche au lieu du message « Chat en cours de configuration », il faut **obligatoirement** dans ton `.env` :
 - **`FLOWISE_CHATFLOW_ID`** = l’ID du chatflow (dans Flowise : ouvre ton Chatflow → onglet **Embed** → l’URL est du type `http://.../embed/XXXX` → **XXXX** est l’ID à copier).
-- **`FLOWISE_URL`** = `http://localhost:3000` si Flowise tourne en local (pour que l’iframe charge le chat depuis le navigateur).
+- **`FLOWISE_URL`** = `http://localhost:3010` (port LPPP dédié, stack autonome) pour que l’iframe charge le chat depuis le navigateur.
 
 Puis **redémarrer le runserver** (ou le conteneur web) pour que Django relise le `.env`. Sous WSL : `python3 manage.py runserver 127.0.0.1:8082` ou `bash scripts/runserver-wsl.sh 8082` (pas `python`, utiliser **python3**).
 
@@ -38,7 +38,7 @@ Puis **redémarrer le runserver** (ou le conteneur web) pour que Django relise l
 Une fois le chatflow créé, Flowise affiche dans l’onglet **Embed** un script et une URL de prédiction. Le **même ID** sert pour l’iframe (`/embed/{id}`) et pour l’API (`/api/v1/prediction/{id}`). Exemple (à remplacer par ton propre ID si différent) :
 
 - **ID chatflow** : `c95b70d6-c7b7-49a8-920f-de00615b0176`
-- **Host** : `http://localhost:3000`
+- **Host** : `http://localhost:3010` (LPPP)
 
 **Embed (script dans une page HTML)** :
 
@@ -47,7 +47,7 @@ Une fois le chatflow créé, Flowise affiche dans l’onglet **Embed** un script
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
     Chatbot.init({
         chatflowid: "c95b70d6-c7b7-49a8-920f-de00615b0176",
-        apiHost: "http://localhost:3000",
+        apiHost: "http://localhost:3010",
     })
 </script>
 ```
@@ -55,10 +55,10 @@ Une fois le chatflow créé, Flowise affiche dans l’onglet **Embed** un script
 **API de prédiction** (même chatflowId) :
 
 - **curl** :  
-  `curl http://localhost:3000/api/v1/prediction/c95b70d6-c7b7-49a8-920f-de00615b0176 -X POST -d '{"question": "Hey, how are you?"}' -H "Content-Type: application/json"`
+  `curl http://localhost:3010/api/v1/prediction/c95b70d6-c7b7-49a8-920f-de00615b0176 -X POST -d '{"question": "Hey, how are you?"}' -H "Content-Type: application/json"`
 
 - **Python** :  
-  `POST http://localhost:3000/api/v1/prediction/{chatflowId}` avec body `{"question": "..."}` (ex. avec `requests.post(API_URL, json={"question": "..."})`).
+  `POST http://localhost:3010/api/v1/prediction/{chatflowId}` avec body `{"question": "..."}` (ex. avec `requests.post(API_URL, json={"question": "..."})`).
 
 - **JavaScript (fetch)** :  
   `POST` sur la même URL avec `body: JSON.stringify({ question: "..." })`.
@@ -111,7 +111,7 @@ Ensuite, uploade `data/flowise/maisons-alfort-contenu.txt` dans Flowise (étape 
 
 ## Étape 2 — Document Store dans Flowise
 
-1. Ouvre Flowise : **http://localhost:3000** (ou l’URL de ton instance).
+1. Ouvre Flowise : **http://localhost:3010** (LPPP ; ou l’URL de ton instance).
 2. Va dans **Document Stores** (menu ou onglet dédié).
 3. **Créer un Document Store** :
    - Nom : `Maisons-Alfort` (ou « Assistant Ville Maisons-Alfort »).
@@ -188,17 +188,17 @@ Ensuite, uploade `data/flowise/maisons-alfort-contenu.txt` dans Flowise (étape 
 
 1. Dans l’écran du Chatflow, ouvre l’onglet **Embed** (ou **Share** / **API**).
 2. Tu obtiens soit :
-   - une **URL d’iframe** (ex. `http://localhost:3000/embed/xxx`) à mettre dans la page démo,
-   - soit une **URL d’API** (ex. `http://localhost:3000/api/v1/prediction/xxx`) pour appels programmatiques.
+   - une **URL d’iframe** (ex. `http://localhost:3010/embed/xxx`) à mettre dans la page démo,
+   - soit une **URL d’API** (ex. `http://localhost:3010/api/v1/prediction/xxx`) pour appels programmatiques.
 3. **Pour la page démo** (`deploy/concierge-demo-maisons-alfort/index.html`) :  
    - Remplace le bloc placeholder par une balise iframe dont le `src` est l’URL d’embed fournie par Flowise.  
    - Exemple :  
-     `<iframe src="http://localhost:3000/embed/VOTRE_ID" title="Chat assistant Maisons-Alfort"></iframe>`  
+     `<iframe src="http://localhost:3010/embed/VOTRE_ID" title="Chat assistant Maisons-Alfort"></iframe>`  
    - Si Flowise est exposé en production, utilise l’URL HTTPS correspondante.
 
 4. **Optionnel — Chatflow ID pour API**  
    - L’ID du Chatflow est souvent visible dans l’URL (ex. `.../chatflow/abc-123`) ou dans la section API.  
-   - Prédiction : `POST http://localhost:3000/api/v1/prediction/{chatflowId}` avec body `{"question": "..."}` (voir [API Reference](https://docs.flowiseai.com/api-reference)).
+   - Prédiction : `POST http://localhost:3010/api/v1/prediction/{chatflowId}` avec body `{"question": "..."}` (voir [API Reference](https://docs.flowiseai.com/api-reference)).
 
 ---
 
@@ -217,7 +217,7 @@ Ensuite, uploade `data/flowise/maisons-alfort-contenu.txt` dans Flowise (étape 
 
 ## Dépannage rapide
 
-- **« Impossible de trouver l'adresse IP du serveur de flowise »** (iframe sur /maisons-alfort/) : l'URL d'embed doit être résolue par le **navigateur** ; le nom `flowise` n'existe que dans le réseau Docker. Avec runserver sur l'hôte (DB_HOST=localhost), le code utilise désormais `http://localhost:3000` par défaut. Sinon définir **FLOWISE_URL=http://localhost:3000** dans `.env`. S'assurer que Flowise écoute sur 3000 (`docker compose up -d flowise`). Voir `erreurs-et-solutions.md` § Landing /maisons-alfort/.
+- **« Impossible de trouver l'adresse IP du serveur de flowise »** (iframe sur /maisons-alfort/) : l'URL d'embed doit être résolue par le **navigateur** ; le nom `flowise` n'existe que dans le réseau Docker. Avec runserver sur l'hôte (DB_HOST=localhost), le code utilise une URL locale ; définir **FLOWISE_URL=http://localhost:3010** dans `.env` (port LPPP). S'assurer que Flowise écoute sur 3010 (`docker compose up -d flowise`). Voir `erreurs-et-solutions.md` § Landing /maisons-alfort/.
 - **Aucun chunk après Upsert** : vérifier que le fichier .txt est bien uploadé et que le Text Splitter a une taille de chunk raisonnable (pas trop grande).
 - **Le modèle ne répond pas** : vérifier les credentials du LLM (clé API, URL Ollama, etc.).
 - **Réponses hors-sujet** : renforcer le System Prompt (« uniquement sur les informations fournies ») et vérifier que la Knowledge pointe vers le bon Document Store et qu’il est bien upserté.

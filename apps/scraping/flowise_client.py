@@ -9,7 +9,7 @@ from pathlib import Path
 
 def get_flowise_config():
     """URL, store ID et optionnellement API key depuis l'environnement."""
-    url = os.environ.get("FLOWISE_URL", "http://flowise:3000").rstrip("/")
+    url = os.environ.get("FLOWISE_URL", "http://flowise:3000").rstrip("/")  # en interne Docker : flowise:3000 ; depuis l'hôte : FLOWISE_URL=http://localhost:3010
     store_id = os.environ.get("FLOWISE_DOCUMENT_STORE_ID", "")
     api_key = os.environ.get("FLOWISE_API_KEY", "")
     return url, store_id, api_key
@@ -33,11 +33,10 @@ def get_flowise_chat_embed_url():
     if not base_url:
         db_host = (os.environ.get("DB_HOST") or "db").strip().lower()
         if db_host in ("localhost", "127.0.0.1"):
-            base_url = "http://localhost:3000"
+            base_url = "http://localhost:3010"  # port LPPP dédié (stack autonome)
         else:
-            # DB_HOST=db (Docker) : l'embed est quand même affiché dans le navigateur sur l'hôte,
-            # donc flowise:3000 ne sera pas résolu. On privilégie localhost:3000 pour l'embed.
-            base_url = "http://localhost:3000"
+            # DB_HOST=db (Docker) : l'embed est affiché dans le navigateur sur l'hôte → localhost:3010
+            base_url = "http://localhost:3010"
     base_url = base_url.rstrip("/")
     chatflow_id = (os.environ.get("FLOWISE_CHATFLOW_ID") or DEFAULT_CHATFLOW_ID).strip()
     if not chatflow_id:

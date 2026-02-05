@@ -2,9 +2,9 @@
 
 **Rôle** : Mettre en place l’environnement (venv, Docker ou dev local), tester l’admin et lancer le projet avec la première landing page.  
 **Référence** : `README.md`, `docs/base-de-connaissances/infra-devops.md`, `Makefile`.  
-**Environnement préféré** : WSL ou Linux — voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+**Environnement préféré** : **Linux Ubuntu, dernier LTS en cours** (ex. 24.04 LTS), natif ou WSL — voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
 
-**Environnement choisi pour LPPP** : **Docker web** (Option A — conteneur web sur port 8000). Option B (runserver local) reste en dépannage si accès impossible sous Windows (voir § 5).
+**Environnement choisi pour LPPP** : **Docker web** (Option A — conteneur **lppp_web** sur port **8010**, stack LPPP autonome). Option B (runserver local) reste en dépannage si accès impossible sous Windows (voir § 5). LPPP n'utilise jamais le port 8000 (réservé à SquidResearch).
 
 ---
 
@@ -50,10 +50,10 @@ make start
 # Créer un superutilisateur pour l’admin :
 make createsuperuser
 
-# 4. Ouvrir dans le navigateur
-# Admin : http://localhost:8000/admin/
-# Interface essais : http://localhost:8000/essais/
-# Landing pages (liste) : http://localhost:8000/
+# 4. Ouvrir dans le navigateur (ports LPPP dédiés, stack autonome)
+# Admin : http://localhost:8010/admin/
+# Interface essais : http://localhost:8010/essais/
+# Landing pages (liste) : http://localhost:8010/
 ```
 
 **Arrêter** : `make down`.
@@ -67,12 +67,13 @@ Django et Celery tournent sur ta machine ; PostgreSQL et Redis restent dans Dock
 ```bash
 # 1. Lancer uniquement la base et Redis
 docker compose up -d db redis
-# Les ports 5432 (PostgreSQL) et 6379 (Redis) sont exposés sur localhost.
+# Ports LPPP dédiés : 5433 (PostgreSQL) et 6380 (Redis) exposés sur localhost (stack autonome § 5.3 log commun).
 
 # 2. Copier et adapter .env pour la machine locale (Linux : cp)
 cp .env.example .env
-# Dans .env : DB_HOST=localhost (ou 127.0.0.1), REDIS_URL=redis://127.0.0.1:6379/0,
-# CELERY_BROKER_URL=redis://127.0.0.1:6379/1, CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/2
+# Dans .env : DB_HOST=localhost, DB_PORT=5433, REDIS_URL=redis://127.0.0.1:6380/0,
+# CELERY_BROKER_URL=redis://127.0.0.1:6380/1, CELERY_RESULT_BACKEND=redis://127.0.0.1:6380/2
+# (Optionnel) Flowise : docker compose up -d flowise → FLOWISE_URL=http://localhost:3010
 
 # 3. Créer et activer le venv (voir § 1)
 python3 -m venv .venv
@@ -102,7 +103,7 @@ make runserver
 
 ## 3. Tester l’interface admin
 
-1. Aller sur **http://localhost:8000/admin/** (ou http://127.0.0.1:8000/admin/ en local).
+1. Aller sur **http://localhost:8010/admin/** (Docker) ou **http://127.0.0.1:8080/admin/** (Option B runserver).
 2. Se connecter avec le compte créé par `createsuperuser`.
 3. Modèles disponibles :
    - **Campagnes** (apps.campaigns) : campagnes de prospection.
@@ -214,12 +215,14 @@ Si le stack Docker ne répond pas ou que le conteneur **web** redémarre en bouc
 
 ## 6. Récap URLs
 
+**Option A (Docker)** : Django LPPP = **lppp_web** sur **8010**. n8n = 5681, Flowise = 3010.
+
 | URL | Usage |
 |-----|--------|
-| http://localhost:8000/admin/ | Interface admin Django (campagnes, prospects, landing pages) |
-| http://localhost:8000/essais/ | Interface landingsgenerator (premier écran relance salon) |
-| http://localhost:8000/ | Liste des landing pages (selon `apps.landing_pages.urls`) |
-| http://localhost:8000/p/<slug>/ | Page publique d’une landing (si `is_published=True`) |
+| http://localhost:8010/admin/ | Interface admin Django (campagnes, prospects, landing pages) |
+| http://localhost:8010/essais/ | Interface landingsgenerator (premier écran relance salon) |
+| http://localhost:8010/ | Liste des landing pages (selon `apps.landing_pages.urls`) |
+| http://localhost:8010/p/<slug>/ | Page publique d’une landing (si `is_published=True`) |
 
 ---
 

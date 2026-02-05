@@ -26,7 +26,7 @@ RED    = \033[0;31m
 CYAN   = \033[0;36m
 NC     = \033[0m
 
-.PHONY: help start go relance full-setup services-urls info backup restore backup-clean
+.PHONY: help start go relance relance-safe full-setup services-urls info backup restore backup-clean
 .PHONY: up down stop restart full build build-no-cache pull update clean-containers
 .PHONY: migrate migrate-wait makemigrations showmigrations dbshell
 .PHONY: shell createsuperuser landing-p4s static check
@@ -54,10 +54,14 @@ ensure-env:
 # =============================================================================
 
 # go — Démarrage à froid complet (tout depuis zéro)
+# ATTENTION : utilise "down -v" → SUPPRIME les volumes (postgres_data, redis_data, static, media) = PERTE DE DONNÉES.
+# Pour préserver les données : utiliser "make relance-safe" (build + start sans supprimer les volumes).
 # Requiert : bash ou sh (Linux, Mac, WSL, Git Bash)
 go: ensure-env
 	@echo "$(CYAN)🚀 $(PROJECT_NAME) — DÉMARRAGE À FROID COMPLET$(NC)"
-	@echo "$(YELLOW)⚠️  Arrêt et nettoyage des services existants...$(NC)"
+	@echo "$(RED)⚠️  ATTENTION : down -v supprime les volumes (données BDD, Redis, static, media).$(NC)"
+	@echo "$(YELLOW)   Pour garder vos données, utilisez : make relance-safe$(NC)"
+	@echo "$(YELLOW)  Arrêt et nettoyage des services existants...$(NC)"
 	$(DOCKER) down -v --remove-orphans 2>/dev/null || $(DOCKER) down
 	@echo "$(GREEN)✅ Services arrêtés$(NC)"
 	@echo ""
@@ -124,6 +128,31 @@ relance: docker-restart-seq health-check
 	@echo "$(GREEN)✅ Application relancée$(NC)"
 	@$(MAKE) services-urls
 
+# relance-safe — Rebuild + démarrage SANS supprimer les volumes (préserve postgres_data, redis_data, static, media)
+# À utiliser quand on ne veut pas perdre ses données. N'utilise pas "down -v".
+relance-safe: ensure-env clean-containers
+	@echo "$(CYAN)🔨 Construction des images (volumes préservés)...$(NC)"
+	$(DOCKER) build
+	@echo "$(GREEN)✅ Images construites$(NC)"
+	@echo "$(CYAN)🚀 Démarrage séquentiel...$(NC)"
+	$(DOCKER) up -d db redis
+	@sleep 10
+	$(DOCKER) up -d web
+	@sleep 15
+	$(DOCKER) up -d celery celery-beat
+	$(DOCKER) up -d n8n flowise
+	@echo "$(CYAN)⏳ Attente que Django soit prêt...$(NC)"
+	@until $(DOCKER) exec web python manage.py check >/dev/null 2>&1; do \
+		echo "  Django pas encore prêt, attente 5s..."; sleep 5; \
+	done
+	@echo "$(CYAN)📝 Migrations...$(NC)"
+	$(DOCKER) exec web python manage.py migrate --noinput
+	@echo "$(CYAN)📦 Fichiers statiques...$(NC)"
+	$(DOCKER) exec web python manage.py collectstatic --noinput --clear 2>/dev/null || true
+	@$(MAKE) health-check
+	@echo "$(GREEN)🎉 Relance terminée (données préservées)$(NC)"
+	@$(MAKE) services-urls
+
 # full-setup — Configuration complète initiale (première fois)
 full-setup: ensure-env build
 	@echo "$(CYAN)🚀 Configuration complète $(PROJECT_NAME)...$(NC)"
@@ -163,13 +192,13 @@ docker-restart-seq:
 
 services-urls:
 	@echo "$(CYAN)📊 URLs des services$(NC)"
-	@echo "  🌐 Django:       http://localhost:8000"
-	@echo "  📊 Admin:        http://localhost:8000/admin/"
-	@echo "  📋 Essais:       http://localhost:8000/essais/"
-	@echo "  🔄 n8n:          http://localhost:5678"
-	@echo "  🤖 Flowise:      http://localhost:3000"
-	@echo "  🗄️  PostgreSQL:   localhost:5432"
-	@echo "  🔴 Redis:        localhost:6379"
+	@echo "  🌐 Django:       http://localhost:8010"
+	@echo "  📊 Admin:        http://localhost:8010/admin/"
+	@echo "  📋 Essais:       http://localhost:8010/essais/"
+	@echo "  🔄 n8n:          http://localhost:5681"
+	@echo "  🤖 Flowise:      http://localhost:3010"
+	@echo "  🗄️  PostgreSQL:   localhost:5433"
+	@echo "  🔴 Redis:        localhost:6380"
 
 info:
 	@echo "$(CYAN)📊 $(PROJECT_NAME) — Informations$(NC)"
@@ -187,7 +216,8 @@ help:
 	@echo ""
 	@echo "$(CYAN)🚀 Commandes principales:$(NC)"
 	@echo "  make start        — LANCER TOUT en une commande (usage quotidien, pas de venv)"
-	@echo "  make go           — DÉMARRAGE À FROID COMPLET (première fois ou reset)"
+	@echo "  make go           — DÉMARRAGE À FROID COMPLET (⚠️ supprime les volumes = perte de données)"
+	@echo "  make relance-safe — Rebuild + start SANS supprimer les volumes (préserve les données)"
 	@echo "  make relance      — Redémarrer sans rebuild"
 	@echo "  make full-setup   — Configuration complète initiale"
 	@echo "  make services-urls — Afficher les URLs des services"
@@ -340,7 +370,7 @@ createsuperuser:
 # Recréer / mettre à jour la landing P4S en base (évite 404 sur /p/p4s-archi/)
 landing-p4s:
 	$(DOCKER) exec web python manage.py create_landing_p4s --update --publish
-	@echo "$(GREEN)✅ Landing P4S à jour. URL : http://localhost:8000/p/p4s-archi/$(NC)"
+	@echo "$(GREEN)✅ Landing P4S à jour. URL : http://localhost:8010/p/p4s-archi/$(NC)"
 
 # Synchroniser le contenu P4S (source unique JSON) vers standalone et frontend Next.js
 # Après édition de docs/contacts/p4s-archi/landing-proposition-joel.json
@@ -420,7 +450,7 @@ logs-flowise:
 health:
 	@echo "Vérification db..." && $(DOCKER) exec db pg_isready -U lpppuser -d lppp 2>/dev/null || echo "db: N/A"
 	@echo "Vérification redis..." && $(DOCKER) exec redis redis-cli ping 2>/dev/null || echo "redis: N/A"
-	@curl -s -o /dev/null -w "Web: %{http_code}\n" http://localhost:8000/ 2>/dev/null || echo "web: non accessible"
+	@curl -s -o /dev/null -w "Web: %{http_code}\n" http://localhost:8010/ 2>/dev/null || echo "web: non accessible"
 
 # Vérification santé détaillée (stratégie SquidResearch)
 health-check:
@@ -470,7 +500,7 @@ celery-beat-restart:
 
 dev:
 	$(DOCKER) up -d db redis
-	@echo "db et redis démarrés. .env : DB_HOST=localhost, REDIS_URL=redis://127.0.0.1:6379/0"
+	@echo "db et redis démarrés. .env : DB_HOST=localhost, DB_PORT=5433, REDIS_URL=redis://127.0.0.1:6380/0"
 	@echo "Puis : make venv-install && make runserver"
 
 # venv — Créer le venv uniquement (sans installer les deps)
