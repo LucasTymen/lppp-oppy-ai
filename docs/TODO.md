@@ -4,12 +4,15 @@ Liste de tâches (maintenue par le chef de projet / agent pilote).
 
 **Environnement choisi** : **Docker web** (conteneur web, pas runserver local). **Git init + premier commit + push** : fait (GitHub origin + GitLab gitlab, SSH SquidResearch).
 
-**Sprint en cours** : toute l'équipe technique mobilisée — voir `docs/base-de-connaissances/segmentations/2025-01-30-sprint-equipe-technique.md`.
+**Sprint en cours** : **Relance projet pour démo + Chatbot Flowise/n8n opérationnel (LPP agents municipaux)** — voir `docs/base-de-connaissances/segmentations/2026-02-05-relance-projet-demo-chatbot-agents-municipaux.md`. Coordination : DevOps (relance stack, Flowise, .env), Automatizer (Flowise + n8n), Dev Django (embed, vue, template), Architecte, Designer, Chef de Projet.
 
 **Mobilisation agents système et connexions** : **DevOps, Dev Django, Pentester** sont mobilisés pour **réparer et lancer** le conteneur, le backend, le front et l’admin. Voir `2025-01-30-lancement-docker-projet.md`. **Montage du projet** : Orchestrateur, Chef de Projet, Data Analyst, Dev Django, DevOps — écrans, concordance des routes back, logique métier. Voir `2025-01-30-montage-projet-ecrans-routes-logique.md` et `routes-back-lppp.md`.
 
 | Statut   | Tâche | Priorité |
 |----------|--------|----------|
+| **À faire (priorité démo)** | **Relance projet** : `make ensure-env` puis `make up` (ou `make start`) ; en cas de conflit conteneurs : `make clean-containers` puis `make start`. Vérifier Django (8000), n8n (5678), Flowise (3000). Réf. segmentation `2026-02-05-relance-projet-demo-chatbot-agents-municipaux.md`. | **Haute** |
+| **À faire (priorité démo)** | **Chatbot Flowise/n8n opérationnel sur LPP agents municipaux** : page `/p/maisons-alfort/` (ou `/maisons-alfort/`) doit afficher le chatbot (iframe Flowise), pas d’écran blanc ni erreur « adresse IP flowise ». Flowise sur 3000, `FLOWISE_CHATFLOW_ID` et `FLOWISE_URL=http://localhost:3000` dans .env ; chaîne n8n scrape → push Flowise. Voir même segmentation + `flowise-concierge-ia-maisons-alfort-guide.md`. | **Haute** |
+| **À faire (reprise)** | **Scraper Concierge IA (n8n)** : réimporter le workflow `docs/n8n-workflows/concierge-ia-aspiration-maisons-alfort.json` dans n8n, exécuter bout en bout, vérifier que le dernier nœud « Rapport run (scrape + Flowise) » produit `{ run, scrape, flowise }`. Optionnel : exporter/conserver les rapports run pour traçabilité. Voir `guide-equipe-scraper-n8n-flowise.md`. | Moyenne |
 | **À faire immédiatement** | **Modifications landing visibles** : appliquer la procédure `procedure-modifications-landing-visible.md` — après édition du JSON lancer `create_landing_p4s --update` ; recharger sans cache (Ctrl+Shift+R). Headers anti-cache déjà ajoutés sur la vue landing. | **Urgent** |
 | Fait     | **Git init + premier commit + push** : Git initialisé, remotes SSH (origin GitHub, gitlab GitLab), commit 67a2055 (125 fichiers), push origin main et push gitlab main réussis. | — |
 | À faire  | **Montage projet** : Orchestrateur, Chef de Projet, Data Analyst, Dev Django, DevOps — écrans, concordance des routes back, logique métier ; segmentation `2025-01-30-montage-projet-ecrans-routes-logique.md`, doc `routes-back-lppp.md` | Haute |
@@ -35,5 +38,6 @@ Liste de tâches (maintenue par le chef de projet / agent pilote).
 | Fait     | Créer log projet, log IA, TODO, boîte à idées | — |
 | Fait     | Intelligence métier : app apps.intelligence (scoring, qualité, matching), doc intelligence-metier-algorithmes.md, branchement nodes | — |
 | Fait     | Créer .env.example et .gitignore (infra DevOps) | — |
+| Fait     | **Scraper Concierge IA finalisé (n8n)** : workflow `concierge-ia-aspiration-maisons-alfort.json` avec collecte des deux résultats (scrape Django + Flowise) via nœud Merge + « Rapport run » ; sortie finale `{ run, scrape: { pageCount, urls, errors }, flowise: { file, numAdded } }`. Guide équipe et README n8n-workflows mis à jour. | — |
 
 *Ajouter les nouvelles tâches en tête du tableau ; marquer « Fait » quand terminé.*

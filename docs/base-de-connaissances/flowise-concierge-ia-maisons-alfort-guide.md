@@ -25,6 +25,46 @@ La **seule** commande qui supprime les volumes (et donc réinitialise la base, n
 3. **Ingestion des textes** : les textes sortis de n8n sont mis dans un ou plusieurs fichiers `.txt`, uploadés dans le Document Store (ou via API).
 4. **URL du chat** : utiliser l’onglet **Embed** ou **API** du Chatflow pour récupérer l’URL à mettre dans la page démo.
 
+**Interface de test dans LPPP** : une fois le chatflow créé, configurer `FLOWISE_CHATFLOW_ID` (ID visible dans Flowise → Embed) dans `.env`, puis ouvrir **`/essais/concierge/`** (authentification admin requise) pour tester le chatbot dans l’interface Django. Voir `docs/base-de-connaissances/routes-back-lppp.md` et `.env.example`.
+
+**Landing publique équipes municipales** : la page **`/maisons-alfort/`** affiche le même chatbot en mode public (sans connexion). Pour qu’il s’affiche au lieu du message « Chat en cours de configuration », il faut **obligatoirement** dans ton `.env` :
+- **`FLOWISE_CHATFLOW_ID`** = l’ID du chatflow (dans Flowise : ouvre ton Chatflow → onglet **Embed** → l’URL est du type `http://.../embed/XXXX` → **XXXX** est l’ID à copier).
+- **`FLOWISE_URL`** = `http://localhost:3000` si Flowise tourne en local (pour que l’iframe charge le chat depuis le navigateur).
+
+Puis **redémarrer le runserver** (ou le conteneur web) pour que Django relise le `.env`. Sous WSL : `python3 manage.py runserver 127.0.0.1:8082` ou `bash scripts/runserver-wsl.sh 8082` (pas `python`, utiliser **python3**).
+
+### Exemple d’ID et d’appels API (Flowise Embed / Prediction)
+
+Une fois le chatflow créé, Flowise affiche dans l’onglet **Embed** un script et une URL de prédiction. Le **même ID** sert pour l’iframe (`/embed/{id}`) et pour l’API (`/api/v1/prediction/{id}`). Exemple (à remplacer par ton propre ID si différent) :
+
+- **ID chatflow** : `c95b70d6-c7b7-49a8-920f-de00615b0176`
+- **Host** : `http://localhost:3000`
+
+**Embed (script dans une page HTML)** :
+
+```html
+<script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+    Chatbot.init({
+        chatflowid: "c95b70d6-c7b7-49a8-920f-de00615b0176",
+        apiHost: "http://localhost:3000",
+    })
+</script>
+```
+
+**API de prédiction** (même chatflowId) :
+
+- **curl** :  
+  `curl http://localhost:3000/api/v1/prediction/c95b70d6-c7b7-49a8-920f-de00615b0176 -X POST -d '{"question": "Hey, how are you?"}' -H "Content-Type: application/json"`
+
+- **Python** :  
+  `POST http://localhost:3000/api/v1/prediction/{chatflowId}` avec body `{"question": "..."}` (ex. avec `requests.post(API_URL, json={"question": "..."})`).
+
+- **JavaScript (fetch)** :  
+  `POST` sur la même URL avec `body: JSON.stringify({ question: "..." })`.
+
+Dans LPPP, l’iframe utilise l’URL **`{FLOWISE_URL}/embed/{FLOWISE_CHATFLOW_ID}`** construite par `get_flowise_chat_embed_url()` ; il suffit de définir `FLOWISE_CHATFLOW_ID` (et `FLOWISE_URL`) dans `.env`.
+
 **Workflow complet en une seule recette (click & drop)** : **`docs/flowise-workflows/workflow-complet-concierge-maisons-alfort.md`** — checklist reproductible étape par étape.
 
 ---
@@ -177,6 +217,7 @@ Ensuite, uploade `data/flowise/maisons-alfort-contenu.txt` dans Flowise (étape 
 
 ## Dépannage rapide
 
+- **« Impossible de trouver l'adresse IP du serveur de flowise »** (iframe sur /maisons-alfort/) : l'URL d'embed doit être résolue par le **navigateur** ; le nom `flowise` n'existe que dans le réseau Docker. Avec runserver sur l'hôte (DB_HOST=localhost), le code utilise désormais `http://localhost:3000` par défaut. Sinon définir **FLOWISE_URL=http://localhost:3000** dans `.env`. S'assurer que Flowise écoute sur 3000 (`docker compose up -d flowise`). Voir `erreurs-et-solutions.md` § Landing /maisons-alfort/.
 - **Aucun chunk après Upsert** : vérifier que le fichier .txt est bien uploadé et que le Text Splitter a une taille de chunk raisonnable (pas trop grande).
 - **Le modèle ne répond pas** : vérifier les credentials du LLM (clé API, URL Ollama, etc.).
 - **Réponses hors-sujet** : renforcer le System Prompt (« uniquement sur les informations fournies ») et vérifier que la Knowledge pointe vers le bon Document Store et qu’il est bien upserté.

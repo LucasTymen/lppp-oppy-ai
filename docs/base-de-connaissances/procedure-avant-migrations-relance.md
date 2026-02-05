@@ -39,6 +39,8 @@ Si `make push-both` n’est pas utilisé :
 
 ### 2.2 Migrations (uniquement si les modèles Django ont changé)
 
+**Prérequis** : le stack Docker doit être démarré (au moins `db` et `web`). Sinon : `make start` ou `make up` avant d’exécuter les commandes ci‑dessous. Si tu vois *« service "web" is not running »* → lancer d’abord `make start`.
+
 - **Créer les migrations** (après modification de `models.py`) :  
   `make makemigrations`  
   (ou `docker compose exec web python manage.py makemigrations`)

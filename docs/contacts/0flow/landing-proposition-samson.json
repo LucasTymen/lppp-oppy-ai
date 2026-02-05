@@ -1,0 +1,71 @@
+{
+  "page_title": "Lucas Tymen x 0Flow — De la donnée brute à l'action automatisée",
+  "alert_banner": "Rapport d'audit d'automatisation offert — Réserver un échange",
+  "hero_headline": "De la donnée brute à l'action automatisée : Lucas Tymen x 0Flow",
+  "hero_sub_headline": "Growth Engineer spécialisé en Python & IA. Je ne me contente pas de coder, je crée des systèmes qui éliminent les frictions.",
+  "hero_subtitle": "Pour 0Flow — Samson Fedida",
+  "intro": "",
+  "icebreaker": "Votre mission est de supprimer le « Flow » inutile. Ma mission est de construire les connecteurs qui rendent cela possible.",
+  "cta_text": "Télécharger mon rapport d'audit d'automatisation",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Entretien 0Flow — Lucas Tymen — rapport d'audit automatisation",
+  "rapport_url": "/p/0flow/rapport/",
+  "seo_resume": {
+    "title": "Résumé SEO — 0Flaw",
+    "manque_annuel": "~30 000 € / an",
+    "intro": "Problèmes principaux identifiés :",
+    "problemes_cles": [
+      "23 pages non indexables",
+      "155 pages sans Referrer-Policy",
+      "3 pages sans H1",
+      "Titres dupliqués et canoniques absentes"
+    ],
+    "lien_analyse": "Voir l'analyse SEO complète →"
+  },
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "coordonnees_intro": "Pour échanger ou recevoir le rapport d'audit d'automatisation :",
+  "pain_points": [
+    "Les API tierces changent souvent — qui maintient les connecteurs ?",
+    "Vendre l'automatisation à des profils non-tech sans perdre en puissance ?",
+    "Faire face à Zapier/Make qui baissent les prix tout en restant différenciant ?",
+    "Rassurer sur la cybersécurité et les fuites de données via l'IA ?"
+  ],
+  "enjeux_lead": "0Flow est sur un marché en explosion (IA / BPA), mais le champ de bataille a ses contraintes. Voici ce que j'ai identifié pour vous :",
+  "solution_workflow": "Je ne remplace pas l'humain — je supprime les tâches répétitives qui le rendent malheureux. En pratique : API First, Python Glue Code (la « colle » entre vos outils), scraping avancé (Selenium / Playwright) quand il faut aller là où les API ne suffisent pas, et LLM Ops pour les agents. Quand une API Hubspot ou Salesforce change, c'est sur ce genre de Glue Code que je peux vous faire gagner des semaines de dev. Beaucoup de boîtes ont des outils ; personne ne s'occupe systématiquement de la maintenance des connecteurs. C'est là que j'interviens.",
+  "workflow_image_url": "",
+  "hero_background_url": "/static/landing_pages/images/hero-0flow.png",
+  "positionnement": "Je me positionne en Growth Engineer orienté automation : connecteurs sur mesure, pipelines de données, et évangélisation technique. 0Flow propose un cadre sécurisé (RGPD, workflows maîtrisés) au moment où les boîtes ont peur de l'IA « sauvage » — et en période de crise, elles automatisent plutôt qu'elles recrutent. Mon angle : rendre l'automatisation accessible sans sacrifier la flexibilité du code.",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer : acquisition B2B, automatisation des processus (Python, n8n, Make, Flowise), et pipelines de données. J'utilise mes propres scripts de scraping et de qualification pour identifier les meilleures opportunités — pour décrocher cet entretien, j'ai qualifié 0Flow comme une cible idéale dans le 94. Dogfooding permanent.",
+  "services": [
+    {
+      "title": "Pourquoi l'automation maintenant ?",
+      "description": "En période de crise, les boîtes ne recrutent plus, elles automatisent. Le RGPD est votre allié : les entreprises ont peur de l'IA non maîtrisée ; 0Flow propose un cadre sécurisé. L'émergence des agents (Auto-GPT, BabyAGI) ouvre la voie à des connecteurs plus intelligents — c'est là que le Python et le Glue Code font la différence."
+    },
+    {
+      "title": "Make vs 0Flow : la flexibilité du code",
+      "description": "Make et Zapier ont une courbe d'apprentissage raide ou deviennent chers dès le volume. UIPath est trop lourd pour un déploiement rapide. 0Flow peut se différencier en rendant l'automatisation accessible tout en gardant la possibilité d'injecter du code sur mesure : déployer un agent Python en 48h plutôt qu'un RPA en 6 mois. Les clients veulent du No-Code jusqu'à ce que ça se complique — là, ils ont besoin de quelqu'un qui fait la « colle »."
+    },
+    {
+      "title": "Sécuriser vos workflows",
+      "description": "Politique et légal : le RGPD est un argument de vente pour 0Flow. Les fuites de données via l'IA font peur ; un cadre workflow maîtrisé (données internes, pas d'IA sauvage en production) rassure. Technologie : les fournisseurs (OpenAI, Anthropic) dictent les prix des API — avoir des connecteurs maintenables et une couche d'abstraction permet de pivoter sans tout casser."
+    },
+    {
+      "title": "Mes agents de prospection",
+      "description": "Pour décrocher cet entretien, j'ai utilisé mes propres scripts de scraping et de qualification pour identifier 0Flow comme la meilleure opportunité dans le 94. Capture d'écran de code, schémas d'automatisation, pipelines qui connectent des outils qui ne sont pas censés se parler (ex. scraper → données enrichies → CRM via API custom). C'est du dogfooding : j'utilise mes outils pour moi-même."
+    }
+  ],
+  "expertise_stack": {
+    "langages": ["Python", "Django"],
+    "automation": ["API First", "n8n", "Make", "Zapier", "Flowise", "LLM Ops"],
+    "data": ["Selenium", "Playwright", "Scraping avancé", "PostgreSQL", "Docker"]
+  },
+  "mission_flash": "J'ai préparé un rapport d'audit d'automatisation (contexte marché, SWOT, PESTEL, Porter, concurrence) pour cadrer notre échange. Si l'angle vous parle, je serais ravi d'en discuter — sans engagement. Question que j'aime poser : « Comment gérez-vous la maintenance des connecteurs quand une API comme Hubspot ou Salesforce change ? » C'est sur ce Glue Code que je peux vous faire gagner des semaines de dev.",
+  "why_growth_engineer": "Beaucoup de boîtes ont des outils, mais personne ne s'occupe de la « colle » entre eux. Je suis le spécialiste de cette colle : code propriétaire que vous gardez, connecteurs maintenables, et une logique de responsabilité (RACI) intégrée au code. Pas du vent, pas des PDF — des systèmes qui tournent.",
+  "produit_commercial": "Rapport d'audit d'automatisation (SWOT, PESTEL, Porter, étude concurrence) pour 0Flow. Échange café ou appel pour voir comment on peut avancer ensemble sur la partie connecteurs et Glue Code.",
+  "loom_embed_url": "",
+  "demo_video_caption": "En 60 secondes : comment j'ai automatisé un processus pour une PME (scraper → données enrichies → CRM via API custom)."
+}

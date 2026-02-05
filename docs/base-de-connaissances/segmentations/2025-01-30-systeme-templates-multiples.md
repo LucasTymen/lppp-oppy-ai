@@ -181,7 +181,7 @@
   - Test de sélection de template
   - Test de fallback vers default
   - Test de validation des choices
-- [ ] Exécuter les tests : `PYTEST_USE_SQLITE=1 PYTHONPATH=".:apps" python -m pytest apps/landing_pages/ -v`
+- [ ] Exécuter les tests : `PYTHONPATH=".:apps" python3 -m pytest apps/landing_pages/ -v`
 
 **Livrables** :
 - Code Python (models, views, admin)

@@ -26,6 +26,7 @@
 |-------|-----|-----|--------|
 | `""` | `views.landing_list` | — | Liste des landing pages (racine `/`) avec filtres `?sector=` et `?category=` |
 | `console/` | `views.console_landings` | `console_landings` | Console landings : tableau URL Django + URL déployée (Vercel), filtres secteur/catégorie |
+| `maisons-alfort/` | `views.concierge_maisons_alfort_public` | `concierge_maisons_alfort_public` | Landing publique Concierge IA pour les équipes municipales (chatbot Flowise intégré) |
 | `p/<slug:slug>/` | `views.landing_public` | `landing_public` | Page publique d’une landing (`/p/<slug>/`) |
 
 | `p/<slug:slug>/rapport/` | `views.landing_rapport` | `landing_rapport` | Page « Consulter le rapport » : rendu Markdown depuis `docs/contacts/<slug>/rapport-complet*.md` |
@@ -37,6 +38,7 @@
 | Route | Vue | Nom | Usage |
 |-------|-----|-----|--------|
 | `""` | `views.EssaisIndexView` | `index` | Premier écran essais : présentation relance salon (`/essais/`) |
+| `concierge/` | `views.ConciergeChatView` | `concierge_chat` | Interface de test du chatbot Concierge IA (embed Flowise) — authentification requise |
 
 *Écrans à venir* : à définir dans la segmentation interface landingsgenerator (wizard, choix template, etc.).
 
@@ -63,8 +65,10 @@
 | `/admin/` | GET | Admin Django |
 | `/` | GET | Liste des landing pages |
 | `/console/` | GET | Console landings (URL Django + URL déployée) |
+| `/maisons-alfort/` | GET | Landing Concierge IA Maisons-Alfort (équipes municipales, chatbot intégré) |
 | `/p/<slug>/` | GET | Page publique landing |
 | `/essais/` | GET | Index essais (relance salon) |
+| `/essais/concierge/` | GET | Test chatbot Concierge IA (embed Flowise, authentifié) |
 | `/campaigns/` | GET | Liste des campagnes (authentifié) |
 | `/campaigns/<slug>/` | GET | Détail campagne (authentifié) |
 | `/api/enriched/enrich` | POST | Webhook enrichissement |

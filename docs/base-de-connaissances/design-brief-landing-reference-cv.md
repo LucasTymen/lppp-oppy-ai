@@ -17,7 +17,10 @@ Objectif : que la landing proposition (Django ou Next.js) atteigne le même nive
 ## 2. Ce qu'on récupère chez la cible (CSS Vampire) vs ce qu'on ajoute
 
 - **Chez la cible** : CSS Vampire extrait **uniquement** couleurs (bg, text, primary, secondary), polices, logo. Pas d'image de fond utilisée dans le hero (souvent filtrée). Voir `css-vampire.md`.
-- **Le fond du hero** : ce n'est **pas** une image du site cible ; c'est un **dégradé généré** dans le template à partir de ces couleurs. Pour retrouver les **effets et couleurs** de la référence (lien ci-dessus), il faut les intégrer dans le template (dégradés, animations, variété de couleurs).
+- **Thème manuel si extraction insuffisante** : lorsque CSS Vampire ne détecte pas correctement les couleurs d’accent (ex. teal/cyan sur un site sombre), on peut **injecter un thème manuel** (variables CSS + dégradé) dans le JSON ou la commande de création de landing (ex. 0flow : `THEME_0FLAW`, `THEME_CSS_0FLAW`). Étude plus approfondie du site cible : couleurs réelles, dégradés, logos, pour les recréer à la main si besoin.
+- **Image de fond hero** : priorité à `hero_background_url` (image fournie par le contact ou extraite manuellement) ; sinon dégradé thème. L’image peut être hébergée en static (ex. `static/landing_pages/images/hero-<slug>.png`) avec parallaxe et overlay.
+- **Bandeau (alert banner)** : bandeau optionnel sous la nav (une ligne, fond primary), pour message d’accroche (offre, CTA). Champ `alert_banner` dans le JSON ; style cohérent avec le thème (ex. teal 0Flaw).
+- **Le fond du hero (fallback)** : sans image, c’est un **dégradé généré** dans le template à partir des couleurs du thème. Pour retrouver les **effets et couleurs** de la référence (lien ci-dessus), les intégrer dans le template (dégradés, animations, variété de couleurs).
 
 ## 3. Contraintes à respecter
 
@@ -60,6 +63,7 @@ Référence visuelle : wireframe « Snap photos and share like never before » (
 - **Style perso (fallback)** : `style-perso-fallback.md` (algorithme, chemin référence, diagrammes / funnels)
 - **Stack frontend** : `stack-frontend-nextjs-react.md` (effet waouh, Next.js + React, Vercel)
 - **Exemple cible** : P4S — `docs/contacts/p4s-archi/landing-proposition-joel.json`
+- **Exemple thème manuel + bandeau + hero image** : 0flow — `docs/contacts/0flow/` (thème 0Flaw injecté manuellement, `hero_background_url`, `alert_banner`), `squelette-vs-inversion-complete.md`
 
 ---
 

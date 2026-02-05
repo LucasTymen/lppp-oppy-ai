@@ -80,12 +80,12 @@ source .venv/bin/activate   # Linux/WSL — ou .venv\Scripts\Activate.ps1 (Windo
 pip install -r requirements.txt
 
 # 4. Migrations et superutilisateur
-python manage.py migrate --noinput
-python manage.py createsuperuser
+python3 manage.py migrate --noinput
+python3 manage.py createsuperuser
 
 # 5. Lancer le serveur de dev
 make runserver
-# Ou : python manage.py runserver
+# Ou : python3 manage.py runserver  (WSL : utiliser python3, pas python)
 
 # 6. (Optionnel) Dans un autre terminal : Celery worker
 # source .venv/bin/activate puis : celery -A lppp worker -l info
@@ -96,7 +96,7 @@ make runserver
 # Landing pages (liste) : http://127.0.0.1:8000/
 ```
 
-**Note** : On reste sur **PostgreSQL** partout (hors tests pytest) ; pas de SQLite en dev, pour ne pas être bloqué si le projet devient une appli à part entière.
+**Note** : **PostgreSQL partout** (dev et tests). Pas de SQLite (incompatible avec le schéma Postgres).
 
 ---
 
@@ -166,7 +166,7 @@ python3 manage.py runserver
 
 1. Arrêter le conteneur web : `docker compose stop web` (libère le port pour runserver).
 2. Dans `.env` : `DB_HOST=localhost` (ou `127.0.0.1`), `REDIS_URL=redis://127.0.0.1:6379/0`, `CELERY_BROKER_URL=redis://127.0.0.1:6379/1`, `CELERY_RESULT_BACKEND=redis://127.0.0.1:6379/2`.
-3. Venv activé (ou Python système) : `python manage.py migrate --noinput`, puis `python manage.py runserver 127.0.0.1:8080` (si le port 8000 est refusé sous Windows, utiliser **8080**).
+3. Venv activé (ou Python système) : `python3 manage.py migrate --noinput`, puis `python3 manage.py runserver 127.0.0.1:8080` (sous WSL utiliser **python3**, pas python).
 4. Ouvrir **http://127.0.0.1:8080/admin/** et **http://127.0.0.1:8080/essais/** (ou 8000 si runserver a réussi sur 8000).
 
 Voir § 2 Option B pour le détail.

@@ -75,7 +75,8 @@ Résultat : **aucune connexion physique entre nœuds** pour ce use case — tout
 |---|--------|--------|
 | 21 | Onglet **Embed** (ou **Share** / **API**) | Sur l’écran du Chatflow |
 | 22 | Copier l’**URL d’iframe** (ou API) | Ex. `http://localhost:3000/embed/xxx` |
-| 23 | Page démo | Remplacer dans `deploy/concierge-demo-maisons-alfort/index.html` le `src` de l’iframe par cette URL |
+| 23 | Page démo | Remplacer dans `deploy/concierge-demo-maisons-alfort/index.html` le `src` de l'iframe par cette URL. |
+| **24** | **Sauvegarder (obligatoire)** | Export / Download sur le canvas → enregistrer dans **`docs/flowise-workflows/backups/concierge-maisons-alfort-YYYY-MM-DD.json`**. Mettre à jour `backups/README.md`. Commit + push. Réinjection : Load depuis ce fichier. Voir `sauvegarde-workflows-flowise-n8n.md`.  |
 
 ---
 

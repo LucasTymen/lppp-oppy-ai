@@ -22,3 +22,4 @@ Dépôt des **faits vérifiés**, **sources** et **décisions** du projet. Toute
 - **Environnement** : WSL ou Linux préféré — voir `environnement-wsl-linux.md`.
 - **Stack** : Django, Celery, PostgreSQL, Redis, n8n, Flowise, ENRICHED (scraping), Docker. Voir `README.md` racine.
 - **SquidResearch** : référence d’architecture (monorepo `apps/`, conteneurs, ENRICHED). Hors workspace LPPP ; chemin pour outils (template, copie de code) : **absolu** `/home/lucas/tools/squidResearch` (WSL : `\\wsl.localhost\Ubuntu-22.04\home\lucas\tools\squidResearch`). Bonnes pratiques éditoriales dans `../bonnes-pratiques.md`. Détail dans `sources.md`.
+- **Log commun LPPP ↔ SquidResearch** : pointeur local `log-commun-lppp-squidresearch.md` ; document canonique dans SquidResearch : `docs/infrastructure/LOG_COMMUN_LPPP_SQUIDRESEARCH.md` (adresses, ports, .env, coexistence, état Docker). À consulter pour éviter conflits entre les deux stacks.

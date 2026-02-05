@@ -67,10 +67,12 @@ docker compose exec web python manage.py css_vampire https://p4s-archi.com --slu
 ## Limites
 
 - Extraction basée sur le HTML/CSS récupéré (pas de rendu JavaScript). Les sites en SPA peuvent ne pas exposer tout le CSS.
-- Les couleurs sont déduites des propriétés `color`, `background`, `border-color` ; la « primary » est une heuristique (couleur la plus présente en luminance moyenne).
+- Les couleurs sont déduites des propriétés `color`, `background`, `border-color` ; la « primary » est une heuristique (couleur la plus présente en luminance moyenne). **Sites à palette sombre** : les couleurs d’accent (teal, cyan, etc.) peuvent ne pas être bien détectées.
 - Le logo est cherché via sélecteurs courants (`.logo`, `header img`) ; selon le site, il peut être manquant ou incorrect.
 - L’image de fond extraite est souvent une **icône UI** (checkbox, checkmark, etc.) : on la filtre et on ne l’affiche pas dans le hero. Le hero utilise un **dégradé** aux couleurs primary/secondary du thème.
 - Timeout 15 s ; User-Agent navigateur pour limiter les blocages.
+
+**Quand l’extraction est insuffisante** : faire une **étude plus approfondie** du site cible (couleurs réelles, dégradés, logos) et injecter un **thème manuel** (variables CSS + dégradé) dans le JSON ou dans la commande de création de landing. Exemple : 0flow/0Flaw — thème défini en dur (`THEME_0FLAW`, `THEME_CSS_0FLAW`) dans la commande `create_landing_0flow` ; image de fond hero fournie séparément (`hero_background_url`). Voir `docs/contacts/0flow/`, `design-brief-landing-reference-cv.md`.
 
 ---
 

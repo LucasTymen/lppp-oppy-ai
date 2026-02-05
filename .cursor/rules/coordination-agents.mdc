@@ -44,10 +44,17 @@ Après accord stratégie, le Conseiller transmet au Chef de Projet un **brief** 
 
 Quand une tâche ou une étude est considérée « done » : voir `docs/base-de-connaissances/definition-of-done.md`. Référence dans le TEMPLATE de segmentation.
 
+## Consultation systématique — Log commun LPPP ↔ SquidResearch
+
+**Les agents qui ont un rôle de coordination** (Chef de Projet, Orchestrateur, Conseiller lorsqu’il coordonne, DevOps pour l’infra) **consultent systématiquement** le log commun dès que le contexte concerne Docker, ports, variables d’environnement, ou coexistence LPPP / SquidResearch.
+
+- **Pointeur LPPP** : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` → indique où se trouve le document canonique (dépôt SquidResearch) : adresses, ports, .env, chemins, état des projets Docker, recommandations de coexistence. Évite conflits de ports et mélange des stacks.
+
 ## Référence
 
 - **Rôles et responsabilités** : `docs/base-de-connaissances/agents-roles-responsabilites.md`
 - **Registre agents et ressources** : `docs/base-de-connaissances/registre-agents-ressources.md` (source de vérité temps réel : rôles, règles Cursor, ressources par pilote ; maintenu par l’orchestrateur)
+- **Log commun LPPP ↔ SquidResearch** : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` (à consulter systématiquement par les agents de coordination)
 - **Matrice RACI** : qui fait quoi (Responsible, Accountable, Consulted, Informed)
 - **TODO** : `docs/TODO.md` (statut des tâches)
 

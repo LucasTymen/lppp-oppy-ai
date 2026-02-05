@@ -25,13 +25,15 @@
     },
     {
       "parameters": {
-        "jsCode": "const body = $input.first().json;\nif (!body.pages || !Array.isArray(body.pages)) {\n  throw new Error('Scrape a échoué ou pages absent');\n}\nreturn [{ json: { pages: body.pages } }];"
+        "jsCode": "const body = $input.first().json;\nif (!body.pages || !Array.isArray(body.pages)) {\n  throw new Error('Scrape a échoué ou pages absent');\n}\nconst pages = body.pages;\nconst _scrapeSummary = {\n  status: body.status || 'ok',\n  pageCount: pages.length,\n  urls: pages.map(p => p && p.url).filter(Boolean),\n  errors: pages.filter(p => p && p.error).map(p => ({ url: p.url, error: p.error }))\n};\nreturn [{ json: { pages, _scrapeSummary } }];"
       },
       "id": "code-build-body",
       "name": "Préparer body save-content",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [680, 300],
+      "notesInFlow": true,
+      "notes": "Sortie : pages (pour save-content) + _scrapeSummary (pour rapport final)"
     },
     {
       "parameters": {
@@ -49,7 +51,7 @@
       "typeVersion": 4.2,
       "position": [900, 300],
       "notesInFlow": true,
-      "notes": "Écrit data/flowise/maisons-alfort-contenu.txt"
+      "notes": "Écrit data/flowise/maisons-alfort-contenu.txt (Django n'utilise que .pages)"
     },
     {
       "parameters": {
@@ -63,7 +65,33 @@
       "typeVersion": 4.2,
       "position": [1120, 300],
       "notesInFlow": true,
-      "notes": "Pousse le fichier vers Document Store (FLOWISE_DOCUMENT_STORE_ID)"
+      "notes": "Pousse le fichier vers Document Store (FLOWISE_DOCUMENT_STORE_ID). Retourne status, file, numAdded."
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "merge-scrape-flowise",
+      "name": "Collecter scrape + Flowise",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [1340, 300],
+      "notesInFlow": true,
+      "notes": "Fusionne sortie Préparer (scrape) et sortie Push (Flowise) pour un seul rapport"
+    },
+    {
+      "parameters": {
+        "jsCode": "const item = $input.first().json;\nconst scrape = item._scrapeSummary || {};\nconst flowise = {\n  file: item.file,\n  numAdded: item.numAdded,\n  status: item.status\n};\nreturn [{ json: { run: 'ok', scrape, flowise } }];"
+      },
+      "id": "code-collect-report",
+      "name": "Rapport run (scrape + Flowise)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1560, 300],
+      "notesInFlow": true,
+      "notes": "Sortie finale : { run, scrape: { pageCount, urls, errors }, flowise: { file, numAdded } }"
     }
   ],
   "connections": {
@@ -74,10 +102,19 @@
       "main": [[{"node": "Préparer body save-content", "type": "main", "index": 0}]]
     },
     "Préparer body save-content": {
-      "main": [[{"node": "Save content (Django)", "type": "main", "index": 0}]]
+      "main": [
+        [{"node": "Save content (Django)", "type": "main", "index": 0}],
+        [{"node": "Collecter scrape + Flowise", "type": "main", "index": 0}]
+      ]
     },
     "Save content (Django)": {
       "main": [[{"node": "Push to Flowise (Django)", "type": "main", "index": 0}]]
+    },
+    "Push to Flowise (Django)": {
+      "main": [[{"node": "Collecter scrape + Flowise", "type": "main", "index": 1}]]
+    },
+    "Collecter scrape + Flowise": {
+      "main": [[{"node": "Rapport run (scrape + Flowise)", "type": "main", "index": 0}]]
     }
   },
   "meta": {"templateCredsSetupCompleted": true},

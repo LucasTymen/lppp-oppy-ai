@@ -6,6 +6,8 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from .models import LandingPage
+from .themes import LANDING_THEMES
+from apps.scraping.flowise_client import get_flowise_chat_embed_url
 
 
 def _use_perso_style(lp):
@@ -32,23 +34,61 @@ def _use_perso_style(lp):
     return False
 
 
+def concierge_maisons_alfort_public(request):
+    """Landing publique Concierge IA Maisons-Alfort pour les équipes municipales (chatbot intégré)."""
+    flowise_embed_url = get_flowise_chat_embed_url()
+    return render(
+        request,
+        "landing_pages/concierge_maisons_alfort.html",
+        {"flowise_embed_url": flowise_embed_url},
+    )
+
+
+def _content_with_defaults(content, template_key):
+    """Renseigne les clés optionnelles manquantes pour éviter VariableDoesNotExist dans les templates."""
+    if template_key != "proposition":
+        return content
+    defaults = {
+        "positionnement": "",
+        "activite_pain_points": "",
+        "mission_flash": "",
+        "produit_commercial": "",
+    }
+    return {**defaults, **content}
+
+
 def landing_public(request, slug):
     """Affiche une landing page publique (pour la cible). Staff peut prévisualiser les brouillons."""
     lp = get_object_or_404(LandingPage, slug=slug)
     if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
         raise Http404("Landing non publiée")
-    content = lp.content_json or {}
-    use_perso_style = _use_perso_style(lp)
+    content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+    # Pour les slugs enregistrés (ex. orsys), le thème vient de themes.py → les modifs sont visibles sans --update
+    if lp.slug in LANDING_THEMES:
+        theme_dict, theme_css = LANDING_THEMES[lp.slug]
+        content = {**content, "theme": theme_dict, "theme_css": theme_css}
+    # ORSYS : vidéo hero en HTML5 (CDN ORSYS) — plus fiable que YouTube embed
+    if lp.slug == "orsys":
+        content["hero_video_mp4_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.mp4"
+        content["hero_video_webm_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.webm"
+        content["hero_video_url"] = ""
+    use_perso_style = _use_perso_style(lp) if lp.slug not in LANDING_THEMES else False
     perso_ref_path = getattr(settings, "LANDING_PERSO_REF_PATH", "")
+    context = {
+        "landing_page": lp,
+        "content": content,
+        "use_perso_style": use_perso_style,
+        "perso_ref_path": perso_ref_path,
+    }
+    if lp.template_key == "concierge_maisons_alfort":
+        try:
+            context["flowise_embed_url"] = get_flowise_chat_embed_url() or ""
+        except Exception:
+            context["flowise_embed_url"] = ""
     response = render(
         request,
         f"landing_pages/{lp.template_key}.html",
-        {
-            "landing_page": lp,
-            "content": content,
-            "use_perso_style": use_perso_style,
-            "perso_ref_path": perso_ref_path,
-        },
+        context,
     )
     # Éviter le cache navigateur pour que les modifications (content_json, templates) soient visibles immédiatement
     response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"

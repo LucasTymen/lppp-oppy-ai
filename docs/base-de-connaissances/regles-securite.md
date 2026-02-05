@@ -2,6 +2,8 @@
 
 Règles de sécurité évidentes à respecter dans le projet. Aligné avec les règles du projet (anti-hallucination, data-driven). Référence : [Django security](https://docs.djangoproject.com/en/stable/topics/security/), bonnes pratiques OWASP.
 
+**Règle unique pour tous les agents en charge** : en fin de session, livraison ou déploiement, **toujours** repasser en debug mode off (`DEBUG=False`) et s’assurer des mesures de protection (checklist § 9). Cette règle s’applique à tous les agents (Dev Django, DevOps, Chef de Projet, Orchestrateur, etc.). Voir aussi `.cursor/rules/pilotage-agents.mdc` § Sécurité.
+
 ---
 
 ## 1. Secrets et credentials
@@ -17,7 +19,7 @@ Règles de sécurité évidentes à respecter dans le projet. Aligné avec les r
 
 - **DEBUG** : doit être `False` en production. Ne jamais laisser `DEBUG=True` en prod (fuite d’informations, stack traces).
 - **ALLOWED_HOSTS** : en production, lister explicitement les domaines autorisés (pas de `*`). Ex. `ALLOWED_HOSTS=app.example.com,api.example.com`.
-- **HTTPS** : en production, servir le site en HTTPS. Configurer `SECURE_SSL_REDIRECT`, `SECURE_PROXY_SSL_HEADER` si derrière un reverse proxy, `SESSION_COOKIE_SECURE`, `CSRF_COOKIE_SECURE` (voir [Django security settings](https://docs.djangoproject.com/en/stable/ref/settings/#security)).
+- **HTTPS** : en production, servir le site en HTTPS. Lorsque `DEBUG=False`, le projet applique déjà dans `lppp/settings.py` : `SECURE_BROWSER_XSS_FILTER`, `SECURE_CONTENT_TYPE_NOSNIFF`, `X_FRAME_OPTIONS`, `SESSION_COOKIE_SECURE`, `CSRF_COOKIE_SECURE`, `SECURE_SSL_REDIRECT` (désactivable via `SECURE_SSL_REDIRECT=False` si le proxy gère HTTPS), `SECURE_PROXY_SSL_HEADER`, `SESSION_COOKIE_HTTPONLY`, `SESSION_COOKIE_SAMESITE`. Voir [Django security settings](https://docs.djangoproject.com/en/stable/ref/settings/#security).
 - **Base de données** : mots de passe forts ; pas de compte par défaut en prod. Préférer des credentials dédiés par environnement.
 
 ---

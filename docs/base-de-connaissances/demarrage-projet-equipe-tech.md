@@ -34,8 +34,8 @@
 |-------|-------------------|---------------|
 | 1 | `docker compose up -d db redis` | Ports 5432 et 6379 exposés |
 | 2 | `.env` avec `DB_HOST=localhost`, `REDIS_URL=redis://127.0.0.1:6379/0`, etc. | Voir `pret-a-demarrer.md` § Option B |
-| 3 | Venv activé, `pip install -r requirements.txt`, `python manage.py migrate`, `python manage.py createsuperuser` | Migrations OK |
-| 4 | `make runserver` ou `python manage.py runserver 127.0.0.1:8080` | http://127.0.0.1:8080/admin/ et /essais/ accessibles |
+| 3 | Venv activé, `pip install -r requirements.txt`, `python3 manage.py migrate`, `python3 manage.py createsuperuser` | Migrations OK |
+| 4 | `make runserver` ou `python3 manage.py runserver 127.0.0.1:8080` (WSL : **python3**) | http://127.0.0.1:8080/admin/ et /essais/ accessibles |
 
 ### Voir les rendus des landing pages
 
@@ -49,6 +49,7 @@
 | Problème | Piste de résolution |
 |----------|---------------------|
 | **Docker : ERR_EMPTY_RESPONSE ou port 8000 inaccessible** | Sous Windows : utiliser **Option B** (runserver 127.0.0.1:8080) ou WSL pour lancer Docker. Voir `pret-a-demarrer.md` § 5. |
+| **Django / admin inaccessible (problème réseau)** | **Option B (WSL)** : à la racine du projet (répertoire d’origine ou chemin actuel), lancer **`bash scripts/runserver-wsl.sh`** (port 8080) ou **`bash scripts/runserver-wsl.sh 8082`** si 8080 est occupé. S’assurer que `db` et `redis` tournent (`docker start lppp_db lppp_redis`). Puis ouvrir **http://127.0.0.1:8080/admin/** (ou le port choisi). Sinon : sprint `segmentations/2026-01-30-sprint-resolution-reseau-django.md`. |
 | **Migrations en erreur** | `make migrate` ou `docker exec web python manage.py migrate --noinput`. Vérifier DB_HOST et credentials dans `.env`. |
 | **Module not found / ImportError** | Vérifier PYTHONPATH, venv activé, ou rebuild image Docker (`make build` puis `make up`). |
 | **PostgreSQL pas prêt** | L’entrypoint attend la DB ; si timeout, augmenter les sleep dans `go` ou vérifier santé : `docker compose ps`, `docker compose logs db`. |

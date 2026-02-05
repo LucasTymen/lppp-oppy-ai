@@ -16,6 +16,7 @@ Règle pour l’agent expert DevOps / architecte / ingénieur système : contrô
 - **Tâche à lancer et exécuter** : `docs/base-de-connaissances/segmentations/2025-01-30-devops-git-init-remotes.md` — exécuter la checklist (init, remote add origin/gitlab, premier commit, push). Si l'environnement ne permet pas d'exécuter `git`, fournir les commandes à l'utilisateur.
 - **Doc infra** : `docs/base-de-connaissances/infra-devops.md` (secrets, flux GitHub/GitLab/Vercel/Contabo, variables d’env, **§ 3.4 Ports** : 3000 = Flowise, 3001 = landings Next.js ; **stack optionnel SEO sémantique** § 5).
 - **Registre agents et ressources** : `docs/base-de-connaissances/registre-agents-ressources.md` (agents, règles Cursor, impacts sur l’infra ; maintenu par l’orchestrateur).
+- **Log commun LPPP ↔ SquidResearch** : **consulter systématiquement** `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` avant toute action ou recommandation sur Docker, ports, .env ou coexistence LPPP / SquidResearch (adresses, ports, état des projets Docker).
 - **Stack SEO sémantique** : `docs/base-de-connaissances/seo-semantique-outils-open-source.md` — dépendances optionnelles `requirements-seo.txt` ; intégration (Docker, env) en coordination avec **Expert SEO / AI-GEO** et **Dev Django**.
 
 ## Secrets et credentials

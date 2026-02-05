@@ -4,14 +4,16 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 
 **Règles de sécurité** : voir `docs/base-de-connaissances/regles-securite.md` (secrets, Django prod, CSRF/XSS/injection, auth, API, checklist prod).
 
-**Environnement préféré** : WSL ou Linux — voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+**Environnement préféré** : Windows + WSL (travail dans WSL, bash) — voir `docs/base-de-connaissances/environnement-wsl-linux.md`. PowerShell en secours seulement.
 
 ---
 
 ## 1. SquidResearch et credentials
 
+- **Priorité SquidResearch** : pour toute modification de **conteneurs** ou de **credentials**, **SquidResearch a la priorité**. LPPP **s’adapte** à son contexte. SquidResearch a déjà une prod et un écosystème ; **ne pas risquer de les endommager**. En cas de conflit (ports, noms, .env), c’est LPPP qui change — jamais modifier ni supprimer les conteneurs ou credentials SquidResearch. Règle pour toute l’équipe et les agents.
 - **On ne remplace pas le conteneur SquidResearch** — tu en as encore besoin. **SquidResearch reste un projet à part** avec son propre Docker ; **LPPP a son propre Docker** (docker-compose à la racine de LPPP). Les deux **coexistent** : tu peux faire tourner SquidResearch quand tu veux (référence, API, charte) et LPPP indépendamment.
 - **SquidResearch** est une **référence externe** (architecture, bonnes pratiques). Il n’est **pas dans le workspace LPPP** ; chemin pour outils (template, copie de code) : **absolu** `/home/lucas/tools/squidResearch` (cf. `sources.md`).
+- **Log commun LPPP ↔ SquidResearch** : adresses, ports, variables d’env, chemins, coexistence et état des projets Docker sont décrits dans **`docs/infrastructure/LOG_COMMUN_LPPP_SQUIDRESEARCH.md`** du dépôt SquidResearch (chemin absolu : `/home/lucas/tools/squidResearch/docs/infrastructure/LOG_COMMUN_LPPP_SQUIDRESEARCH.md`). Pointeur dans LPPP : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md`. À consulter pour éviter conflits de ports et mélange des .env.
 - Les **clés SSH, logs et credentials** permettant de travailler sur GitHub, GitLab, Vercel ou Contabo **ne sont pas stockés dans ce dépôt** et ne doivent **jamais** y être committés.
 - **LPPP réutilise les clés et la stratégie SSH de SquidResearch** : même machine, même `~/.ssh`, même agent SSH pour GitHub et GitLab (voir `git-remotes-github-gitlab.md`). Pas de nouvelle config nécessaire.
 - Si tu utilises un environnement ou un dépôt SquidResearch séparé : les secrets restent dans ce contexte (machine locale, vault, CI secrets) ou dans les plateformes cibles (GitHub Secrets, Vercel, Contabo). Aucune copie de clés privées ou de mots de passe dans LPPP.
@@ -25,7 +27,7 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 - **Où** : à la racine du projet LPPP (`docker-compose.yml`, `docker/Dockerfile.web`, `Makefile`).
 - **Lancer** : `docker compose up -d` ou `make up`. Services démarrés : **db** (PostgreSQL), **redis**, **web** (Django/Gunicorn), **celery**, **celery-beat**, **n8n**, **flowise**. Optionnel (profil `full`) : **enriched**, **kalilinux**. **Stratégie opérationnelle Make** : voir `strategie-operationnelle-make.md` (catalogue commandes, workflows, répartition DevOps/Dev Django/Chef Projet). `make help` pour l'aide.
 - **Première fois** : créer un `.env` depuis `.env.example`, puis `make build` puis `make up` puis `make createsuperuser` pour accéder à l’admin et à `/essais/`. **Guide complet** (venv, Docker, dev local avec PostgreSQL, tester l’admin) : `docs/base-de-connaissances/pret-a-demarrer.md`.
-- **Dev local avec PostgreSQL** : lancer uniquement `db` et `redis` (`docker compose up -d db redis`), exposer les ports 5432 et 6379 ; dans `.env` mettre `DB_HOST=localhost`, `REDIS_URL=redis://127.0.0.1:6379/0`, etc. ; venv, `pip install`, `migrate`, `createsuperuser`, `make runserver`. On reste sur PostgreSQL partout (pas de SQLite en dev). Voir `pret-a-demarrer.md` § Option B.
+- **Dev local avec PostgreSQL** : lancer uniquement `db` et `redis` (`docker compose up -d db redis`), exposer les ports 5432 et 6379 ; dans `.env` mettre `DB_HOST=localhost`, `REDIS_URL=redis://127.0.0.1:6379/0`, etc. ; venv, `pip install`, `migrate`, `createsuperuser`, `make runserver`. PostgreSQL uniquement (pas de SQLite, incompatible). Voir `pret-a-demarrer.md` § Option B.
 - **SquidResearch** : c’est un **autre projet** (référence externe, hors workspace). Tu peux :
   - **Faire tourner uniquement LPPP** : utiliser uniquement le `docker-compose` du dépôt LPPP — tout fonctionne dans les conteneurs LPPP (web, db, redis, celery, n8n, flowise, etc.).
   - **Optionnel** : si le **stack SquidResearch** tourne ailleurs et expose une API (ex. ENRICHED), tu peux configurer LPPP pour l’appeler (ex. `ENRICHED_API_URL` dans `.env`) — mais pour faire tourner Django LPPP, l’admin et `/essais/`, tu utilises **les conteneurs LPPP**, pas le container SquidResearch.

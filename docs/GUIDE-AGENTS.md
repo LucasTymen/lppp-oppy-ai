@@ -20,6 +20,8 @@ Vous êtes l'un des 7 agents du projet :
 
 **Votre fiche de rôle complète** : `docs/base-de-connaissances/agents-roles-responsabilites.md`
 
+**Si vous avez un rôle de coordination** (Chef de Projet, Orchestrateur, Conseiller quand vous coordonnez, DevOps pour l’infra) : **consulter systématiquement** le log commun LPPP ↔ SquidResearch avant toute décision ou action touchant Docker, ports, .env ou la coexistence des deux projets → `docs/base-de-connaissances/log-commun-lppp-squidresearch.md`.
+
 ---
 
 ## 📋 Comment recevoir une tâche

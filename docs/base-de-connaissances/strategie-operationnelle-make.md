@@ -100,7 +100,7 @@ Toute commande opérationnelle passe par `make` — les agents et l'utilisateur 
 
 | Commande | Rôle | Description | Pilote |
 |----------|------|-------------|--------|
-| `make test` | Lancer les tests | `pytest` (SQLite, hors Docker) | Dev Django |
+| `make test` | Lancer les tests | `pytest` (PostgreSQL, db doit être joignable) | Dev Django |
 | `make test-docker` | Tests dans le conteneur web | `docker compose exec web pytest` | Dev Django |
 | `make lint` | Linter le code | flake8, black --check, isort --check | Dev Django |
 | `make lint-fix` | Corriger automatiquement | black, isort | Dev Django |

@@ -1,1 +1,66 @@
-{"page_title":"Optimisation Growth pour ORSYS","hero_headline":"Aboubakar, et si vos leads formation venaient des recrutements actifs ?","hero_sub_headline":"Data + Stratégie Growth Formation IT","hero_subtitle":"Pour ORSYS — Aboubakar","intro":"Suite au Cyber Show Paris — ce que je peux faire pour Orsys côté acquisition et flux de leads.","icebreaker":"Nous nous sommes croisés au Cyber Show Paris. En tant que Growth Engineer, j'accompagne les acteurs de la formation IT sur la détection des besoins (offres d'emploi, recrutements) et la génération de leads qualifiés.","enjeux_lead":"Pour Orsys, j'ai identifié des enjeux côté acquisition :","pain_points":["Détecter les besoins formation tech au bon moment (recrutements, postes ouverts).","Alimenter un flux de leads basé sur les signaux du marché (offres d'emploi, tendances).","Réduire le délai entre la détection du besoin et la prise de contact."],"solution_workflow":"J'automatise la collecte et l'analyse des offres d'emploi (scraping, filtres métier) pour identifier les entreprises qui recrutent sur des compétences que vous formez. Livrable : pipeline de données, liste qualifiée, intégration avec votre CRM.","cta_text":"Reprendre la conversation","cta_url":"mailto:atimite@orsys.fr?subject=Suite Cyber Show Paris — ORSYS","contact_email":"lucas.tymen@gmail.com","contact_gmail":"mailto:lucas.tymen@gmail.com?subject=Suite ORSYS — Cyber Show Paris","contact_linkedin":"https://www.linkedin.com/in/lucas-tymen-310255123/","contact_github":"https://github.com/LucasTymen","contact_linktree":"https://linktr.ee/lucas.tymen","rapport_url":"","about_me_title":"Qui je suis","about_me":"Growth Engineer B2B : data, scraping, automatisation. Je livre du code et des pipelines de leads — rapports SEO, échantillons de prospects, workflows que vous gardez.","prestations_headline":"Des livrables concrets pour votre acquisition formation","services":[{"title":"Flux leads recrutement","description":"Pipeline pour détecter les entreprises qui recrutent sur des compétences que vous formez (scraping offres d'emploi, scoring)."},{"title":"Rapport SEO","description":"Visibilité et opportunités sur les requêtes formation tech / cyber."},{"title":"Échantillon de prospects","description":"Liste qualifiée de décideurs formation IT pour tester votre message."},{"title":"Automatisations","description":"Workflows de qualification et synchronisation CRM (n8n, Make)."}],"expertise_stack":{"langages":["Python"],"automation":["n8n","Make","Scrapy"],"data":["SQL"]},"mission_flash":"J'ai une méthodologie pour alimenter vos leads à partir des recrutements actifs. On en parle ?","why_growth_engineer":"Une agence vous vend des listes statiques. Moi : un flux de données que vous pilotez et que vous gardez."}
+{
+  "page_title": "ORSYS : l'acquisition prédictive — Lucas Tymen",
+  "hero_headline": "ORSYS : et si vous connaissiez les besoins de formation de vos clients avant même qu'ils ne vous appellent ?",
+  "hero_sub_headline": "Le marché se contracte ? Changeons de méthode. Je ne vous vends pas du SEO — je branche une sonde sur les signaux faibles de vos futurs clients.",
+  "hero_subtitle": "Pour ORSYS — Aboubakar",
+  "intro": "Suite au Cyber Show Paris. Données terrain, pas du marketing : une machine à signaux faibles pour cibler restructuration et conformité IA Act.",
+  "icebreaker": "Nous nous sommes croisés au Cyber Show Paris. En tant que Growth Engineer, j'utilise l'automatisation pour détecter qui lève des fonds, qui change de stack, qui a des budgets restructuration ou conformité — pas « qui recrute ». Là où vos concurrents attendent que le téléphone sonne.",
+  "enjeux_lead": "Pour ORSYS, dans le contexte 2026 (CPF bridé, B2B Pur, coûts d'acquisition sous pression), j'ai identifié :",
+  "pain_points": [
+    "Réduire les coûts d'acquisition : ne plus attendre que le téléphone sonne.",
+    "Cibler les budgets Business Critical (restructuration, FNE-Formation, conformité IA Act).",
+    "Détecter en amont qui va licencier, pivoter ou investir dans la formation technique."
+  ],
+  "solution_workflow": "Je ne vous vends pas du SEO : je transforme vos données techniques en CA. Mon script cible « qui lève des fonds » ou « qui change de stack ». Pipeline pour les budgets restructuration et conformité IA Act. Livrable : code que vous gardez, intégration CRM, priorisation selon votre catalogue.",
+  "cta_text": "Reprendre la conversation",
+  "cta_url": "mailto:atimite@orsys.fr?subject=Suite Cyber Show Paris — ORSYS",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Suite ORSYS — Cyber Show Paris",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "contact_github": "https://github.com/LucasTymen",
+  "contact_linktree": "https://linktr.ee/lucas.tymen",
+  "rapport_url": "/p/orsys/rapport/",
+  "alert_banner": "40 % du site invisible pour Google — Diagnostic et Pack Commando : reprendre la conversation",
+  "seo_resume": {
+    "title": "Le diagnostic « Fuite de cash » (crawl fév. 2026)",
+    "manque_annuel": "Estimation 185 000 €/an en opportunités non captées sur le segment Cyber.",
+    "intro": "Alerte visibilité : 40 % de votre site est invisible pour Google (budget de crawl gaspillé). 197 pages non indexables dont 189 dans formations/. Pendant que vos concurrents optimisent leur structure, ORSYS rachète son propre trafic via Google Ads. Arrêtons l'hémorragie.",
+    "problemes_cles": [
+      "189 URLs formations/ non indexables (canonisées).",
+      "208 pages sans balise canonique.",
+      "2 pages sans H1, 2 doublons exacts, 3 ressources 4xx.",
+      "En-têtes sécurité (HSTS, Referrer-Policy) absents sur 97 % des URLs."
+    ],
+    "lien_analyse": "Voir le diagnostic SEO complet et l'analyse (PESTEL, Porter, SWOT, script) →"
+  },
+  "coordonnees_intro": "Pour échanger sur la machine à signaux faibles ou recevoir le rapport :",
+  "about_me_title": "Qui je suis",
+  "about_me": "Growth Engineer B2B : data, scraping, automatisation. Je livre du code et des pipelines basés sur des signaux faibles (restructuration, conformité, levées de fonds) — pas des listes statiques. Vous gardez la main.",
+  "hero_video_url": "https://www.youtube.com/watch?v=3I6qdPG0eiU",
+  "prestations_headline": "Cas d'usage concrets : la solution « Sniper »",
+  "services": [
+    {
+      "title": "Radar levées de fonds",
+      "description": "Une boîte lève 5 M€ ? Mon script alerte vos Sales : ils vont recruter et devoir onboarder 20 personnes sur votre catalogue Cyber. Pipeline de leads au bon moment, pas après la bataille."
+    },
+    {
+      "title": "Alerte changement de stack",
+      "description": "Détection des entreprises qui passent de AWS à Azure via les offres d'emploi. C'est le moment de leur vendre votre cursus Cloud. Signaux faibles = opportunité avant que la concurrence ne réagisse."
+    },
+    {
+      "title": "Opportunité IA Act",
+      "description": "Scraping des entreprises soumises aux nouvelles normes européennes : un pipe de leads tout prêt pour vos formations DPO / Compliance. Budgets conformité = budgets captables en 2026."
+    },
+    {
+      "title": "Rapport SEO & automatisations",
+      "description": "Visibilité formation tech/cyber, nettoyage des pages prioritaires (H1, canoniques), workflows de qualification et synchro CRM (n8n, Make). Code que vous gardez."
+    }
+  ],
+  "expertise_stack": {
+    "langages": ["Python"],
+    "automation": ["n8n", "Make", "Scrapy"],
+    "data": ["SQL"]
+  },
+  "mission_flash": "Pack Commando — 5 jours (zéro risque)\n\n• Installation du script de détection de leads (recrutement / levées de fonds).\n• Nettoyage des 10 pages Cyber les plus rentables (correction H1, 404).\n• Transfert du code source : vous êtes propriétaires du système.\n\nJe vous installe une machine de guerre ; on voit si on continue ensemble.",
+  "why_growth_engineer": "Une agence vous vend des listes statiques. Moi : je transforme vos données techniques en CA — un flux que vous pilotez et que vous gardez."
+}

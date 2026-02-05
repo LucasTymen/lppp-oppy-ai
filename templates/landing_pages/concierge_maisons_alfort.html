@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant Ville de Maisons-Alfort — Équipes municipales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; }
+        /* Critique : fond et texte toujours visibles (éviter écran blanc) */
+        html, body {
+            margin: 0;
+            min-height: 100vh;
+            background-color: #0d0d0d;
+            color: #e6e6e6;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+        }
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0d0d0d 100%);
+            padding: clamp(2rem, 6vw, 4rem) 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid rgba(74, 158, 255, 0.3);
+        }
+        .hero h1 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            font-weight: 700;
+        }
+        .hero .subtitle {
+            color: #94a3b8;
+            font-size: 1rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+        .section {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+        }
+        .intro {
+            background: rgba(255,255,255,0.04);
+            border-left: 4px solid #4a9eff;
+            padding: 1.25rem 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+        .chat-embed {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 420px;
+            background: #111;
+        }
+        .chat-embed iframe {
+            width: 100%;
+            height: 600px;
+            border: 0;
+        }
+        .chat-placeholder {
+            padding: 3rem 1.5rem;
+            text-align: center;
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        .chat-placeholder code {
+            background: rgba(0,0,0,0.3);
+            padding: 0.2em 0.5em;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .chat-troubleshoot {
+            margin: 0;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .chat-troubleshoot a { color: #4a9eff; }
+        .chat-troubleshoot code { font-size: 0.85em; }
+    </style>
+</head>
+<body style="background-color:#0d0d0d;color:#e6e6e6;">
+    <header class="hero" role="banner">
+        <h1>Assistant Ville de Maisons-Alfort</h1>
+        <p class="subtitle">Pour les équipes municipales : posez vos questions sur les démarches, horaires, déchets, état civil et services de la ville. Réponses basées sur les informations officielles du site de la mairie.</p>
+    </header>
+    <main class="section">
+        <div class="intro">
+            Utilisez le chat ci‑dessous pour obtenir des réponses immédiates. L’assistant s’appuie sur les contenus du site <strong>maisons-alfort.fr</strong> (RAG).
+        </div>
+        <div class="chat-embed" id="chat-embed">
+            {% if flowise_embed_url %}
+                <iframe src="{{ flowise_embed_url }}" title="Assistant Maisons-Alfort" allow="clipboard-write"></iframe>
+                <p class="chat-troubleshoot">
+                    Le cadre ci‑dessus est vide ? <a href="{{ flowise_embed_url }}" target="_blank" rel="noopener">Ouvrir le chat dans un nouvel onglet</a> pour tester. Si le chat s’affiche là mais pas ici, le problème vient du chargement en iframe. Sinon, vérifiez que Flowise tourne sur le port 3000 et que <code>FLOWISE_CHATFLOW_ID</code> dans votre configuration correspond bien au chatflow Conciergerie dans Flowise.
+                </p>
+            {% else %}
+                <div class="chat-placeholder">
+                    <p><strong>Chat en cours de configuration</strong></p>
+                    <p>L’assistant sera bientôt disponible. Vérifiez que Flowise tourne (port 3000) et que <code>FLOWISE_CHATFLOW_ID</code> est renseigné dans la configuration.</p>
+                    <p>En attendant, consultez <a href="https://maisons-alfort.fr/" style="color:#4a9eff;">maisons-alfort.fr</a>.</p>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

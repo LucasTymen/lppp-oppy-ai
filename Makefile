@@ -95,13 +95,26 @@ go: ensure-env
 
 # start — Lancer tout le stack en une commande (démarrer ou redémarrer)
 # Usage quotidien recommandé. Pas de venv requis : tout tourne dans Docker.
+# On applique migrate tôt pour que "check" puisse passer (souvent bloqué sinon après clean-containers).
+# Après 12 tentatives (1 min), affiche la sortie de "check" pour diagnostiquer.
 start: docker-up-seq
-	@echo "$(CYAN)⏳ Attente que Django soit prêt...$(NC)"
-	@until $(DOCKER) exec web python manage.py check >/dev/null 2>&1; do \
+	@echo "$(CYAN)⏳ Attente 15s que le conteneur web démarre...$(NC)"
+	@sleep 15
+	@echo "$(CYAN)📝 Application des migrations...$(NC)"
+	@$(DOCKER) exec web python manage.py migrate --noinput 2>/dev/null || true
+	@echo "$(CYAN)⏳ Vérification Django (check)...$(NC)"
+	@i=0; while [ $$i -lt 12 ]; do \
+		if $(DOCKER) exec web python manage.py check >/dev/null 2>&1; then \
+			echo "$(GREEN)✅ Django prêt$(NC)"; break; \
+		fi; \
 		echo "  Django pas encore prêt, attente 5s..."; sleep 5; \
+		i=$$(($$i+1)); \
+		if [ $$i -eq 12 ]; then \
+			echo "$(RED)❌ Django toujours pas prêt après 1 min. Sortie de 'python manage.py check':$(NC)"; \
+			$(DOCKER) exec web python manage.py check || true; \
+			echo ""; echo "Voir aussi: make logs-web"; exit 1; \
+		fi; \
 	done
-	@echo "$(GREEN)✅ Django prêt$(NC)"
-	@$(MAKE) migrate
 	@$(MAKE) health-check
 	@echo ""
 	@$(MAKE) services-urls
@@ -347,7 +360,7 @@ check:
 # =============================================================================
 
 test:
-	PYTEST_USE_SQLITE=1 PYTHONPATH=".:apps" python -m pytest apps/ -v --tb=short 2>/dev/null || true
+	PYTHONPATH=".:apps" python3 -m pytest apps/ -v --tb=short 2>/dev/null || PYTHONPATH=".:apps" python -m pytest apps/ -v --tb=short 2>/dev/null || true
 
 test-docker:
 	$(DOCKER) exec web python -m pytest apps/ -v --tb=short 2>/dev/null || true
@@ -368,10 +381,10 @@ security-check:
 prod-check:
 	@echo "Checklist avant prod (regles-securite.md) :"
 	@echo "  Vérifier : DEBUG=False, SECRET_KEY forte, ALLOWED_HOSTS explicite"
-	@PYTHONPATH=".:apps" python manage.py check --deploy 2>/dev/null || echo "  (Django check --deploy : exécuter manuellement si erreur)"
+	@PYTHONPATH=".:apps" python3 manage.py check --deploy 2>/dev/null || PYTHONPATH=".:apps" python manage.py check --deploy 2>/dev/null || echo "  (Django check --deploy : exécuter manuellement si erreur)"
 
 validate:
-	@echo "=== Django check ===" && PYTHONPATH=".:apps" python manage.py check
+	@echo "=== Django check ===" && (PYTHONPATH=".:apps" python3 manage.py check || PYTHONPATH=".:apps" python manage.py check)
 	@echo "=== Tests ===" && $(MAKE) test
 	@echo "=== Lint ===" && $(MAKE) lint
 	@echo "=== Prod check ===" && $(MAKE) prod-check
@@ -485,12 +498,12 @@ runserver:
 # =============================================================================
 
 secret-key:
-	@python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
+	@python3 -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())" 2>/dev/null || python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 
 clean:
-	@python -Bc "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]" 2>/dev/null || true
-	@python -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]" 2>/dev/null || true
-	@python -Bc "import pathlib, shutil; p=pathlib.Path('.pytest_cache'); shutil.rmtree(p) if p.exists() else None" 2>/dev/null || true
+	@python3 -Bc "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]" 2>/dev/null || python -Bc "import pathlib, shutil; [shutil.rmtree(p) for p in pathlib.Path('.').rglob('__pycache__') if p.is_dir()]" 2>/dev/null || true
+	@python3 -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]" 2>/dev/null || python -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.pyc') if p.is_file()]" 2>/dev/null || true
+	@python3 -Bc "import pathlib, shutil; p=pathlib.Path('.pytest_cache'); shutil.rmtree(p) if p.exists() else None" 2>/dev/null || python -Bc "import pathlib, shutil; p=pathlib.Path('.pytest_cache'); shutil.rmtree(p) if p.exists() else None" 2>/dev/null || true
 	@echo "Nettoyage terminé."
 
 # =============================================================================

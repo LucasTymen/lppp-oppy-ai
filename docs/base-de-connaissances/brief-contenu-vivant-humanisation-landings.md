@@ -12,7 +12,9 @@
 - **Sections sans accroche** : titre + liste ou paragraphe seul, sans phrase d’introduction ou de transition.
 - **Hero trop compact** : intro + icebreaker fusionnés en un bloc unique ; pas de phrase de contexte narrative (type « positionnement » P4S).
 - **Enjeux** : liste à puces sans lead-in (« Pour vous, j’ai identifié trois points… »).
-- **Pas de lien rapport** : quand une étude (PESTEL, SWOT, Porter) ou un rapport complet existe pour le contact, `rapport_url` vide = opportunité manquée de montrer du concret.
+- **Pas de lien rapport** : quand une étude (PESTEL, SWOT, Porter) ou un rapport complet existe pour le contact, `rapport_url` vide = opportunité manquée de montrer du concret. Voir § 2.1 (rapport, page dédiée, ancre).
+- **Pas de résumé SEO sur la landing** : si une étude SEO / manque à gagner existe, `seo_resume` permet d’afficher un bloc concis + lien vers l’analyse complète (ancre `#analyse-seo-complete`).
+- **Pas de bandeau d’accroche** : `alert_banner` (une ligne sous la nav) peut relayer une offre ou un message fort (ex. « Rapport d’audit offert — Réserver un échange »).
 - **Rythme visuel** : blocs uniformes (titre + texte) sans respiration ni mise en avant (citation, encadré).
 
 ---
@@ -25,7 +27,9 @@
 |-------|--------|--------|
 | **positionnement** | Paragraphe narratif (contexte, angle, « pourquoi je vous contacte »). À afficher après le hero ou avant les enjeux. Déjà utilisé sur P4S. | « J’ai une idée précise de ce qu’Ackuracy apporte côté Red Team. Voici où je peux vous être utile : prospection RSSI automatisée, rapport SEO déjà prêt. » |
 | **enjeux_lead** | Une phrase d’introduction avant la liste des pain points. Optionnel dans le JSON ; si présent, le template l’affiche au-dessus de la liste. | « Pour Ackuracy, j’ai identifié trois enjeux côté prospection : » |
-| **rapport_url** | Dès qu’un rapport ou une étude (PESTEL/SWOT/Porter) existe pour le contact, renseigner l’URL (page exportée, Google Doc, ou `/rapport.html` en standalone). | `rapport.html` ou URL du rapport complet. |
+| **rapport_url** | Dès qu’un rapport ou une étude (PESTEL/SWOT/Porter) existe pour le contact, renseigner l’URL (page exportée, Google Doc, ou `/p/<slug>/rapport/` en Django). Idéalement une **page dédiée** avec présentation + résumé + **ancre** `#analyse-seo-complete` pour lien direct vers l’analyse. | `/p/0flow/rapport/` ou `rapport.html` en export. |
+| **seo_resume** | Objet optionnel : `title`, `manque_annuel`, `intro`, `problemes_cles` (liste), `lien_analyse` (libellé). Affiche une section « Résumé SEO » sur la landing + lien vers `rapport_url#analyse-seo-complete`. À renseigner quand une étude SEO / manque à gagner existe. | Voir `docs/contacts/0flow/landing-proposition-samson.json`. |
+| **alert_banner** | Une ligne de texte centrée sous la nav (bandeau teal). Message fort : offre, CTA court. Optionnel. | « Rapport d'audit offert — Réserver un échange ». |
 | **coordonnees_intro** | Phrase au-dessus des coordonnées (optionnel). Déjà en dur dans certains templates ; peut être dynamique. | « Pour échanger ou voir le prototype : » |
 
 ### 2.2 Ton et humanisation
@@ -39,7 +43,7 @@
 ### 2.3 Où déposer les contenus
 
 - **JSON par contact** : `docs/contacts/<slug>/landing-proposition-<prénom>.json`.
-- **Nouveaux champs optionnels** : `positionnement`, `enjeux_lead`, `coordonnees_intro` — les ajouter au JSON quand pertinent ; le Designer / Dev s’assure que les templates (Django et Next.js) les affichent s’ils sont présents.
+- **Nouveaux champs optionnels** : `positionnement`, `enjeux_lead`, `coordonnees_intro`, `rapport_url`, `seo_resume`, `alert_banner` — les ajouter au JSON quand pertinent ; le Designer / Dev s’assure que les templates (Django et Next.js) les affichent s’ils sont présents.
 
 ---
 
@@ -76,7 +80,8 @@
 
 - [ ] **Positionnement** : si la landing cible un décideur après un événement / un échange, un paragraphe `positionnement` (narratif) est présent et affiché.
 - [ ] **Enjeux** : liste des pain points avec, si possible, une phrase `enjeux_lead` au-dessus.
-- [ ] **Rapport** : si une étude (PESTEL/SWOT/Porter) ou un rapport complet existe pour le contact, `rapport_url` est renseigné et le lien « Consulter le rapport » visible.
+- [ ] **Rapport** : si une étude (PESTEL/SWOT/Porter) ou un rapport complet existe pour le contact, `rapport_url` est renseigné et le lien « Consulter le rapport » visible ; si étude SEO, `seo_resume` renseigné pour la section Résumé SEO + lien vers l’ancre `#analyse-seo-complete`.
+- [ ] **Bandeau** : si message d’accroche fort (offre, CTA court), `alert_banner` renseigné.
 - [ ] **Ton** : phrases variées, transitions naturelles, pas de mur de listes sans contexte.
 - [ ] **Visuel** : bloc « Why Growth Engineer » mis en avant (callout/citation) ; sections aérées.
 
@@ -86,11 +91,13 @@
 
 | Fichier | Action |
 |---------|--------|
-| `schema-landing-proposition.md` | Documenter les champs optionnels `enjeux_lead`, `coordonnees_intro` (si pas déjà présents). |
+| `schema-landing-proposition.md` | Documenter les champs optionnels `enjeux_lead`, `coordonnees_intro`, `rapport_url`, `seo_resume`, `alert_banner` (si pas déjà présents). |
 | `docs/contacts/<slug>/landing-proposition-*.json` | Rédacteur : ajouter positionnement, enjeux_lead, rapport_url selon le contact. |
 | `templates/landing_pages/proposition.html` | Designer : afficher enjeux_lead au-dessus de la liste enjeux ; callout pour why_growth_engineer. |
 | `deploy/standalone-ackuracy/src/app/page.tsx` | Afficher positionnement (après hero), enjeux_lead (au-dessus de la liste), style callout pour why_growth_engineer. |
 
 ---
+
+**Projets à venir** : pour chaque nouvelle landing, réutiliser ce brief pour humaniser et compléter le squelette (rapport, résumé SEO, bandeau, positionnement, enjeux_lead). Référence exemple : `docs/contacts/0flow/` (rapport, `seo_resume`, `alert_banner`, thème manuel). Voir aussi `docs/contacts/0flow/squelette-vs-inversion-complete.md` pour le passage squelette → version complète.
 
 *Brief créé pour rendre les landings plus vivantes et humaines, en coordination Rédacteur / Designer. Dernière mise à jour : 2025-01-30.*

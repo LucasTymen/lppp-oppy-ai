@@ -12,6 +12,8 @@ alwaysApply: true
 - **Éviter** : enchaîner seul des modifications multi-fichiers ou multi-rôles (infra + code + doc + contenu) sans passer par la coordination ou les rôles dédiés. Cela fait perdre du temps (oublis, incohérences, corrections en cascade).
 - **Préférer** : (1) consulter le registre et le RACI ; (2) proposer un plan qui associe les rôles concernés ; (3) faire soi-même uniquement ce qui relève de son périmètre ou de la demande explicite de l’utilisateur ; (4) pour le reste, documenter la tâche (segmentation, TODO) ou donner à l’utilisateur les instructions pour solliciter le bon agent.
 - **Décisions transverses** (ports, infra, stratégie contenu, déploiement) : s’appuyer sur la doc existante (infra-devops, stratégie qualité, erreurs-et-solutions) et, si besoin, **demander** au Chef de Projet ou au DevOps (via leurs règles et docs) plutôt que d’inventer une solution seul.
+- **Coexistence LPPP / SquidResearch** : toute décision ou recommandation touchant Docker, ports, .env ou les deux projets doit s’appuyer sur le **log commun**. Pointeur : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` (document canonique dans le dépôt SquidResearch). **Agents de coordination** (Chef de Projet, Orchestrateur, Conseiller en mode coordination, DevOps) le consultent **systématiquement** dans ce contexte.
+- **Priorité SquidResearch** : pour toute modification de **conteneurs** ou de **credentials**, **SquidResearch a la priorité**. LPPP **s’adapte**. Ne jamais risquer d’endommager la prod ou l’écosystème SquidResearch. En cas de conflit (ex. noms de conteneurs, ports), ne modifier que les conteneurs LPPP (`lppp_*`) ; jamais toucher aux conteneurs ou au .env SquidResearch. Décision : `decisions.md` ; infra : `infra-devops.md` § 1.
 
 ## Anti-hallucination
 
@@ -26,9 +28,9 @@ alwaysApply: true
 - Le chef de projet / agent pilote met à jour les logs (`docs/logs/log-projet.md`, `docs/logs/log-ia.md`), la base de connaissances, `docs/TODO.md` et `docs/boite-a-idees.md` après les sessions.
 - **Lors d’une correction d’erreur** : mettre à jour les logs et le **registre erreurs/solutions** (`docs/base-de-connaissances/erreurs-et-solutions.md`) pour éviter de reproduire l’erreur. L’agent qui assiste le chef de projet s’en charge ; tout agent peut y contribuer en ajoutant une entrée après résolution.
 
-## Terminal — WSL par défaut
+## Terminal — WSL (bash) par défaut
 
-- **Par défaut** : exécuter les commandes terminal (git, make, python, pip, etc.) dans **WSL** (Ubuntu), pas dans PowerShell Windows. Chemin projet WSL : `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`. Voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+- **Contexte LPPP** : environnement **Windows avec WSL installé** ; le travail se fait **dans WSL**. **Par défaut** : exécuter les commandes (git, make, python, pip, docker, etc.) dans **WSL (bash)**. PowerShell est possible mais l’utilisateur le privilégie beaucoup moins — ne proposer PowerShell qu’en secours. Chemin projet WSL : `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`. Voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
 - Si l’utilisateur demande explicitement PowerShell ou Windows, utiliser alors le shell Windows.
 - **Git** : **penser à l'installer ou à le rendre disponible** (WSL, Git Bash) pour les commit et push. En clôture de livraison ou de feature : **commit + push sur les deux remotes** (origin + gitlab), **tout le temps**. Commandes : `make push-both` ou `make commit-push MSG="..."`. Réf. `git-remotes-github-gitlab.md`, template de segmentation § Règle Git.
 
@@ -40,6 +42,7 @@ alwaysApply: true
 
 - **Rien de sensible committé** : pas de secrets, mots de passe, clés privées ou tokens dans le dépôt. Respecter le `.gitignore` (cf. `docs/base-de-connaissances/infra-devops.md` § Conventions).
 - **Règles de sécurité** : appliquer les règles dans `docs/base-de-connaissances/regles-securite.md` (Django prod, CSRF/XSS/injection, auth, API, checklist prod). En cas de modification de config ou d’API, vérifier l’impact sécurité.
+- **Debug mode off et mesures de protection (règle unique pour tous les agents en charge)** : en fin de session, avant commit de livraison ou avant tout déploiement, **toujours** s’assurer que le mode DEBUG est désactivé (`DEBUG=False` en prod/staging) et que les mesures de protection sont en place (ALLOWED_HOSTS explicite, HTTPS, cookies sécurisés, pas de secret dans le code). C’est une **règle unique** s’appliquant à **tous les agents** (Dev Django, DevOps, Chef de Projet, Orchestrateur, etc.) : quiconque touche à la config, au déploiement ou livre du code doit vérifier / remettre DEBUG off et la checklist `regles-securite.md` § 9. Référence : `docs/base-de-connaissances/regles-securite.md`, `make prod-check`.
 
 ## Ne pas écrire pour écrire (contrôle en temps réel)
 

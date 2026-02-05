@@ -52,8 +52,14 @@ Règle pour l’**agent orchestrateur** : maintenir en temps réel le registre d
 - Ne pas inventer d’agents, de règles ou de fichiers : s’appuyer sur le contenu réel de `.cursor/rules/` et de `docs/base-de-connaissances/`.
 - Toute mise à jour du registre doit refléter l’état actuel du dépôt (vérifier les noms de fichiers et les descriptions).
 
+## Log commun LPPP ↔ SquidResearch (consultation systématique)
+
+- **En tant qu’agent de coordination**, consulter **systématiquement** le log commun avant toute décision ou recommandation touchant à l’infra, aux ports, à Docker ou à la coexistence des deux projets.
+- **Pointeur dans LPPP** : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` (emplacement du document canonique dans SquidResearch : adresses, ports, variables d’env, chemins, état des projets Docker). À mettre à jour côté LPPP si l’emplacement du log change.
+
 ## Référence
 
 - Registre : `docs/base-de-connaissances/registre-agents-ressources.md`
 - Rôles et RACI : `docs/base-de-connaissances/agents-roles-responsabilites.md`
 - Procédure d’ajout d’agent : section 5 du registre.
+- Log commun (coexistence LPPP / SquidResearch) : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md`.

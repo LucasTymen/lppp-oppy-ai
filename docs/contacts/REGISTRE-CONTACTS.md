@@ -20,6 +20,7 @@ Liste des contacts pour lesquels un dossier existe sous `docs/contacts/<slug>/`.
 | `lazaregue-avocats` | LAZARÈGUE AVOCATS — Cyber Show Paris, Sarah Hinderer (Juridique / Cyber), extraction données RGPD, appui technique audits conformité | 2025-01-30 |
 | `coffid` | COFFID — Cyber Show Paris, Alexandre Rasset (Logiciel / RH), lead gen DRH PME ETI, machine prospection B2B cold mailing | 2025-01-30 |
 | `lucidum-conseil` | LUCIDUM CONSEIL — LinkedIn, Frédéric Cichocky (Conseil IA / Investisseur), prototypage outils IA, transformation méthodes conseil en outils digitaux | 2025-01-30 |
+| `0flow` | 0FLOW (zéro-flow) — Workflow Automation & Productivité, Samson Fedida (samson.fedida@0flaw.fr), landing PoC automation pour entretien, SWOT/PESTEL/Porter, rapport d'audit | 2026-01-30 |
 
 ---
 

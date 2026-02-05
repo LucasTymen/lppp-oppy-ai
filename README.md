@@ -52,15 +52,15 @@ cp .env.example .env
 make venv
 # Activer le venv puis :
 pip install -r requirements.txt
-python manage.py migrate --noinput
-python manage.py createsuperuser
+python3 manage.py migrate --noinput
+python3 manage.py createsuperuser
 make runserver
 ```
 
 - **Admin** : http://127.0.0.1:8000/admin/  
 - **Interface essais** : http://127.0.0.1:8000/essais/  
 
-On reste sur **PostgreSQL** partout (pas de SQLite en dev).  
+**PostgreSQL uniquement** (dev et tests). Pas de SQLite (incompatible avec Postgres).  
 
 ## Structure (stratégie SquidResearch)
 
@@ -84,7 +84,7 @@ Le **PYTHONPATH** inclut `apps/` (manage.py, wsgi, asgi, celery) pour les import
 ## Tests (hors Docker)
 
 ```bash
-PYTEST_USE_SQLITE=1 PYTHONPATH=".:apps" python -m pytest apps/ -v
+PYTHONPATH=".:apps" python3 -m pytest apps/ -v
 ```
 
 ## Référence

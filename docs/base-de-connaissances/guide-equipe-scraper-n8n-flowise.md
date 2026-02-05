@@ -96,13 +96,15 @@ Le workflow utilise par défaut **`http://web:8000`** (conteneurs Docker sur le 
 - **Si n8n tourne dans le même Docker Compose que Django** : garder `http://web:8000` pour les 3 nœuds HTTP (scrape, save-content, push-to-flowise).
 - **Si n8n tourne en local (hors Docker)** et Django dans Docker : remplacer par `http://localhost:8000` dans chaque nœud HTTP.
 
-### 4.3 Enchaînement des nœuds
+### 4.3 Enchaînement des nœuds (workflow finalisé)
 
 1. **Déclencher** — Déclenchement manuel (ou remplacer par cron/webhook plus tard).  
 2. **Scrape Maisons-Alfort (Django)** — GET `http://web:8000/api/concierge/scrape`. Sortie : 1 item avec `status`, `pages`.  
 3. **Préparer body save-content** — Code : prend `$input.first().json`, retourne `[{ json: { pages: body.pages } }]` pour le nœud suivant.  
 4. **Save content (Django)** — POST `http://web:8000/api/concierge/save-content` avec body JSON `{ "pages": [...] }`. Écrit `data/flowise/maisons-alfort-contenu.txt` sur le serveur.  
 5. **Push to Flowise (Django)** — POST `http://web:8000/api/concierge/push-to-flowise`. Appelle l’API Flowise (Document Store upsert) avec ce fichier.
+
+**Finalisation (collecte des 2)** : le workflow inclut un nœud **Merge** qui reçoit la sortie scrape (résumé : pageCount, urls, errors) et la sortie **Push to Flowise** (file, numAdded). Un dernier nœud **Rapport run** produit `{ run: "ok", scrape, flowise }` pour tracer les deux résultats en un seul rapport (traçabilité, stats).
 
 ### 4.4 Erreurs fréquentes n8n
 
@@ -133,7 +135,7 @@ Le workflow utilise par défaut **`http://web:8000`** (conteneurs Docker sur le 
 4. [ ] Dans Flowise : Document Store « Maisons-Alfort » créé et configuré (loader, splitter, embeddings, vector store).  
 5. [ ] n8n : workflow importé, URLs = `http://web:8000` (ou `localhost:8000` si n8n hors Docker).  
 6. [ ] Exécuter le workflow n8n (bouton « Test workflow » ou « Execute Workflow »).  
-7. [ ] Vérifier : aucun nœud en erreur ; dernier nœud « Push to Flowise » retourne 200 et un JSON avec `status: ok`.  
+7. [ ] Vérifier : aucun nœud en erreur ; dernier nœud **Rapport run (scrape + Flowise)** produit `{ run, scrape, flowise }`.  
 8. [ ] Dans Flowise : lancer l’ingestion si nécessaire, puis tester le chat (Chatflow avec Knowledge = Maisons-Alfort).
 
 ---

@@ -1,5 +1,5 @@
 """
-LPPP — Settings (stratégie SquidResearch : PostgreSQL + SQLite fallback tests).
+LPPP — Settings (PostgreSQL uniquement, pas de SQLite).
 """
 import os
 from pathlib import Path
@@ -60,28 +60,19 @@ TEMPLATES = [
     },
 ]
 
-# Database — PostgreSQL (Docker / prod / dev local). SQLite uniquement pour les tests (pytest).
-if os.environ.get("PYTEST_USE_SQLITE") == "1":
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.environ.get("PYTEST_SQLITE_NAME", ":memory:"),
-            "TEST": {"NAME": os.environ.get("PYTEST_SQLITE_NAME", ":memory:")},
-        }
+# Database — PostgreSQL uniquement (Docker / prod / dev local). Pas de SQLite (incompatible avec le schéma Postgres).
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("DB_NAME", default="lppp"),
+        "USER": env("DB_USER", default="lpppuser"),
+        "PASSWORD": env("DB_PASSWORD", default="lppppass123"),
+        "HOST": env("DB_HOST", default="db"),
+        "PORT": env("DB_PORT", default="5432"),
+        "ATOMIC_REQUESTS": True,
+        "CONN_MAX_AGE": 600,
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": env("DB_NAME", default="lppp"),
-            "USER": env("DB_USER", default="lpppuser"),
-            "PASSWORD": env("DB_PASSWORD", default="lppppass123"),
-            "HOST": env("DB_HOST", default="db"),
-            "PORT": env("DB_PORT", default="5432"),
-            "ATOMIC_REQUESTS": True,
-            "CONN_MAX_AGE": 600,
-        }
-    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
@@ -120,6 +111,18 @@ CELERY_TIMEZONE = TIME_ZONE
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 
+# Mesures de protection quand DEBUG est désactivé (prod / staging)
+if not DEBUG:
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = "DENY"
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = "Lax"
+
 # Style perso (fallback) : projet landing CV / page perso (graphiques, infographiques, style)
 # Chemin absolu Linux/WSL : /home/lucas/lucasTymenGraphx/landingpageCvPagePerso
 # Sous Windows (WSL) : \\wsl$\Ubuntu\home\lucas\lucasTymenGraphx\landingpageCvPagePerso
@@ -127,3 +130,18 @@ LANDING_PERSO_REF_PATH = env(
     "LANDING_PERSO_REF_PATH",
     default="/home/lucas/lucasTymenGraphx/landingpageCvPagePerso",
 )
+
+# Logs : moins de bruit (requêtes HTTP en WARNING), plus lisible en dev
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {"simple": {"format": "%(levelname)s %(name)s: %(message)s"}},
+    "handlers": {
+        "console": {"class": "logging.StreamHandler", "formatter": "simple"},
+    },
+    "root": {"level": "WARNING", "handlers": ["console"]},
+    "loggers": {
+        "django.request": {"level": "WARNING"},
+        "django.server": {"level": "WARNING"},
+    },
+}

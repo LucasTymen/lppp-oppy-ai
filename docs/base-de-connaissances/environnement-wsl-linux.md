@@ -1,8 +1,12 @@
 # Environnement WSL / Linux — LPPP
 
-**Environnement préféré (par défaut)** : **WSL** (Ubuntu) ou Linux natif — préférence explicite de l’utilisateur. Tous les scripts, le Makefile et la documentation sont optimisés pour cet environnement.
+**Contexte LPPP (contrairement à SquidResearch)** : on est sur un **environnement Windows avec WSL installé**, et le travail se fait **notamment dans WSL**. PowerShell est possible mais personnellement beaucoup moins prisé.
 
-**Décision** : Linux/WSL est l’environnement **par défaut** pour le développement LPPP. Les commandes Windows (PowerShell) restent documentées en fallback si besoin.
+**Environnement préféré (par défaut)** : **WSL** (Ubuntu) — préférence explicite de l’utilisateur. Tous les scripts, le Makefile et la documentation privilégient WSL. Les commandes et procédures sont données en **bash / WSL** en premier.
+
+**PowerShell** : documenté en fallback si besoin ; à éviter comme canal principal pour le dev LPPP (l’utilisateur préfère WSL).
+
+**Python sur WSL** : sous WSL (Ubuntu), la commande disponible est **`python3`** et non `python`. Pour les commandes sur l'hôte WSL (migrate, runserver, scripts), utiliser **`python3`**. Ex. : `python3 manage.py runserver 127.0.0.1:8082`, `python3 scripts/set_superuser.py`. (Dans les conteneurs : `docker compose exec web python ...` reste valide.)
 
 ---
 
@@ -10,11 +14,14 @@
 
 ### LPPP (workspace actuel)
 
+**Répertoire de travail d’origine (référence)** : c’est le scope à utiliser pour travailler. Les commandes, scripts et procédures supposent ce chemin.
+
 | Contexte | Chemin |
 |----------|--------|
-| **WSL / Linux** | `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections` |
-| **Windows (accès WSL)** | `\\wsl.localhost\Ubuntu-22.04\home\lucas\tools\homelucastoolsLandingsPagesPourProspections` |
-| **Depuis $HOME** | `~/tools/homelucastoolsLandingsPagesPourProspections` ou `$HOME/tools/homelucastoolsLandingsPagesPourProspections` |
+| **WSL — répertoire de travail historique** | `/mnt/wsl/docker-desktop-/U/0c7104cdaed2e52d3be34327ae75a4c7c5cbac6068ff2537ab8a9a4b4ed6eb83` |
+| **Windows (accès WSL)** | `\\wsl.localhost\Ubuntu-22.04\...` (équivalent du chemin ci-dessus) |
+
+Pour se placer à la racine du projet depuis WSL : `cd /mnt/wsl/docker-desktop-/U/0c7104cdaed2e52d3be34327ae75a4c7c5cbac6068ff2537ab8a9a4b4ed6eb83`
 
 ### SquidResearch (référence externe)
 
@@ -155,6 +162,10 @@ make runserver      # Lance Django (utilise .venv automatiquement)
 
 **Référence détaillée** : `docs/base-de-connaissances/pret-a-demarrer.md` § 5.1.
 
+### Terminal : WSL (bash) en premier, pas PowerShell
+
+Pour LPPP, l’utilisateur travaille **dans WSL** ; **PowerShell est possible mais beaucoup moins prisé**. Les agents et la doc doivent **privilégier les commandes bash / WSL** (make, docker, curl, etc.) et ne proposer PowerShell qu’en secours si vraiment nécessaire.
+
 ### ERR_EMPTY_RESPONSE (problème Windows natif)
 
 Sous **Windows natif** (hors WSL), Docker peut provoquer ERR_EMPTY_RESPONSE sur localhost. **Solution** : utiliser **WSL** pour le développement. Sous WSL, ce problème n’apparaît pas.
@@ -179,4 +190,4 @@ En WSL, le projet doit résider dans le système de fichiers Linux (`/home/lucas
 
 ---
 
-*Document créé pour intégrer WSL/Linux comme environnement cible. Dernière mise à jour : 2025-01-30.*
+*Document créé pour intégrer WSL/Linux comme environnement cible. LPPP = Windows + WSL (travail dans WSL) ; PowerShell en secours seulement. Dernière mise à jour : 2026-01-30.*

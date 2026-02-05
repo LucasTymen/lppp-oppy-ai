@@ -55,6 +55,20 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
+### Docker — « The container name "/lppp_xxx" is already in use »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2025-01-30 |
+| **Contexte** | WSL ou Linux, `make up` ou `make start` dans le projet LPPP |
+| **Erreur** | `Error response from daemon: Conflict. The container name "/lppp_db" is already in use by container "..."` (ou lppp_redis, lppp_web, etc.) |
+| **Cause** | Conteneurs LPPP orphelins (créés lors d’une exécution précédente, éventuellement depuis un autre répertoire ou projet Compose). `make down` ne les supprime pas car ils ne sont plus associés au projet Compose actuel. |
+| **Solution** | Supprimer **uniquement les conteneurs LPPP** par leur nom, puis relancer : `docker rm -f lppp_db lppp_redis lppp_web lppp_celery lppp_celery_beat lppp_n8n lppp_flowise 2>/dev/null; make up`. **Ne jamais** supprimer ou modifier les conteneurs SquidResearch (django, worker, react, n8n, flowise, postgres, redis, etc.) : SquidResearch a la priorité (prod, écosystème). Décision : `decisions.md` « Priorité SquidResearch ». |
+| **Prévention** | Lancer `make down` depuis la racine LPPP avant de quitter ou en cas de changement de branche. En cas de conflit, ne toucher qu’aux conteneurs dont le nom commence par `lppp_`. |
+| **Lien(s)** | `infra-devops.md` § 1 (Priorité SquidResearch), `log-commun-lppp-squidresearch.md` |
+
+---
+
 ### Flowise — incompatibilités de types entre nœuds / difficulté à raccorder
 
 | Champ | Contenu |
@@ -66,6 +80,132 @@ Pour chaque erreur documentée, indiquer :
 | **Solution** | Pour le RAG Concierge Maisons-Alfort : **ne pas câbler** les nœuds. Utiliser la section **Document Stores** pour l'ingestion (Loader → Splitter → Embedding → Vector Store, sans fils). Sur le **Chatflow**, mettre un seul nœud **Agent** et configurer **Knowledge** via la liste déroulante (sélection du Document Store), pas par un câble. |
 | **Prévention** | Suivre la recette `docs/flowise-workflows/workflow-complet-concierge-maisons-alfort.md` § « Pourquoi les nœuds ne se raccordent pas ». Règle : Document → Document uniquement ; ChatMessage/string → même type. Vérifier les libellés des prises avant de connecter. |
 | **Lien(s)** | `docs/flowise-workflows/workflow-complet-concierge-maisons-alfort.md`, `flowise-concierge-ia-maisons-alfort-guide.md` |
+
+---
+
+### make migrate / makemigrations — « service "web" is not running »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2025-02-03 |
+| **Contexte** | WSL (ou autre), après commit/push ; `make makemigrations` ou `make migrate` |
+| **Erreur** | `service "web" is not running` — Makefile:309 (makemigrations) ou Makefile:299 (migrate) Error 1 |
+| **Cause** | Les commandes exécutent `docker compose exec web python manage.py ...` ; le conteneur `web` n’existe pas tant que le stack n’est pas démarré. |
+| **Solution** | Démarrer le stack : **`make start`** (recommandé : démarre db, redis, web, etc. puis applique migrate automatiquement) ou **`make up`** puis **`make migrate`**. |
+| **Prévention** | Avant toute commande `make migrate` / `make makemigrations`, s’assurer que les services tournent (`make ps`). Procédure : `procedure-avant-migrations-relance.md` — l’ordre est : 1) commit+push, 2) **démarrer le stack** si besoin, 3) migrations, 4) relance si nécessaire. |
+| **Lien(s)** | `procedure-avant-migrations-relance.md`, `strategie-operationnelle-make.md` |
+
+---
+
+### Docker — « The container name "/lppp_redis" is already in use »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2025-02-03 |
+| **Contexte** | `make start` ou `docker compose up -d db redis` ; WSL ou autre |
+| **Erreur** | `Error response from daemon: Conflict. The container name "/lppp_redis" is already in use by container "…". You have to remove (or rename) that container to be able to reuse that name.` |
+| **Cause** | Un conteneur nommé `lppp_redis` (ou autre `lppp_*`) existe déjà — créé par un ancien `docker compose` ou par un autre répertoire/projet utilisant les mêmes noms. |
+| **Solution** | Supprimer les conteneurs LPPP par nom : **`make clean-containers`** puis **`make start`**. (Ne supprime pas les **volumes** : les données db/redis/n8n/flowise restent ; seuls les conteneurs sont retirés.) |
+| **Prévention** | Après un `make down` dans un autre répertoire ou un changement de branche, en cas de conflit utiliser `make clean-containers` avant `make start`. |
+| **Lien(s)** | `Makefile` (cible `clean-containers`), `strategie-operationnelle-make.md` |
+
+---
+
+### Admin Django — impossible de se connecter / « il n’y a rien »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2025-02-04 |
+| **Contexte** | Ouverture de `http://localhost:8000/admin/` : page blanche, timeout, connexion refusée ou aucun formulaire de login. |
+| **Erreur** | Rien ne s’affiche, ou « This site can’t be reached », ou page vide. |
+| **Cause** | (1) **Stack non démarré** : conflit Docker (`lppp_db` / `lppp_redis` already in use) → `make up` échoue, le conteneur `web` ne tourne pas. (2) **Aucun superutilisateur** : aucun compte admin n’a été créé (ou mot de passe oublié). |
+| **Solution** | **(1)** Supprimer les conteneurs LPPP puis relancer : **`make clean-containers`** puis **`make start`**. Attendre la fin (migrate, static). **(2)** Créer un compte admin : **`make createsuperuser`** (dans le terminal, saisir username, email, mot de passe). Puis ouvrir `http://localhost:8000/admin/` et se connecter. |
+| **Prévention** | Après un conflit Docker, toujours utiliser `make clean-containers` avant `make start`. À la première installation ou sur une base vide, exécuter `make createsuperuser` avant d’aller sur l’admin. |
+| **Lien(s)** | `Makefile` (clean-containers, createsuperuser), `pret-a-demarrer.md`, entrée « Docker — container name already in use » ci-dessus. |
+
+---
+
+### make start — « Django pas encore prêt » en boucle puis interruption
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2025-02-03 |
+| **Contexte** | `make start` après `make clean-containers` ; conteneurs démarrés mais la boucle d’attente de Django ne se termine pas. |
+| **Erreur** | Message répété « Django pas encore prêt, attente 5s... » pendant plusieurs minutes ; pas de message d’erreur visible. |
+| **Cause** | `python manage.py check` échoue ou bloque dans le conteneur `web` (sortie masquée par le Makefile). Causes fréquentes : migrations non appliquées, DB injoignable, erreur d’import ou de config Django. |
+| **Solution** | (1) **Diagnostiquer** : `docker compose exec web python manage.py check` (voir l’erreur réelle) et `docker compose logs web --tail 80` (logs Gunicorn). (2) **Makefile mis à jour** : `make start` applique maintenant les migrations tôt (après 15 s) puis refait le check ; après 12 échecs (1 min) il affiche la sortie de `check` puis quitte. Relancer `make start` après correction. (3) Si la DB est vide ou corrompue : `make migrate` à la main après avoir vérifié que `web` et `db` tournent. |
+| **Prévention** | Utiliser `make start` à jour ; en cas de boucle, ne pas attendre indéfiniment : Ctrl+C puis exécuter les commandes de diagnostic ci‑dessus. |
+| **Lien(s)** | `Makefile` (cible `start`), `procedure-avant-migrations-relance.md` |
+
+---
+
+### ModuleNotFoundError: No module named 'markdown' (conteneur web)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2025-02-03 |
+| **Contexte** | `make start` ou `docker compose logs web` ; conteneur `web` en boucle de redémarrage. |
+| **Erreur** | `ModuleNotFoundError: No module named 'markdown'` dans `apps/landing_pages/views.py` (ou autre module). |
+| **Cause** | La dépendance est dans `requirements.txt` mais l’**image Docker** du service `web` a été construite avant son ajout (ou jamais reconstruite). |
+| **Solution** | **Reconstruire l’image** : `make build` puis `make start`. Ou `docker compose build web` puis `docker compose up -d web`. Le conteneur récupère alors les paquets à jour. |
+| **Prévention** | Après ajout ou modification de `requirements.txt`, exécuter `make build` (ou `docker compose build`) avant de relancer les services. |
+| **Lien(s)** | `requirements.txt`, `Makefile` (build), `strategie-operationnelle-make.md` |
+
+---
+
+### Landing /p/maisons-alfort/ — Écran blanc
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Page **/p/maisons-alfort/** (ou /maisons-alfort/ après redirection) : écran blanc, rien ne s’affiche ou le contenu n’est pas visible. |
+| **Erreur** | Écran blanc (page entière ou zone chat uniquement). |
+| **Causes possibles** | (1) **Dev Django** : exception dans la vue, template manquant ou mal nommé, contexte incomplet ; (2) **DevOps** : Django non servi sur l’URL, Flowise non exposé sur 3000, `.env` sans FLOWISE_CHATFLOW_ID / FLOWISE_URL ; (3) **Architecte** : route manquante ou conflit, LandingPage `maisons-alfort` absente en base (migration 0004 non appliquée) ; (4) **Designer** : CSS qui masque le contenu (fond blanc + texte blanc, overflow hidden) ; (5) **Automatizer** : Flowise ne répond pas sur /embed/{id}, chatflow absent ou ID incorrect. |
+| **Solution** | **Sprint multi-agents** : suivre `segmentations/2026-01-30-sprint-ecran-blanc-landing-chatbot.md`. **Architecte** : vérifier chaîne route → vue → template, existence de la LandingPage en base. **DevOps** : vérifier que Django répond (curl /p/maisons-alfort/ → 200), Flowise sur 3000, .env FLOWISE_CHATFLOW_ID et FLOWISE_URL. **Dev Django** : s’assurer que flowise_embed_url est passé (ou "" pour placeholder), template toujours visible (hero + intro + zone chat). **Designer** : vérifier styles (contraste, pas de contenu masqué). **Automatizer** : vérifier chatflow déployé et URL /embed/{id} joignable. |
+| **Prévention** | Toujours afficher au minimum hero + intro + message « Chat en cours de configuration » si pas d’URL embed ; ne jamais renvoyer une page vide. Voir template `concierge_maisons_alfort.html` et vue `landing_public`. |
+| **Lien(s)** | `segmentations/2026-01-30-sprint-ecran-blanc-landing-chatbot.md`, `flowise-concierge-ia-maisons-alfort-guide.md`, `conciergerie-maisons-alfort-architecture-et-onboarding.md` |
+
+---
+
+### Landing /maisons-alfort/ — « Impossible de trouver l'adresse IP du serveur de flowise »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Page **http://127.0.0.1:8082/maisons-alfort/** (ou /essais/concierge/) : iframe du chatbot Flowise affiche une erreur « Impossible de trouver l'adresse IP du serveur de flowise ». |
+| **Erreur** | « Impossible de trouver l'adresse IP du serveur de flowise » (navigateur, dans la zone de l'iframe). |
+| **Cause** | L'URL d'embed envoyée au navigateur pointait vers **http://flowise:3000** (nom d'hôte Docker). Le navigateur tourne sur l'hôte et ne peut pas résoudre « flowise » (résolution DNS du réseau Docker). |
+| **Solution** | **Correctif code** : `get_flowise_chat_embed_url()` (apps/scraping/flowise_client.py) utilise maintenant une URL joignable par le navigateur : si `DB_HOST` est `localhost` ou `127.0.0.1` (Django sur l'hôte), l'URL par défaut est **http://localhost:3000**. Sinon définir **`FLOWISE_URL=http://localhost:3000`** dans `.env` et redémarrer le runserver. Vérifier que Flowise écoute sur le port 3000 (`docker compose up -d flowise` ou instance locale). |
+| **Prévention** | En dev avec runserver sur l'hôte : ne pas forcer `FLOWISE_URL` si `DB_HOST=localhost` (le code choisit localhost:3000). En Docker full stack : l'iframe doit pointer vers une URL que le navigateur peut joindre (ex. localhost:3000 si Flowise est exposé). |
+| **Lien(s)** | `flowise-concierge-ia-maisons-alfort-guide.md`, `segmentations/2026-01-30-sprint-chatbot-landing-flowise.md` |
+
+---
+
+### Landing /p/maisons-alfort/ — iframe du chatbot vide (cadre blanc)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-04 |
+| **Contexte** | La **landing** s’affiche correctement (titre, intro) mais le **cadre (iframe) du chatbot** reste blanc, sans interface de chat. |
+| **Erreur** | Zone dédiée au chat visible mais vide (rectangle blanc dans l’iframe). |
+| **Causes possibles** | (1) **Flowise n’est pas démarré** sur le port 3000 (ou autre si `FLOWISE_URL` est défini). (2) **Mauvais `FLOWISE_CHATFLOW_ID`** : l’ID dans `.env` ne correspond pas au chatflow Conciergerie dans Flowise (récupérer l’ID dans Flowise → chatflow → onglet **Embed**). (3) **URL d’embed non joignable par le navigateur** : si Django tourne sur l’hôte (runserver 127.0.0.1:8082) sans `FLOWISE_URL`, le code utilise `http://localhost:3000` si `DB_HOST=localhost` ; si `DB_HOST=db`, l’URL devient `http://flowise:3000` et le navigateur ne peut pas la résoudre → iframe vide. (4) Flowise répond mais la page **/embed/{id}** renvoie une page vide (chatflow inexistant ou erreur côté Flowise). |
+| **Solution** | **Étape 1** : Sous l’iframe, cliquer sur **« Ouvrir le chat dans un nouvel onglet »** (lien ajouté sur la page). Si le chat **s’affiche** dans l’onglet → problème d’affichage en iframe (CORS / X-Frame-Options à vérifier côté Flowise). Si le nouvel onglet est **vide ou erreur** → **Étape 2** : Vérifier que Flowise tourne (`docker compose ps` → `lppp_flowise` ou processus sur 3000 ; `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000` → 200). **Étape 3** : Dans Flowise (http://localhost:3000), ouvrir le chatflow Conciergerie Maisons-Alfort → onglet **Embed** → copier l’**ID** et le mettre dans `.env` : `FLOWISE_CHATFLOW_ID=<id>`. **Étape 4** : Si Django est en runserver sur l’hôte (127.0.0.1:8082), forcer l’URL pour le navigateur : dans `.env` définir `FLOWISE_URL=http://localhost:3000` (ou `http://127.0.0.1:3000`), redémarrer le runserver, recharger la page. |
+| **Prévention** | En dev local (runserver sur l’hôte) : avoir `FLOWISE_URL=http://localhost:3000` et `FLOWISE_CHATFLOW_ID` correct dans `.env`, et Flowise démarré sur le port 3000. Voir `flowise-concierge-ia-maisons-alfort-guide.md`, `conciergerie-maisons-alfort-architecture-et-onboarding.md`. |
+| **Lien(s)** | `flowise-concierge-ia-maisons-alfort-guide.md`, `conciergerie-maisons-alfort-architecture-et-onboarding.md`, entrée « Impossible de trouver l'adresse IP du serveur de flowise » ci-dessus |
+
+---
+
+### Flowise — « No Chatflows Yet » / plus de workflows après reconnexion ou changement de credentials
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Après reconnexion (Flowise demande identifiants) ou après changement de `FLOWISE_USERNAME` / `FLOWISE_PASSWORD` dans `.env`, l’interface Flowise sur localhost:3000 affiche **« No Chatflows Yet »** — plus aucune trace des chatflows créés. Flowise ne permet qu'un seul utilisateur (même email avant/après). |
+| **Erreur** | « No Chatflows Yet » ; liste des Chatflows vide. |
+| **Cause** | (1) **Deux Flowise** : le port 3000 peut être utilisé par **LPPP** (`lppp_flowise`, volume `flowise_data`) ou par **SquidResearch** (autre conteneur, autre volume). Selon quel stack est démarré, localhost:3000 affiche l’un ou l’autre — les chatflows LPPP ne sont que dans le Flowise LPPP. (2) **Changement de credentials** : en activant ou modifiant `FLOWISE_USERNAME`/`FLOWISE_PASSWORD`, Flowise peut associer les données à un « utilisateur » ; si l’app considère que c’est un nouvel utilisateur, l’espace peut apparaître vide alors que les données sont toujours dans le volume. |
+| **Solution** | **Étape 1 — Quel Flowise tourne ?** `docker ps --format "table {{.Names}}\t{{.Ports}}"` et repérer qui expose `3000/tcp`. Si c’est **lppp_flowise** → les données LPPP sont dans le volume `flowise_data` (non supprimé par `docker rm` ni `make down`). Si c’est un autre conteneur (ex. SquidResearch) → tu regardes l’autre instance ; pour retrouver les chatflows LPPP, arrêter l’autre stack et lancer LPPP : `docker compose up -d flowise` depuis la racine LPPP. **Étape 2 — Recréer l’ancien identifiant** : remettre temporairement dans `.env` les **anciennes** valeurs `FLOWISE_USERNAME` et `FLOWISE_PASSWORD` (celles utilisées quand tu avais créé les chatflows), redémarrer Flowise (`docker compose restart flowise`), puis recharger localhost:3000 — les chatflows peuvent réapparaître. **Étape 2 — Recréer le chatflow** : Flowise est single-user ; si les chatflows ont disparu, les recréer avec **`docs/flowise-workflows/workflow-complet-concierge-maisons-alfort.md`**, puis mettre le nouvel ID (onglet Embed) dans `.env` : **`FLOWISE_CHATFLOW_ID=<nouvel-id>`**. |
+| **Prévention** | Ne pas modifier `FLOWISE_USERNAME`/`FLOWISE_PASSWORD` sans nécessité (risque de réinitialisation). Un seul utilisateur Flowise. Vérifier quel conteneur utilise le port 3000 avant de conclure à une perte de données. Rappel : **`make go`** seul supprime les volumes ; `make down` et `docker rm -f lppp_flowise` ne touchent pas à `flowise_data`. |
+| **Lien(s)** | `flowise-concierge-ia-maisons-alfort-guide.md` § Démarrer sans perdre de données, **`sauvegarde-workflows-flowise-n8n.md`** (exporter chatflows dans `docs/flowise-workflows/backups/` pour réinjection), `docker-compose.yml` |
 
 ---
 
@@ -115,13 +255,27 @@ Pour chaque erreur documentée, indiquer :
 
 | Champ | Contenu |
 |-------|---------|
-| **Date** | 2025-02-03 |
-| **Contexte** | Windows, accès à http://localhost:8000/p/p4s-archi/ (ou /admin/, /essais/) après avoir lancé Docker ou runserver |
+| **Date** | 2025-02-03 (enrichi 2025-02-04) |
+| **Contexte** | Windows (ou WSL), accès à http://localhost:8000/admin/ (ou /, /essais/) après avoir lancé Docker ou runserver. Navigateur : « Ce site est inaccessible », « La connexion a été réinitialisée », **ERR_CONNECTION_RESET**. |
 | **Erreur** | « Ce site est inaccessible », « La connexion a été réinitialisée », **ERR_CONNECTION_RESET** |
-| **Cause** | Sous Windows, le port forward Docker vers le conteneur `web` (8000) peut provoquer une connexion réinitialisée ; ou le serveur Django n’est pas démarré. |
-| **Solution** | Utiliser l’**Option B (runserver local)** : 1) `docker compose up -d db redis` (garder uniquement db + redis). 2) Dans `.env` : `DB_HOST=localhost`, `REDIS_URL=redis://127.0.0.1:6379/0`, `CELERY_BROKER_URL=redis://127.0.0.1:6379/1`. 3) Venv activé : `pip install -r requirements.txt`, `python manage.py migrate --noinput`, `python manage.py runserver 127.0.0.1:8080`. 4) Ouvrir **http://127.0.0.1:8080/p/p4s-archi/** (landing complète Django). Si le conteneur `web` tourne, le libérer d’abord : `docker compose stop web`. |
-| **Prévention** | Sous Windows : privilégier Option B pour le dev (runserver sur 8080). Sous WSL : Docker web sur 8000 fonctionne en général. |
-| **Lien(s)** | `pret-a-demarrer.md` § 5.2, `demarrage-projet-equipe-tech.md` |
+| **Cause** | (1) Conteneur `web` non démarré ou en crash (conflit Docker, Django qui plante au démarrage). (2) Sous Windows, le port forward Docker (8000) peut provoquer une connexion réinitialisée. (3) Résolution `localhost` (IPv6 vs IPv4) ou pare-feu. |
+| **Solution** | **Diagnostic** : `docker ps` → vérifier que `lppp_web` est « Up ». Si absent ou « Restarting » : `docker compose logs web --tail 50` (erreur Django/Gunicorn ?). Corriger les conflits : `make clean-containers` puis `make start`. **Essai rapide** : utiliser **http://127.0.0.1:8000** au lieu de http://localhost:8000. **Si toujours ERR_CONNECTION_RESET** : **Option B (runserver local)** : 1) `docker compose up -d db redis` (et `docker compose stop web` pour libérer le port). 2) Dans `.env` : `DB_HOST=localhost`, `REDIS_URL=redis://127.0.0.1:6379/0`, `CELERY_BROKER_URL=redis://127.0.0.1:6379/1`. 3) Venv : `pip install -r requirements.txt`, `python3 manage.py migrate --noinput`, `python3 manage.py runserver 127.0.0.1:8080` (WSL : **python3**). 4) Ouvrir **http://127.0.0.1:8080/admin/** (ou /essais/). |
+| **Prévention** | Sous Windows : privilégier Option B pour le dev (runserver sur 8080). Sous WSL : Docker web sur 8000 fonctionne en général ; en cas de reset, tester 127.0.0.1:8000 puis Option B. |
+| **Lien(s)** | `pret-a-demarrer.md` § 5.2, `demarrage-projet-equipe-tech.md`, entrée « Admin Django — impossible de se connecter » |
+
+---
+
+### Django inaccessible — problème réseau (sprint Architecte / DevOps / Pentester)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Impossible d’accéder à l’admin Django ni à Django en général ; problème réseau, aucune différence entre admin et reste du site. SquidResearch est prioritaire : on ne touche pas à sa stack. |
+| **Erreur** | Site inaccessible (timeout, connexion refusée, reset), admin et pages Django inaccessibles. |
+| **Cause** | Plusieurs causes possibles : (1) Conflit de ports si SquidResearch occupe 8000 (ou 3000, 5432) ; (2) Conteneur `lppp_web` non démarré ou en crash ; (3) Sous Windows : port forward Docker 8000 (ERR_CONNECTION_RESET) ; (4) localhost vs 127.0.0.1 (IPv6/IPv4). |
+| **Solution** | **Sprint multi-agents** : suivre `segmentations/2026-01-30-sprint-resolution-reseau-django.md`. **Architecte réseau** : consulter le log commun SquidResearch (`log-commun-lppp-squidresearch.md`), identifier conflits de ports, recommander port alternatif LPPP (ex. 8001) si 8000 est pris. **DevOps** : `docker ps` → état `lppp_web` ; `make clean-containers` (conteneurs LPPP uniquement) puis `make start` ; tester http://127.0.0.1:8000 puis http://127.0.0.1:8001 si configuré ; sinon Option B runserver (voir entrée « localhost:8000 inaccessible »). **Pentester** : vérifier ALLOWED_HOSTS et politique sécurité après toute modification. |
+| **Prévention** | Consulter le log commun avant de lancer les deux stacks ; documenter le port Django LPPP si différent de 8000 ; sous Windows privilégier Option B (runserver 8080) si Docker 8000 pose problème. |
+| **Lien(s)** | `segmentations/2026-01-30-sprint-resolution-reseau-django.md`, `log-commun-lppp-squidresearch.md`, `infra-devops.md` § 1 et § 3.4, entrée « localhost:8000 inaccessible » ci-dessus |
 
 ---
 
@@ -225,4 +379,20 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
-*Dernière mise à jour : 2025-01-30 — Port 3000 = Flowise, landings Next.js = 3001. Précédent : CTA/Gmail popup contact. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*
+---
+
+### Fiche entretien emploi — section « Tests techniques » oubliée
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-05 |
+| **Contexte** | Génération d'une fiche de préparation d'entretien (Assistant Entretien Emploi) pour une entreprise (ex. 0Flow). |
+| **Erreur** | La section **Tests techniques** (programmation, growth, marketing, mix dev/growth) est absente de la fiche générée. L'utilisateur ne sait pas à l'avance si l'entretien sera orienté dev, marketing ou mix ; cette section est indispensable pour se préparer à tous les cas. |
+| **Cause** | Le modèle canonique n'a pas été appliqué en entier : la section « 2. PROGRAMMATION – Questions techniques » du modèle (avec sous-parties programmation, growth, marketing, mix) a été omise lors de la génération. |
+| **Solution** | Réintégrer la section complète depuis `_modele-canonique_prepa_entretien.html` (accordéon « TESTS TECHNIQUES — Programmation & Growth » et tout son contenu), puis renuméroter les sections suivantes (Questions à poser, Entreprise — Ce que vous devez savoir). |
+| **Prévention** | **Toujours générer la fiche à partir du modèle canonique COMPLET** dès la première livraison. Inclure **toutes** les sections : 0 Présentation, 1 Formalités, 2 Q/R stratégiques, **3 Tests techniques** (programmation, growth, marketing, mix), 4 Questions à poser, 5 [Entreprise] — Ce que vous devez savoir. Inclure **tous** les textes, lexique, abréviations (KPI, CPA, CPL, CTA, etc.), questions à poser et tout ce qui peut être utile. Consulter `fiches-entretien-emploi-modele-et-veille.md` et la règle `assistant-entretien-emploi.mdc` ; l'Assistant Entretien Emploi doit s'assurer que le modèle canonique est copié en entier (structure + contenu type) avant d'adapter au cas par cas. |
+| **Lien(s)** | `.cursor/rules/assistant-entretien-emploi.mdc`, `fiches-entretien-emploi-modele-et-veille.md`, `docs/ressources-utilisateur/fiches-entretien-emploi/_modele-canonique_prepa_entretien.html` |
+
+---
+
+*Dernière mise à jour : 2026-02-05 — Fiche entretien : section tests techniques obligatoire. Précédent : Port 3000 = Flowise. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*

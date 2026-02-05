@@ -16,11 +16,14 @@ Toute landing livrée doit atteindre ce niveau, quel que soit le template (Djang
 | **Contenu complet** | Toutes les sections prévues par le template sont remplies depuis les données (hero, enjeux, solution, services, stack, offre, coordonnées, CTA). Pas de blocs vides ni de « Lorem ipsum ». |
 | **Pas de squelette** | La page affichée = la page finale. Pas de structure vide, pas de placeholders visibles pour le visiteur. |
 | **Contact utilisable** | CTA et coordonnées fonctionnent : popup contact avec texte « Vous pouvez me contacter par Mail à cette adresse : [email] » (fallback quand `mailto:` ne fonctionne pas). Voir `erreurs-et-solutions.md` § CTA/Gmail. |
-| **Rapport (si applicable)** | Si un rapport intermédiaire existe pour le contact, lien « Consulter le rapport complet » pointant vers une URL ou une page dédiée (ex. `rapport.html` en export statique). Sinon, pas de lien mort. |
-| **Personnalisation visuelle** | Hero avec image de fond (ou thème), style perso ou thème CSS Vampire selon la config ; pas de page générique non personnalisée. |
+| **Rapport (si applicable)** | Si un rapport intermédiaire existe pour le contact, lien « Consulter le rapport complet » pointant vers une URL ou une page dédiée (ex. `rapport.html` ou `/p/<slug>/rapport/`), avec ancre `#analyse-seo-complete` si analyse SEO détaillée. Sinon, pas de lien mort. |
+| **Résumé SEO (si étude)** | Quand une étude SEO / manque à gagner existe : section « Résumé SEO » sur la landing (`seo_resume`) + lien vers la page rapport (ancre). Renforce la crédibilité sans dupliquer tout le rapport. |
+| **Personnalisation visuelle** | Hero avec image de fond (ou thème), style perso ou thème CSS Vampire (ou **thème manuel** si extraction insuffisante) ; pas de page générique non personnalisée. |
 | **Source unique par contact** | Tout le contenu affiché provient d’**un seul** jeu de données associé à **ce** contact (voir § 2). |
 
-Référence technique : `templates/landing_pages/proposition.html`, `docs/contacts/p4s-archi/landing-proposition-joel.json`, `reconstitution-landing-p4s-personnalisation.md`, `schema-landing-proposition.md`.
+**Squelette vs inversion complète** : une landing « squelette » a le contenu rempli mais un style générique (pas de thème cible, pas de logo, pas de rapport/démo). L’**inversion complète** = contenu OK + thème (CSS Vampire ou manuel) + optionnel démo Loom + lien rapport + vérif visuelle. Pour les projets à venir, utiliser la checklist de passage squelette → complète sans recréer de doc : voir `docs/contacts/0flow/squelette-vs-inversion-complete.md` (et l’adapter au slug du contact).
+
+Référence technique : `templates/landing_pages/proposition.html`, `docs/contacts/p4s-archi/landing-proposition-joel.json`, `docs/contacts/0flow/squelette-vs-inversion-complete.md`, `reconstitution-landing-p4s-personnalisation.md`, `schema-landing-proposition.md`.
 
 ---
 
@@ -90,7 +93,8 @@ Voir `organisation-donnees-contacts.md` (un contact = un dossier, données isol�
 | `generation-landing-nextjs-contenu-hero.md` | Application qualité + contenu dynamique pour les standalones Next.js. |
 | `erreurs-et-solutions.md` | Popup contact (CTA/Gmail), déploiement, auth Git. |
 | `deploy/PUSH-POUR-VERSION-COMPLETE.md` | Export + rapport intermédiaire + déploiement P4S. |
-| `brief-contenu-vivant-humanisation-landings.md` | Contenu vivant, humanisation, combler les manques (positionnement, enjeux_lead, callout, rapport) ; Rédacteur + Designer. |
+| `brief-contenu-vivant-humanisation-landings.md` | Contenu vivant, humanisation, combler les manques (positionnement, enjeux_lead, callout, rapport, seo_resume, alert_banner) ; Rédacteur + Designer. |
+| `docs/contacts/0flow/squelette-vs-inversion-complete.md` | Checklist squelette → inversion complète (thème, hero, rapport, démo) ; à réutiliser/adapter pour chaque nouveau contact. |
 
 ---
 

@@ -22,6 +22,7 @@ Vous êtes le **chef de projet** avec expertise en **UX/UI design** et **veille 
 
 ### Base de connaissances (`docs/base-de-connaissances/`)
 - **`registre-agents-ressources.md`** : **Registre temps réel** — tous les agents, règles Cursor, ressources à votre disposition (maintenu par l’orchestrateur ; à consulter en priorité pour savoir quels agents et quelles capacités utiliser)
+- **`log-commun-lppp-squidresearch.md`** : **À consulter systématiquement** (en tant que Chef de Projet / coordination) — pointeur vers le log commun LPPP ↔ SquidResearch (adresses, ports, .env, coexistence, état Docker). Document canonique dans le dépôt SquidResearch ; éviter conflits de ports et mélange des stacks.
 - **`agents-roles-responsabilites.md`** : 7 rôles d'agents, matrice RACI
 - **`decisions.md`** : Décisions enregistrées (architecture, stack, process)
 - **`sources.md`** : Références externes (SquidResearch, docs Django, etc.)

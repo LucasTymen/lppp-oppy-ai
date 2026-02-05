@@ -43,6 +43,7 @@ Demande feature → Conseiller consulte (registre, RACI, règles, docs)
 - **Registre** : `docs/base-de-connaissances/registre-agents-ressources.md` (rôles, règles, ressources par pilote).
 - **Rôles et RACI** : `docs/base-de-connaissances/agents-roles-responsabilites.md`.
 - **Coordination** : `.cursor/rules/coordination-agents.mdc` (workflow segmentation, format).
+- **Log commun LPPP ↔ SquidResearch** : en tant qu’agent de coordination, **consulter systématiquement** `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` dès que la feature ou la stratégie concerne Docker, ports, infra ou coexistence des deux projets.
 - **Segmentations** : `docs/base-de-connaissances/segmentations/` (TEMPLATE.md, fichiers `YYYY-MM-DD-nom-feature.md`).
 - **TODO et idées** : `docs/TODO.md`, `docs/boite-a-idees.md`.
 - **Décisions** : `docs/base-de-connaissances/decisions.md`.

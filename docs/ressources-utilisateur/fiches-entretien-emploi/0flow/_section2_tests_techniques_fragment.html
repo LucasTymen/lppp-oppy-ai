@@ -1,0 +1,1504 @@
+    <div class="panel">
+
+        <div class="info">
+            <h4>📌 Comment utiliser cette section</h4>
+            <p>Questions classiques posées en entretien. Pour chaque techno :</p>
+            <ul>
+                <li>✅ <strong>Questions fondamentales</strong> : À maîtriser absolument</li>
+                <li>🔧 <strong>Questions pratiques</strong> : Cas d'usage concrets</li>
+                <li>🎯 <strong>Questions avancées</strong> : Pour montrer votre expertise</li>
+        </ul>
+    </div>
+
+        <!-- PYTHON -->
+        <button class="sub-accordion">🐍 PYTHON - Questions Courantes</button>
+    <div class="sub-panel">
+            <button class="sub-accordion">Q1: Quelle est la différence entre une liste et un tuple ?</button>
+        <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Une liste est mutable (modifiable), un tuple est immutable (non modifiable).<br>
+                    <strong>Exemple :</strong> <code>liste = [1, 2, 3]</code> peut être modifiée avec <code>liste.append(4)</code>, alors que <code>tuple = (1, 2, 3)</code> ne peut pas être modifié.<br>
+                    <strong>Cas d'usage :</strong> Utilisez un tuple pour des données fixes (coordonnées GPS, configuration), une liste pour des données dynamiques (panier d'achat, historique).<br>
+                    <strong>Performance :</strong> Les tuples sont plus rapides et prennent moins de mémoire car ils sont optimisés pour l'immutabilité.
+            </div>
+        </div>
+
+            <button class="sub-accordion">Q2: Qu'est-ce qu'un décorateur en Python ?</button>
+        <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Un décorateur est une fonction qui prend une fonction en paramètre et retourne une fonction modifiée. Il permet d'ajouter des fonctionnalités sans modifier le code original.<br>
+                    <strong>Exemple :</strong> <code>@login_required</code> vérifie l'authentification avant d'exécuter la vue. Syntaxe : <code>@decorator</code> avant la définition de fonction.<br>
+                    <strong>Cas d'usage :</strong> Logging, timing, authentification, validation, caching. Très utilisé dans Django pour les vues.<br>
+                    <strong>Avantage :</strong> Réutilisabilité et séparation des préoccupations (concerns).
+            </div>
+        </div>
+
+            <button class="sub-accordion">Q3: Expliquez la différence entre `is` et `==`</button>
+        <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>==</code> compare les valeurs, <code>is</code> compare l'identité en mémoire (même objet).<br>
+                    <strong>Exemple :</strong> <code>a = [1,2,3]</code> et <code>b = [1,2,3]</code> → <code>a == b</code> est <code>True</code> mais <code>a is b</code> est <code>False</code> (objets différents).<br>
+                    <strong>Cas d'usage :</strong> Utilisez <code>is</code> pour comparer à <code>None</code> (<code>if x is None</code>), <code>==</code> pour comparer les valeurs.<br>
+                    <strong>Attention :</strong> Les petits entiers (-5 à 256) sont internés, donc <code>a = 5; b = 5; a is b</code> peut être <code>True</code>.
+            </div>
+        </div>
+
+            <button class="sub-accordion">Q4: Qu'est-ce qu'une list comprehension ?</button>
+        <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Syntaxe concise pour créer des listes à partir d'itérables avec une condition optionnelle.<br>
+                    <strong>Exemple :</strong> <code>[i**2 for i in range(10) if i % 2 == 0]</code> crée une liste des carrés des nombres pairs de 0 à 9.<br>
+                    <strong>Avantages :</strong> Plus lisible et souvent plus rapide qu'une boucle <code>for</code> classique.<br>
+                    <strong>Variantes :</strong> Dict comprehension <code>{k: v for k, v in items}</code>, set comprehension <code>{x for x in range(10)}</code>.
+            </div>
+        </div>
+
+            <button class="sub-accordion">Q5: Comment gérez-vous les exceptions ?</button>
+        <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Structure <code>try/except/else/finally</code> pour gérer les erreurs de manière contrôlée.<br>
+                    <strong>Exemple :</strong> <code>try: result = 10/0</code> puis <code>except ZeroDivisionError: print("Division par zéro")</code>.<br>
+                    <strong>Bonnes pratiques :</strong> Capturer des exceptions spécifiques (pas <code>except:</code> seul), utiliser <code>else</code> pour le code qui ne doit pas lever d'exception, <code>finally</code> pour le nettoyage.<br>
+                    <strong>Cas d'usage :</strong> Gestion de fichiers, appels API, validation de données. Toujours logger l'erreur pour le debugging.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q6: Qu'est-ce que le GIL (Global Interpreter Lock) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Verrou global qui empêche plusieurs threads Python d'exécuter du bytecode simultanément sur le même processus.<br>
+                    <strong>Impact :</strong> Le multithreading Python n'est pas vraiment parallèle pour le CPU-bound (calculs intensifs).<br>
+                    <strong>Solution :</strong> Utiliser <code>multiprocessing</code> pour le vrai parallélisme, ou des bibliothèques comme NumPy qui libèrent le GIL.<br>
+                    <strong>Cas d'usage :</strong> Le GIL n'est pas un problème pour l'I/O-bound (requêtes réseau, fichiers) car le GIL est libéré pendant les opérations I/O.
+                </div>
+</div>
+
+            <button class="sub-accordion">Q7: Expliquez *args et **kwargs</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>*args</code> collecte les arguments positionnels variables en tuple, <code>**kwargs</code> collecte les arguments nommés variables en dictionnaire.<br>
+                    <strong>Exemple :</strong> <code>def func(a, *args, **kwargs):</code> peut être appelée avec <code>func(1, 2, 3, x=4, y=5)</code> où <code>args=(2,3)</code> et <code>kwargs={'x':4, 'y':5}</code>.<br>
+                    <strong>Cas d'usage :</strong> Fonctions wrapper, décorateurs, fonctions avec nombre variable d'arguments. Très utile pour passer des arguments à des fonctions parentes.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q8: Qu'est-ce qu'un générateur et yield ?</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Fonction qui utilise <code>yield</code> au lieu de <code>return</code>, produisant des valeurs à la demande (lazy evaluation).<br>
+                    <strong>Exemple :</strong> <code>def gen(): yield 1; yield 2</code> crée un générateur qui produit 1 puis 2 à chaque appel de <code>next()</code>.<br>
+                    <strong>Avantages :</strong> Économie mémoire (pas besoin de stocker toute la séquence), peut être infini, évaluation paresseuse.<br>
+                    <strong>Cas d'usage :</strong> Traitement de gros fichiers ligne par ligne, séquences infinies, pipelines de données. Utilisé dans Django pour les QuerySets.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q9: Expliquez le concept de "duck typing"</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> "Si ça marche comme un canard et ça fait le bruit d'un canard, c'est un canard" - On vérifie les méthodes disponibles, pas le type exact.<br>
+                    <strong>Exemple :</strong> Si un objet a une méthode <code>read()</code>, on peut l'utiliser comme un fichier, peu importe son type réel.<br>
+                    <strong>Avantage :</strong> Code plus flexible et réutilisable, moins de couplage avec les types spécifiques.<br>
+                    <strong>Python :</strong> Le duck typing est au cœur de Python - les protocoles (comme le protocole itérable) sont basés sur les méthodes, pas les types.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q10: Différence entre méthodes de classe, statiques et d'instance ?</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Méthode d'instance prend <code>self</code> (accès à l'instance), méthode de classe prend <code>cls</code> avec <code>@classmethod</code> (accès à la classe), méthode statique avec <code>@staticmethod</code> (ni self ni cls).<br>
+                    <strong>Exemple :</strong> <code>@classmethod</code> pour créer des instances alternatives, <code>@staticmethod</code> pour des fonctions utilitaires liées à la classe.<br>
+                    <strong>Cas d'usage :</strong> Factory methods avec <code>@classmethod</code>, fonctions utilitaires avec <code>@staticmethod</code>, logique métier avec méthodes d'instance.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q11: Qu'est-ce qu'un context manager (with) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Objet qui gère automatiquement l'acquisition et la libération de ressources via les méthodes <code>__enter__</code> et <code>__exit__</code>.<br>
+                    <strong>Exemple :</strong> <code>with open('file.txt') as f:</code> ouvre le fichier et le ferme automatiquement, même en cas d'erreur.<br>
+                    <strong>Avantages :</strong> Code plus propre, gestion automatique des erreurs, pas d'oubli de fermeture de ressources.<br>
+                    <strong>Cas d'usage :</strong> Fichiers, connexions DB, verrous (locks), transactions. Utilisé partout en Python moderne.
+                </div>
+</div>
+
+            <button class="sub-accordion">Q12: Qu'est-ce que la mutabilité et l'immutabilité ?</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Mutable = modifiable après création (list, dict, set), Immutable = non modifiable (tuple, str, int, frozenset).<br>
+                    <strong>Exemple :</strong> <code>liste[0] = 5</code> fonctionne, mais <code>tuple[0] = 5</code> lève une erreur.<br>
+                    <strong>Avantages immutabilité :</strong> Thread-safe, hashable (utilisable comme clé de dict), prévisible.<br>
+                    <strong>Cas d'usage :</strong> Utilisez des tuples pour des données fixes (clés de dict, coordonnées), des listes pour des données dynamiques.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q13: Comment fonctionne le garbage collector en Python ?</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Système automatique de gestion mémoire utilisant le comptage de références + détection de cycles.<br>
+                    <strong>Mécanisme :</strong> Chaque objet a un compteur de références. Quand il atteint 0, l'objet est supprimé. Un algorithme détecte les cycles de références.<br>
+                    <strong>Avantages :</strong> Pas besoin de libérer manuellement la mémoire, pas de fuites mémoire classiques.<br>
+                    <strong>Cas d'usage :</strong> Fonctionne automatiquement. On peut forcer avec <code>gc.collect()</code> si nécessaire pour les cycles complexes.
+        </div>
+    </div>
+
+            <button class="sub-accordion">Q14: Deep copy vs shallow copy ?</button>
+    <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Shallow copy = copie les références (objets imbriqués partagés), Deep copy = copie récursive complète (objets indépendants).<br>
+                    <strong>Exemple :</strong> <code>import copy; shallow = copy.copy(liste); deep = copy.deepcopy(liste)</code><br>
+                    <strong>Cas d'usage :</strong> Shallow copy pour des structures simples, deep copy quand vous voulez modifier les objets imbriqués indépendamment.<br>
+                    <strong>Attention :</strong> Les shallow copies peuvent causer des bugs subtils si vous modifiez des objets imbriqués sans le réaliser.
+                </div>
+        </div>
+    </div>
+
+        <!-- DJANGO -->
+        <button class="sub-accordion">🎸 DJANGO - Questions Courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Expliquez l'architecture MVT de Django</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> MVT = Model-View-Template (variante de MVC). Model = données (ORM), View = logique métier (contrôleur), Template = présentation (HTML).<br>
+                    <strong>Flux :</strong> Requête → URL → View (logique) → Model (données) → Template (rendu) → Réponse.<br>
+                    <strong>Avantages :</strong> Séparation claire des responsabilités, code maintenable, réutilisabilité des composants.<br>
+                    <strong>Cas d'usage :</strong> Dans un projet Django, les models définissent la structure DB, les views contiennent la logique, les templates affichent les données.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q2: Qu'est-ce que l'ORM Django et pourquoi l'utiliser ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Object-Relational Mapping - Manipule la base de données avec du code Python au lieu de SQL brut.<br>
+                    <strong>Exemple :</strong> <code>User.objects.filter(email='test@example.com')</code> au lieu de <code>SELECT * FROM users WHERE email='test@example.com'</code>.<br>
+                    <strong>Avantages :</strong> Protection contre les injections SQL, portabilité entre SGBD, code plus lisible, migrations automatiques.<br>
+                    <strong>Cas d'usage :</strong> Utilisé partout dans Django. Permet de changer de SGBD (PostgreSQL → MySQL) sans modifier le code.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q3: Qu'est-ce qu'une migration Django ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Fichier Python décrivant les changements de schéma de base de données (création/modification de tables, colonnes).<br>
+                    <strong>Processus :</strong> <code>python manage.py makemigrations</code> crée les fichiers, <code>python manage.py migrate</code> les applique.<br>
+                    <strong>Avantages :</strong> Versioning du schéma DB, réversibilité, collaboration en équipe, déploiement automatisé.<br>
+                    <strong>Cas d'usage :</strong> Chaque modification de model génère une migration. Les migrations sont commitées dans Git avec le code.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q4: Comment créer une API REST avec DRF ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Django Rest Framework permet de créer des APIs REST facilement avec Serializers, ViewSets et Router.<br>
+                    <strong>Composants :</strong> Serializer (validation/sérialisation), ViewSet (CRUD automatique), Router (URLs automatiques).<br>
+                    <strong>Exemple :</strong> <code>class UserViewSet(viewsets.ModelViewSet): queryset = User.objects.all(); serializer_class = UserSerializer</code> crée automatiquement GET, POST, PUT, DELETE.<br>
+                    <strong>Avantages :</strong> Code minimal, documentation automatique (Swagger), authentification intégrée, pagination.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q5: Comment gérer l'authentification ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Django propose plusieurs systèmes : Session (cookies pour web), Token (DRF pour API simple), JWT (API moderne stateless).<br>
+                    <strong>Session :</strong> Pour applications web classiques, utilise des cookies sécurisés.<br>
+                    <strong>Token :</strong> Token simple stocké en DB, utilisé pour les APIs basiques.<br>
+                    <strong>JWT :</strong> JSON Web Token auto-contenu, pas besoin de DB, idéal pour microservices et mobile.<br>
+                    <strong>Cas d'usage :</strong> JWT pour les APIs modernes (mobile, SPA), Session pour les sites web traditionnels.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q6: Qu'est-ce que le problème N+1 ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Problème de performance : 1 requête pour récupérer N objets, puis N requêtes supplémentaires pour leurs relations.<br>
+                    <strong>Exemple :</strong> <code>for user in User.objects.all(): print(user.profile.bio)</code> fait 1 requête pour users + N requêtes pour profiles.<br>
+                    <strong>Solution :</strong> <code>select_related()</code> pour ForeignKey (JOIN SQL), <code>prefetch_related()</code> pour ManyToMany (2 requêtes optimisées).<br>
+                    <strong>Cas d'usage :</strong> Toujours utiliser <code>select_related</code> ou <code>prefetch_related</code> quand vous accédez à des relations dans une boucle.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q7: Comment sécuriser Django en production ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Configuration de sécurité essentielle pour protéger l'application en production.<br>
+                    <strong>Checklist :</strong> <code>DEBUG=False</code>, <code>SECRET_KEY</code> dans variables d'environnement, <code>ALLOWED_HOSTS</code> configuré, HTTPS activé, <code>SECURE_SSL_REDIRECT=True</code>.<br>
+                    <strong>Autres :</strong> <code>SECURE_BROWSER_XSS_FILTER</code>, <code>SECURE_CONTENT_TYPE_NOSNIFF</code>, <code>X_FRAME_OPTIONS='DENY'</code>.<br>
+                    <strong>Cas d'usage :</strong> Utiliser <code>django-environ</code> pour gérer les variables d'environnement, activer tous les paramètres de sécurité dans <code>settings.py</code>.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q8: Qu'est-ce qu'un signal Django ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Système de notifications permettant d'exécuter du code automatiquement lors d'événements (création, modification, suppression d'objets).<br>
+                    <strong>Exemple :</strong> <code>@receiver(post_save, sender=User)</code> exécute du code après chaque sauvegarde d'un User.<br>
+                    <strong>Signaux courants :</strong> <code>pre_save</code>, <code>post_save</code>, <code>pre_delete</code>, <code>post_delete</code>, <code>m2m_changed</code>.<br>
+                    <strong>Cas d'usage :</strong> Envoyer un email après création d'utilisateur, créer un profil automatiquement, logger les modifications.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q9: Comment optimiser les performances ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Techniques pour améliorer la vitesse et réduire la charge serveur.<br>
+                    <strong>Techniques :</strong> Caching (Redis/Memcached), indexation DB, <code>select_related</code>/<code>prefetch_related</code>, pagination, <code>only()</code>/<code>defer()</code> pour limiter les champs, <code>values()</code> pour dictionnaires.<br>
+                    <strong>Outils :</strong> <code>django-debug-toolbar</code> pour analyser les requêtes, <code>django-silk</code> pour le profiling.<br>
+                    <strong>Cas d'usage :</strong> Utiliser le cache pour les données fréquemment lues, optimiser les QuerySets avec <code>select_related</code>, paginer les listes.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q10: Différence entre get() et filter() ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>get()</code> retourne UN objet ou lève une exception, <code>filter()</code> retourne un QuerySet (peut être vide).<br>
+                    <strong>Exemple :</strong> <code>User.objects.get(id=1)</code> retourne un User ou <code>DoesNotExist</code>, <code>User.objects.filter(active=True)</code> retourne un QuerySet.<br>
+                    <strong>Cas d'usage :</strong> Utilisez <code>get()</code> quand vous êtes sûr qu'un seul objet existe, <code>filter()</code> pour des listes ou quand plusieurs objets peuvent correspondre.<br>
+                    <strong>Attention :</strong> <code>get()</code> lève <code>MultipleObjectsReturned</code> si plusieurs objets correspondent.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q11: Qu'est-ce qu'un middleware Django ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Composant qui traite les requêtes et réponses globalement, avant qu'elles n'atteignent la vue ou après.<br>
+                    <strong>Exemple :</strong> Middleware d'authentification, CORS, logging, compression, sécurité.<br>
+                    <strong>Cycle :</strong> Requête → Middlewares (ordre) → View → Middlewares (ordre inverse) → Réponse.<br>
+                    <strong>Cas d'usage :</strong> Créer un middleware personnalisé pour logger les requêtes, ajouter des headers, gérer l'authentification JWT.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q12: Comment gérer les fichiers statiques et médias ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Statiques = assets (CSS, JS, images) versionnés, Médias = fichiers uploadés par les utilisateurs.<br>
+                    <strong>Configuration :</strong> <code>STATIC_URL</code>/<code>STATIC_ROOT</code> pour statiques, <code>MEDIA_URL</code>/<code>MEDIA_ROOT</code> pour médias.<br>
+                    <strong>Production :</strong> <code>collectstatic</code> collecte tous les statiques dans un dossier, servir via Nginx/CDN (pas Django).<br>
+                    <strong>Cas d'usage :</strong> En dev, Django sert les statiques. En prod, utiliser WhiteNoise ou servir via Nginx/AWS S3.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q13: Qu'est-ce que le CSRF ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Cross-Site Request Forgery - Attaque où un site malveillant fait exécuter des actions à un utilisateur authentifié sur un autre site.<br>
+                    <strong>Protection Django :</strong> Token CSRF automatique dans les formulaires, vérifié à chaque POST/PUT/DELETE.<br>
+                    <strong>Utilisation :</strong> <code>{% csrf_token %}</code> dans les templates, <code>@csrf_exempt</code> pour désactiver (rare).<br>
+                    <strong>Cas d'usage :</strong> Django protège automatiquement. Pour les APIs, utiliser <code>@csrf_exempt</code> si vous utilisez JWT (pas de cookies).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q14: Comment faire des tests dans Django ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Framework de test intégré avec <code>TestCase</code>, <code>Client</code> pour simuler les requêtes, fixtures pour les données.<br>
+                    <strong>Exemple :</strong> <code>class UserTest(TestCase): def setUp(self): User.objects.create(...); def test_login(self): response = self.client.post('/login/', {...})</code><br>
+                    <strong>Outils :</strong> <code>Client</code> pour tester les vues, <code>fixtures</code> pour données de test, <code>factory_boy</code> pour générer des données.<br>
+                    <strong>Cas d'usage :</strong> Tests unitaires pour les models, tests d'intégration pour les vues, tests fonctionnels avec Selenium.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q15: Qu'est-ce que Celery ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Système de tâches asynchrones distribuées pour exécuter du code en arrière-plan.<br>
+                    <strong>Exemple :</strong> Envoyer des emails, générer des rapports, traitement d'images, scraping, notifications.<br>
+                    <strong>Architecture :</strong> Django → Celery (broker Redis/RabbitMQ) → Workers (exécutent les tâches) → Résultat.<br>
+                    <strong>Cas d'usage :</strong> Toutes les opérations longues (>2s) doivent être en tâches Celery pour ne pas bloquer les requêtes HTTP.
+                </div>
+            </div>
+        </div>
+
+        <!-- JAVA -->
+        <button class="sub-accordion">☕ JAVA - Questions Courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Différence JDK, JRE, JVM ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> JVM (Java Virtual Machine) = exécute le bytecode, JRE (Java Runtime Environment) = JVM + bibliothèques standard, JDK (Java Development Kit) = JRE + outils de développement (compilateur, debugger).<br>
+                    <strong>Hiérarchie :</strong> JDK contient JRE qui contient JVM.<br>
+                    <strong>Cas d'usage :</strong> JVM pour exécuter, JRE pour exécuter des applications, JDK pour développer. En production, on installe souvent juste le JRE.<br>
+                    <strong>Exemple :</strong> <code>javac</code> (compilateur) est dans le JDK, pas dans le JRE.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q2: Les 4 piliers de la POO ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Encapsulation (cacher les détails internes), Héritage (réutiliser le code), Polymorphisme (même interface, comportements différents), Abstraction (concepts généraux).<br>
+                    <strong>Encapsulation :</strong> Utiliser <code>private</code> pour les champs, <code>public</code> pour les méthodes (getters/setters).<br>
+                    <strong>Héritage :</strong> <code>class Child extends Parent</code> hérite des méthodes et champs.<br>
+                    <strong>Polymorphisme :</strong> Une référence de type parent peut pointer vers un objet enfant.<br>
+                    <strong>Abstraction :</strong> Classes abstraites et interfaces définissent des contrats sans implémentation complète.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q3: Différence == et .equals() ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>==</code> compare les références (adresses mémoire), <code>.equals()</code> compare le contenu des objets.<br>
+                    <strong>Exemple :</strong> <code>String a = new String("test"); String b = new String("test");</code> → <code>a == b</code> est <code>false</code> (objets différents), mais <code>a.equals(b)</code> est <code>true</code> (même contenu).<br>
+                    <strong>Règle :</strong> Pour les primitifs, utilisez <code>==</code>. Pour les objets, utilisez <code>.equals()</code> (sauf si vous voulez comparer les références).<br>
+                    <strong>Attention :</strong> Toujours redéfinir <code>hashCode()</code> si vous redéfinissez <code>equals()</code>.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q4: Interface vs Classe abstraite ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Interface = contrat pur (toutes méthodes abstraites), Classe abstraite = peut avoir du code concret et abstrait.<br>
+                    <strong>Différences :</strong> Interface = héritage multiple possible, pas de constructeur, méthodes par défaut <code>public abstract</code>. Classe abstraite = héritage simple, constructeur possible, méthodes concrètes possibles.<br>
+                    <strong>Cas d'usage :</strong> Interface pour définir un contrat (comportement), classe abstraite pour partager du code commun entre classes liées.<br>
+                    <strong>Exemple :</strong> <code>List</code> est une interface, <code>AbstractList</code> est une classe abstraite qui implémente <code>List</code>.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q5: Collections Java principales ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Framework de collections pour stocker et manipuler des groupes d'objets.<br>
+                    <strong>List :</strong> Ordre préservé, doublons autorisés (<code>ArrayList</code>, <code>LinkedList</code>).<br>
+                    <strong>Set :</strong> Pas de doublons, ordre non garanti (<code>HashSet</code>) ou ordonné (<code>TreeSet</code>, <code>LinkedHashSet</code>).<br>
+                    <strong>Map :</strong> Clé-valeur, pas de doublons de clés (<code>HashMap</code>, <code>TreeMap</code>, <code>LinkedHashMap</code>).<br>
+                    <strong>Cas d'usage :</strong> <code>ArrayList</code> pour listes dynamiques, <code>HashSet</code> pour éviter doublons, <code>HashMap</code> pour recherche rapide par clé.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q6: Qu'est-ce que le Garbage Collector ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Système automatique qui gère la mémoire en supprimant les objets qui ne sont plus référencés.<br>
+                    <strong>Mécanisme :</strong> Marque les objets non accessibles, puis les supprime. Différents algorithmes (Serial, Parallel, G1, ZGC).<br>
+                    <strong>Avantages :</strong> Pas de fuites mémoire classiques, pas besoin de libérer manuellement la mémoire.<br>
+                    <strong>Cas d'usage :</strong> Fonctionne automatiquement. On peut suggérer avec <code>System.gc()</code> mais le GC décide. Tuning possible avec des flags JVM.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q7: String vs StringBuilder vs StringBuffer ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>String</code> = immutable (non modifiable), <code>StringBuilder</code> = mutable et rapide, <code>StringBuffer</code> = mutable et thread-safe.<br>
+                    <strong>Performance :</strong> <code>String</code> crée un nouvel objet à chaque concaténation (lent), <code>StringBuilder</code> modifie le même objet (rapide).<br>
+                    <strong>Cas d'usage :</strong> <code>String</code> pour chaînes fixes, <code>StringBuilder</code> pour concaténations multiples (boucles), <code>StringBuffer</code> pour environnements multithreadés.<br>
+                    <strong>Exemple :</strong> Dans une boucle, utilisez <code>StringBuilder</code> : <code>StringBuilder sb = new StringBuilder(); sb.append("text");</code>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q8: Qu'est-ce qu'une lambda expression ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Syntaxe concise pour créer des fonctions anonymes (Java 8+). Permet la programmation fonctionnelle.<br>
+                    <strong>Exemple :</strong> <code>(a, b) -> a + b</code> au lieu de créer une classe anonyme complète.<br>
+                    <strong>Cas d'usage :</strong> Streams API, callbacks, interfaces fonctionnelles (<code>Runnable</code>, <code>Comparator</code>, <code>Predicate</code>).<br>
+                    <strong>Avantages :</strong> Code plus lisible, moins verbeux, permet la programmation fonctionnelle en Java.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q9: Différence throw et throws ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>throw</code> lance une exception, <code>throws</code> déclare qu'une méthode peut lancer une exception dans sa signature.<br>
+                    <strong>Exemple :</strong> <code>public void method() throws IOException { throw new IOException(); }</code><br>
+                    <strong>Cas d'usage :</strong> <code>throw</code> pour lancer une exception, <code>throws</code> pour informer les appelants qu'ils doivent gérer l'exception.<br>
+                    <strong>Règle :</strong> Les exceptions checked (comme <code>IOException</code>) doivent être déclarées avec <code>throws</code> ou gérées avec <code>try-catch</code>.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q10: Qu'est-ce que les generics ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Système de types paramétrés permettant de créer des classes, interfaces et méthodes qui fonctionnent avec différents types.<br>
+                    <strong>Exemple :</strong> <code>List&lt;String&gt;</code> au lieu de <code>List</code> (raw type). Garantit que la liste ne contient que des String.<br>
+                    <strong>Avantages :</strong> Type-safety à la compilation, évite les <code>ClassCastException</code>, code plus lisible.<br>
+                    <strong>Cas d'usage :</strong> Collections typées, classes génériques (<code>Box&lt;T&gt;</code>), méthodes génériques. Utilisé partout en Java moderne.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q11: Qu'est-ce que l'autoboxing ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Conversion automatique entre types primitifs (<code>int</code>, <code>double</code>) et leurs classes wrapper (<code>Integer</code>, <code>Double</code>).<br>
+                    <strong>Exemple :</strong> <code>List&lt;Integer&gt; list = new ArrayList&lt;&gt;(); list.add(5);</code> - le <code>int</code> 5 est automatiquement converti en <code>Integer</code>.<br>
+                    <strong>Unboxing :</strong> Conversion inverse (wrapper → primitif).<br>
+                    <strong>Cas d'usage :</strong> Permet d'utiliser des primitifs avec des collections (qui ne stockent que des objets). Attention aux performances en cas de conversions fréquentes.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q12: Modificateurs d'accès ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Contrôlent la visibilité des classes, méthodes et champs.<br>
+                    <strong>public :</strong> Accessible partout (toutes les classes).<br>
+                    <strong>private :</strong> Accessible uniquement dans la classe elle-même.<br>
+                    <strong>protected :</strong> Accessible dans la classe et ses sous-classes (même package ou héritage).<br>
+                    <strong>default (package-private) :</strong> Accessible uniquement dans le même package (pas de mot-clé).<br>
+                    <strong>Cas d'usage :</strong> Encapsulation : champs <code>private</code>, méthodes publiques pour l'API, <code>protected</code> pour l'héritage.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q13: Qu'est-ce qu'une classe imbriquée (nested class) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Classe définie à l'intérieur d'une autre classe.<br>
+                    <strong>Static nested class :</strong> Indépendante de l'instance de la classe externe, accès uniquement aux membres statiques.<br>
+                    <strong>Inner class :</strong> Liée à une instance de la classe externe, accès à tous les membres (y compris privés).<br>
+                    <strong>Cas d'usage :</strong> Classes utilitaires liées (<code>Map.Entry</code>), callbacks, organisation logique du code.<br>
+                    <strong>Exemple :</strong> <code>class Outer { static class Nested {}; class Inner {} }</code>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q14: Différence final, finally, finalize ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Trois concepts différents souvent confondus.<br>
+                    <strong>final :</strong> Mot-clé pour constantes (variables), méthodes non redéfinissables, classes non héritables.<br>
+                    <strong>finally :</strong> Bloc dans <code>try-catch</code> toujours exécuté (même en cas d'exception), utilisé pour le nettoyage.<br>
+                    <strong>finalize() :</strong> Méthode appelée par le GC avant suppression (dépréciée depuis Java 9, remplacée par <code>Cleaner</code>).<br>
+                    <strong>Cas d'usage :</strong> <code>final</code> pour immutabilité, <code>finally</code> pour fermer des ressources, éviter <code>finalize()</code>.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q15: Qu'est-ce que le polymorphisme et donnez un exemple</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Capacité d'un objet à prendre plusieurs formes. Même interface, comportements différents selon le type réel.<br>
+                    <strong>Exemple :</strong> <code>Animal animal = new Dog(); animal.makeSound();</code> - appelle la méthode de <code>Dog</code>, pas de <code>Animal</code>.<br>
+                    <strong>Types :</strong> Polymorphisme de compilation (surcharge) et d'exécution (redéfinition/override).<br>
+                    <strong>Cas d'usage :</strong> Permet d'écrire du code générique qui fonctionne avec différents types. Fondamental en POO pour la flexibilité.
+                </div>
+            </div>
+    </div>
+
+        <!-- SPRING / SPRING BOOT -->
+        <button class="sub-accordion">🌱 SPRING / SPRING BOOT - Questions Courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Qu'est-ce que l'injection de dépendances ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Principe IoC (Inversion of Control) où Spring gère la création et l'injection des dépendances au lieu du code lui-même.<br>
+                    <strong>Exemple :</strong> Au lieu de <code>UserService userService = new UserService(new UserRepository());</code>, Spring injecte automatiquement via <code>@Autowired</code>.<br>
+                    <strong>Avantages :</strong> Testabilité (facile de mocker), couplage faible, code plus maintenable, configuration centralisée.<br>
+                    <strong>Cas d'usage :</strong> Utilisé partout dans Spring. Permet de changer d'implémentation sans modifier le code consommateur.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q2: Annotations principales ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Annotations Spring pour configurer et marquer les composants.<br>
+                    <strong>@SpringBootApplication :</strong> Point d'entrée, combine <code>@Configuration</code>, <code>@EnableAutoConfiguration</code>, <code>@ComponentScan</code>.<br>
+                    <strong>@RestController :</strong> Contrôleur REST (retourne JSON automatiquement).<br>
+                    <strong>@Service, @Repository, @Component :</strong> Marquent les beans Spring (sémantiquement différents).<br>
+                    <strong>@Autowired :</strong> Injection de dépendances (constructeur recommandé).<br>
+                    <strong>Cas d'usage :</strong> Utilisées partout dans Spring Boot pour la configuration et l'injection.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q3: Différence @Component, @Service, @Repository ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Fonctionnellement identiques (tous créent des beans), mais sémantiquement différents pour la lisibilité.<br>
+                    <strong>@Component :</strong> Composant générique (utilitaire, helper).<br>
+                    <strong>@Service :</strong> Logique métier (services, business logic).<br>
+                    <strong>@Repository :</strong> Accès aux données (repositories, DAO).<br>
+                    <strong>Avantages :</strong> Code plus lisible, meilleure organisation, <code>@Repository</code> traduit les exceptions DB en <code>DataAccessException</code>.<br>
+                    <strong>Cas d'usage :</strong> Utilisez l'annotation appropriée selon le rôle du composant pour la clarté du code.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q4: Comment créer une API REST ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Créer des endpoints REST avec Spring Boot.<br>
+                    <strong>Composants :</strong> <code>@RestController</code> + <code>@RequestMapping</code> + <code>@GetMapping</code>/<code>@PostMapping</code>/<code>@PutMapping</code>/<code>@DeleteMapping</code>.<br>
+                    <strong>Exemple :</strong> <code>@RestController @RequestMapping("/api/users") public class UserController { @GetMapping("/{id}") public User getUser(@PathVariable Long id) {...} }</code><br>
+                    <strong>Avantages :</strong> Code minimal, validation automatique, sérialisation JSON automatique, gestion des exceptions.<br>
+                    <strong>Cas d'usage :</strong> Créer des APIs REST pour mobile, SPA, microservices. Spring Boot gère tout automatiquement.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q5: Qu'est-ce que Spring Data JPA ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Framework qui simplifie l'accès aux données en générant automatiquement les repositories.<br>
+                    <strong>Exemple :</strong> <code>interface UserRepository extends JpaRepository&lt;User, Long&gt;</code> génère automatiquement <code>findAll()</code>, <code>save()</code>, <code>delete()</code>, etc.<br>
+                    <strong>Avantages :</strong> Moins de code boilerplate, méthodes de requête générées automatiquement, support des requêtes personnalisées (<code>@Query</code>).<br>
+                    <strong>Cas d'usage :</strong> Utilisé pour tous les accès DB dans Spring Boot. Réduit drastiquement le code nécessaire pour les opérations CRUD.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q6: Comment gérer les exceptions ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Centraliser la gestion des exceptions avec <code>@RestControllerAdvice</code> et <code>@ExceptionHandler</code>.<br>
+                    <strong>Exemple :</strong> <code>@RestControllerAdvice public class GlobalExceptionHandler { @ExceptionHandler(UserNotFoundException.class) public ResponseEntity&lt;ErrorResponse&gt; handleUserNotFound(...) {...} }</code><br>
+                    <strong>Avantages :</strong> Gestion centralisée, réponses d'erreur cohérentes, séparation des préoccupations.<br>
+                    <strong>Cas d'usage :</strong> Créer un handler global pour toutes les exceptions de l'API, retourner des réponses JSON standardisées.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q7: Les scopes des beans ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Durée de vie et nombre d'instances d'un bean Spring.<br>
+                    <strong>singleton :</strong> Une seule instance partagée (défaut) - toute l'application.<br>
+                    <strong>prototype :</strong> Nouvelle instance à chaque injection - pour des objets avec état.<br>
+                    <strong>request :</strong> Une instance par requête HTTP (web uniquement).<br>
+                    <strong>session :</strong> Une instance par session HTTP (web uniquement).<br>
+                    <strong>application :</strong> Une instance par ServletContext (web uniquement).<br>
+                    <strong>Cas d'usage :</strong> <code>singleton</code> pour services stateless, <code>prototype</code> pour objets avec état, <code>request</code> pour données de requête.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q8: Spring Security pour JWT ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Configurer Spring Security pour utiliser JWT (JSON Web Token) pour l'authentification.<br>
+                    <strong>Composants :</strong> <code>SecurityFilterChain</code> pour la configuration, <code>JwtAuthFilter</code> pour valider les tokens, <code>BCryptPasswordEncoder</code> pour les mots de passe.<br>
+                    <strong>Flux :</strong> Login → Génère JWT → Client envoie JWT dans header → Filter valide → Accès autorisé.<br>
+                    <strong>Cas d'usage :</strong> APIs stateless, microservices, applications mobile. JWT permet l'authentification sans session serveur.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q9: Qu'est-ce que Spring AOP ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Aspect-Oriented Programming - Permet d'ajouter des fonctionnalités transverses (cross-cutting concerns) sans modifier le code métier.<br>
+                    <strong>Exemple :</strong> Logging, sécurité, transactions, monitoring - appliqués automatiquement via aspects.<br>
+                    <strong>Composants :</strong> Aspect (fonctionnalité transverse), Pointcut (où appliquer), Advice (quand appliquer : before, after, around).<br>
+                    <strong>Cas d'usage :</strong> <code>@Transactional</code> utilise AOP pour gérer les transactions. Créer des aspects personnalisés pour logging, sécurité, performance.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q10: Comment tester Spring Boot ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Tests unitaires et d'intégration dans Spring Boot.<br>
+                    <strong>Tests unitaires :</strong> <code>@Mock</code> (Mockito) pour mocker les dépendances, <code>@InjectMocks</code> pour injecter les mocks.<br>
+                    <strong>Tests d'intégration :</strong> <code>@SpringBootTest</code> charge le contexte Spring complet, <code>MockMvc</code> pour tester les contrôleurs.<br>
+                    <strong>Cas d'usage :</strong> Tests unitaires pour la logique métier isolée, tests d'intégration pour tester les contrôleurs et les repositories ensemble.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q11: Différence @RestController et @Controller ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>@RestController</code> = <code>@Controller</code> + <code>@ResponseBody</code> (retourne JSON automatiquement).<br>
+                    <strong>@Controller :</strong> Pour applications web classiques (retourne des vues HTML).<br>
+                    <strong>@RestController :</strong> Pour APIs REST (retourne JSON/XML automatiquement).<br>
+                    <strong>Cas d'usage :</strong> Utilisez <code>@RestController</code> pour les APIs, <code>@Controller</code> pour les applications web avec templates.<br>
+                    <strong>Exemple :</strong> <code>@RestController</code> retourne directement les objets (sérialisés en JSON), <code>@Controller</code> retourne un nom de vue.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q12: @Autowired et alternatives ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Différentes façons d'injecter des dépendances dans Spring.<br>
+                    <strong>Injection par constructeur :</strong> Recommandée - obligatoire, testable, immutabilité.<br>
+                    <strong>Injection par setter :</strong> Optionnelle, permet de changer la dépendance.<br>
+                    <strong>Injection par champ :</strong> Avec <code>@Autowired</code> sur le champ - moins recommandée (difficile à tester).<br>
+                    <strong>Cas d'usage :</strong> Préférez l'injection par constructeur pour les dépendances obligatoires, setter pour les optionnelles.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q13: @Transactional ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Gère automatiquement les transactions de base de données - rollback si exception, commit si succès.<br>
+                    <strong>Exemple :</strong> <code>@Transactional public void transferMoney(...)</code> - si une exception survient, toutes les opérations DB sont annulées.<br>
+                    <strong>Avantages :</strong> Pas besoin de gérer manuellement les transactions, rollback automatique, propagation configurable.<br>
+                    <strong>Cas d'usage :</strong> Toutes les méthodes qui modifient la DB doivent être <code>@Transactional</code>. Utilisé sur les services, pas les repositories (déjà géré).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q14: Profils Spring (dev, prod, test) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Configurations différentes selon l'environnement (développement, production, test).<br>
+                    <strong>Utilisation :</strong> <code>@Profile("dev")</code> pour activer un bean uniquement en dev, <code>spring.profiles.active=prod</code> pour activer le profil prod.<br>
+                    <strong>Avantages :</strong> Configuration adaptée à l'environnement, pas besoin de changer le code entre dev/prod.<br>
+                    <strong>Cas d'usage :</strong> DB locale en dev, DB distante en prod. Logging détaillé en dev, minimal en prod. Activer/désactiver des fonctionnalités selon l'environnement.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q15: Comment configurer plusieurs sources de données ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Configurer Spring Boot pour utiliser plusieurs bases de données (primary et secondary).<br>
+                    <strong>Configuration :</strong> Créer plusieurs <code>@Configuration</code> avec <code>@Primary</code> pour la source principale, <code>@Bean</code> pour les autres.<br>
+                    <strong>Exemple :</strong> <code>@Primary @Bean public DataSource primaryDataSource() {...}</code> et <code>@Bean public DataSource secondaryDataSource() {...}</code>.<br>
+                    <strong>Cas d'usage :</strong> Applications avec plusieurs bases (DB principale + DB de reporting, DB principale + cache Redis).<br>
+                    <strong>Attention :</strong> Gérer les transactions séparément pour chaque source de données avec <code>@Transactional</code> et <code>@Qualifier</code>.
+                </div>
+            </div>
+</div>
+
+        <!-- ANGULAR -->
+        <button class="sub-accordion">🅰️ ANGULAR - Questions Courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Qu'est-ce qu'un composant ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Élément réutilisable composé de logique (TypeScript), vue (HTML) et styles (CSS). Unité de base d'une application Angular.<br>
+                    <strong>Structure :</strong> <code>@Component</code> avec sélecteur, template, styles. Contient la logique métier et l'affichage.<br>
+                    <strong>Exemple :</strong> <code>@Component({ selector: 'app-user', templateUrl: './user.component.html' })</code> crée un composant utilisateur.<br>
+                    <strong>Cas d'usage :</strong> Créer des composants réutilisables (boutons, formulaires, cartes). Chaque page est généralement un composant.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q2: Types de data binding ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Mécanismes pour lier les données entre le composant et le template.<br>
+                    <strong>Interpolation :</strong> <code>{{ variable }}</code> - affiche la valeur dans le template.<br>
+                    <strong>Property binding :</strong> <code>[property]="value"</code> - lie une propriété à une valeur.<br>
+                    <strong>Event binding :</strong> <code>(event)="handler()"</code> - lie un événement à une méthode.<br>
+                    <strong>Two-way binding :</strong> <code>[(ngModel)]="variable"</code> - synchronise dans les deux sens (nécessite FormsModule).<br>
+                    <strong>Cas d'usage :</strong> Interpolation pour afficher, property binding pour les attributs, event binding pour les interactions, two-way pour les formulaires.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q3: Différence module et composant ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Module = organisation de l'application (regroupe composants, services, directives), Composant = élément UI réutilisable.<br>
+                    <strong>Module :</strong> <code>@NgModule</code> déclare les composants, imports les dépendances, exports pour réutilisation.<br>
+                    <strong>Composant :</strong> <code>@Component</code> définit un élément UI avec sa logique et sa vue.<br>
+                    <strong>Cas d'usage :</strong> Modules pour organiser l'app (FeatureModule, SharedModule), composants pour l'UI (UserComponent, ProductComponent).<br>
+                    <strong>Exemple :</strong> Un module peut contenir plusieurs composants. Les composants sont déclarés dans les modules.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q4: Comment créer un service ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Service Angular pour partager la logique métier et les données entre composants.<br>
+                    <strong>Exemple :</strong> <code>@Injectable({ providedIn: 'root' }) export class UserService { constructor(private http: HttpClient) {} }</code><br>
+                    <strong>providedIn: 'root' :</strong> Service singleton disponible dans toute l'application (injection automatique).<br>
+                    <strong>HttpClient :</strong> Pour les appels API. Import <code>HttpClientModule</code> dans le module.<br>
+                    <strong>Cas d'usage :</strong> Services pour appels API, logique métier partagée, gestion d'état. Injecté dans les composants via le constructeur.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q5: Qu'est-ce qu'un Observable ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Stream asynchrone de données (RxJS) - peut émettre plusieurs valeurs au fil du temps.<br>
+                    <strong>Exemple :</strong> <code>this.http.get('/api/users').subscribe(users => {...})</code> - <code>get()</code> retourne un Observable.<br>
+                    <strong>Opérateurs :</strong> <code>map()</code> (transformation), <code>filter()</code> (filtrage), <code>catchError()</code> (gestion erreurs), <code>switchMap()</code> (chaînage).<br>
+                    <strong>Cas d'usage :</strong> Appels HTTP, événements utilisateur, WebSockets. Utilisé partout en Angular pour la programmation réactive.<br>
+                    <strong>Important :</strong> Toujours s'abonner avec <code>subscribe()</code> et se désabonner avec <code>unsubscribe()</code> (ou utiliser <code>async</code> pipe).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q6: Comment gérer le routing ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Navigation entre les vues de l'application basée sur les URLs.<br>
+                    <strong>Configuration :</strong> <code>RouterModule.forRoot(routes)</code> avec <code>Routes[]</code> définissant les chemins.<br>
+                    <strong>Exemple :</strong> <code>{ path: 'users/:id', component: UserComponent }</code> - route avec paramètre.<br>
+                    <strong>Navigation :</strong> <code>router.navigate(['/users', id])</code> ou <code>routerLink="/users"</code> dans le template.<br>
+                    <strong>ActivatedRoute :</strong> Pour récupérer les paramètres : <code>this.route.params.subscribe(params => {...})</code>.<br>
+                    <strong>Cas d'usage :</strong> Navigation entre pages, routes avec paramètres, routes protégées avec Guards.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q7: Cycles de vie d'un composant ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Hooks appelés à différents moments du cycle de vie d'un composant.<br>
+                    <strong>ngOnInit :</strong> Après la première initialisation - idéal pour charger les données initiales.<br>
+                    <strong>ngOnChanges :</strong> Quand les <code>@Input()</code> changent - reçoit un objet <code>SimpleChanges</code>.<br>
+                    <strong>ngOnDestroy :</strong> Avant la destruction - pour nettoyer (unsubscribe, timers, listeners).<br>
+                    <strong>Autres :</strong> <code>ngAfterViewInit</code> (après initialisation de la vue), <code>ngDoCheck</code> (détection de changements personnalisée).<br>
+                    <strong>Cas d'usage :</strong> <code>ngOnInit</code> pour initialisation, <code>ngOnDestroy</code> pour éviter les fuites mémoire.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q8: Reactive Forms vs Template-driven ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Deux approches pour gérer les formulaires dans Angular.<br>
+                    <strong>Reactive Forms :</strong> Déclaratif dans le TypeScript avec <code>FormBuilder</code>, <code>FormGroup</code>, <code>FormControl</code>. Plus flexible et testable.<br>
+                    <strong>Template-driven :</strong> Déclaratif dans le template avec <code>ngModel</code>, directives. Plus simple pour les formulaires basiques.<br>
+                    <strong>Avantages Reactive :</strong> Validation complexe, tests unitaires faciles, logique dans le composant.<br>
+                    <strong>Cas d'usage :</strong> Reactive Forms pour formulaires complexes avec validation avancée, Template-driven pour formulaires simples.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q9: Qu'est-ce qu'un Guard ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Service qui contrôle l'accès aux routes - peut autoriser, bloquer ou rediriger.<br>
+                    <strong>Types :</strong> <code>CanActivate</code> (accès à la route), <code>CanDeactivate</code> (quitter la route), <code>CanLoad</code> (charger le module), <code>Resolve</code> (précharger les données).<br>
+                    <strong>Exemple :</strong> <code>canActivate: [AuthGuard]</code> dans la route - vérifie l'authentification avant d'accéder.<br>
+                    <strong>Cas d'usage :</strong> Protection des routes (authentification, autorisation), préchargement de données, confirmation avant de quitter.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q10: Comment gérer l'état global ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Partager des données entre composants non liés (pas parent-enfant).<br>
+                    <strong>Services + BehaviorSubject :</strong> Service singleton avec <code>BehaviorSubject</code> pour stocker et émettre l'état. Simple et efficace.<br>
+                    <strong>NgRx :</strong> Gestion d'état complexe avec Redux pattern (Store, Actions, Reducers, Effects). Pour applications grandes.<br>
+                    <strong>Exemple :</strong> <code>private state$ = new BehaviorSubject&lt;State&gt;(initialState); getState() { return this.state$.asObservable(); }</code><br>
+                    <strong>Cas d'usage :</strong> Services pour état simple (panier, utilisateur connecté), NgRx pour état complexe (applications grandes avec beaucoup d'interactions).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q11: Différence @Input() et @Output() ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Communication entre composants parent et enfant.<br>
+                    <strong>@Input() :</strong> Données passées du parent vers l'enfant - propriété décorée avec <code>@Input()</code>.<br>
+                    <strong>@Output() :</strong> Événements émis de l'enfant vers le parent - <code>EventEmitter</code> décoré avec <code>@Output()</code>.<br>
+                    <strong>Exemple :</strong> <code>@Input() user: User;</code> dans l'enfant, <code>&lt;child [user]="currentUser"&gt;</code> dans le parent.<br>
+                    <strong>Cas d'usage :</strong> <code>@Input()</code> pour passer des données, <code>@Output()</code> pour notifier le parent d'événements (clics, changements).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q12: Qu'est-ce que la détection de changements (Change Detection) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Mécanisme Angular qui détecte les changements dans les données et met à jour la vue automatiquement.<br>
+                    <strong>Stratégies :</strong> Default (vérifie tout l'arbre) vs OnPush (vérifie uniquement si les références changent).<br>
+                    <strong>OnPush :</strong> Optimisation - ne vérifie que si les <code>@Input()</code> changent ou si un événement se produit. Meilleures performances.<br>
+                    <strong>Exemple :</strong> <code>@Component({ changeDetection: ChangeDetectionStrategy.OnPush })</code> pour optimiser les performances.<br>
+                    <strong>Cas d'usage :</strong> OnPush pour composants avec beaucoup de données ou listes longues. Améliore drastiquement les performances.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q13: Qu'est-ce qu'un pipe ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Transforme les données dans le template pour l'affichage - ne modifie pas les données originales.<br>
+                    <strong>Pipes intégrés :</strong> <code>date</code>, <code>uppercase</code>, <code>lowercase</code>, <code>currency</code>, <code>json</code>, <code>async</code>.<br>
+                    <strong>Exemple :</strong> <code>{{ user.name | uppercase }}</code> ou <code>{{ price | currency:'EUR' }}</code>.<br>
+                    <strong>Pipe personnalisé :</strong> <code>@Pipe({ name: 'custom' })</code> avec méthode <code>transform()</code>.<br>
+                    <strong>Cas d'usage :</strong> Formatage de dates, devises, textes. Pipes personnalisés pour transformations métier spécifiques.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q14: Comment gérer les appels HTTP avec HttpClient ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Service Angular pour effectuer des requêtes HTTP (GET, POST, PUT, DELETE) vers des APIs REST.<br>
+                    <strong>Utilisation :</strong> Injecter <code>HttpClient</code> dans le service, utiliser <code>get()</code>, <code>post()</code>, <code>put()</code>, <code>delete()</code>.<br>
+                    <strong>Exemple :</strong> <code>this.http.get&lt;User[]&gt;('/api/users').subscribe(users => {...})</code> - retourne un Observable.<br>
+                    <strong>Intercepteurs :</strong> <code>HttpInterceptor</code> pour ajouter des headers (JWT), gérer les erreurs globalement, logging.<br>
+                    <strong>Cas d'usage :</strong> Tous les appels API dans Angular. Utiliser dans les services, pas directement dans les composants. Toujours gérer les erreurs avec <code>catchError()</code>.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q15: Lazy loading des modules ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Charger les modules à la demande (lors de la navigation) au lieu de tout charger au démarrage.<br>
+                    <strong>Avantages :</strong> Temps de chargement initial réduit, meilleures performances, code splitting automatique.<br>
+                    <strong>Exemple :</strong> <code>{ path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }</code><br>
+                    <strong>Cas d'usage :</strong> Modules volumineux (admin, dashboard) chargés uniquement quand nécessaire. Améliore drastiquement les performances initiales.
+                </div>
+            </div>
+    </div>
+
+        <!-- CONCEPTS GÉNÉRAUX -->
+        <button class="sub-accordion">🎯 CONCEPTS GÉNÉRAUX - Questions Transverses</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Qu'est-ce qu'une API REST ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Architecture HTTP basée sur les ressources avec méthodes standard (GET, POST, PUT, DELETE) et codes de statut.<br>
+                    <strong>Principes :</strong> Stateless (pas de session), ressources identifiées par URLs, méthodes HTTP standard, codes de statut appropriés.<br>
+                    <strong>Exemple :</strong> <code>GET /api/users/1</code> récupère l'utilisateur 1, <code>POST /api/users</code> crée un utilisateur.<br>
+                    <strong>Avantages :</strong> Simple, standardisé, cacheable, scalable, indépendant de la plateforme.<br>
+                    <strong>Cas d'usage :</strong> APIs pour mobile, SPA, microservices. Standard de facto pour les APIs web modernes.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q2: Différence SQL et NoSQL ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Deux approches différentes pour stocker et gérer les données.<br>
+                    <strong>SQL (relationnel) :</strong> Tables structurées, relations entre tables, schéma fixe, ACID, exemples : PostgreSQL, MySQL.<br>
+                    <strong>NoSQL :</strong> Flexible (documents, clé-valeur, graphes), schéma dynamique, scalable horizontalement, exemples : MongoDB, Redis, Cassandra.<br>
+                    <strong>Cas d'usage :</strong> SQL pour données structurées et relations complexes, NoSQL pour données non structurées et haute scalabilité.<br>
+                    <strong>Choix :</strong> SQL pour applications transactionnelles, NoSQL pour big data, cache, données non structurées.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q3: Qu'est-ce que l'injection SQL ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Attaque exploitant des requêtes SQL non sécurisées en injectant du code SQL malveillant.<br>
+                    <strong>Exemple :</strong> <code>SELECT * FROM users WHERE name = 'admin' OR '1'='1'</code> - contourne l'authentification.<br>
+                    <strong>Prévention :</strong> Utiliser un ORM (Django ORM, Hibernate), requêtes paramétrées, validation des entrées, principe du moindre privilège.<br>
+                    <strong>Cas d'usage :</strong> Toujours utiliser l'ORM ou des requêtes paramétrées. Jamais de concaténation de strings pour les requêtes SQL.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q4: CORS - Cross-Origin Resource Sharing ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Mécanisme de sécurité du navigateur contrôlant les requêtes cross-domain (entre domaines différents).<br>
+                    <strong>Problème :</strong> Par défaut, les navigateurs bloquent les requêtes entre domaines différents (même origine policy).<br>
+                    <strong>Solution :</strong> Configurer les headers CORS côté serveur (<code>Access-Control-Allow-Origin</code>, <code>Access-Control-Allow-Methods</code>).<br>
+                    <strong>Cas d'usage :</strong> APIs REST appelées depuis un frontend sur un autre domaine. Configurer CORS dans Django/Spring Boot pour autoriser les requêtes.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q5: Différence authentification et autorisation ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Deux concepts de sécurité souvent confondus.<br>
+                    <strong>Authentification :</strong> "Qui es-tu ?" - Vérifier l'identité de l'utilisateur (login, mot de passe, JWT).<br>
+                    <strong>Autorisation :</strong> "Que peux-tu faire ?" - Vérifier les permissions (rôles, ACL, RBAC).<br>
+                    <strong>Exemple :</strong> Authentification = se connecter, Autorisation = accéder à la page admin (réservée aux admins).<br>
+                    <strong>Cas d'usage :</strong> Authentification en premier (login), puis autorisation (vérifier les permissions pour chaque action).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q6: Qu'est-ce que JWT ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> JSON Web Token - Token auto-contenu et stateless pour l'authentification.<br>
+                    <strong>Structure :</strong> <code>header.payload.signature</code> - header (algorithme), payload (données), signature (vérification).<br>
+                    <strong>Avantages :</strong> Stateless (pas de session serveur), portable, scalable, auto-contenu (pas besoin de DB pour valider).<br>
+                    <strong>Cas d'usage :</strong> APIs REST, microservices, applications mobile. Le client envoie le JWT dans le header <code>Authorization: Bearer &lt;token&gt;</code>.<br>
+                    <strong>Flux :</strong> Login → Serveur génère JWT → Client stocke JWT → Client envoie JWT à chaque requête → Serveur valide JWT.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q7: Expliquez MVC (Model-View-Controller)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Architecture de séparation des préoccupations en trois couches : Model (données), View (présentation), Controller (logique).<br>
+                    <strong>Model :</strong> Gère les données et la logique métier (accès DB, règles métier).<br>
+                    <strong>View :</strong> Présente les données à l'utilisateur (interface utilisateur, templates).<br>
+                    <strong>Controller :</strong> Coordonne Model et View, gère les interactions utilisateur (requêtes HTTP, actions).<br>
+                    <strong>Flux :</strong> Requête → Controller → Model (données) → View (rendu) → Réponse.<br>
+                    <strong>Cas d'usage :</strong> Architecture standard pour applications web. Django utilise MVT (variante), Spring MVC, Ruby on Rails.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q8: Qu'est-ce qu'un ORM ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Object-Relational Mapping - Framework qui permet de manipuler la base de données avec des objets au lieu de SQL brut.<br>
+                    <strong>Avantages :</strong> Protection contre les injections SQL, portabilité entre SGBD, code plus lisible, migrations automatiques, moins de code boilerplate.<br>
+                    <strong>Exemple :</strong> <code>User.objects.filter(email='test@example.com')</code> (Django) au lieu de <code>SELECT * FROM users WHERE email='test@example.com'</code>.<br>
+                    <strong>ORM populaires :</strong> Django ORM (Python), Hibernate (Java), Entity Framework (.NET), Sequelize (Node.js), SQLAlchemy (Python).<br>
+                    <strong>Cas d'usage :</strong> Utilisé partout dans le développement web moderne. Permet de changer de SGBD sans modifier le code.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q9: Git : différence merge et rebase ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Deux façons d'intégrer des branches dans Git.<br>
+                    <strong>merge :</strong> Crée un commit de fusion qui combine les deux branches - préserve l'historique complet.<br>
+                    <strong>rebase :</strong> Réécrit l'historique en appliquant les commits de la branche sur la branche cible - historique linéaire.<br>
+                    <strong>Avantages merge :</strong> Historique complet, pas de réécriture, sûr pour branches partagées.<br>
+                    <strong>Avantages rebase :</strong> Historique linéaire et propre, plus facile à lire.<br>
+                    <strong>Cas d'usage :</strong> <code>merge</code> pour branches partagées (main, develop), <code>rebase</code> pour branches locales avant merge.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q10: TDD - Test Driven Development ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Méthodologie où on écrit les tests AVANT le code - cycle Red → Green → Refactor.<br>
+                    <strong>Cycle :</strong> Red (écrire test qui échoue), Green (écrire code minimal pour passer), Refactor (améliorer le code).<br>
+                    <strong>Avantages :</strong> Code testé dès le départ, meilleure couverture, design meilleur (code testable), documentation vivante.<br>
+                    <strong>Cas d'usage :</strong> Pour logique métier complexe, APIs critiques. Pas toujours nécessaire pour code simple ou prototypes.<br>
+                    <strong>Exemple :</strong> Écrire <code>test_user_creation()</code> qui échoue, puis implémenter <code>create_user()</code> pour faire passer le test.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q11: CI/CD ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Continuous Integration / Continuous Deployment - Automatisation des tests et du déploiement.<br>
+                    <strong>CI (Continuous Integration) :</strong> Automatiser les tests à chaque commit - détecter les erreurs tôt.<br>
+                    <strong>CD (Continuous Deployment) :</strong> Automatiser le déploiement en production après validation des tests.<br>
+                    <strong>Outils :</strong> GitHub Actions, GitLab CI, Jenkins, CircleCI, Travis CI.<br>
+                    <strong>Cas d'usage :</strong> Pipeline : Commit → Tests automatiques → Build → Tests d'intégration → Déploiement automatique si succès.<br>
+                    <strong>Avantages :</strong> Détection précoce des bugs, déploiements fréquents et sûrs, moins d'erreurs manuelles.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q12: Microservices vs Monolithe ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Deux architectures différentes pour structurer les applications.<br>
+                    <strong>Monolithe :</strong> Application unique déployée comme une seule unité - toutes les fonctionnalités ensemble.<br>
+                    <strong>Microservices :</strong> Application divisée en services indépendants communiquant via APIs - chaque service a sa responsabilité.<br>
+                    <strong>Avantages Monolithe :</strong> Simple à développer, déployer, déboguer. Idéal pour petites/moyennes applications.<br>
+                    <strong>Avantages Microservices :</strong> Scalabilité indépendante, technologies différentes par service, équipes autonomes.<br>
+                    <strong>Cas d'usage :</strong> Commencer par un monolithe, migrer vers microservices si nécessaire (équipes multiples, scalabilité différenciée).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q13: Qu'est-ce que Docker ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Plateforme de conteneurisation permettant de packager une application avec toutes ses dépendances dans un conteneur isolé.<br>
+                    <strong>Avantages :</strong> Portabilité (fonctionne partout), isolation, légèreté (vs VMs), reproductibilité, scalabilité.<br>
+                    <strong>Composants :</strong> Dockerfile (définit l'image), Image (template), Container (instance de l'image), Docker Compose (orchestration).<br>
+                    <strong>Cas d'usage :</strong> Développement local identique à la prod, déploiement simplifié, CI/CD, microservices. Standard de facto pour la conteneurisation.<br>
+                    <strong>Exemple :</strong> <code>docker build -t myapp .</code> crée une image, <code>docker run myapp</code> lance un conteneur.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q14: Principe SOLID ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Cinq principes de design orienté objet pour écrire du code maintenable et extensible.<br>
+                    <strong>S - Single Responsibility :</strong> Une classe = une responsabilité (une seule raison de changer).<br>
+                    <strong>O - Open/Closed :</strong> Ouvert à l'extension, fermé à la modification (héritage, interfaces).<br>
+                    <strong>L - Liskov Substitution :</strong> Les sous-classes doivent pouvoir remplacer leurs classes parentes sans casser le code.<br>
+                    <strong>I - Interface Segregation :</strong> Interfaces spécifiques plutôt qu'une interface générale (éviter les interfaces "grasse").<br>
+                    <strong>D - Dependency Inversion :</strong> Dépendre d'abstractions (interfaces) plutôt que d'implémentations concrètes.<br>
+                    <strong>Cas d'usage :</strong> Principes à suivre pour écrire du code propre, maintenable et testable. Fondamentaux en POO.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q15: Codes statut HTTP principaux ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Codes de statut HTTP indiquant le résultat d'une requête.<br>
+                    <strong>2xx (Succès) :</strong> <code>200 OK</code> (succès), <code>201 Created</code> (ressource créée), <code>204 No Content</code> (succès sans contenu).<br>
+                    <strong>4xx (Erreur client) :</strong> <code>400 Bad Request</code> (requête invalide), <code>401 Unauthorized</code> (non authentifié), <code>403 Forbidden</code> (non autorisé), <code>404 Not Found</code> (ressource introuvable).<br>
+                    <strong>5xx (Erreur serveur) :</strong> <code>500 Internal Server Error</code> (erreur serveur), <code>502 Bad Gateway</code> (problème proxy), <code>503 Service Unavailable</code> (service indisponible).<br>
+                    <strong>Cas d'usage :</strong> Utiliser les codes appropriés dans les APIs REST pour indiquer clairement le résultat de chaque requête.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q16: ACID en base de données ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Propriétés garantissant la fiabilité des transactions en base de données.<br>
+                    <strong>Atomicity (Atomicité) :</strong> Tout ou rien - soit toutes les opérations réussissent, soit aucune (rollback en cas d'erreur).<br>
+                    <strong>Consistency (Cohérence) :</strong> La base reste dans un état cohérent après la transaction (contraintes respectées).<br>
+                    <strong>Isolation (Isolation) :</strong> Les transactions concurrentes ne se voient pas mutuellement (niveaux d'isolation).<br>
+                    <strong>Durability (Durabilité) :</strong> Les changements sont persistants même en cas de crash (écrits sur disque).<br>
+                    <strong>Cas d'usage :</strong> Garanties essentielles pour les opérations critiques (transferts d'argent, commandes). Les bases SQL garantissent ACID, NoSQL souvent non.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q17: Différence entre HTTP et HTTPS ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> HTTP (HyperText Transfer Protocol) vs HTTPS (HTTP Secure) - protocole de communication web sécurisé.<br>
+                    <strong>HTTP :</strong> Communication non chiffrée - données en clair, vulnérable aux attaques (man-in-the-middle, interception).<br>
+                    <strong>HTTPS :</strong> HTTP + SSL/TLS (chiffrement) - données chiffrées, authentification du serveur, intégrité des données.<br>
+                    <strong>Avantages HTTPS :</strong> Sécurité (chiffrement), confiance (certificat), SEO (Google favorise HTTPS), conformité (RGPD).<br>
+                    <strong>Cas d'usage :</strong> HTTPS obligatoire pour sites e-commerce, authentification, données sensibles. HTTP uniquement pour développement local.<br>
+                    <strong>Exemple :</strong> <code>http://example.com</code> (non sécurisé) vs <code>https://example.com</code> (sécurisé avec certificat SSL).
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q18: Différence entre synchrone et asynchrone ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Deux modèles d'exécution de code différents.<br>
+                    <strong>Synchrone :</strong> Exécution séquentielle - chaque opération attend la fin de la précédente. Bloque l'exécution pendant les opérations longues.<br>
+                    <strong>Asynchrone :</strong> Exécution non bloquante - les opérations longues s'exécutent en arrière-plan, le code continue. Callbacks, Promises, async/await.<br>
+                    <strong>Exemple synchrone :</strong> <code>const data = fetch('/api/users'); console.log(data);</code> - attend la fin de fetch.<br>
+                    <strong>Exemple asynchrone :</strong> <code>fetch('/api/users').then(data => console.log(data)); console.log('continuer');</code> - continue immédiatement.<br>
+                    <strong>Cas d'usage :</strong> Asynchrone pour appels API, I/O (fichiers, DB), opérations longues. Synchrone pour calculs simples, logique métier.
+                </div>
+            </div>
+        </div>
+
+        <!-- GROWTH HACKING & ENGINEERING -->
+        <button class="sub-accordion">🚀 GROWTH HACKING & ENGINEERING - Questions Courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Qu'est-ce que le growth hacking ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Approche marketing axée sur la croissance rapide et mesurable, utilisant des techniques créatives et low-cost pour acquérir et retenir des utilisateurs.<br>
+                    <strong>Principe :</strong> Build → Measure → Learn (construire, mesurer, apprendre) - cycle itératif rapide.<br>
+                    <strong>Différence avec marketing traditionnel :</strong> Focus sur la croissance mesurable, expérimentation rapide, data-driven, souvent low-cost ou gratuit.<br>
+                    <strong>Exemple :</strong> Dropbox a utilisé le referral program (parrainage) pour passer de 100K à 4M utilisateurs en 15 mois.<br>
+                    <strong>Cas d'usage :</strong> Startups, scale-ups, projets e-commerce cherchant une croissance rapide avec budget limité.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q2: Qu'est-ce que le growth engineering ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Discipline combinant développement logiciel et growth marketing pour créer des features qui génèrent de la croissance mesurable.<br>
+                    <strong>Approche :</strong> Développer des fonctionnalités avec analytics embarqué dès la conception, A/B testing, optimisation continue basée sur les données.<br>
+                    <strong>Différence avec dev classique :</strong> Focus sur l'impact business (conversions, revenus) autant que sur la qualité technique.<br>
+                    <strong>Exemple :</strong> Optimiser le temps de chargement d'une page produit pour améliorer le taux de conversion (chaque 100ms = +1% conversion).<br>
+                    <strong>Cas d'usage :</strong> E-commerce, SaaS, applications mobiles où chaque feature doit contribuer à la croissance mesurable.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q3: Qu'est-ce qu'un funnel de conversion ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Modèle représentant le parcours utilisateur depuis la découverte jusqu'à l'action finale (achat, inscription, etc.).<br>
+                    <strong>Étapes classiques :</strong> Awareness (découverte) → Interest (intérêt) → Consideration (considération) → Purchase (achat) → Retention (rétention).<br>
+                    <strong>Métriques clés :</strong> Taux de conversion par étape, taux d'abandon, temps moyen entre étapes.<br>
+                    <strong>Exemple :</strong> E-commerce : Visite → Ajout panier → Checkout → Paiement → Confirmation. Chaque étape a un taux de conversion mesurable.<br>
+                    <strong>Cas d'usage :</strong> Identifier les goulots d'étranglement, optimiser les étapes critiques, améliorer le taux de conversion global.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q4: Qu'est-ce que l'A/B testing ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Méthode d'expérimentation comparant deux versions (A et B) d'une page/feature pour déterminer laquelle performe le mieux.<br>
+                    <strong>Principe :</strong> Diviser le trafic en deux groupes égaux, exposer chaque groupe à une version différente, mesurer les résultats statistiquement significatifs.<br>
+                    <strong>Métriques :</strong> Taux de conversion, revenu par visiteur, temps sur page, taux de rebond.<br>
+                    <strong>Exemple :</strong> Tester deux couleurs de bouton "Acheter" : rouge vs vert, mesurer lequel génère plus de conversions.<br>
+                    <strong>Cas d'usage :</strong> Optimisation de landing pages, formulaires, CTAs, emails marketing. Outils : Google Optimize, Optimizely, VWO.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q5: Qu'est-ce que le SEO technique ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Aspect technique du SEO concernant l'optimisation du code, de l'infrastructure et des performances pour améliorer le référencement.<br>
+                    <strong>Éléments clés :</strong> Vitesse de chargement, mobile-friendliness, structure HTML sémantique, sitemap XML, robots.txt, Core Web Vitals.<br>
+                    <strong>Différence avec SEO contenu :</strong> SEO technique = infrastructure/code, SEO contenu = mots-clés/contenu.<br>
+                    <strong>Exemple :</strong> Optimiser le temps de chargement (LCP < 2.5s), améliorer le mobile-first index, corriger les erreurs 404.<br>
+                    <strong>Cas d'usage :</strong> Développeurs impliqués dans l'optimisation SEO, amélioration des performances pour le référencement.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q6: Qu'est-ce que le CRO (Conversion Rate Optimization) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Processus d'optimisation du taux de conversion d'un site/app pour maximiser le nombre de visiteurs qui effectuent l'action désirée.<br>
+                    <strong>Méthodes :</strong> A/B testing, analyse de parcours utilisateur, heatmaps, enregistrements de sessions, formulaires optimisés.<br>
+                    <strong>Métriques :</strong> Taux de conversion global, conversion par source de trafic, valeur moyenne par conversion.<br>
+                    <strong>Exemple :</strong> Réduire le nombre de champs d'un formulaire de 7 à 3 peut augmenter les conversions de 20-30%.<br>
+                    <strong>Cas d'usage :</strong> E-commerce, SaaS, landing pages, formulaires d'inscription. Outils : Hotjar, Crazy Egg, Google Analytics.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q7: Qu'est-ce que l'instrumentation analytics ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Processus d'intégration d'outils de tracking et de mesure dans une application pour collecter des données sur le comportement utilisateur.<br>
+                    <strong>Éléments :</strong> Events tracking (clics, vues, conversions), user properties, custom dimensions, e-commerce tracking.<br>
+                    <strong>Outils :</strong> Google Analytics, Adobe Analytics, Mixpanel, Amplitude, Segment.<br>
+                    <strong>Exemple :</strong> Implémenter Google Analytics 4 avec events personnalisés : "add_to_cart", "purchase", "view_item" pour tracker le parcours e-commerce.<br>
+                    <strong>Cas d'usage :</strong> Mesurer l'efficacité des features, comprendre le comportement utilisateur, optimiser les conversions. Essentiel pour le growth engineering.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q8: Qu'est-ce qu'un Core Web Vital ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Métriques de performance web définies par Google pour mesurer l'expérience utilisateur réelle sur une page web.<br>
+                    <strong>LCP (Largest Contentful Paint) :</strong> Temps de chargement du contenu principal (< 2.5s = bon).<br>
+                    <strong>FID (First Input Delay) :</strong> Temps de réponse à la première interaction (< 100ms = bon).<br>
+                    <strong>CLS (Cumulative Layout Shift) :</strong> Stabilité visuelle de la page (< 0.1 = bon).<br>
+                    <strong>Impact :</strong> Facteur de ranking SEO depuis 2021, impact direct sur les conversions (chaque 100ms de LCP = +1% conversion).<br>
+                    <strong>Cas d'usage :</strong> Optimisation performance e-commerce, SEO technique, amélioration de l'expérience utilisateur.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q9: Qu'est-ce que le tracking des événements (event tracking) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Méthode de collecte de données sur les actions spécifiques des utilisateurs (clics, vues, téléchargements, achats).<br>
+                    <strong>Structure :</strong> Event = {category, action, label, value} - exemple : {category: "E-commerce", action: "Purchase", label: "Product ID", value: 99.99}.<br>
+                    <strong>Avantages :</strong> Comprendre le comportement utilisateur, mesurer l'efficacité des features, optimiser les conversions.<br>
+                    <strong>Exemple :</strong> Tracker l'événement "button_click" sur le bouton "Ajouter au panier" pour mesurer le taux de clic et optimiser le placement.<br>
+                    <strong>Cas d'usage :</strong> Analytics avancé, A/B testing, optimisation de parcours utilisateur. Outils : Google Analytics Events, Mixpanel, Amplitude.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q10: Qu'est-ce que l'automatisation marketing ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Utilisation de logiciels pour automatiser des tâches marketing répétitives et déclencher des actions basées sur le comportement utilisateur.<br>
+                    <strong>Exemples :</strong> Emails de bienvenue automatiques, emails de réactivation, workflows de nurturing, scoring de leads.<br>
+                    <strong>Avantages :</strong> Économie de temps, personnalisation à l'échelle, meilleure conversion, cohérence du message.<br>
+                    <strong>Exemple :</strong> Workflow : Visiteur abandonne panier → Email 1h après → Email 24h après avec code promo → Email 7 jours après.<br>
+                    <strong>Cas d'usage :</strong> E-commerce, SaaS, lead generation. Outils : Mailchimp, HubSpot, Sendinblue, Zapier.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q11: Qu'est-ce que le cohort analysis ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Analyse de groupes d'utilisateurs partageant une caractéristique commune (date d'inscription, source d'acquisition) sur une période donnée.<br>
+                    <strong>Objectif :</strong> Comprendre le comportement et la rétention de différents groupes d'utilisateurs dans le temps.<br>
+                    <strong>Métriques :</strong> Taux de rétention par cohorte, revenu par cohorte, durée de vie moyenne (LTV).<br>
+                    <strong>Exemple :</strong> Comparer la rétention à J+7, J+30, J+90 des utilisateurs acquis en janvier vs février pour identifier les meilleures sources.<br>
+                    <strong>Cas d'usage :</strong> Mesurer l'efficacité des campagnes d'acquisition, optimiser la rétention, calculer le LTV par source.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q12: Qu'est-ce que le LTV (Lifetime Value) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Valeur totale qu'un client génère pour l'entreprise sur toute la durée de sa relation avec la marque.<br>
+                    <strong>Calcul :</strong> LTV = Revenu moyen par transaction × Nombre de transactions par an × Durée de vie moyenne (années).<br>
+                    <strong>Importance :</strong> Permet de déterminer combien investir en acquisition (CAC doit être < LTV/3 idéalement).<br>
+                    <strong>Exemple :</strong> Client e-commerce : Panier moyen 50€ × 4 commandes/an × 3 ans = LTV de 600€. CAC acceptable < 200€.<br>
+                    <strong>Cas d'usage :</strong> Stratégie d'acquisition, budget marketing, pricing, optimisation de la rétention.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q13: Qu'est-ce que le CAC (Customer Acquisition Cost) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Coût total pour acquérir un nouveau client (coûts marketing + ventes / nombre de nouveaux clients).<br>
+                    <strong>Calcul :</strong> CAC = (Coûts marketing + Coûts ventes) / Nombre de nouveaux clients acquis sur une période.<br>
+                    <strong>Ratio clé :</strong> LTV/CAC > 3 est considéré comme sain (le client génère 3x plus qu'il n'a coûté).<br>
+                    <strong>Exemple :</strong> Budget marketing 10K€ + Ventes 5K€ = 15K€ pour 100 nouveaux clients → CAC = 150€.<br>
+                    <strong>Cas d'usage :</strong> Optimisation du budget marketing, évaluation de la rentabilité des canaux d'acquisition, stratégie de croissance.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q14: Qu'est-ce que le referral program (programme de parrainage) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Système incitant les clients existants à recommander le produit/service à leur réseau en échange d'une récompense.<br>
+                    <strong>Avantages :</strong> Acquisition low-cost, clients de meilleure qualité (recommandés), croissance virale potentielle.<br>
+                    <strong>Exemples célèbres :</strong> Dropbox (espace de stockage gratuit), Airbnb (crédit voyage), Uber (crédit trajet).<br>
+                    <strong>Implémentation technique :</strong> Codes de parrainage uniques, tracking des conversions, attribution des récompenses automatiques.<br>
+                    <strong>Cas d'usage :</strong> Startups, SaaS, e-commerce cherchant une croissance virale. Outils : ReferralCandy, Friendbuy, solutions custom.
+                </div>
+            </div>
+            
+            <button class="sub-accordion">Q15: Comment optimiser les performances web pour la conversion ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Techniques techniques pour améliorer la vitesse et les performances d'un site/app afin d'augmenter les conversions.<br>
+                    <strong>Techniques :</strong> Lazy loading, code splitting, CDN, compression images, minification CSS/JS, caching, optimisation DB.<br>
+                    <strong>Impact :</strong> Chaque 100ms de réduction du temps de chargement = +1% de conversion (Amazon).<br>
+                    <strong>Métriques :</strong> Time to First Byte (TTFB), First Contentful Paint (FCP), Largest Contentful Paint (LCP), Core Web Vitals.<br>
+                    <strong>Cas d'usage :</strong> E-commerce, landing pages, applications critiques. Outils : Lighthouse, PageSpeed Insights, WebPageTest.
+                </div>
+            </div>
+        </div>
+
+        <!-- CALCULS KPI -->
+        <button class="sub-accordion">📊 CALCULS DES KPI - Formules Détaillées</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">📈 KPI E-commerce</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <h4>Taux de Conversion</h4>
+                    <strong>Formule :</strong> <code>Taux de Conversion (%) = (Nombre de conversions / Nombre de visiteurs) × 100</code><br>
+                    <strong>Exemple :</strong> 100 conversions / 5000 visiteurs = 2%<br>
+                    <strong>Objectif :</strong> E-commerce : 2-3%, SaaS : 1-2%, Landing page : 5-10%<br><br>
+                    
+                    <h4>Panier Moyen</h4>
+                    <strong>Formule :</strong> <code>Panier Moyen = Chiffre d'affaires total / Nombre de commandes</code><br>
+                    <strong>Exemple :</strong> 50 000€ / 500 commandes = 100€<br>
+                    <strong>Objectif :</strong> Augmenter via upselling, cross-selling, bundling<br><br>
+                    
+                    <h4>Taux d'Abandon de Panier</h4>
+                    <strong>Formule :</strong> <code>Taux d'Abandon (%) = (Paniers abandonnés / Paniers créés) × 100</code><br>
+                    <strong>Exemple :</strong> 300 paniers abandonnés / 500 paniers créés = 60%<br>
+                    <strong>Objectif :</strong> Réduire sous 70% (moyenne e-commerce : 70-80%)<br><br>
+                    
+                    <h4>Revenue per Visit (RPV)</h4>
+                    <strong>Formule :</strong> <code>RPV = Chiffre d'affaires total / Nombre de visites</code><br>
+                    <strong>Exemple :</strong> 50 000€ / 10 000 visites = 5€ par visite<br>
+                    <strong>Objectif :</strong> Maximiser via optimisation conversion et panier moyen<br><br>
+                    
+                    <h4>Taux de Rebond</h4>
+                    <strong>Formule :</strong> <code>Taux de Rebond (%) = (Sessions à une seule page / Total des sessions) × 100</code><br>
+                    <strong>Exemple :</strong> 2000 sessions rebond / 5000 sessions = 40%<br>
+                    <strong>Objectif :</strong> E-commerce : < 50%, Blog : < 70%, Landing page : < 30%
+                </div>
+            </div>
+            
+            <button class="sub-accordion">💰 KPI Business</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <h4>LTV (Lifetime Value)</h4>
+                    <strong>Formule simple :</strong> <code>LTV = Revenu moyen par transaction × Nombre de transactions par an × Durée de vie moyenne (années)</code><br>
+                    <strong>Formule avancée :</strong> <code>LTV = (Panier moyen × Fréquence d'achat) / Taux de désabonnement</code><br>
+                    <strong>Exemple :</strong> 50€ × 4 achats/an × 3 ans = 600€<br>
+                    <strong>Exemple avancé :</strong> (50€ × 4) / 0.33 (33% de désabonnement/an) = 606€<br>
+                    <strong>Objectif :</strong> LTV > 3× CAC (idéalement 5×)<br><br>
+                    
+                    <h4>CAC (Customer Acquisition Cost)</h4>
+                    <strong>Formule :</strong> <code>CAC = (Coûts marketing + Coûts ventes) / Nombre de nouveaux clients acquis</code><br>
+                    <strong>Exemple :</strong> (10 000€ marketing + 5 000€ ventes) / 100 clients = 150€<br>
+                    <strong>Objectif :</strong> CAC < LTV/3 (si LTV = 600€, CAC < 200€)<br><br>
+                    
+                    <h4>Ratio LTV/CAC</h4>
+                    <strong>Formule :</strong> <code>Ratio LTV/CAC = LTV / CAC</code><br>
+                    <strong>Exemple :</strong> 600€ / 150€ = 4:1<br>
+                    <strong>Objectif :</strong> > 3:1 (sain), > 5:1 (excellent), < 1:1 (non viable)<br><br>
+                    
+                    <h4>Payback Period (Période de Récupération)</h4>
+                    <strong>Formule :</strong> <code>Payback Period (mois) = CAC / (Revenu mensuel moyen par client)</code><br>
+                    <strong>Exemple :</strong> 150€ / 50€/mois = 3 mois<br>
+                    <strong>Objectif :</strong> < 12 mois (idéalement < 6 mois)<br><br>
+                    
+                    <h4>MRR (Monthly Recurring Revenue)</h4>
+                    <strong>Formule :</strong> <code>MRR = Nombre de clients payants × Prix moyen mensuel</code><br>
+                    <strong>Exemple :</strong> 1000 clients × 50€/mois = 50 000€ MRR<br>
+                    <strong>Variations :</strong> New MRR (nouveaux clients), Expansion MRR (upgrades), Churned MRR (perdus)
+                </div>
+            </div>
+            
+            <button class="sub-accordion">⚡ KPI Performance Web</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <h4>Time to First Byte (TTFB)</h4>
+                    <strong>Définition :</strong> Temps entre la requête HTTP et la réception du premier octet de réponse<br>
+                    <strong>Objectif :</strong> < 200ms (excellent), < 500ms (bon), < 800ms (acceptable)<br>
+                    <strong>Impact :</strong> Chaque 100ms de réduction = +1% conversion (Amazon)<br><br>
+                    
+                    <h4>Largest Contentful Paint (LCP)</h4>
+                    <strong>Définition :</strong> Temps de chargement du plus grand élément visible de la page<br>
+                    <strong>Objectif :</strong> < 2.5s (bon), 2.5s - 4s (à améliorer), > 4s (mauvais)<br>
+                    <strong>Impact :</strong> Facteur de ranking SEO, impact direct sur les conversions<br><br>
+                    
+                    <h4>First Input Delay (FID)</h4>
+                    <strong>Définition :</strong> Temps entre l'interaction utilisateur et la réponse du navigateur<br>
+                    <strong>Objectif :</strong> < 100ms (bon), 100ms - 300ms (à améliorer), > 300ms (mauvais)<br>
+                    <strong>Impact :</strong> Expérience utilisateur, taux de rebond<br><br>
+                    
+                    <h4>Cumulative Layout Shift (CLS)</h4>
+                    <strong>Définition :</strong> Mesure de la stabilité visuelle (décalages de contenu)<br>
+                    <strong>Formule :</strong> <code>CLS = Σ (Impact fraction × Distance fraction)</code><br>
+                    <strong>Objectif :</strong> < 0.1 (bon), 0.1 - 0.25 (à améliorer), > 0.25 (mauvais)<br>
+                    <strong>Impact :</strong> Expérience utilisateur, taux de conversion<br><br>
+                    
+                    <h4>Page Speed Score</h4>
+                    <strong>Définition :</strong> Score Lighthouse (0-100) basé sur les performances<br>
+                    <strong>Objectif :</strong> > 90 (excellent), 70-90 (bon), 50-70 (à améliorer), < 50 (mauvais)<br>
+                    <strong>Impact :</strong> SEO, conversions, expérience utilisateur
+                </div>
+            </div>
+            
+            <button class="sub-accordion">📊 KPI SEO</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <h4>Taux de Clic Organique (CTR)</h4>
+                    <strong>Formule :</strong> <code>CTR (%) = (Clics organiques / Impressions) × 100</code><br>
+                    <strong>Exemple :</strong> 1000 clics / 50 000 impressions = 2%<br>
+                    <strong>Objectif :</strong> Position 1 : 30-40%, Position 2-3 : 15-20%, Position 4-10 : 5-10%<br><br>
+                    
+                    <h4>Trafic Organique</h4>
+                    <strong>Formule :</strong> <code>Trafic Organique = Σ (Clics depuis Google pour tous les mots-clés)</code><br>
+                    <strong>Métriques :</strong> Sessions organiques, Pages vues, Durée moyenne, Taux de rebond<br>
+                    <strong>Objectif :</strong> Croissance mensuelle de 10-20%<br><br>
+                    
+                    <h4>Position Moyenne</h4>
+                    <strong>Formule :</strong> <code>Position Moyenne = Σ (Position × Impressions) / Σ Impressions</code><br>
+                    <strong>Exemple :</strong> (1×1000 + 5×500 + 10×200) / 1700 = 3.5<br>
+                    <strong>Objectif :</strong> < 10 pour les mots-clés principaux<br><br>
+                    
+                    <h4>Taux de Conversion Organique</h4>
+                    <strong>Formule :</strong> <code>Taux de Conversion Organique (%) = (Conversions organiques / Sessions organiques) × 100</code><br>
+                    <strong>Exemple :</strong> 100 conversions / 5000 sessions = 2%<br>
+                    <strong>Objectif :</strong> Comparer avec autres sources (généralement meilleur que paid)
+                </div>
+            </div>
+        </div>
+
+        <!-- FRAMEWORKS GROWTH -->
+        <button class="sub-accordion">🎯 FRAMEWORKS DE GROWTH</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">📊 AARRR (Pirate Metrics)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Framework de croissance en 5 étapes créé par Dave McClure pour mesurer et optimiser la croissance d'un produit.<br>
+                    
+                    <h4>🔵 A - Acquisition (Acquisition)</h4>
+                    <strong>Objectif :</strong> Attirer des utilisateurs vers votre produit<br>
+                    <strong>Métriques :</strong> Nombre de visiteurs, Coût par acquisition (CAC), Taux de conversion par canal<br>
+                    <strong>Exemples :</strong> SEO, SEA, Social Media, Référencement, Partenariats<br>
+                    <strong>Questions :</strong> D'où viennent nos utilisateurs ? Quel canal est le plus rentable ?<br><br>
+                    
+                    <h4>🟢 A - Activation (Activation)</h4>
+                    <strong>Objectif :</strong> Créer une première expérience positive (Aha! moment)<br>
+                    <strong>Métriques :</strong> Taux d'activation, Temps jusqu'à activation, Taux d'onboarding complet<br>
+                    <strong>Exemples :</strong> Premier achat, Premier article publié, Premier contact ajouté<br>
+                    <strong>Questions :</strong> Combien d'utilisateurs atteignent le moment "Aha!" ? Combien de temps ça prend ?<br><br>
+                    
+                    <h4>🟡 R - Retention (Rétention)</h4>
+                    <strong>Objectif :</strong> Faire revenir les utilisateurs régulièrement<br>
+                    <strong>Métriques :</strong> Taux de rétention J+1, J+7, J+30, Taux de désabonnement, Durée de vie moyenne<br>
+                    <strong>Exemples :</strong> Utilisateurs actifs quotidiens (DAU), hebdomadaires (WAU), mensuels (MAU)<br>
+                    <strong>Questions :</strong> Combien d'utilisateurs reviennent ? À quelle fréquence ?<br><br>
+                    
+                    <h4>🔴 R - Revenue (Revenu)</h4>
+                    <strong>Objectif :</strong> Générer des revenus<br>
+                    <strong>Métriques :</strong> Revenu par utilisateur (ARPU), LTV, MRR, Taux de conversion payant<br>
+                    <strong>Exemples :</strong> Abonnements, Achats, Upgrades, Cross-selling<br>
+                    <strong>Questions :</strong> Combien génère chaque utilisateur ? Quel est le LTV ?<br><br>
+                    
+                    <h4>🟣 R - Referral (Référencement/Parrainage)</h4>
+                    <strong>Objectif :</strong> Faire recommander votre produit par les utilisateurs existants<br>
+                    <strong>Métriques :</strong> Taux de referral, Coefficient viral (K-factor), Coût par referral<br>
+                    <strong>Exemples :</strong> Programme de parrainage, Partage social, Invitations<br>
+                    <strong>Questions :</strong> Combien d'utilisateurs recommandent ? Quel est le coefficient viral ?<br><br>
+                    
+                    <div class="highlight">
+                        <strong>💡 Utilisation :</strong> Identifier l'étape la plus faible (goulot d'étranglement) et l'optimiser en priorité. Ne pas optimiser toutes les étapes en même temps.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">🔄 Build-Measure-Learn (Lean Startup)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Cycle itératif de développement produit créé par Eric Ries pour valider rapidement des hypothèses.<br>
+                    
+                    <h4>1️⃣ BUILD (Construire)</h4>
+                    <strong>Objectif :</strong> Créer un MVP (Minimum Viable Product) pour tester une hypothèse<br>
+                    <strong>Principe :</strong> Minimum de fonctionnalités pour valider l'hypothèse<br>
+                    <strong>Exemple :</strong> Landing page avec formulaire pour tester l'intérêt avant de développer<br><br>
+                    
+                    <h4>2️⃣ MEASURE (Mesurer)</h4>
+                    <strong>Objectif :</strong> Collecter des données sur l'utilisation et le comportement<br>
+                    <strong>Métriques :</strong> Analytics, Events tracking, Feedback utilisateurs, A/B tests<br>
+                    <strong>Exemple :</strong> Tracker les clics, conversions, temps sur page, taux de rebond<br><br>
+                    
+                    <h4>3️⃣ LEARN (Apprendre)</h4>
+                    <strong>Objectif :</strong> Analyser les données et tirer des conclusions<br>
+                    <strong>Actions :</strong> Valider ou invalider l'hypothèse, identifier les insights, décider de la suite<br>
+                    <strong>Exemple :</strong> Si taux de conversion < 1%, l'hypothèse est invalidée → pivoter ou itérer<br><br>
+                    
+                    <div class="highlight">
+                        <strong>💡 Principe clé :</strong> Itérer rapidement (sprints courts) pour apprendre vite et éviter de perdre du temps sur des features inutiles.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">🎯 North Star Metric</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Métrique unique qui représente la valeur créée pour les utilisateurs et la croissance de l'entreprise.<br>
+                    
+                    <h4>Caractéristiques d'une bonne North Star Metric :</h4>
+                    <ul>
+                        <li>✅ Représente la valeur utilisateur</li>
+                        <li>✅ Corrélée à la croissance</li>
+                        <li>✅ Actionnable (on peut l'influencer)</li>
+                        <li>✅ Mesurable facilement</li>
+                        <li>✅ Compréhensible par toute l'équipe</li>
+                    </ul>
+                    
+                    <h4>Exemples par type de produit :</h4>
+                    <ul>
+                        <li><strong>E-commerce :</strong> Revenu récurrent (MRR) ou Nombre de commandes</li>
+                        <li><strong>SaaS :</strong> Revenu récurrent mensuel (MRR) ou Utilisateurs actifs payants</li>
+                        <li><strong>Marketplace :</strong> Nombre de transactions ou GMV (Gross Merchandise Value)</li>
+                        <li><strong>Social Media :</strong> Temps passé sur la plateforme ou Posts créés</li>
+                        <li><strong>Content :</strong> Temps de lecture ou Articles partagés</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <strong>💡 Avantage :</strong> Aligne toute l'équipe sur un objectif unique et évite l'optimisation locale au détriment du global.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">📈 Growth Loops</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Systèmes auto-renforçants où les utilisateurs génèrent de la croissance pour le produit en l'utilisant.<br>
+                    
+                    <h4>Types de Growth Loops :</h4>
+                    
+                    <h4>1. Acquisition Loops</h4>
+                    <strong>Exemple :</strong> Dropbox - Plus vous utilisez, plus vous invitez → Plus d'utilisateurs → Plus de valeur<br>
+                    <strong>Mécanisme :</strong> Utilisateur → Action → Acquisition → Plus d'utilisateurs → Boucle<br><br>
+                    
+                    <h4>2. Engagement Loops</h4>
+                    <strong>Exemple :</strong> LinkedIn - Plus vous ajoutez de contacts, plus vous utilisez → Plus de valeur → Plus d'engagement<br>
+                    <strong>Mécanisme :</strong> Utilisateur → Engagement → Valeur → Plus d'engagement → Boucle<br><br>
+                    
+                    <h4>3. Monetization Loops</h4>
+                    <strong>Exemple :</strong> Uber - Plus de conducteurs → Plus de trajets → Plus de revenus → Plus d'investissement → Plus de conducteurs<br>
+                    <strong>Mécanisme :</strong> Utilisateur → Transaction → Revenu → Investissement → Plus d'utilisateurs → Boucle<br><br>
+                    
+                    <h4>4. Viral Loops</h4>
+                    <strong>Exemple :</strong> Instagram - Plus vous partagez, plus vous attirez d'utilisateurs → Plus d'utilisateurs → Plus de partages<br>
+                    <strong>Mécanisme :</strong> Utilisateur → Partage → Nouveaux utilisateurs → Plus de partages → Boucle<br><br>
+                    
+                    <div class="highlight">
+                        <strong>💡 Principe :</strong> Identifier et optimiser les boucles de croissance pour créer une croissance organique et auto-entretenue.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">🎲 ICE Score</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Framework de priorisation des expériences basé sur 3 critères : Impact, Confiance, Effort.<br>
+                    
+                    <h4>Formule :</h4>
+                    <code>ICE Score = (Impact + Confiance + Effort) / 3</code><br>
+                    <strong>Chaque critère noté de 1 à 10 :</strong><br><br>
+                    
+                    <h4>📊 Impact (1-10)</h4>
+                    <strong>Question :</strong> Quel est l'impact potentiel sur la métrique cible ?<br>
+                    <strong>Exemples :</strong> 10 = Impact majeur (doubler les conversions), 5 = Impact moyen, 1 = Impact faible<br><br>
+                    
+                    <h4>🎯 Confiance (1-10)</h4>
+                    <strong>Question :</strong> À quel point sommes-nous confiants que ça fonctionnera ?<br>
+                    <strong>Exemples :</strong> 10 = Très confiant (données solides), 5 = Moyennement confiant, 1 = Peu confiant (hypothèse)<br><br>
+                    
+                    <h4>⚡ Effort (1-10, inversé)</h4>
+                    <strong>Question :</strong> Combien d'effort (temps, ressources) cela nécessite-t-il ?<br>
+                    <strong>Exemples :</strong> 10 = Effort minimal (1 jour), 5 = Effort moyen (1 semaine), 1 = Effort maximal (1 mois)<br>
+                    <strong>Note :</strong> Plus l'effort est faible, plus le score est élevé (inversé)<br><br>
+                    
+                    <h4>Exemple de calcul :</h4>
+                    <strong>Hypothèse :</strong> Optimiser le bouton "Acheter"<br>
+                    <ul>
+                        <li>Impact : 8/10 (amélioration conversion attendue)</li>
+                        <li>Confiance : 7/10 (données A/B test similaires)</li>
+                        <li>Effort : 9/10 (changement simple, 1 jour)</li>
+                    </ul>
+                    <strong>ICE Score :</strong> (8 + 7 + 9) / 3 = 8.0<br><br>
+                    
+                    <div class="highlight">
+                        <strong>💡 Utilisation :</strong> Prioriser les expériences avec le score ICE le plus élevé pour maximiser l'impact avec le moins d'effort.
+                    </div>
+                </div>
+            </div>
+            
+            <button class="sub-accordion">🔍 Jobs-to-be-Done (JTBD)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Framework centré sur la compréhension du "job" (tâche) que les utilisateurs essaient d'accomplir avec votre produit.<br>
+                    
+                    <h4>Principe :</h4>
+                    <strong>Formule :</strong> <code>Quand [SITUATION], je veux [MOTIVATION], pour [RÉSULTAT ATTENDU]</code><br>
+                    <strong>Exemple :</strong> "Quand je cherche un cadeau, je veux trouver rapidement quelque chose de personnalisé, pour faire plaisir sans perdre de temps"<br><br>
+                    
+                    <h4>Éléments clés :</h4>
+                    <ul>
+                        <li><strong>Situation :</strong> Contexte dans lequel l'utilisateur se trouve</li>
+                        <li><strong>Motivation :</strong> Ce que l'utilisateur veut accomplir</li>
+                        <li><strong>Résultat attendu :</strong> Le bénéfice ou la valeur recherchée</li>
+                    </ul>
+                    
+                    <h4>Application en Growth :</h4>
+                    <ul>
+                        <li>Comprendre pourquoi les utilisateurs adoptent votre produit</li>
+                        <li>Identifier les moments de "switch" (changement de solution)</li>
+                        <li>Optimiser les features pour mieux accomplir le "job"</li>
+                        <li>Améliorer l'onboarding en se concentrant sur le job principal</li>
+                    </ul>
+                    
+                    <div class="highlight">
+                        <strong>💡 Avantage :</strong> Focus sur la valeur utilisateur plutôt que sur les features, permet de mieux comprendre les besoins réels.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ========================================
+         3. QUESTIONS À POSER À CLEVER AGE

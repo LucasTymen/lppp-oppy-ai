@@ -19,11 +19,12 @@ DEFAULT_HEADERS = {
 
 # URLs par défaut pour Maisons-Alfort (pages clés : accueil, état civil, déchets, horaires, contact)
 DEFAULT_MAISONS_ALFORT_URLS = [
-    "https://www.maisons-alfort.fr/",
-    "https://www.maisons-alfort.fr/etat-civil",
-    "https://www.maisons-alfort.fr/dechets-propreté",
-    "https://www.maisons-alfort.fr/horaires-et-contacts",
-    "https://www.maisons-alfort.fr/travaux-et-voirie",
+    "https://maisons-alfort.fr/",
+    "https://maisons-alfort.fr/votre-ville-votre-mairie/les-demarches-en-ligne/etat-civil/",
+    "https://maisons-alfort.fr/votre-cadre-de-vie/le-tri-facile-pour-vos-dechets/",
+    "https://maisons-alfort.fr/votre-cadre-de-vie/voirie/",
+    "https://maisons-alfort.fr/votre-cadre-de-vie/travaux/",
+    "https://maisons-alfort.fr/accueil/infos-pratiques/vos-contacts-en-mairie/",
 ]
 
 

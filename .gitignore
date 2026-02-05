@@ -38,6 +38,7 @@ __pycache__/
 .Python
 *.so
 .venv/
+.venv.wsl/
 venv/
 env/
 .env/

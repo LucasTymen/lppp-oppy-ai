@@ -16,7 +16,8 @@ from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
 
 from apps.landing_pages.models import LandingPage
-from apps.landing_pages.views import _use_perso_style
+from apps.landing_pages.themes import LANDING_THEMES
+from apps.landing_pages.views import _content_with_defaults, _use_perso_style
 
 RAPPORT_HTML_HEAD = """<!DOCTYPE html>
 <html lang="fr">
@@ -82,23 +83,26 @@ class Command(BaseCommand):
         content = {}
         try:
             lp = LandingPage.objects.get(slug=slug)
-            content = dict(lp.content_json or {})
+            content = _content_with_defaults(dict(lp.content_json or {}), lp.template_key)
             use_perso_style = _use_perso_style(lp)
             self.stdout.write(f"Landing trouvée en base : {lp.title} (use_perso_style={use_perso_style})")
         except LandingPage.DoesNotExist:
             if json_path and Path(json_path).exists():
                 with open(json_path, encoding="utf-8") as f:
-                    content = json.load(f)
+                    content = _content_with_defaults(json.load(f), "proposition")
                 # Objet minimal pour le template + _use_perso_style (content_json, template_key)
                 class MockLanding:
                     title = content.get("page_title", "Landing")
                     slug = slug
-                    prospect_company = "P4S Architecture"
-                    prospect_name = "Joël Courtois"
+                    prospect_company = content.get("prospect_company", "P4S Architecture")
+                    prospect_name = content.get("prospect_name", "Joël Courtois")
                     template_key = "proposition"
                     content_json = content
 
                 lp = MockLanding()
+                if slug == "orsys":
+                    lp.prospect_company = "ORSYS"
+                    lp.prospect_name = "Aboubakar"
                 use_perso_style = _use_perso_style(lp)
                 self.stdout.write(f"Contenu chargé depuis {json_path} (use_perso_style={use_perso_style})")
             else:
@@ -129,6 +133,18 @@ class Command(BaseCommand):
                 content["rapport_url"] = "rapport.html"
             else:
                 self.stdout.write(self.style.WARNING(f"Fichier rapport non trouvé : {rapport_path}"))
+
+        # Thème + vidéo hero pour les slugs enregistrés (ex. orsys) — même logique que la vue
+        content = dict(content)
+        if slug in LANDING_THEMES:
+            theme_dict, theme_css = LANDING_THEMES[slug]
+            content["theme"] = theme_dict
+            content["theme_css"] = theme_css
+            use_perso_style = False
+        if slug == "orsys":
+            content["hero_video_mp4_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.mp4"
+            content["hero_video_webm_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.webm"
+            content["hero_video_url"] = ""
 
         perso_ref_path = getattr(settings, "LANDING_PERSO_REF_PATH", "")
         html = render_to_string(

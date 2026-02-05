@@ -73,6 +73,16 @@
         }
         .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent); }
 
+        /* ===== Bandeau alerte (style 0Flaw : bandeau teal sous la nav) ===== */
+        .alert-banner {
+            background: var(--lp-primary, #00C2CB);
+            color: #0d0d0d;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
         /* ===== Hero pleine hauteur (effet waouh) ===== */
         .hero {
             min-height: 100vh;
@@ -92,6 +102,28 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
+        /* Hero fond vidéo : contenu dans la section hero uniquement (scroll avec elle) */
+        .hero.has-bg-video .hero-bg-video {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .hero.has-bg-video .hero-bg-video iframe,
+        .hero.has-bg-video .hero-bg-video video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100vw;
+            height: 56.25vw;
+            min-height: 100vh;
+            min-width: 177.78vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+        .hero.has-bg-video .hero-bg-video video {
+            object-fit: cover;
+        }
         .hero.has-bg-image::before {
             content: '';
             position: absolute;
@@ -99,11 +131,20 @@
             background: rgba(0, 0, 0, 0.15);
             pointer-events: none;
         }
-        /* Scanlines légères (texture, pas forme dominante) */
+        .hero.has-bg-video::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.35);
+            pointer-events: none;
+        }
+        /* Scanlines légères (texture) — image et vidéo */
         .hero.has-bg-image::after {
             content: '';
             position: absolute;
             inset: 0;
+            z-index: 1;
             background: repeating-linear-gradient(
                 0deg,
                 transparent 0,
@@ -113,15 +154,29 @@
             );
             pointer-events: none;
         }
-        /* Fond hero sans image : fond uni (pas de V ni forme blanche) */
-        .hero:not(.has-bg-image)::before {
+        .hero.has-bg-video::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                rgba(0, 0, 0, 0.12) 2px,
+                rgba(0, 0, 0, 0.12) 4px
+            );
+            pointer-events: none;
+        }
+        /* Fond hero sans image ni vidéo : fond uni (éviter que --lp-bg recouvre la vidéo) */
+        .hero:not(.has-bg-image):not(.has-bg-video)::before {
             content: '';
             position: absolute;
             inset: 0;
             background: var(--lp-bg, #0d0d0d);
             pointer-events: none;
         }
-        .hero > * { position: relative; z-index: 1; }
+        .hero > * { position: relative; z-index: 3; }
         .hero-logo { margin-bottom: 2rem; }
         .hero-logo img {
             max-height: 64px;
@@ -129,6 +184,14 @@
             display: block;
             margin: 0 auto;
             filter: drop-shadow(0 2px 12px rgba(0,0,0,0.4));
+        }
+        /* Hero avec vidéo : texte blanc ou rose (primary) */
+        .hero.has-bg-video h1,
+        .hero.has-bg-video .hero-sub,
+        .hero.has-bg-video .hero-logo { color: #fff; }
+        .hero.has-bg-video .cta {
+            background: var(--lp-primary);
+            color: #fff;
         }
         .hero h1 {
             font-family: var(--lp-font-heading, 'Open Sans', var(--lp-font-body, inherit));
@@ -364,6 +427,7 @@
             box-shadow: 0 0 48px color-mix(in srgb, var(--lp-primary, #4a9eff) 25%, transparent), 0 0 24px color-mix(in srgb, var(--lp-secondary, #5ebeff) 15%, transparent);
         }
         .mission-flash p { margin: 0; }
+        .mission-flash .mission-flash-content { margin: 0; line-height: 1.7; }
         .mission-flash .tag-line { font-size: 0.8rem; font-weight: 700; color: var(--lp-primary, #4a9eff); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
 
         .why-quote {
@@ -479,6 +543,7 @@
         <div class="nav-links">
             {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
             {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
+            {% if content.loom_embed_url %}<a href="#demo">Démo</a>{% endif %}
             {% if content.services %}<a href="#services">Services</a>{% endif %}
             {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
             {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
@@ -487,11 +552,26 @@
             {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="#coordonnees">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
         </div>
     </nav>
+    {% if content.alert_banner %}
+    <div class="alert-banner">{{ content.alert_banner }}</div>
+    {% endif %}
 
     <main id="top">
-        <!-- Hero (Aérosection) : ton image en background 100 %, parallaxe (fixed), assombrissement 15 % — pas de scanlines -->
-        <section class="hero{% if content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
-            {% if content.theme and content.theme.logo_url and not content.hero_background_url %}
+        <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
+        <section class="hero{% if content.hero_video_mp4_url or content.hero_video_webm_url or content.hero_video_url %} has-bg-video{% elif content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
+            {% if content.hero_video_mp4_url or content.hero_video_webm_url %}
+            <div class="hero-bg-video">
+                <video autoplay muted loop playsinline aria-hidden="true">
+                    {% if content.hero_video_webm_url %}<source src="{{ content.hero_video_webm_url }}" type="video/webm">{% endif %}
+                    {% if content.hero_video_mp4_url %}<source src="{{ content.hero_video_mp4_url }}" type="video/mp4">{% endif %}
+                </video>
+            </div>
+            {% elif content.hero_video_url %}
+            <div class="hero-bg-video">
+                <iframe src="{{ content.hero_video_url|youtube_embed_background }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="eager" title="Fond hero"></iframe>
+            </div>
+            {% endif %}
+            {% if content.theme and content.theme.logo_url and not content.hero_background_url and not content.hero_video_url and not content.hero_video_mp4_url and not content.hero_video_webm_url %}
             {% if not content.theme.background_image_url or content.theme.logo_url != content.theme.background_image_url %}
             <p class="hero-logo"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" loading="lazy"></p>
             {% endif %}
@@ -532,6 +612,18 @@
         </section>
         {% endif %}
 
+        {% if content.loom_embed_url %}
+        <section class="section" id="demo">
+            <div class="section-head"><span class="section-num">02b</span><h2>Démo 60 sec</h2></div>
+            <div class="card">
+                {% if content.demo_video_caption %}<p class="coordonnees-intro">{{ content.demo_video_caption }}</p>{% endif %}
+                <div class="workflow-figure" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
+                    <iframe src="{{ content.loom_embed_url }}" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="Démo vidéo"></iframe>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
         {% if content.services %}
         <section class="section" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
@@ -554,6 +646,24 @@
         </section>
         {% endif %}
 
+        {% if content.seo_resume and content.rapport_url %}
+        <section class="section" id="resume-seo">
+            <div class="section-head"><span class="section-num">03b</span><h2>{{ content.seo_resume.title|default:"Résumé SEO" }}</h2></div>
+            <div class="card seo-resume-card">
+                {% if content.seo_resume.manque_annuel %}
+                <p class="seo-manque">Manque à gagner SEO estimé : {{ content.seo_resume.manque_annuel }}</p>
+                {% endif %}
+                {% if content.seo_resume.problemes_cles %}
+                <p>{{ content.seo_resume.intro|default:"Problèmes principaux identifiés :" }}</p>
+                <ul>
+                    {% for item in content.seo_resume.problemes_cles %}<li>{{ item }}</li>{% endfor %}
+                </ul>
+                {% endif %}
+                <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">{{ content.seo_resume.lien_analyse|default:"Voir l'analyse SEO complète →" }}</a>
+            </div>
+        </section>
+        {% endif %}
+
         {% if content.expertise_stack %}
         <section class="section" id="stack">
             <div class="section-head"><span class="section-num">04</span><h2>Stack technique</h2></div>
@@ -572,7 +682,7 @@
             <div class="section-head"><span class="section-num">05</span><h2>Mission Flash</h2></div>
             <div class="mission-flash">
                 <p class="tag-line">Offre pour vous</p>
-                <p>{{ content.mission_flash|default:content.produit_commercial }}</p>
+                <div class="mission-flash-content">{{ content.mission_flash|default:content.produit_commercial|linebreaksbr }}</div>
             </div>
         </section>
         {% endif %}

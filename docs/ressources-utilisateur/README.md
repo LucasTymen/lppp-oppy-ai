@@ -17,6 +17,7 @@ Espace dédié aux **données et informations** que tu transmets au Conseiller :
 | `ebauches/` | Brouillons, wireframes texte, maquettes préliminaires |
 | `etudes/` | Textes d’études, recherches ayant servi à élaborer un système ou un outil |
 | `autres/` | Autres formats (PDF, etc.) ou ressources diverses |
+| **`fiches-entretien-emploi/`** | **Espace de l’Assistant Entretien Emploi** : fiches Résumé HTML (accordéons) par entreprise, ressources et résumés ; un dossier par entreprise. Voir `fiches-entretien-emploi/README.md`. |
 
 ## Comment ajouter une ressource
 
