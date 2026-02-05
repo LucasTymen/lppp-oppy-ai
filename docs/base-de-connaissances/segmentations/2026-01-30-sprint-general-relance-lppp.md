@@ -1,7 +1,7 @@
 # Sprint général — Relance LPPP (équipe + coordinateurs)
 
 **Date** : 2026-01-30  
-**Statut** : 🟡 En cours  
+**Statut** : 🟢 Terminé (relance-safe exécutée, Django 8010 OK, commit+push 2026-01-30)  
 **Priorité** : URGENT  
 **Objectif** : Relancer LPPP de bout en bout : séparation SquidResearch/LPPP opérationnelle, conteneurs rebuildés, migrations appliquées, Django accessible ; commit + push une fois l’état satisfaisant.
 
