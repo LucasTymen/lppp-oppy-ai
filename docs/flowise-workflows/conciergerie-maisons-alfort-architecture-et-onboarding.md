@@ -4,7 +4,7 @@
 
 > **Règle équipe : plus de reset.** La config Conciergerie Maisons-Alfort (Flowise, FAISS, chatflow) est **validée et stable**. Pas de réinitialisation du projet, des credentials ou du chemin FAISS sans accord explicite. On ne reset pas.
 
-> **Intégration locale** : le chatbot est intégré dans la landing LPPP en **local** (pas de prod Squid Research pour l’instant). URL landing : **`/p/maisons-alfort/`**. L’iframe utilise `flowise_embed_url` (construit par `get_flowise_chat_embed_url()`). En local : `FLOWISE_URL` vide ou `http://localhost:3000`, `FLOWISE_CHATFLOW_ID` dans `.env` ; Flowise doit tourner (ex. `docker compose up -d flowise` ou instance sur le port 3000).
+> **Intégration locale** : le chatbot est intégré dans la landing LPPP en **local** (pas de prod Squid Research pour l’instant). URL landing : **`/p/maisons-alfort/`**. L’iframe utilise `flowise_embed_url` (construit par `get_flowise_chat_embed_url()`). LPPP Docker : Flowise sur le **port 3010** ; `FLOWISE_URL=http://localhost:3010`, `FLOWISE_CHATFLOW_ID` dans `.env` ; Base Path FAISS = `/data/flowise/faiss/maisons-alfort`.
 
 ---
 
@@ -32,13 +32,13 @@ Mettre en place une IA de conciergerie administrative capable de répondre **uni
 |--------|--------|
 | **Moteur vectoriel** | FAISS (local) |
 | **Embeddings** | Provider : **OpenAI**, modèle : **text-embedding-3-small** |
-| **Chemin FAISS (CRITIQUE)** | `C:\flowise-data\faiss\conciergerie-maisons-alfort` |
+| **Chemin FAISS (CRITIQUE)** | **En Docker (LPPP, port 3010)** : **`/data/flowise/faiss/maisons-alfort`** (chemin dans le conteneur). Sur le host : `data/flowise/faiss/maisons-alfort/`. — **En Windows (Flowise hors Docker)** : `C:\flowise-data\faiss\conciergerie-maisons-alfort`. |
 
 ⚠️ Ce chemin est utilisé à la fois :
 - lors de l’**upsert** (Document Store) ;
 - dans le node **Faiss Retriever** du canvas.
 
-👉 **Toute différence de chemin = FAISS introuvable = erreur runtime.**
+👉 **En Docker, ne jamais mettre `C:\...`** : le conteneur est sous Linux → erreur « faiss.index No such file or directory ». Voir `flowise-faiss-base-path-infra.md` § 5.
 
 ### 3. Canvas Flow (ordre exact)
 
@@ -77,7 +77,7 @@ flowchart LR
 
     subgraph Flowise
         E[OpenAI Embeddings\ntext-embedding-3-small]
-        F[Faiss Retriever\nC:\flowise-data\faiss\conciergerie-maisons-alfort]
+        F[Faiss Retriever\n/data/flowise/faiss/maisons-alfort]
         C[Conversational Retrieval\nQA Chain]
         L[ChatOpenAI\ngpt-4o-mini, temp=0]
     end
@@ -109,7 +109,7 @@ flowchart LR
 |-------|--------|
 | **Chemin FAISS** | Ne jamais modifier sans refaire un upsert. |
 | **Câblage** | Ne pas brancher ChatOpenAI directement au Faiss. Toujours passer par la **Conversational Retrieval QA Chain**. |
-| **Erreur "faiss.index not found"** | L’index n’existe pas ou le chemin est faux. Vérifier `C:\flowise-data\faiss\conciergerie-maisons-alfort`. |
+| **Erreur "faiss.index not found"** | L’index n’existe pas ou le chemin est faux. **Docker LPPP** : Base Path = `/data/flowise/faiss/maisons-alfort`. Pas de `C:\...` dans Docker. Voir `flowise-faiss-base-path-infra.md` § 5 et `erreurs-et-solutions.md` (faiss.index). |
 | **Nouveau document** | Nécessite un **nouvel upsert** (ré-ingestion + vectorisation). |
 
 ---
@@ -120,7 +120,7 @@ flowchart LR
 |---------|--------|
 | **Projet Flowise** | conciergerie-maisons-alfort |
 | **Document Store** | mairies-maisons-alfort-docs |
-| **FAISS folder** | `C:\flowise-data\faiss\conciergerie-maisons-alfort` |
+| **FAISS folder (Docker LPPP)** | **`/data/flowise/faiss/maisons-alfort`** (dans le conteneur). Host : `data/flowise/faiss/maisons-alfort/`. |
 | **Embeddings model** | text-embedding-3-small |
 | **LLM réponse** | gpt-4o-mini |
 
@@ -130,10 +130,10 @@ flowchart LR
 
 - [ ] Flowise installé et démarré (local ou Docker).
 - [ ] Credential **OpenAI API** configurée dans Flowise.
-- [ ] Dossier FAISS créé : `C:\flowise-data\faiss\conciergerie-maisons-alfort` (ou chemin identique au canvas).
+- [ ] Dossier FAISS côté host : `data/flowise/faiss/maisons-alfort/` (ou laisser Flowise le créer au premier upsert).
 - [ ] Importer le chatflow : **Chatflows** → **Import** → choisir `chatflow-conciergerie-maisons-alfort-restore.json` (dans `docs/flowise-workflows/`).
-- [ ] Vérifier dans le node **Faiss** que **Base Path** = `C:\flowise-data\faiss\conciergerie-maisons-alfort`.
-- [ ] Si l’index n’existe pas : utiliser **Document Store** (Text File Loader) avec le même chemin FAISS + **OpenAI Embeddings** → lancer l’upsert.
+- [ ] **Si Flowise en Docker (LPPP, port 3010)** : dans le node **Faiss**, **Base Path to load** = **`/data/flowise/faiss/maisons-alfort`**. (Le JSON restore peut contenir l’ancien chemin Windows ; le corriger manuellement après import.)
+- [ ] Si l’index n’existe pas : Document Store → Load / Upsert vers le même Base Path ; ou Text File Loader + **OpenAI Embeddings** → lancer l’upsert.
 - [ ] Tester avec : « comment renouveler mon passeport ? » → la réponse doit citer mairie, ANTS, pièces, rendez-vous.
 - [ ] Ne pas connecter **ChatOpenAI** directement au **Faiss** ; garder **Conversational Retrieval QA Chain** au milieu.
 
@@ -143,7 +143,7 @@ flowchart LR
 
 | Fichier | Rôle |
 |---------|------|
-| `docs/flowise-workflows/chatflow-conciergerie-maisons-alfort-restore.json` | Canvas à ré-importer dans Flowise (FAISS path Windows). |
+| `docs/flowise-workflows/chatflow-conciergerie-maisons-alfort-restore.json` | Canvas à ré-importer. Après import en Docker LPPP : corriger le node Faiss → Base Path = `/data/flowise/faiss/maisons-alfort`. |
 | `docs/flowise-workflows/sources/passeport_et_cni.txt` | Exemple de document source pour l’upsert. |
 | `docs/flowise-workflows/conciergerie-maisons-alfort-etat-valide-prompts.md` | Prompts finaux (rephrase, response) validés. |
 | `docs/flowise-workflows/backups/` | Sauvegardes ExportData Flowise si besoin de restauration. |

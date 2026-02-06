@@ -7,7 +7,7 @@ urlpatterns = [
     path("console/", views.console_landings, name="console_landings"),
     path(
         "maisons-alfort/",
-        lambda req: redirect("landing_pages:landing_public", slug="maisons-alfort", permanent=False),
+        lambda req: redirect("landing_public", slug="maisons-alfort", permanent=False),
         name="concierge_maisons_alfort_public",
     ),
     path("p/<slug:slug>/", views.landing_public, name="landing_public"),

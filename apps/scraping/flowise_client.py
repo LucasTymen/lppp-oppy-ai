@@ -16,7 +16,8 @@ def get_flowise_config():
 
 
 # Chatflow Concierge IA Maisons-Alfort (ID Flowise Embed). Overridable par FLOWISE_CHATFLOW_ID.
-DEFAULT_CHATFLOW_ID = "c95b70d6-c7b7-49a8-920f-de00615b0176"
+# ID du chatflow qui fonctionne (Flowise UI → Embed) ; mettre à jour si tu recrées le flow.
+DEFAULT_CHATFLOW_ID = "67206a96-470e-4607-ba8b-5955e97aa116"
 
 
 def get_flowise_chat_embed_url():
@@ -24,9 +25,8 @@ def get_flowise_chat_embed_url():
     URL d'embed du chatflow Flowise (landing /essais/concierge/ et /p/maisons-alfort/).
     L'URL est consommée par le navigateur (iframe) : elle doit être joignable depuis la machine
     où s'ouvre la page (souvent l'hôte). Si FLOWISE_URL n'est pas défini : on utilise
-    http://localhost:3000 quand DB_HOST est localhost/127.0.0.1 (runserver sur l'hôte) ;
-    sinon http://flowise:3000 (stack full Docker). En runserver sur l'hôte avec DB en Docker,
-    définir explicitement FLOWISE_URL=http://localhost:3000 pour que l'iframe charge.
+    http://localhost:3010 (port LPPP). Définir explicitement FLOWISE_URL=http://localhost:3010
+    dans .env et redémarrer le service web après modification.
     Override : FLOWISE_URL, FLOWISE_CHATFLOW_ID.
     """
     base_url = os.environ.get("FLOWISE_URL", "").strip()
@@ -42,6 +42,21 @@ def get_flowise_chat_embed_url():
     if not chatflow_id:
         return ""
     return f"{base_url}/embed/{chatflow_id}"
+
+
+def get_flowise_chat_embed_config():
+    """
+    Retourne (base_url, chatflow_id) pour l'embed par script (flowise-embed).
+    Si pas configuré : ("", ""). Utilisé par le template pour Chatbot.initFull({ apiHost, chatflowid }) (embed in-place).
+    """
+    embed_url = get_flowise_chat_embed_url()
+    if not embed_url:
+        return "", ""
+    # embed_url = "http://localhost:3010/embed/UUID"
+    parts = embed_url.rstrip("/").split("/embed/")
+    if len(parts) != 2:
+        return "", ""
+    return parts[0], (parts[1].split("?")[0].strip() or "")
 
 
 def push_file_to_flowise(file_path: Path, base_url: str, store_id: str, api_key: str):

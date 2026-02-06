@@ -188,10 +188,10 @@ Pour chaque erreur documentée, indiquer :
 | **Date** | 2026-02-04 |
 | **Contexte** | La **landing** s’affiche correctement (titre, intro) mais le **cadre (iframe) du chatbot** reste blanc, sans interface de chat. |
 | **Erreur** | Zone dédiée au chat visible mais vide (rectangle blanc dans l’iframe). |
-| **Causes possibles** | (1) **Flowise n’est pas démarré** sur le port 3000 (ou autre si `FLOWISE_URL` est défini). (2) **Mauvais `FLOWISE_CHATFLOW_ID`** : l’ID dans `.env` ne correspond pas au chatflow Conciergerie dans Flowise (récupérer l’ID dans Flowise → chatflow → onglet **Embed**). (3) **URL d’embed non joignable par le navigateur** : si Django tourne sur l’hôte (runserver 127.0.0.1:8082) sans `FLOWISE_URL`, le code utilise `http://localhost:3010` si `DB_HOST=localhost` (port LPPP) ; si `DB_HOST=db`, l’URL devient `http://flowise:3000` et le navigateur ne peut pas la résoudre → iframe vide. (4) Flowise répond mais la page **/embed/{id}** renvoie une page vide (chatflow inexistant ou erreur côté Flowise). |
-| **Solution** | **Étape 1** : Sous l’iframe, cliquer sur **« Ouvrir le chat dans un nouvel onglet »** (lien ajouté sur la page). Si le chat **s’affiche** dans l’onglet → problème d’affichage en iframe (CORS / X-Frame-Options à vérifier côté Flowise). Si le nouvel onglet est **vide ou erreur** → **Étape 2** : Vérifier que Flowise tourne (`docker compose ps` → `lppp_flowise` ou processus sur 3000 ; `curl -s -o /dev/null -w "%{http_code}" http://localhost:3000` → 200). **Étape 3** : Dans Flowise (http://localhost:3010), ouvrir le chatflow Conciergerie Maisons-Alfort → onglet **Embed** → copier l’**ID** et le mettre dans `.env` : `FLOWISE_CHATFLOW_ID=<id>`. **Étape 4** : Si Django est en runserver sur l’hôte (127.0.0.1:8082), forcer l’URL pour le navigateur : dans `.env` définir `FLOWISE_URL=http://localhost:3000` (ou `http://127.0.0.1:3000`), redémarrer le runserver, recharger la page. |
+| **Causes possibles** | (1) **Flowise n’est pas démarré** sur le port **3010** (LPPP). (2) **Mauvais `FLOWISE_CHATFLOW_ID`** : l’ID dans `.env` ne correspond pas au chatflow Conciergerie dans Flowise (récupérer l’ID dans Flowise → chatflow → onglet **Embed**). (3) **URL d’embed non joignable par le navigateur** : si Django tourne sur l’hôte (runserver 127.0.0.1:8082) sans `FLOWISE_URL`, le code utilise `http://localhost:3010` si `DB_HOST=localhost` (port LPPP) ; si `DB_HOST=db`, l’URL devient `http://flowise:3000` et le navigateur ne peut pas la résoudre → iframe vide. (4) Flowise répond mais la page **/embed/{id}** renvoie une page vide (chatflow inexistant ou erreur côté Flowise). |
+| **Solution** | **Étape 1** : Sous l’iframe, cliquer sur **« Ouvrir le chat dans un nouvel onglet »** (lien ajouté sur la page). Si le chat **s’affiche** dans l’onglet → problème d’affichage en iframe (CORS / X-Frame-Options à vérifier côté Flowise). Si le nouvel onglet est **vide ou erreur** → **Étape 2** : Vérifier que Flowise tourne (`docker compose ps` → `lppp_flowise` ; `curl -s -o /dev/null -w "%{http_code}" http://localhost:3010` → 200). **Étape 3** : Dans Flowise (http://localhost:3010), ouvrir le chatflow Conciergerie Maisons-Alfort → onglet **Embed** → copier l’**ID** et le mettre dans `.env` : `FLOWISE_CHATFLOW_ID=<id>`. **Étape 4** : Si Django est en runserver sur l’hôte (127.0.0.1:8082), forcer l’URL pour le navigateur : dans `.env` définir `FLOWISE_URL=http://localhost:3010` (LPPP), redémarrer le runserver, recharger la page. |
 | **Prévention** | En dev local (runserver sur l’hôte) : avoir `FLOWISE_URL=http://localhost:3010` et `FLOWISE_CHATFLOW_ID` correct dans `.env`, et Flowise démarré sur le port 3010 (LPPP). Voir `flowise-concierge-ia-maisons-alfort-guide.md`, `conciergerie-maisons-alfort-architecture-et-onboarding.md`. |
-| **Lien(s)** | `flowise-concierge-ia-maisons-alfort-guide.md`, `conciergerie-maisons-alfort-architecture-et-onboarding.md`, entrée « Impossible de trouver l'adresse IP du serveur de flowise » ci-dessus |
+| **Lien(s)** | **`flowise-chatbot-ecran-vide-diagnostic.md`** (checklist complète écran vide / flux), `flowise-concierge-ia-maisons-alfort-guide.md`, `conciergerie-maisons-alfort-architecture-et-onboarding.md`, entrée « Impossible de trouver l'adresse IP du serveur de flowise » ci-dessus |
 
 ---
 
@@ -220,6 +220,20 @@ Pour chaque erreur documentée, indiquer :
 | **Solution** | Vérifier dans Flowise : (1) Credentials / clé API du nœud OpenAI (Chat ou Embeddings) — clé valide et avec les bons droits ; (2) Nom du modèle exact (ex. `gpt-4o-mini`, `text-embedding-3-small`) ; (3) Si modèle local : URL de base (ex. `http://host.docker.internal:11434`) et nom du modèle. Corriger la config puis recharger la page. |
 | **Prévention** | Documenter les modèles utilisés dans `data/flowise/comptes-et-llm.md` ; ne pas committer les clés (`.env` / UI Flowise uniquement). |
 | **Lien(s)** | `data/flowise/comptes-et-llm.md`, `flowise-faiss-base-path-infra.md` § 5 |
+
+---
+
+### Flowise — faiss.index « No such file or directory » (RAG / Base Path)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Chatflow Conciergerie (ou autre RAG FAISS) : le chat s'affiche mais à l'envoi d'un message, erreur « could not open C:\flowise-data\faiss\.../faiss.index for reading: No such file or directory ». |
+| **Erreur** | Error in faiss::FileIOReader::FileIOReader(...): could not open .../faiss.index for reading: No such file or directory |
+| **Cause** | Le nœud Faiss utilise un Base Path inadapté : Flowise en Docker (LPPP) avec chemin Windows (C:\...) laissé après réimport ; ou index jamais créé à cet emplacement. |
+| **Solution** | **Docker LPPP (port 3010)** : chatflow → nœud Faiss → Base Path to load = **/data/flowise/faiss/maisons-alfort**. Sauvegarder. Si dossier vide côté host (data/flowise/faiss/maisons-alfort/), lancer un upsert (Document Store → Load). **Windows hors Docker** : C:\flowise-data\faiss\conciergerie-maisons-alfort. |
+| **Prévention** | À chaque réimport ou changement de stack, vérifier l'adresse tampon (Base Path). Voir flowise-faiss-base-path-infra.md § 5 et automatizer.mdc § Contrôle adresse tampon. |
+| **Lien(s)** | flowise-faiss-base-path-infra.md § 5, conciergerie-maisons-alfort-architecture-et-onboarding.md, automatizer.mdc |
 
 ---
 
@@ -389,6 +403,18 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
+### Templates / modèles de landing générés — meta description manquante (Lighthouse SEO)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-06 |
+| **Contexte** | Génération de **nouveaux templates** ou **modèles** de landing (Django, Next.js, export HTML, conciergerie ou autre). Audit Lighthouse : score SEO dégradé. |
+| **Erreur** | « Le document ne contient pas d'attribut meta description » (Lighthouse SEO). |
+| **Cause** | Le template généré ou copié n'inclut pas la balise `<meta name="description" content="...">` dans le `<head>`. |
+| **Solution** | Ajouter dans le `<head>` : `<meta name="description" content="Texte court (150–160 car.) décrivant la page.">`. Exemple : `templates/landing_pages/concierge_maisons_alfort.html`. |
+| **Prévention** | **L'agent en charge des erreurs** (et tout agent qui crée ou génère des templates de landing) doit **prendre en note** : à chaque **nouveau modèle ou template** de page publique, inclure dans le `<head>` : (1) **meta description** (contenu adapté), (2) **viewport**, (3) **title** pertinent. Consulter `segmentations/2026-02-06-lighthouse-landing-maisons-alfort-rapport-seo-perf.md` et appliquer cette checklist avant de livrer un nouveau template. |
+| **Lien(s)** | `segmentations/2026-02-06-lighthouse-landing-maisons-alfort-rapport-seo-perf.md`, `templates/landing_pages/concierge_maisons_alfort.html`, `expert-seo-demarche-rapport-wording-copywriting.md` |
+
 ---
 
 ### Fiche entretien emploi — section « Tests techniques » oubliée
@@ -405,4 +431,4 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
-*Dernière mise à jour : 2026-02-05 — Fiche entretien : section tests techniques obligatoire. Précédent : Port 3000 = Flowise. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*
+*Dernière mise à jour : 2026-02-06 — Templates landing : meta description obligatoire pour tout nouveau modèle (Lighthouse SEO). Précédent : Fiche entretien section tests techniques. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*

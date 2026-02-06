@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from .models import LandingPage
 from .themes import LANDING_THEMES
-from apps.scraping.flowise_client import get_flowise_chat_embed_url
+from apps.scraping.flowise_client import get_flowise_chat_embed_url, get_flowise_chat_embed_config
 
 
 def _use_perso_style(lp):
@@ -36,11 +36,16 @@ def _use_perso_style(lp):
 
 def concierge_maisons_alfort_public(request):
     """Landing publique Concierge IA Maisons-Alfort pour les équipes municipales (chatbot intégré)."""
-    flowise_embed_url = get_flowise_chat_embed_url()
+    flowise_embed_url = get_flowise_chat_embed_url() or ""
+    base_url, chatflow_id = get_flowise_chat_embed_config()
     return render(
         request,
         "landing_pages/concierge_maisons_alfort.html",
-        {"flowise_embed_url": flowise_embed_url},
+        {
+            "flowise_embed_url": flowise_embed_url,
+            "flowise_api_host": base_url,
+            "flowise_chatflow_id": chatflow_id,
+        },
     )
 
 
@@ -83,8 +88,13 @@ def landing_public(request, slug):
     if lp.template_key == "concierge_maisons_alfort":
         try:
             context["flowise_embed_url"] = get_flowise_chat_embed_url() or ""
+            base_url, chatflow_id = get_flowise_chat_embed_config()
+            context["flowise_api_host"] = base_url
+            context["flowise_chatflow_id"] = chatflow_id
         except Exception:
             context["flowise_embed_url"] = ""
+            context["flowise_api_host"] = ""
+            context["flowise_chatflow_id"] = ""
     response = render(
         request,
         f"landing_pages/{lp.template_key}.html",
