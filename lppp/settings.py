@@ -111,6 +111,9 @@ CELERY_TIMEZONE = TIME_ZONE
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[])
 
+# Referrer-Policy : requis pour les embeds YouTube (éviter Erreur 153). Doit être strict-origin-when-cross-origin.
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
 # Mesures de protection quand DEBUG est désactivé (prod / staging)
 if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True

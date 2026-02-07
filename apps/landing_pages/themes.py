@@ -33,7 +33,36 @@ THEME_CSS_ORSYS = """:root {
 }
 """
 
+# Charte Maisons-Alfort (CSS Vampire) — fond sombre, primary #ac7fe8
+THEME_MAISONS_ALFORT = {
+    "fonts": {"body": "Roboto", "heading": "Roboto"},
+    "colors": {
+        "background": "#000000",
+        "text": "#e6e6e6",
+        "primary": "#ac7fe8",
+        "secondary": "#d2a5ff",
+    },
+    "logo_url": "https://maisons-alfort.fr/wp-content/uploads/2018/12/logo-maisons-alfort.png",
+    "background_image_url": "https://maisons-alfort.fr/wp-content/uploads/2022/02/bg-agenda.jpg?id=22720",
+}
+
+THEME_CSS_MAISONS_ALFORT = """:root {
+  --lp-font-body: Roboto, system-ui, sans-serif;
+  --lp-font-heading: Roboto, system-ui, sans-serif;
+  --lp-bg: #000000;
+  --lp-text: #e6e6e6;
+  --lp-primary: #ac7fe8;
+  --lp-secondary: #d2a5ff;
+  --lp-border: #262626;
+  --lp-block-bg: #141414;
+  --lp-muted: #999;
+  --lp-heading: #e6e6e6;
+  --lp-cta-text: #0d0d0d;
+}
+"""
+
 # Slug → (theme dict, theme_css string) pour injection côté vue
 LANDING_THEMES = {
     "orsys": (THEME_ORSYS, THEME_CSS_ORSYS),
+    "maisons-alfort": (THEME_MAISONS_ALFORT, THEME_CSS_MAISONS_ALFORT),
 }

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>{{ content.page_title|default:landing_page.title }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -102,12 +103,19 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-        /* Hero fond vidéo : contenu dans la section hero uniquement (scroll avec elle) */
-        .hero.has-bg-video .hero-bg-video {
-            position: absolute;
-            inset: 0;
+        /* Hero fond vidéo : parallaxe (fixed) comme page concierge — reste en place au scroll */
+        .hero.has-bg-video .hero-bg-video,
+        .hero.has-bg-video .hero-bg-thumbnail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             z-index: 0;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
         .hero.has-bg-video .hero-bg-video iframe,
         .hero.has-bg-video .hero-bg-video video {
@@ -120,23 +128,50 @@
             min-width: 177.78vh;
             transform: translate(-50%, -50%);
             pointer-events: none;
+            border: 0;
         }
         .hero.has-bg-video .hero-bg-video video {
             object-fit: cover;
         }
+        .hero.has-bg-video .hero-video-fallback,
+        .hero.has-bg-video .hero-video-cta {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            text-decoration: none;
+            pointer-events: auto;
+            padding: 0.6rem 1.2rem;
+            background: rgba(0,0,0,0.6);
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .hero.has-bg-video .hero-video-fallback:hover,
+        .hero.has-bg-video .hero-video-cta:hover {
+            color: #fff;
+            background: rgba(0,0,0,0.8);
+            text-decoration: none;
+        }
+        .hero.has-bg-video::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.35);
+            pointer-events: none;
+        }
+        .hero.has-bg-video > * { position: relative; z-index: 3; }
         .hero.has-bg-image::before {
             content: '';
             position: absolute;
             inset: 0;
             background: rgba(0, 0, 0, 0.15);
-            pointer-events: none;
-        }
-        .hero.has-bg-video::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.35);
             pointer-events: none;
         }
         /* Scanlines légères (texture) — image et vidéo */
@@ -156,8 +191,11 @@
         }
         .hero.has-bg-video::after {
             content: '';
-            position: absolute;
-            inset: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
             z-index: 2;
             background: repeating-linear-gradient(
                 0deg,
@@ -544,6 +582,7 @@
             {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
             {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
             {% if content.loom_embed_url %}<a href="#demo">Démo</a>{% endif %}
+            {% if flowise_embed_url %}<a href="#demo-concierge">Démo Conciergerie</a>{% endif %}
             {% if content.services %}<a href="#services">Services</a>{% endif %}
             {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
             {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
@@ -567,9 +606,19 @@
                 </video>
             </div>
             {% elif content.hero_video_url %}
+            {% with embed_url=content.hero_video_url|youtube_embed_background watch_url=content.hero_video_url|youtube_watch_url %}
             <div class="hero-bg-video">
-                <iframe src="{{ content.hero_video_url|youtube_embed_background }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="eager" title="Fond hero"></iframe>
+                <iframe
+                    src="{{ embed_url }}"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    title="Fond hero"
+                    aria-hidden="true"
+                ></iframe>
             </div>
+            {% if watch_url %}<a href="{{ watch_url }}" target="_blank" rel="noopener noreferrer" class="hero-video-fallback">Ouvrir sur YouTube</a>{% endif %}
+            {% endwith %}
             {% endif %}
             {% if content.theme and content.theme.logo_url and not content.hero_background_url and not content.hero_video_url and not content.hero_video_mp4_url and not content.hero_video_webm_url %}
             {% if not content.theme.background_image_url or content.theme.logo_url != content.theme.background_image_url %}
@@ -577,7 +626,7 @@
             {% endif %}
             {% endif %}
             <h1>{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
-            <p class="hero-sub">{{ content.hero_sub_headline|default:content.hero_subtitle|default:'' }}{% if not content.hero_sub_headline and not content.hero_subtitle and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
+            <p class="hero-sub">{{ content.hero_sub_headline|default:'' }}{% if not content.hero_sub_headline and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
             {% if content.cta_text %}
             {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
             <a href="#contact-email-modal" class="cta">{{ content.cta_text }}</a>
@@ -619,6 +668,42 @@
                 {% if content.demo_video_caption %}<p class="coordonnees-intro">{{ content.demo_video_caption }}</p>{% endif %}
                 <div class="workflow-figure" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
                     <iframe src="{{ content.loom_embed_url }}" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="Démo vidéo"></iframe>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if flowise_embed_url %}
+        <section class="section" id="demo-concierge">
+            <div class="section-head"><span class="section-num">02c</span><h2>Démo : ce que je peux implanter pour vous</h2></div>
+            <div class="card">
+                <p class="section-lead">Un assistant IA qui répond aux questions des citoyens à partir de vos documents officiels (RAG). Ci-dessous, une démo basée sur les démarches passeport et CNI. Les réponses sont ancrées dans vos textes, pas inventées.</p>
+                <div class="workflow-figure flowise-embed-wrap" style="position:relative;min-height:420px;height:600px;overflow:hidden;border-radius:12px;background:#111;">
+                    {% if flowise_api_host and flowise_chatflow_id %}
+                    <script type="module">
+                        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
+                        Chatbot.initFull({
+                            chatflowid: "{{ flowise_chatflow_id|escapejs }}",
+                            apiHost: "{{ flowise_api_host|escapejs }}",
+                        });
+                    </script>
+                    <flowise-fullchatbot></flowise-fullchatbot>
+                    {% else %}
+                    <iframe src="{{ flowise_embed_url }}" title="Assistant Conciergerie IA" allow="clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
+                    {% endif %}
+                </div>
+                <p style="margin-top:0.75rem;font-size:0.9rem;color:var(--lp-muted,#999);">Élargir les thèmes, déployer en prod, connecter vos outils : on en parle.</p>
+                <p style="margin-top:0.5rem;font-size:0.85rem;"><a href="{{ flowise_embed_url }}" target="_blank" rel="noopener">Ouvrir le chat dans un nouvel onglet</a> si le cadre reste vide.</p>
+            </div>
+        </section>
+        {% else %}
+        <section class="section" id="demo-concierge">
+            <div class="section-head"><span class="section-num">02c</span><h2>Démo : ce que je peux implanter pour vous</h2></div>
+            <div class="card">
+                <p class="section-lead">Un assistant IA qui répond aux questions des citoyens à partir de vos documents officiels (RAG).</p>
+                <div class="workflow-figure" style="min-height:200px;padding:1.5rem;border-radius:12px;background:#111;color:var(--lp-muted,#999);">
+                    <p><strong>Chat démo en cours de configuration</strong></p>
+                    <p>Pour afficher le chatbot ici : dans le fichier <code>.env</code> à la racine du projet, définissez <code>FLOWISE_URL=http://localhost:3010</code> (et éventuellement <code>FLOWISE_CHATFLOW_ID</code>). Vérifiez que Flowise tourne (port 3010). Puis redémarrez le conteneur web : <code>docker compose restart web</code>.</p>
                 </div>
             </div>
         </section>
@@ -742,5 +827,6 @@
         </div>
     </div>
     {% endif %}
+
 </body>
 </html>

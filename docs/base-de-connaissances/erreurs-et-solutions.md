@@ -41,6 +41,80 @@ Pour chaque erreur documentée, indiquer :
 
 *(Les entrées seront ajoutées au fur et à mesure des corrections.)*
 
+### WSL/Linux : « python: command not found » — toujours utiliser python3
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-06 |
+| **Contexte** | WSL (ou Linux), exécution de commandes Django depuis l’hôte (migrate, runserver, etc.). |
+| **Erreur** | `zsh: command not found: python` ou `python: command not found`. |
+| **Cause** | Sur WSL/Ubuntu (et beaucoup de distributions Linux), la commande système officielle est **`python3`**. La commande `python` n’est pas installée ou n’est pas dans le PATH. |
+| **Solution** | **Toujours** utiliser **`python3`** pour les commandes sur l’hôte : `python3 manage.py migrate`, `python3 manage.py runserver`, `python3 -c "..."`. Ne jamais donner d’instruction avec `python` seul. |
+| **Prévention** | Règle projet : **ne jamais proposer ou documenter une commande Python sur l’hôte sans utiliser `python3`**. Voir `.cursor/rules/pilotage-agents.mdc` (§ Terminal — Python sur l’hôte), `environnement-wsl-linux.md`. Dans les conteneurs Docker, `docker compose exec web python ...` reste valide (image avec `python` en symlink). **Si en plus** `python3 manage.py migrate` échoue avec « Connection refused » (port 5432) : la base PostgreSQL n’est pas démarrée — lancer `make up` ou `docker compose up -d db redis`, attendre quelques secondes, puis réessayer ; ou exécuter la migration dans le conteneur : `docker compose exec web python manage.py migrate`. |
+| **Lien(s)** | `environnement-wsl-linux.md`, `pilotage-agents.mdc` |
+
+### PostgreSQL « manque » / Connection refused 5432 — tests ou runserver sur l'hôte
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-07 |
+| **Contexte** | Exécution de **pytest** ou **runserver** **sur l'hôte** (WSL) alors que la base tourne dans Docker (`lppp_db`). |
+| **Erreur** | `OperationalError: connection to server at "127.0.0.1", port 5432 failed: Connection refused` ou « postgres manque ». |
+| **Cause** | Le conteneur **lppp_db** expose PostgreSQL en **5432** dans le réseau Docker ; sur l'**hôte** le port mappé est **5433** (`5433:5432`). Avec `DB_HOST=db` / `DB_PORT=5432`, depuis l'hôte Django tente 127.0.0.1:5432 — rien n'écoute sur 5432. |
+| **Solution** | **Sur l'hôte** : dans `.env` mettre **`DB_HOST=localhost`** et **`DB_PORT=5433`**. Lancer `docker compose up -d db redis`, attendre, puis `make test` ou `runserver`. **Dans Docker** : garder `DB_HOST=db`, `DB_PORT=5432`. Alternative : **`make test-docker`** (pytest dans le conteneur, pas besoin de changer .env). |
+| **Prévention** | Docker interne = db:5432 ; hôte = localhost:5433. Voir `pret-a-demarrer.md` § Option B, `.env.example`. |
+| **Lien(s)** | `pret-a-demarrer.md`, `.env.example`, `infra-devops.md` (§ 3.4), `docker-compose.yml` |
+
+### Landing Maisons-Alfort : page de prospection (missions, CDI, CDD), pas « page municipale »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-06 |
+| **Contexte** | Landing `/p/maisons-alfort/` ; contenu et positionnement de la page. |
+| **Erreur** | La landing a été traitée comme une **page municipale** (focus sur l’assistant pour les équipes, peu de structure). L’utilisateur se vend aux élus et services : **missions, CDI, CDD**. L’iframe Conciergerie est une **démo** de ce qu’il peut implanter chez eux, pas le produit principal. |
+| **Cause** | Confusion entre « page pour la mairie » (contenu institutionnel) et « landing de prospection pour se vendre à la mairie » (même niveau de qualité et structure que P4S, 0flow, etc.). |
+| **Solution** | Maisons-Alfort = template **proposition** avec **structure enrichie** (hero, enjeux, solution, services, mission flash, CTA, coordonnées) et **qualité de texte** au niveau des autres landings. Section « Démo : ce que je peux implanter pour vous » avec l’iframe Conciergerie. Migration `0005_maisons_alfort_landing_proposition_enrichie.py` + section démo dans `proposition.html` + passage de `flowise_embed_url` pour slug `maisons-alfort` dans la vue. |
+| **Prévention** | Pour toute landing ciblant une collectivité ou un prospect : **toujours** appliquer la **structure enrichie** et le **niveau de qualité P4S** (contenu statique de qualité, ventes / missions / CDI / CDD). Les démos (chatbot, Loom, etc.) sont des **sections** qui illustrent ce qu’on peut déployer, pas le cœur du message. Voir `strategie-qualite-contenu-landings.md`, `attentes-contenu-et-enrichissement-qualite.md`. |
+| **Lien(s)** | `strategie-qualite-contenu-landings.md`, `attentes-contenu-et-enrichissement-qualite.md`, `docs/contacts/mairies/maisons-alfort/` |
+
+### VariableDoesNotExist — clé manquante dans `content` (landing pages)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-07 |
+| **Contexte** | Landing publique (ex. `/p/maisons-alfort/`), template `proposition.html` ou `proposition_value.html`, `relance-evenement.html`. |
+| **Erreur** | `VariableDoesNotExist: Failed lookup for key [hero_subtitle] in {...}` (ou autre clé `content.*`). Erreur pendant le rendu du template (ex. ligne 581 dans proposition.html). |
+| **Cause** | Dans les templates Django, un filtre comme `{{ content.hero_sub_headline\|default:content.hero_subtitle }}` **évalue d’abord** `content.hero_subtitle`. Si la clé n’existe pas dans le dict `content`, Django lève `VariableDoesNotExist` avant d’appliquer le `default`. Une clé absente de `content_json` ou non renseignée par la vue produit la même erreur dès qu’elle est utilisée dans un `{% if %}` ou un `default:variable`. |
+| **Solution** | (1) **Vue** : `apps/landing_pages/views.py` — `_content_with_defaults()` renseigne toutes les clés optionnelles et **toujours les deux** clés `hero_sub_headline` et `hero_subtitle` avec la **même** valeur normalisée (`hero_sub_headline or hero_subtitle or ""`), pour les templates `proposition`, `proposition_value`, `relance-evenement`. Ainsi même une ancienne version de template (ex. conteneur non reconstruit) qui référencerait `content.hero_subtitle` ne lève pas d’exception. (2) **Templates** : ne pas utiliser `default:content.une_cle` si `une_cle` peut être absente ; utiliser de préférence `content.hero_sub_headline` avec `|default:''`. |
+| **Prévention** | **Gestion des erreurs / Dev Django** : (1) Toute nouvelle clé `content.*` utilisée dans un template landing doit être ajoutée aux `defaults` dans `_content_with_defaults()` (vue). (2) Éviter dans les templates les chaînes du type `{{ content.a\|default:content.b }}` lorsque `b` peut être absent ; privilégier une normalisation côté vue (une seule clé affichée) ou des defaults littéraux `{{ content.a\|default:"" }}`. (3) Consulter ce registre et la vue avant d’ajouter des variables `content.*` dans les templates. |
+| **Lien(s)** | `apps/landing_pages/views.py` (§ `_content_with_defaults`), `templates/landing_pages/proposition.html`, `proposition_value.html`, `relance-evenement.html`, `segmentations/2026-02-07-sprint-devops-resolution-erreurs-landing.md` (flux anti-régression) |
+
+### YouTube embed — Erreur 153 (vidéo hero ne s’affiche pas)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-07 |
+| **Contexte** | Landing avec fond vidéo YouTube (hero, `content.hero_video_url`), iframe dans `.hero-bg-video`. |
+| **Erreur** | Message « Erreur 153 » / « Regarder la vidéo sur YouTube » dans le lecteur intégré ; la vidéo ne se charge pas. |
+| **Cause** | Erreur 153 = « Video Player Configuration Error » : la **page** est servie avec `Referrer-Policy: same-origin` (défaut Django depuis 3.1), ce qui supprime le Referer pour les requêtes cross-origin ; l’iframe YouTube ne peut pas s’identifier auprès de YouTube. L’attribut `referrerpolicy` sur l’iframe seul ne suffit pas si l’en-tête HTTP de la page est plus restrictif. |
+| **Solution** | (1) **Serveur (obligatoire)** : que la **réponse HTTP** de la page envoie **`Referrer-Policy: strict-origin-when-cross-origin`**. Dans LPPP : **`SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"`** dans `lppp/settings.py` (SecurityMiddleware applique l’en-tête). (2) Sur l’iframe : **`referrerpolicy="strict-origin-when-cross-origin"`**. (3) **URL embed** : utiliser **youtube-nocookie.com** (filtre `youtube_embed_background` dans LPPP). (4) Lien de secours « Regarder la vidéo sur YouTube » (filtre `youtube_watch_url`). |
+| **Ne pas reproduire** | **L’agent en charge des erreurs** (et tout agent qui ajoute une vidéo YouTube à une landing) doit **prendre en note** : (1) **Jamais** d’iframe YouTube sans `referrerpolicy="strict-origin-when-cross-origin"`. (2) **Toujours** un lien de secours vers YouTube (filtre `youtube_watch_url`). (3) Utiliser la **procédure dédiée** pour intégrer **n’importe quelle** vidéo YouTube de façon fluide : `integration-video-youtube-landings.md` (checklist, filtres, exemple iframe). |
+| **Prévention** | Pour tout nouvel iframe YouTube (embed), inclure `referrerpolicy="strict-origin-when-cross-origin"`. Utiliser les filtres `youtube_embed_background` et `youtube_watch_url` (`landing_filters.py`). **Avant d’ajouter une vidéo YouTube** : consulter `integration-video-youtube-landings.md` pour appliquer la même intégration sans reproduire l’erreur 153. |
+| **Lien(s)** | `integration-video-youtube-landings.md` (procédure fluide pour toute vidéo YouTube), `templates/landing_pages/proposition.html` (hero YouTube), `apps/landing_pages/templatetags/landing_filters.py` |
+
+### Blocage vidéo YouTube (fond) + chatbot Flowise — résolution via Claude Code (cloud)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02 |
+| **Contexte** | Landing `/p/maisons-alfort/` : vidéo YouTube devant servir de **fond** (autoplay, boucle, sans son) ; chatbot Flowise qui ne s’intégrait pas. Plusieurs itérations avec l’agent Cursor avaient conduit à une **miniature + lien** (pour contourner l’erreur 153) et à un chatbot en **iframe seule**, sans résoudre le cadre vide. |
+| **Erreur** | Utilisateur bloqué : vidéo pas en fond automatique ; chatbot cadre vide. |
+| **Cause** | (1) **Vidéo** : choix précédent de remplacer l’iframe par une miniature pour éviter l’erreur 153, alors que l’utilisateur voulait **autoplay en fond**. (2) **Chatbot** : variables **FLOWISE_URL** et **FLOWISE_CHATFLOW_ID** absentes du `.env` ; le code utilise des valeurs par défaut mais l’ajout explicite dans `.env` + redémarrage du conteneur web était nécessaire pour que l’embed soit bien fourni. |
+| **Solution** | Résolution effectuée par **Claude Code (cloud)** : (1) Vidéo : iframe avec **`src="{{ embed_url }}"`** (chargement direct), **referrerpolicy="strict-origin-when-cross-origin"**, **youtube-nocookie.com**, paramètres autoplay=1&mute=1&loop=1 ; suppression du bouton « Lancer la vidéo » et du script au clic ; lien de fallback « Ouvrir sur YouTube » conservé. (2) Chatbot : ajout dans `.env` de **FLOWISE_URL=http://localhost:3010** et **FLOWISE_CHATFLOW_ID=67206a96-470e-4607-ba8b-5955e97aa116** ; redémarrage du conteneur web. (3) Templates concierge et proposition alignés (iframe hero en `src`, overlay/scanlines limités au hero). |
+| **Ne pas reproduire** | **À l’avenir** : (1) Si l’utilisateur demande une **vidéo en fond** (autoplay, boucle, sans son), privilégier l’**iframe avec src=** (et referrer policy + youtube-nocookie) plutôt que de basculer sur miniature seule sans proposer l’option autoplay. (2) En cas de **chatbot qui ne s’affiche pas**, vérifier en premier **.env** (FLOWISE_URL, FLOWISE_CHATFLOW_ID) et **docker compose restart web** avant de changer l’intégration (iframe vs web component). (3) Documenter ici qu’un blocage a été levé par un autre outil (Claude Code) pour éviter que les agents Cursor ne répètent les mêmes choix qui avaient conduit à l’impasse. |
+| **Prévention** | Consulter cette entrée et `flowise-chatbot-ecran-vide-diagnostic.md` avant de modifier le hero vidéo ou l’embed chatbot. Exiger **FLOWISE_URL** et **FLOWISE_CHATFLOW_ID** dans la checklist déploiement / démo (voir `.env.example`). |
+| **Lien(s)** | `flowise-chatbot-ecran-vide-diagnostic.md`, `integration-video-youtube-landings.md`, `.env.example`, `templates/landing_pages/proposition.html`, `concierge_maisons_alfort.html` |
+
 ### Exemple (template) — ModuleNotFoundError: No module named 'environ'
 
 | Champ | Contenu |

@@ -20,25 +20,34 @@ def get_flowise_config():
 DEFAULT_CHATFLOW_ID = "67206a96-470e-4607-ba8b-5955e97aa116"
 
 
+def _flowise_embed_base_url():
+    """
+    URL de base joignable par le navigateur (iframe). L'embed est affiché dans le navigateur
+    (souvent sur l'hôte), donc l'URL ne doit jamais être flowise:3000 (résolu uniquement dans Docker).
+    """
+    base_url = os.environ.get("FLOWISE_URL", "").strip().rstrip("/")
+    # Si l'URL pointe vers le conteneur (flowise:3000), le navigateur ne peut pas la joindre → utiliser localhost:3010
+    if base_url and ("flowise:" in base_url or base_url.startswith("http://flowise/") or base_url.startswith("https://flowise/")):
+        base_url = "http://localhost:3010"
+    if not base_url:
+        base_url = "http://localhost:3010"
+    return base_url.rstrip("/")
+
+
+def _flowise_chatflow_id_stripped():
+    """ID du chatflow (env ou défaut), sans query string."""
+    raw = (os.environ.get("FLOWISE_CHATFLOW_ID") or DEFAULT_CHATFLOW_ID).strip()
+    return (raw.split("?")[0].strip() or raw) if raw else ""
+
+
 def get_flowise_chat_embed_url():
     """
     URL d'embed du chatflow Flowise (landing /essais/concierge/ et /p/maisons-alfort/).
-    L'URL est consommée par le navigateur (iframe) : elle doit être joignable depuis la machine
-    où s'ouvre la page (souvent l'hôte). Si FLOWISE_URL n'est pas défini : on utilise
-    http://localhost:3010 (port LPPP). Définir explicitement FLOWISE_URL=http://localhost:3010
-    dans .env et redémarrer le service web après modification.
-    Override : FLOWISE_URL, FLOWISE_CHATFLOW_ID.
+    L'URL est consommée par le navigateur (iframe) : toujours une URL joignable depuis le navigateur
+    (localhost:3010). Override : FLOWISE_URL, FLOWISE_CHATFLOW_ID.
     """
-    base_url = os.environ.get("FLOWISE_URL", "").strip()
-    if not base_url:
-        db_host = (os.environ.get("DB_HOST") or "db").strip().lower()
-        if db_host in ("localhost", "127.0.0.1"):
-            base_url = "http://localhost:3010"  # port LPPP dédié (stack autonome)
-        else:
-            # DB_HOST=db (Docker) : l'embed est affiché dans le navigateur sur l'hôte → localhost:3010
-            base_url = "http://localhost:3010"
-    base_url = base_url.rstrip("/")
-    chatflow_id = (os.environ.get("FLOWISE_CHATFLOW_ID") or DEFAULT_CHATFLOW_ID).strip()
+    base_url = _flowise_embed_base_url()
+    chatflow_id = _flowise_chatflow_id_stripped()
     if not chatflow_id:
         return ""
     return f"{base_url}/embed/{chatflow_id}"
@@ -46,17 +55,14 @@ def get_flowise_chat_embed_url():
 
 def get_flowise_chat_embed_config():
     """
-    Retourne (base_url, chatflow_id) pour l'embed par script (flowise-embed).
-    Si pas configuré : ("", ""). Utilisé par le template pour Chatbot.initFull({ apiHost, chatflowid }) (embed in-place).
+    Retourne (base_url, chatflow_id) pour l'embed (iframe ou script). base_url est toujours
+    une URL joignable par le navigateur (localhost:3010). Les query strings sont retirées du chatflow_id.
     """
-    embed_url = get_flowise_chat_embed_url()
-    if not embed_url:
+    base_url = _flowise_embed_base_url()
+    chatflow_id = _flowise_chatflow_id_stripped()
+    if not chatflow_id:
         return "", ""
-    # embed_url = "http://localhost:3010/embed/UUID"
-    parts = embed_url.rstrip("/").split("/embed/")
-    if len(parts) != 2:
-        return "", ""
-    return parts[0], (parts[1].split("?")[0].strip() or "")
+    return base_url, chatflow_id
 
 
 def push_file_to_flowise(file_path: Path, base_url: str, store_id: str, api_key: str):

@@ -50,16 +50,28 @@ def concierge_maisons_alfort_public(request):
 
 
 def _content_with_defaults(content, template_key):
-    """Renseigne les clés optionnelles manquantes pour éviter VariableDoesNotExist dans les templates."""
-    if template_key != "proposition":
+    """Renseigne les clés optionnelles manquantes pour éviter VariableDoesNotExist dans les templates.
+    Normalise hero sub : une seule valeur (hero_sub_headline puis hero_subtitle) renseignée dans les DEUX clés
+    pour que tout template (proposition, proposition_value, relance-evenement) puisse utiliser l'une ou l'autre sans erreur."""
+    templates_using_content = ("proposition", "proposition_value", "relance-evenement")
+    if template_key not in templates_using_content:
         return content
     defaults = {
         "positionnement": "",
         "activite_pain_points": "",
         "mission_flash": "",
         "produit_commercial": "",
+        "hero_subtitle": "",
+        "hero_sub_headline": "",
+        "icebreaker": "",
+        "intro": "",
+        "hero_title": "",
     }
-    return {**defaults, **content}
+    out = {**defaults, **content}
+    # Toujours renseigner les deux clés avec la même valeur (évite VariableDoesNotExist si un template référence l'une ou l'autre)
+    hero_sub = out.get("hero_sub_headline") or out.get("hero_subtitle") or ""
+    out["hero_sub_headline"] = out["hero_subtitle"] = hero_sub
+    return out
 
 
 def landing_public(request, slug):
@@ -85,7 +97,8 @@ def landing_public(request, slug):
         "use_perso_style": use_perso_style,
         "perso_ref_path": perso_ref_path,
     }
-    if lp.template_key == "concierge_maisons_alfort":
+    # Démo Conciergerie IA (iframe) : pour slug maisons-alfort, même avec template proposition
+    if lp.slug == "maisons-alfort":
         try:
             context["flowise_embed_url"] = get_flowise_chat_embed_url() or ""
             base_url, chatflow_id = get_flowise_chat_embed_config()
@@ -104,6 +117,8 @@ def landing_public(request, slug):
     response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response["Pragma"] = "no-cache"
     response["Expires"] = "0"
+    # YouTube embed Erreur 153 : la page doit être servie avec Referrer-Policy pour que l'iframe envoie le Referer à YouTube
+    response["Referrer-Policy"] = "strict-origin-when-cross-origin"
     return response
 
 

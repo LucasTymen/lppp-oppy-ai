@@ -34,7 +34,7 @@
     {% include "landing_pages/includes/nav_landing_annexes.html" with current_page="proposition" %}
     <main class="page-wrap">
         <h1 class="pv-headline">{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
-        {% if content.hero_sub_headline or content.hero_subtitle %}<p class="pv-sub">{{ content.hero_sub_headline|default:content.hero_subtitle }}</p>{% endif %}
+        {% if content.hero_sub_headline %}<p class="pv-sub">{{ content.hero_sub_headline }}</p>{% endif %}
 
         {% if content.intro %}<div class="pv-section"><p>{{ content.intro }}</p></div>{% endif %}
 

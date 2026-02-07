@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 
 class LandingPage(models.Model):
@@ -10,6 +11,7 @@ class LandingPage(models.Model):
         ("juridique", "Juridique / Cabinets avocats"),
         ("industrie", "Industrie"),
         ("low-tech", "Low tech / Sans tech"),
+        ("mairie", "Mairie / Collectivités territoriales"),
         ("autre", "Autre"),
     ]
     CATEGORY_CHOICES = [
@@ -52,3 +54,7 @@ class LandingPage(models.Model):
 
     def __str__(self):
         return f"{self.title} ({self.slug})"
+
+    def get_absolute_url(self):
+        """URL publique de la landing (pour « Voir sur le site » et liens admin)."""
+        return reverse("landing_public", args=[self.slug])

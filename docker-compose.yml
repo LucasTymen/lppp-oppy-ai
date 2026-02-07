@@ -117,6 +117,9 @@ services:
       PORT: 3000
       FLOWISE_USERNAME: ${FLOWISE_USERNAME:-}
       FLOWISE_PASSWORD: ${FLOWISE_PASSWORD:-}
+      # Autoriser l'embed en iframe depuis la landing (éviter cadre vide / Erreur 151)
+      IFRAME_ORIGINS: "*"
+      CORS_ORIGINS: "*"
     volumes:
       - flowise_data:/root/.flowise
       # Répertoire de travail : les fichiers déposés ici sont visibles dans le conteneur (et poussés via API par les agents)
