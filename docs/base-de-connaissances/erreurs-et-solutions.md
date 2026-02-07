@@ -115,6 +115,18 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | Consulter cette entrée et `flowise-chatbot-ecran-vide-diagnostic.md` avant de modifier le hero vidéo ou l’embed chatbot. Exiger **FLOWISE_URL** et **FLOWISE_CHATFLOW_ID** dans la checklist déploiement / démo (voir `.env.example`). |
 | **Lien(s)** | `flowise-chatbot-ecran-vide-diagnostic.md`, `integration-video-youtube-landings.md`, `.env.example`, `templates/landing_pages/proposition.html`, `concierge_maisons_alfort.html` |
 
+### Vercel — 404 NOT_FOUND ou PR_END_OF_FILE_ERROR (repo LPPP complet)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-07 |
+| **Contexte** | Projet Vercel lié au repo **LPPP_Missions_mairie_m-Alfort** (ou tout repo contenant le **projet Django LPPP entier**). |
+| **Erreur** | **404: NOT_FOUND** sur l’URL Vercel ; ou **Échec de la connexion sécurisée / PR_END_OF_FILE_ERROR** (connexion coupée). |
+| **Cause** | Le dépôt contient une **app Django** (apps/, manage.py, etc.), pas un site statique ni une app Next.js à la racine. Vercel ne sait pas quoi servir → pas de sortie à la racine → 404. |
+| **Solution** | Dans **Vercel** → projet → **Settings** → **General** : définir **Root Directory** = **`deploy/concierge-demo-maisons-alfort`** (démo statique Maisons-Alfort). Laisser **Build Command** et **Output Directory** vides. Puis **Redeploy**. Pour d’autres missions : utiliser le dossier static/standalone correspondant ou suivre `strategie-deploiement-git-vercel.md` (1 repo = 1 contenu déployable). |
+| **Prévention** | Pour un repo « missions » contenant tout LPPP : documenter le Root Directory Vercel (ex. `deploy/VERCEL-MISSIONS-MAISONS-ALFORT.md`). Ou, pour une URL dédiée propre : repo avec **uniquement** le contenu déployable (clone → copier `deploy/standalone-*` ou `deploy/static-*` → push). |
+| **Lien(s)** | `deploy/VERCEL-MISSIONS-MAISONS-ALFORT.md`, `strategie-deploiement-git-vercel.md` |
+
 ### Exemple (template) — ModuleNotFoundError: No module named 'environ'
 
 | Champ | Contenu |
