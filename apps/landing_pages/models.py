@@ -57,4 +57,7 @@ class LandingPage(models.Model):
 
     def get_absolute_url(self):
         """URL publique de la landing (pour « Voir sur le site » et liens admin)."""
+        # Portfolio Yuwell : pages dédiées /yuwell/…, pas /p/<slug>/
+        if self.slug == "yuwell-portfolio":
+            return reverse("yuwell_presentation")
         return reverse("landing_public", args=[self.slug])

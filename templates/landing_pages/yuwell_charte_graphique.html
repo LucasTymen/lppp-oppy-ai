@@ -1,0 +1,120 @@
+{% extends "landing_pages/yuwell_base.html" %}
+{% block yuwell_title %}{{ content.page_title }}{% endblock %}
+{% block yuwell_extra_head %}
+<style>
+    /* Mise en situation — préceptes hiérarchie & cas d'usage */
+    .mise-en-situation-intro { margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--lp-muted); }
+    .mock-cards { display: grid; gap: 1rem; margin-top: 1rem; }
+    @media (min-width: 640px) { .mock-cards { grid-template-columns: repeat(3, 1fr); } }
+    .mock-card {
+        background: #FFFFFF;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid var(--lp-border, #90C2D3);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .mock-card .mock-band { height: 6px; }
+    .mock-card .mock-card-inner { padding: 1rem; }
+    .mock-card .mock-titre { font-size: 1rem; font-weight: 700; color: #333333; margin: 0 0 0.5rem; }
+    .mock-card .mock-gamme-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .mock-card .mock-body { font-size: 0.85rem; color: #333333; line-height: 1.5; margin: 0; }
+    .mock-card .mock-alerte { font-size: 0.75rem; font-weight: 600; color: #FFFFFF; background: var(--yuwell-urgence-alerte, #C5281C); padding: 0.25rem 0.5rem; border-radius: 4px; margin-top: 0.5rem; display: inline-block; }
+    .mock-legend { margin-top: 1.5rem; padding: 1rem; background: var(--lp-block-bg, #F5F5F5); border-radius: 8px; font-size: 0.85rem; }
+    .mock-legend dt { font-weight: 600; color: var(--lp-heading); margin-top: 0.5rem; }
+    .mock-legend dd { margin: 0.25rem 0 0 1rem; color: var(--lp-muted); }
+</style>
+{% endblock %}
+{% block yuwell_hero %}
+    <h1>Charte graphique</h1>
+    <p class="hero-sub">Palettes corporate et par gamme — HEX, RGB, Pantone</p>
+{% endblock %}
+{% block yuwell_content %}
+<section class="section" id="corporate">
+    <div class="section-head"><span class="section-num">01</span><h2>Palette corporate (marque mère)</h2></div>
+    <table class="yuwell-table">
+        <thead>
+            <tr>
+                <th>Aperçu</th>
+                <th>Usage</th>
+                <th>Nom</th>
+                <th>HEX</th>
+                <th>RGB</th>
+                <th>Pantone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in palette_corporate %}
+            <tr>
+                <td><span class="swatch" style="background-color: {{ c.hex }};"></span></td>
+                <td>{{ c.usage }}</td>
+                <td>{{ c.name }}</td>
+                <td><code>{{ c.hex }}</code></td>
+                <td>{{ c.rgb }}</td>
+                <td>{{ c.pantone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="section" id="gammes">
+    <div class="section-head"><span class="section-num">02</span><h2>Palettes par gamme produit</h2></div>
+    {% for gamme in palette_gammes %}
+    <div class="gamme-block">
+        <h3>{{ gamme.gamme }}</h3>
+        <p>{{ gamme.description }}</p>
+        <div class="palette-grid">
+            {% for c in gamme.colors %}
+            <div class="palette-item">
+                <span class="swatch" style="background-color: {{ c.hex }};"></span>
+                <span>{{ c.name }} — {{ c.hex }} · {{ c.pantone }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<section class="section" id="mise-en-situation">
+    <div class="section-head"><span class="section-num">03</span><h2>Mise en situation</h2></div>
+    <p class="mise-en-situation-intro">Les blocs ci-dessous appliquent les préceptes de la charte : <strong>hiérarchisation</strong> (corporate → gamme → usage) et <strong>déclinaison par cas d’usage</strong>. Le contenu est en lorem ipsum ; l’enjeu est de montrer la structure et l’attribution des couleurs.</p>
+    <div class="mock-cards">
+        <div class="mock-card">
+            <div class="mock-band" style="background-color: var(--yuwell-respiratoire);"></div>
+            <div class="mock-card-inner">
+                <p class="mock-gamme-label" style="color: var(--yuwell-respiratoire-bleu);">Solutions respiratoires</p>
+                <h3 class="mock-titre">Fiche produit type</h3>
+                <p class="mock-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+            </div>
+        </div>
+        <div class="mock-card">
+            <div class="mock-band" style="background-color: var(--yuwell-diagnostic);"></div>
+            <div class="mock-card-inner">
+                <p class="mock-gamme-label" style="color: var(--yuwell-diagnostic-vert);">Diagnostic & monitoring</p>
+                <h3 class="mock-titre">Fiche produit type</h3>
+                <p class="mock-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+            </div>
+        </div>
+        <div class="mock-card">
+            <div class="mock-band" style="background-color: var(--yuwell-mobilite);"></div>
+            <div class="mock-card-inner">
+                <p class="mock-gamme-label" style="color: var(--yuwell-mobilite);">Équipements cliniques & urgence</p>
+                <h3 class="mock-titre">Fiche produit type</h3>
+                <p class="mock-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                <span class="mock-alerte" style="background-color: var(--yuwell-urgence-alerte);">Alerte — usage encadré</span>
+            </div>
+        </div>
+    </div>
+    <dl class="mock-legend">
+        <dt>Hiérarchisation appliquée</dt>
+        <dd><strong>Corporate</strong> : titre et texte en Dark Charcoal (#333333) sur fond blanc ; bandeau supérieur = couleur de <strong>gamme</strong> (identification immédiate de la famille produit).</dd>
+        <dt>Cas d’usage</dt>
+        <dd><strong>Respiratoire</strong> : cyan (#00C2D1) en bandeau, bleu moyen (#0078A8) en label. <strong>Diagnostic</strong> : vert stable (#57B894) en bandeau, vert moyen (#3F8D68) en label. <strong>Urgence</strong> : gris (Cool Slate) en bandeau ; <strong>rouge sécurisé (#C5281C)</strong> réservé à l’alerte (jamais en fond large).</dd>
+    </dl>
+</section>
+
+<section class="section" id="regles">
+    <div class="section-head"><span class="section-num">04</span><h2>Règles d’usage</h2></div>
+    <p>Une gamme = une couleur dominante. Maximum deux couleurs de gamme sur un même support. Le bleu corporate reste prioritaire. Couleurs de gamme pour orienter, pas décorer. Contraste texte/fond et accessibilité (daltonisme, lisibilité) intégrés dès la conception.</p>
+</section>
+{% endblock %}

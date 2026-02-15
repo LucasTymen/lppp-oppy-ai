@@ -1,150 +1,82 @@
 {
   "meta": {
-    "strategie": "Prospection commando - ROI immédiat",
-    "logique_centrale": "MISSION_THEN_ALTERNANCE",
-    "zone_focus": "Créteil + 15km",
-    "statut_base": "Priorité Haute / Solvable"
+    "strategie": "Prospection inverse vers entreprises sous-digitalisées mais solvables",
+    "logique_centrale": "MISSION_THEN_CDI comme levier principal d'entrée",
+    "champ_decisionnel_cle": "mode_ciblage_principal",
+    "valeurs_autorisees": [
+      "MISSION",
+      "ALTERNANCE",
+      "CDI",
+      "MISSION_THEN_ALTERNANCE",
+      "MISSION_THEN_CDI",
+      "A_EXCLURE"
+    ],
+    "zone_focus": {
+      "centre": "Créteil",
+      "rayon_km": 15,
+      "zones_couvertes": [
+        "Bonneuil-sur-Marne", "Rungis", "Vitry-sur-Seine", "Limeil-Brévannes",
+        "Choisy-le-Roi", "Charenton-le-Pont", "Nogent-sur-Marne", "Paris 12, 13, 14"
+      ]
+    },
+    "exclusions_strictes": [
+      "immobilier", "associations", "secteur public", "micro-entreprises", "agences digitales"
+    ]
+  },
+  "opportuniteEmbauche": {
+    "objectif_prioritaire": "CDI",
+    "strategie_entree": "MISSION_THEN_CDI",
+    "delai_cible_integration": "1-3 mois",
+    "alternance": {
+      "statut": "LEVIER_SECONDAIRE",
+      "cadre": "Rocket School",
+      "formulation_recommandee": "Si vous préférez un format alternance pour sécuriser l'intégration, je suis déjà dans un dispositif Rocket School."
+    }
   },
   "entreprises_ciblees": [
-    {
-      "nom": "SOCATEB",
-      "ville": "Neuilly-sur-Marne",
-      "segment": "PME industrielles / BTP lourds",
-      "mode_ciblage_principal": "MISSION_THEN_CDI",
-      "decideur_cible": "Stéphane LARDY (Président)",
-      "contact": {
-        "tel": "01 43 00 24 00",
-        "web": "https://www.socateb.com",
-        "email_pattern": "initiale.nom@socateb.com"
-      },
-      "growth_hook": "Scraping des AG de copropriétés et permis de ravalement",
-      "angle_relance": "Détecter les chantiers avant les appels d'offres"
-    },
-    {
-      "nom": "SIFA LOGISTICS",
-      "ville": "Rungis",
-      "segment": "Logistique / transport B2B",
-      "mode_ciblage_principal": "MISSION",
-      "decideur_cible": "Julien BARBAREAU (DG)",
-      "contact": {
-        "tel": "01 41 80 18 80",
-        "web": "https://www.sifa-logistics.com",
-        "email_pattern": "p.nom@sifa-logistics.com"
-      },
-      "growth_hook": "Extraction de flux import/export concurrents via OSINT",
-      "angle_relance": "Pipeline de conquête de parts de marché à Rungis"
-    },
-    {
-      "nom": "GROUPE ORQUAL",
-      "ville": "Paris 14 / Fontenay",
-      "segment": "Santé privée / logiciels santé",
-      "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE",
-      "decideur_cible": "Philippe ROUSSEL (Fondateur)",
-      "contact": {
-        "tel": "01 46 60 40 40",
-        "web": "https://www.orqual.fr",
-        "email_pattern": "nom@orqual.fr"
-      },
-      "growth_hook": "Agent IA de qualification des leads praticiens",
-      "angle_relance": "Automatisation du funnel d'acquisition SaaS santé"
-    },
-    {
-      "nom": "LACROIX SIGNALISATION",
-      "ville": "Bonneuil-sur-Marne",
-      "segment": "PME industrielles / BTP lourds",
-      "mode_ciblage_principal": "MISSION_THEN_CDI",
-      "decideur_cible": "Directeur Agence IDF",
-      "contact": {
-        "tel": "01 41 94 30 00",
-        "web": "https://www.lacroix-city.com",
-        "email_pattern": "p.nom@lacroix-city.com"
-      },
-      "growth_hook": "Monitoring automatisé des marchés publics locaux",
-      "angle_relance": "Répondre aux appels d'offres en temps record"
-    },
-    {
-      "nom": "DESAUTEL",
-      "ville": "Créteil",
-      "segment": "PME industrielles / BTP lourds",
-      "mode_ciblage_principal": "MISSION_THEN_CDI",
-      "decideur_cible": "Directeur Commercial",
-      "contact": {
-        "tel": "01 49 56 22 22",
-        "web": "https://www.desautel.fr",
-        "email_pattern": "nom.p@desautel.fr"
-      },
-      "growth_hook": "Tracking des ouvertures d'établissements recevant du public (ERP)",
-      "angle_relance": "Placer la sécurité incendie dès la construction"
-    },
-    {
-      "nom": "STILL FRANCE",
-      "ville": "Limeil-Brévannes",
-      "segment": "PME industrielles / BTP lourds",
-      "mode_ciblage_principal": "MISSION_THEN_CDI",
-      "decideur_cible": "Responsable Marketing Opé",
-      "contact": {
-        "tel": "01 45 10 33 00",
-        "web": "https://www.still.fr",
-        "email_pattern": "prenom.nom@still.fr"
-      },
-      "growth_hook": "Activation automatique de la base clients dormante",
-      "angle_relance": "Augmenter le panier moyen via data-mining"
-    },
-    {
-      "nom": "MECALAC",
-      "ville": "Limeil-Brévannes",
-      "segment": "PME industrielles / BTP lourds",
-      "mode_ciblage_principal": "MISSION_THEN_CDI",
-      "decideur_cible": "Directeur de Région",
-      "contact": {
-        "tel": "01 45 10 23 00",
-        "web": "https://www.mecalac.com",
-        "email_pattern": "p.nom@mecalac.com"
-      },
-      "growth_hook": "Audit de performance du réseau de distributeurs IDF",
-      "angle_relance": "Tracking centralisé des ventes indirectes"
-    },
-    {
-      "nom": "DELZONGLE IDF",
-      "ville": "Créteil",
-      "segment": "Services B2B / Artisanat",
-      "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE",
-      "decideur_cible": "Responsable de Dépôt",
-      "contact": {
-        "tel": "01 43 39 40 40",
-        "web": "https://www.delzongle.com",
-        "email_contact": "creteil@delzongle.com"
-      },
-      "growth_hook": "Lead Gen ciblée sur les artisans et peintres du 94",
-      "angle_relance": "Générer du flux magasin via SEO local et Ads"
-    },
-    {
-      "nom": "CLINIQUE DE BERCY",
-      "ville": "Charenton-le-Pont",
-      "segment": "Santé privée",
-      "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE",
-      "decideur_cible": "Directeur d'Établissement",
-      "contact": {
-        "tel": "01 43 96 70 00",
-        "web": "https://www.clinique-bercy.com",
-        "email_contact": "accueil@clinique-bercy.com"
-      },
-      "growth_hook": "Automation du suivi post-opératoire et e-réputation",
-      "angle_relance": "Améliorer le parcours patient et les avis Google"
-    },
-    {
-      "nom": "SCHMIDT (Vincennes/Nogent)",
-      "ville": "Nogent-sur-Marne",
-      "segment": "Franchise / Retail",
-      "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE",
-      "decideur_cible": "Gérant du Magasin",
-      "contact": {
-        "tel": "01 48 73 00 00",
-        "web": "https://www.home-design.schmidt",
-        "email_contact": "vincennes@schmidt-vincennes.fr"
-      },
-      "growth_hook": "Machine à leads via scraping d'intentions d'achat (immobilier local)",
-      "angle_relance": "Capter les nouveaux acquéreurs avant Leroy Merlin"
-    }
-  ]
+    { "nom": "SOCATEB", "ville": "Neuilly-sur-Marne", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO local + Lead Gen copropriétés", "priorite": "MOYENNE", "decideur_cible": "Stéphane LARDY (Président)", "contact": { "tel": "01 43 00 24 00", "web": "https://www.socateb.com", "email_pattern": "initiale.nom@socateb.com" }, "growth_hook": "Scraping des AG de copropriétés et permis de ravalement", "angle_relance": "Détecter les chantiers avant les appels d'offres" },
+    { "nom": "LACROIX SIGNALISATION", "ville": "Bonneuil-sur-Marne", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Automation B2B + SEO technique niche", "priorite": "HAUTE", "decideur_cible": "Directeur Agence IDF", "contact": { "tel": "01 41 94 30 00", "web": "https://www.lacroix-city.com", "email_pattern": "p.nom@lacroix-city.com" }, "growth_hook": "Monitoring automatisé des marchés publics locaux", "angle_relance": "Répondre aux appels d'offres en temps record" },
+    { "nom": "DESAUTEL", "ville": "Créteil", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "UX + Tracking conversion", "priorite": "HAUTE", "decideur_cible": "Directeur Commercial", "contact": { "tel": "01 49 56 22 22", "web": "https://www.desautel.fr", "email_pattern": "nom.p@desautel.fr" }, "growth_hook": "Tracking des ouvertures d'établissements recevant du public (ERP)", "angle_relance": "Placer la sécurité incendie dès la construction" },
+    { "nom": "MAISON TINO", "ville": "Les Mureaux", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Cold mailing B2B restauration", "priorite": "MOYENNE" },
+    { "nom": "SEDI-ATI FIBRES OPTIQUES", "ville": "Courtabœuf", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Scraping LinkedIn international", "priorite": "MOYENNE" },
+    { "nom": "BROSSARD", "ville": "Choisy-le-Roi", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO + automation devis", "priorite": "HAUTE" },
+    { "nom": "STILL France", "ville": "Limeil-Brévannes", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Exploitation data clients", "priorite": "HAUTE", "decideur_cible": "Responsable Marketing Opé", "contact": { "tel": "01 45 10 33 00", "web": "https://www.still.fr", "email_pattern": "prenom.nom@still.fr" }, "growth_hook": "Activation automatique de la base clients dormante", "angle_relance": "Augmenter le panier moyen via data-mining" },
+    { "nom": "MECALAC", "ville": "Limeil-Brévannes", "segment": "PME industrielles / BTP lourds", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Tracking réseau distributeurs", "priorite": "HAUTE", "decideur_cible": "Directeur de Région", "contact": { "tel": "01 45 10 23 00", "web": "https://www.mecalac.com", "email_pattern": "p.nom@mecalac.com" }, "growth_hook": "Audit de performance du réseau de distributeurs IDF", "angle_relance": "Tracking centralisé des ventes indirectes" },
+    { "nom": "TSE", "ville": "Thiais", "segment": "Logistique / transport B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Tracking appels + dashboard", "priorite": "MOYENNE" },
+    { "nom": "TRANSPORTS DUMAS", "ville": "Paris 13", "segment": "Logistique / transport B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO niche transport", "priorite": "MOYENNE" },
+    { "nom": "TRANSPORTS CLOT", "ville": "Paris 12", "segment": "Logistique / transport B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Digitalisation commandes", "priorite": "MOYENNE" },
+    { "nom": "SIFA LOGISTICS", "ville": "Orly / Rungis", "segment": "Logistique / transport B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Scraping import/export", "priorite": "MOYENNE", "decideur_cible": "Julien BARBAREAU (DG)", "contact": { "tel": "01 41 80 18 80", "web": "https://www.sifa-logistics.com", "email_pattern": "p.nom@sifa-logistics.com" }, "growth_hook": "Extraction de flux import/export concurrents via OSINT", "angle_relance": "Pipeline de conquête de parts de marché à Rungis" },
+    { "nom": "GEODIS (agences locales)", "ville": "Créteil / Bonneuil", "segment": "Logistique / transport B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Activation growth locale", "priorite": "BASSE" },
+    { "nom": "VEOLIA PROPRETÉ IDF", "ville": "Rungis", "segment": "Logistique / transport B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Automation suivi leads", "priorite": "BASSE" },
+    { "nom": "DELZONGLE IDF", "ville": "Créteil", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Ads + lead gen artisans", "priorite": "MOYENNE", "decideur_cible": "Responsable de Dépôt", "contact": { "tel": "01 43 39 40 40", "web": "https://www.delzongle.com", "email_contact": "creteil@delzongle.com" }, "growth_hook": "Lead Gen ciblée sur les artisans et peintres du 94", "angle_relance": "Générer du flux magasin via SEO local et Ads" },
+    { "nom": "REFLEX BOUTIQUE", "ville": "Alfortville", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Paid media e-commerce", "priorite": "MOYENNE" },
+    { "nom": "AUX ARTS DU FEU", "ville": "Paris 12", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO local rénovation haut de gamme", "priorite": "MOYENNE" },
+    { "nom": "IMPRIMERIE CHAUVAT-BERTAU", "ville": "Paris 13", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Automation devis", "priorite": "MOYENNE" },
+    { "nom": "ESPACE ÉMERAUDE", "ville": "Paris 14", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Drive-to-store", "priorite": "MOYENNE" },
+    { "nom": "CUISINES SCHMIDT (réseau IDF)", "ville": "IDF", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Centralisation leads réseau", "priorite": "HAUTE", "decideur_cible": "Gérant du Magasin", "contact": { "tel": "01 48 73 00 00", "web": "https://www.home-design.schmidt", "email_contact": "vincennes@schmidt-vincennes.fr" }, "growth_hook": "Machine à leads via scraping d'intentions d'achat (immobilier local)", "angle_relance": "Capter les nouveaux acquéreurs avant Leroy Merlin" },
+    { "nom": "L'AUTO LECLERC", "ville": "Vitry / Bonneuil", "segment": "Franchises / têtes de réseau", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO local ateliers", "priorite": "MOYENNE" },
+    { "nom": "GROUPE ORQUAL", "ville": "Paris 14", "segment": "Santé privée", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "GEO + inbound IA", "priorite": "MOYENNE", "decideur_cible": "Philippe ROUSSEL (Fondateur)", "contact": { "tel": "01 46 60 40 40", "web": "https://www.orqual.fr", "email_pattern": "nom@orqual.fr" }, "growth_hook": "Agent IA de qualification des leads praticiens", "angle_relance": "Automatisation du funnel d'acquisition SaaS santé" },
+    { "nom": "CLINIQUE JEANNE D'ARC", "ville": "Paris 13", "segment": "Santé privée", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Parcours patient", "priorite": "MOYENNE" },
+    { "nom": "CLINIQUE SAINT-JEAN DE DIEU", "ville": "Paris 14", "segment": "Santé privée", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "E-réputation + automation", "priorite": "MOYENNE" },
+    { "nom": "ORTHO CENTER NATION", "ville": "Paris 12", "segment": "Santé privée", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO local orthopédie", "priorite": "MOYENNE" },
+    { "nom": "CLINIQUE DE BERCY", "ville": "Charenton-le-Pont", "segment": "Santé privée", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "SEO local + tracking", "priorite": "HAUTE", "decideur_cible": "Directeur d'Établissement", "contact": { "tel": "01 43 96 70 00", "web": "https://www.clinique-bercy.com", "email_contact": "accueil@clinique-bercy.com" }, "growth_hook": "Automation du suivi post-opératoire et e-réputation", "angle_relance": "Améliorer le parcours patient et les avis Google" },
+    { "nom": "HÔPITAL PRIVÉ ARMAND BRIARD", "ville": "Nogent-sur-Marne", "segment": "Santé privée", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Structuration data patient", "priorite": "MOYENNE" },
+    { "nom": "P4S", "ville": "Paris", "segment": "Cyber / Éditeur", "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE", "besoin": "Automation veille + Monitoring infra", "priorite": "HAUTE" },
+    { "nom": "ACKURACY", "ville": "Paris", "segment": "Cyber / Red Team", "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE", "besoin": "Extraction leads + Automation prospection", "priorite": "MOYENNE" },
+    { "nom": "ECRITEL", "ville": "Paris", "segment": "Infra / Cloud", "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE", "besoin": "Tracking conversions + Audit funnel", "priorite": "HAUTE" },
+    { "nom": "KLARITY ASSURANCE", "ville": "Nationale", "segment": "Assurtech / B2B", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Lead Gen + Marketing Digital réseau", "priorite": "HAUTE" },
+    { "nom": "KRYS GROUP", "ville": "Nanterre", "segment": "Retail / Santé", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Optimisation CRM et Fidélisation", "priorite": "MOYENNE" },
+    { "nom": "GREEN COMMUNICATIONS", "ville": "Paris", "segment": "Innovation / Télécom", "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE", "besoin": "SEO multi-local + Tunnel conversion", "priorite": "MOYENNE" },
+    { "nom": "KNS IT", "ville": "Paris", "segment": "Cyber / IT", "mode_ciblage_principal": "MISSION_THEN_ALTERNANCE", "besoin": "Qualification leads + UX parcours", "priorite": "MOYENNE" },
+    { "nom": "ECONOCOM", "ville": "Puteaux", "segment": "ESN", "mode_ciblage_principal": "MISSION_THEN_CDI", "besoin": "Support marketing digital & growth", "priorite": "MOYENNE" }
+  ],
+  "plan_action_proof_of_value": {
+    "duree_standard": "15 jours",
+    "preuves_recommandees": [
+      "Scraping prospects qualifiés",
+      "Audit SEO concurrentiel local",
+      "Mise en place tracking appels/formulaires",
+      "Automation (Python/no-code) pour gain de temps commercial"
+    ]
+  }
 }

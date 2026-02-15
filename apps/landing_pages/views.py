@@ -6,7 +6,7 @@ from django.conf import settings
 from django.shortcuts import render, get_object_or_404
 from django.http import Http404
 from .models import LandingPage
-from .themes import LANDING_THEMES
+from .themes import LANDING_THEMES, THEME_YUWELL, THEME_CSS_YUWELL
 from apps.scraping.flowise_client import get_flowise_chat_embed_url, get_flowise_chat_embed_config
 
 
@@ -49,6 +49,124 @@ def concierge_maisons_alfort_public(request):
     )
 
 
+# Données palettes Yuwell (étude graphique portfolio) — source: docs/ressources-utilisateur/etudes/yuwell-portfolio-etude-graphique.md
+YUWELL_PALETTE_CORPORATE = [
+    {"usage": "Marque principale", "name": "Yuwell Red", "hex": "#E60012", "rgb": "230, 0, 18", "pantone": "PANTONE 186 C"},
+    {"usage": "Neutre principal", "name": "Pure White", "hex": "#FFFFFF", "rgb": "255, 255, 255", "pantone": "PANTONE White"},
+    {"usage": "Neutre secondaire", "name": "Cool Gray", "hex": "#F5F5F5", "rgb": "245, 245, 245", "pantone": "PANTONE Cool Gray 1 C"},
+    {"usage": "Texte principal", "name": "Dark Charcoal", "hex": "#333333", "rgb": "51, 51, 51", "pantone": "PANTONE 426 C"},
+]
+YUWELL_PALETTE_GAMMES = [
+    {
+        "gamme": "Solutions respiratoires",
+        "description": "Concentrateurs d’oxygène, nébuliseurs, aspiration — Bleu clair / cyan médical.",
+        "colors": [
+            {"name": "Cyan médical", "hex": "#00C2D1", "rgb": "0, 194, 209", "pantone": "3125 C"},
+            {"name": "Bleu moyen", "hex": "#0078A8", "rgb": "0, 120, 168", "pantone": "7699 C"},
+            {"name": "Bleu grisé", "hex": "#90C2D3", "rgb": "144, 194, 211", "pantone": "544 C"},
+        ],
+    },
+    {
+        "gamme": "Diagnostic & monitoring",
+        "description": "Tensiomètres, oxymètres, thermomètres — Vert médical doux.",
+        "colors": [
+            {"name": "Vert stable", "hex": "#57B894", "rgb": "87, 184, 148", "pantone": "7496 C"},
+            {"name": "Vert moyen", "hex": "#3F8D68", "rgb": "63, 141, 104", "pantone": "3292 C"},
+            {"name": "Vert désaturé", "hex": "#AACFBF", "rgb": "170, 207, 191", "pantone": "565 C"},
+        ],
+    },
+    {
+        "gamme": "Soins à domicile & chronic care",
+        "description": "Suivi long terme, patients chroniques — Teal doux.",
+        "colors": [
+            {"name": "Teal doux", "hex": "#4DA6A1", "rgb": "77, 166, 161", "pantone": "7718 C"},
+            {"name": "Teal clair", "hex": "#8FC7C4", "rgb": "143, 199, 196", "pantone": "3245 C"},
+            {"name": "Gris bleuté", "hex": "#BECFD1", "rgb": "190, 207, 209", "pantone": "656 C"},
+        ],
+    },
+    {
+        "gamme": "Mobilité & rééducation",
+        "description": "Fauteuils roulants, aides à la mobilité — Gris structurant + accent.",
+        "colors": [
+            {"name": "Cool Slate", "hex": "#7A7A7A", "rgb": "122, 122, 122", "pantone": "Cool Gray 9 C"},
+            {"name": "Orange attention", "hex": "#E08E3C", "rgb": "224, 142, 60", "pantone": "7584 C"},
+        ],
+    },
+    {
+        "gamme": "Équipements cliniques & urgence",
+        "description": "DAE, équipements hospitaliers — Rouge désaturé (alerte uniquement).",
+        "colors": [
+            {"name": "Rouge sécurisé", "hex": "#C5281C", "rgb": "197, 40, 28", "pantone": "186 C (désaturé)"},
+        ],
+    },
+]
+
+
+# Vidéo hero portfolio Yuwell — YouTube embed (autoplay, mute, loop)
+YUWELL_HERO_VIDEO_URL = "https://www.youtube.com/watch?v=6pNskp5ZMqA"
+
+
+def _yuwell_common_context(active_nav):
+    """Contexte commun pour toutes les pages Yuwell (thème, palettes, vidéo hero)."""
+    content = {
+        "theme": THEME_YUWELL,
+        "theme_css": THEME_CSS_YUWELL,
+        "page_title": "Yuwell — Portfolio étude graphique",
+        "hero_headline": "Study case — Yuwell",
+        "hero_sub_headline": "Structuration chromatique par gamme de dispositifs médicaux",
+    }
+    return {
+        "content": content,
+        "palette_corporate": YUWELL_PALETTE_CORPORATE,
+        "palette_gammes": YUWELL_PALETTE_GAMMES,
+        "hero_video_url": YUWELL_HERO_VIDEO_URL,
+        "active_nav": active_nav,
+    }
+
+
+def yuwell_presentation(request):
+    """Page Présentation — accueil portfolio Yuwell (hero vidéo + liens vers les autres pages)."""
+    ctx = _yuwell_common_context("presentation")
+    ctx["content"]["page_title"] = "Yuwell — Présentation"
+    ctx["content"]["hero_headline"] = "Portfolio Yuwell"
+    ctx["content"]["hero_sub_headline"] = "Étude graphique : système couleur & charte par gamme produit"
+    return render(request, "landing_pages/yuwell_presentation.html", ctx)
+
+
+def yuwell_study_case(request):
+    """Page Study case 1 — contexte, principes, gammes, palettes, règles, bénéfices."""
+    ctx = _yuwell_common_context("study-case")
+    ctx["content"]["page_title"] = "Yuwell — Study case : système couleur"
+    return render(request, "landing_pages/yuwell_study_case.html", ctx)
+
+
+def yuwell_study_case_2(request):
+    """Page Study case 2 — second cas d'étude (à compléter)."""
+    ctx = _yuwell_common_context("study-case-2")
+    ctx["content"]["page_title"] = "Yuwell — Study case 2"
+    return render(request, "landing_pages/yuwell_study_case_2.html", ctx)
+
+
+def yuwell_charte_graphique(request):
+    """Page Charte graphique — palettes corporate + par gamme, règles d'usage."""
+    ctx = _yuwell_common_context("charte-graphique")
+    ctx["content"]["page_title"] = "Yuwell — Charte graphique"
+    return render(request, "landing_pages/yuwell_charte_graphique.html", ctx)
+
+
+def yuwell_a_propos(request):
+    """Page À propos de moi."""
+    ctx = _yuwell_common_context("a-propos")
+    ctx["content"]["page_title"] = "Yuwell — À propos"
+    return render(request, "landing_pages/yuwell_a_propos.html", ctx)
+
+
+def yuwell_portfolio(request):
+    """Redirection vers la page Présentation (accueil Yuwell)."""
+    from django.shortcuts import redirect
+    return redirect("yuwell_presentation", permanent=False)
+
+
 def _content_with_defaults(content, template_key):
     """Renseigne les clés optionnelles manquantes pour éviter VariableDoesNotExist dans les templates.
     Normalise hero sub : une seule valeur (hero_sub_headline puis hero_subtitle) renseignée dans les DEUX clés
@@ -76,6 +194,10 @@ def _content_with_defaults(content, template_key):
 
 def landing_public(request, slug):
     """Affiche une landing page publique (pour la cible). Staff peut prévisualiser les brouillons."""
+    # Portfolio Yuwell : suivi en base pour admin/console, mais pages réelles sous /yuwell/
+    if slug == "yuwell-portfolio":
+        from django.shortcuts import redirect
+        return redirect("yuwell_presentation", permanent=False)
     lp = get_object_or_404(LandingPage, slug=slug)
     if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
         raise Http404("Landing non publiée")

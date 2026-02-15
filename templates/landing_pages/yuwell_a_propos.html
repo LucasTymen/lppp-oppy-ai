@@ -1,0 +1,34 @@
+{% extends "landing_pages/yuwell_base.html" %}
+{% load static %}
+{% block yuwell_title %}{{ content.page_title }}{% endblock %}
+{% block yuwell_hero %}
+    <h1>À propos de moi</h1>
+    <p class="hero-sub">Parcours et approche design</p>
+{% endblock %}
+{% block yuwell_content %}
+<section class="section">
+    <div class="section-head"><span class="section-num">01</span><h2>À propos de moi</h2></div>
+    <div class="yuwell-a-propos-intro">
+        <img src="{% static 'landing_pages/images/lucas-tymen-portrait-yuwell.png' %}" alt="Lucas Tymen" class="yuwell-a-propos-portrait" width="160" height="160" loading="lazy">
+        <div class="yuwell-a-propos-body">
+            <p>Je suis issu d'un parcours professionnel où j'ai navigué entre webdesign, développement et marketing digital, ce qui m'a permis de construire une approche très transversale du produit et de la marque.</p>
+            <p>Ce qui me motive avant tout, c'est de transformer une idée ou un besoin métier en expérience claire, utile et cohérente, aussi bien sur le fond que sur la forme.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head"><span class="section-num">02</span><h2>Process & alignement</h2></div>
+    <p>Au fil de mes projets, j'ai appris à travailler sur l'ensemble du process : compréhension du besoin, structuration du message, design des interfaces, prototypage, mise en ligne et itération. J'accorde une grande importance à l'alignement entre branding, UX et objectifs business, en gardant toujours une approche pragmatique et orientée usage.</p>
+</section>
+
+<section class="section">
+    <div class="section-head"><span class="section-num">03</span><h2>Outils & livrables</h2></div>
+    <p>Côté outils, je travaille régulièrement avec <strong>Figma</strong> pour la conception et le prototypage, <strong>Canva</strong> pour des supports rapides et efficaces, ainsi qu'avec des outils no-code et web (CMS, landing pages, intégrations simples) qui me permettent de passer rapidement de l'idée à un livrable concret. Mon background technique me permet également de dialoguer facilement avec des profils développeurs et de concevoir des interfaces réalistes, pensées pour être réellement implémentées.</p>
+</section>
+
+<section class="section">
+    <div class="section-head"><span class="section-num">04</span><h2>Positionnement</h2></div>
+    <p>Curieux, autonome et orienté solution, j'aime évoluer dans des contextes où il faut structurer, clarifier et faire avancer, que ce soit sur un produit, une identité ou un parcours utilisateur.</p>
+</section>
+{% endblock %}

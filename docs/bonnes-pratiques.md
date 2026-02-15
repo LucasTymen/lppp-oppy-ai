@@ -92,7 +92,16 @@ Objectif : les textes ne doivent pas sonner « générés par IA » (détecteurs
 
 ---
 
-## 5. Rangement, organisation et maintenance
+## 5. Design — Responsive (tous les projets)
+
+**Règle explicite** : **toutes les pages doivent être responsives** — grille adaptative, breakpoints, typo fluide (clamp, rem), images et vidéos adaptatives. S’applique à chaque landing, chaque page, chaque template, pour tout projet.
+
+- **Pilotes** : Designer (priorité), Orchestrateur (rappel stratégique), Chef de Projet (validation).
+- **Vérification** : mobile-first, tests sur différentes largeurs d’écran.
+
+---
+
+## 6. Rangement, organisation et maintenance
 
 Chaque agent nettoie derrière lui et ne crée rien d'inutile. Organisation propre et lisible.
 

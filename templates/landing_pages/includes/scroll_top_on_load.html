@@ -1,0 +1,19 @@
+{% comment %}
+Règle projet : toutes les landings doivent s'ouvrir tout en haut (ancrage en haut de page).
+- Désactive la restauration de scroll du navigateur (retour arrière).
+- Force scroll (0,0) au chargement et au pageshow (cache bfcache).
+À inclure une fois par page, juste avant </body>.
+{% endcomment %}
+<script>
+(function() {
+    if (typeof window === 'undefined') return;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) window.scrollTo(0, 0);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+    });
+})();
+</script>

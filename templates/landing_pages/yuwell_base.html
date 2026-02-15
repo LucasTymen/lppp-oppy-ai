@@ -1,0 +1,275 @@
+{% comment %}
+Base Yuwell portfolio — nav 5 pages, charte Yuwell (rouge #E60012, cyan #00C2D1, blanc, gris).
+active_nav = "presentation" | "study-case" | "study-case-2" | "charte-graphique" | "a-propos"
+{% endcomment %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>{% block yuwell_title %}Yuwell — Portfolio étude graphique{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <style>
+        /* Oswald — polices locales (static/landing_pages/yuwell/fonts/) */
+        @font-face {
+            font-family: 'Oswald';
+            src: url('{% static "landing_pages/yuwell/fonts/Oswald-ExtraLight.ttf" %}') format('truetype');
+            font-weight: 200;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Oswald';
+            src: url('{% static "landing_pages/yuwell/fonts/Oswald-Extra-LightItalic.ttf" %}') format('truetype');
+            font-weight: 200;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Oswald';
+            src: url('{% static "landing_pages/yuwell/fonts/Oswald-Heavy.ttf" %}') format('truetype');
+            font-weight: 800;
+            font-style: normal;
+            font-display: swap;
+        }
+        {% if content.theme_css %}{{ content.theme_css|safe }}{% endif %}
+        :root {
+            --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --lp-section-padding: clamp(3rem, 8vw, 5rem);
+            --lp-font-extralight: 'Oswald', 'Work Sans', system-ui, sans-serif;
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--lp-font-body, var(--lp-font-extralight));
+            font-weight: 200;
+            margin: 0;
+            min-height: 100vh;
+            background: transparent;
+            color: var(--lp-text, #333333);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: color-mix(in srgb, var(--lp-bg) 94%, transparent);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 2px solid color-mix(in srgb, var(--lp-primary) 50%, transparent);
+        }
+        .nav-logo { font-weight: 700; font-size: 1.25rem; color: var(--lp-primary, #E60012); text-decoration: none; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a:hover { color: var(--lp-primary); }
+        .nav-links a.active { color: var(--lp-primary); font-weight: 600; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero.has-bg-video .hero-bg-video {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: -5000;
+            overflow: hidden;
+        }
+        .hero.has-bg-video .hero-bg-video video,
+        .hero.has-bg-video .hero-bg-video iframe {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100vw; height: 56.25vw;
+            min-height: 100vh; min-width: 177.78vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            border: 0;
+        }
+        .hero.has-bg-video .hero-bg-video video { object-fit: cover; }
+        .hero.has-bg-video .hero-video-fallback {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translate(-50%, 0);
+            z-index: 4;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.95);
+            text-decoration: none;
+            pointer-events: auto;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.6);
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .hero.has-bg-video .hero-video-fallback:hover {
+            color: #fff;
+            background: rgba(0,0,0,0.8);
+            text-decoration: none;
+        }
+        .hero.has-bg-video::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: -4980;
+            background: linear-gradient(180deg, rgba(230, 0, 18, 0.12) 0%, rgba(0, 0, 0, 0.4) 100%);
+            pointer-events: none;
+        }
+        .hero.has-bg-video::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: -4980;
+            background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+            pointer-events: none;
+        }
+        /* Parallaxe : vidéo z-index -5000, overlay z-index -4980 — contenu toujours devant */
+        .hero.has-bg-video h1,
+        .hero.has-bg-video .hero-sub,
+        .hero.has-bg-video .hero-video-fallback { position: relative; z-index: 5; }
+        .hero.has-bg-video h1,
+        .hero.has-bg-video .hero-sub { color: #fff; }
+        .hero h1 {
+            font-family: var(--lp-font-heading, 'Inter', inherit);
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin: 0 0 1rem;
+            color: var(--lp-heading);
+            letter-spacing: -0.02em;
+            max-width: 24ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero .hero-sub {
+            font-family: var(--lp-font-extralight);
+            font-weight: 200;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--lp-muted, rgba(255,255,255,0.75));
+            margin: 0;
+            max-width: 36ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section {
+            padding: var(--lp-section-padding) 1.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+            background: color-mix(in srgb, var(--lp-bg, #FFFFFF) 88%, transparent);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+        .section:nth-of-type(odd) {
+            background: color-mix(in srgb, var(--lp-primary, #E60012) 5%, color-mix(in srgb, var(--lp-bg, #FFFFFF) 88%, transparent));
+        }
+        .section:nth-of-type(even) {
+            background: color-mix(in srgb, var(--lp-secondary, #00C2D1) 4%, color-mix(in srgb, var(--lp-bg, #FFFFFF) 88%, transparent));
+        }
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--lp-primary);
+        }
+        .section:nth-of-type(even) .section-head { border-left-color: var(--lp-secondary); }
+        .section-num { font-size: 0.85rem; font-weight: 700; color: var(--lp-primary); min-width: 2rem; }
+        .section:nth-of-type(even) .section-num { color: var(--lp-secondary); }
+        .section h2 {
+            font-family: var(--lp-font-heading, 'Inter', inherit);
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 600;
+            margin: 0;
+            color: var(--lp-heading);
+            letter-spacing: -0.01em;
+        }
+        .section p { margin: 0 0 0.75rem; font-weight: 300; }
+        .section .section-num { font-weight: 700; letter-spacing: 0.02em; }
+        .section p:last-child { margin-bottom: 0; }
+        .yuwell-thin { font-weight: 100; }
+        .yuwell-extralight { font-weight: 200; }
+
+        .card {
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-block-bg, #F5F5F5) 90%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--lp-border, #90C2D3);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .card:last-child { margin-bottom: 0; }
+        .card a { color: var(--lp-primary); font-weight: 600; text-decoration: none; }
+        .card a:hover { text-decoration: underline; }
+
+        .yuwell-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 1rem 0; }
+        .yuwell-table th, .yuwell-table td { border: 1px solid var(--lp-border, #90C2D3); padding: 0.5rem 0.75rem; text-align: left; }
+        .yuwell-table th { background: color-mix(in srgb, var(--lp-block-bg, #F5F5F5) 90%, transparent); font-weight: 600; color: var(--lp-heading, #333333); }
+        .swatch { width: 2.5rem; height: 1.5rem; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); display: inline-block; vertical-align: middle; }
+        .palette-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
+        .palette-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
+        .gamme-block { margin-bottom: 1.5rem; padding: 1rem; background: color-mix(in srgb, var(--lp-block-bg, #F5F5F5) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 12px; border-left: 4px solid var(--lp-secondary, #00C2D1); }
+        .gamme-block:last-child { margin-bottom: 0; }
+        .gamme-block h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--lp-heading); }
+        .gamme-block p { margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--lp-muted); }
+        /* À propos — bloc intro (portrait + texte) */
+        .yuwell-a-propos-intro { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1.5rem; margin-bottom: 1rem; }
+        .yuwell-a-propos-portrait { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 3px solid var(--lp-border, #90C2D3); }
+        .yuwell-a-propos-body { flex: 1; min-width: 280px; }
+        .yuwell-a-propos-body p { margin: 0 0 0.75rem; }
+        .yuwell-a-propos-body p:last-child { margin-bottom: 0; }
+    </style>
+    {% block yuwell_extra_head %}{% endblock %}
+</head>
+<body>
+    <nav class="nav">
+        <a href="{% url 'yuwell_presentation' %}" class="nav-logo">Yuwell</a>
+        <div class="nav-links">
+            <a href="{% url 'yuwell_presentation' %}" class="{% if active_nav == 'presentation' %}active{% endif %}">Présentation</a>
+            <a href="{% url 'yuwell_study_case' %}" class="{% if active_nav == 'study-case' %}active{% endif %}">Study case</a>
+            <a href="{% url 'yuwell_study_case_2' %}" class="{% if active_nav == 'study-case-2' %}active{% endif %}">Study case 2</a>
+            <a href="{% url 'yuwell_charte_graphique' %}" class="{% if active_nav == 'charte-graphique' %}active{% endif %}">Charte graphique</a>
+            <a href="{% url 'yuwell_a_propos' %}" class="{% if active_nav == 'a-propos' %}active{% endif %}">À propos</a>
+        </div>
+    </nav>
+
+    <main id="top">
+        <section class="hero has-bg-video">
+            {% load landing_filters %}
+            {% if hero_video_url %}
+            {% with embed_url=hero_video_url|youtube_embed_background watch_url=hero_video_url|youtube_watch_url %}
+            <div class="hero-bg-video">
+                <iframe src="{{ embed_url }}" title="Vidéo d'ambiance" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen aria-hidden="true"></iframe>
+            </div>
+            {% if watch_url %}<a href="{{ watch_url }}" target="_blank" rel="noopener noreferrer" class="hero-video-fallback">Regarder sur YouTube</a>{% endif %}
+            {% endwith %}
+            {% endif %}
+            {% block yuwell_hero %}{% endblock %}
+        </section>
+        {% block yuwell_content %}{% endblock %}
+    </main>
+    {% include "landing_pages/includes/scroll_top_on_load.html" %}
+</body>
+</html>

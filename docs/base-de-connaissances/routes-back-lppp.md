@@ -27,6 +27,12 @@
 | `""` | `views.landing_list` | — | Liste des landing pages (racine `/`) avec filtres `?sector=` et `?category=` |
 | `console/` | `views.console_landings` | `console_landings` | Console landings : tableau URL Django + URL déployée (Vercel), filtres secteur/catégorie |
 | `maisons-alfort/` | `views.concierge_maisons_alfort_public` | `concierge_maisons_alfort_public` | Landing publique Concierge IA pour les équipes municipales (chatbot Flowise intégré) |
+| `yuwell/` | `views.yuwell_portfolio` | `yuwell_portfolio` | Redirige vers `yuwell_presentation` |
+| `yuwell/presentation/` | `views.yuwell_presentation` | `yuwell_presentation` | Page Présentation (accueil, hero vidéo, liens vers les 4 autres pages) |
+| `yuwell/study-case/` | `views.yuwell_study_case` | `yuwell_study_case` | Study case 1 — système couleur |
+| `yuwell/study-case-2/` | `views.yuwell_study_case_2` | `yuwell_study_case_2` | Study case 2 (à compléter) |
+| `yuwell/charte-graphique/` | `views.yuwell_charte_graphique` | `yuwell_charte_graphique` | Charte graphique — palettes, règles |
+| `yuwell/a-propos/` | `views.yuwell_a_propos` | `yuwell_a_propos` | À propos de moi |
 | `p/<slug:slug>/` | `views.landing_public` | `landing_public` | Page publique d’une landing (`/p/<slug>/`) |
 
 | `p/<slug:slug>/rapport/` | `views.landing_rapport` | `landing_rapport` | Page « Consulter le rapport » : rendu Markdown depuis `docs/contacts/<slug>/rapport-complet*.md` |
@@ -66,6 +72,7 @@
 | `/` | GET | Liste des landing pages |
 | `/console/` | GET | Console landings (URL Django + URL déployée) |
 | `/maisons-alfort/` | GET | Landing Concierge IA Maisons-Alfort (équipes municipales, chatbot intégré) |
+| `/yuwell/`, `/yuwell/presentation/`, etc. | GET | Portfolio Yuwell (étude graphique, 5 pages) — déployé aussi en statique : repos LPPP_yuwell_portfolio (GH/GL), Vercel. Voir `deploy/PUSH-YUWELL.md`. |
 | `/p/<slug>/` | GET | Page publique landing |
 | `/essais/` | GET | Index essais (relance salon) |
 | `/essais/concierge/` | GET | Test chatbot Concierge IA (embed Flowise, authentifié) |

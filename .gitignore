@@ -27,6 +27,9 @@ data/flowise/*.txt
 # Index FAISS (binaires, générés par Flowise) — un dossier par RAG sous data/flowise/faiss/<projet>
 data/flowise/faiss/*/
 
+# ---- Sauvegardes PostgreSQL (make backup) — ne pas versionner les dumps ----
+backups/
+
 # ---- Deploy (clones temporaires) ----
 deploy/repo-p4s/
 deploy/repo-*/

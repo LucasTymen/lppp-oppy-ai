@@ -1,0 +1,28 @@
+{% extends "landing_pages/yuwell_base.html" %}
+{% block yuwell_title %}{{ content.page_title }}{% endblock %}
+{% block yuwell_hero %}
+    <h1>{{ content.hero_headline }}</h1>
+    <p class="hero-sub">{{ content.hero_sub_headline }}</p>
+{% endblock %}
+{% block yuwell_content %}
+<section class="section">
+    <div class="section-head"><span class="section-num">01</span><h2>Bienvenue</h2></div>
+    <p>Ce portfolio présente une <strong>étude graphique</strong> pour Yuwell (dispositifs médicaux) : système couleur structurant par gamme produit, principes de design et charte. Vous pouvez explorer les différentes parties ci‑dessous.</p>
+    <div class="card">
+        <p><strong>Study case</strong> — Contexte, objectifs, principes de design, déclinaison par gamme, palettes et règles d'usage.</p>
+        <p><a href="{% url 'yuwell_study_case' %}">Voir le study case →</a></p>
+    </div>
+    <div class="card">
+        <p><strong>Study case 2</strong> — Second cas d'étude (à compléter).</p>
+        <p><a href="{% url 'yuwell_study_case_2' %}">Voir le study case 2 →</a></p>
+    </div>
+    <div class="card">
+        <p><strong>Charte graphique</strong> — Palette corporate, palettes par gamme produit (HEX, RGB, Pantone), règles d'usage.</p>
+        <p><a href="{% url 'yuwell_charte_graphique' %}">Voir la charte graphique →</a></p>
+    </div>
+    <div class="card">
+        <p><strong>À propos de moi</strong> — Parcours et approche design.</p>
+        <p><a href="{% url 'yuwell_a_propos' %}">En savoir plus →</a></p>
+    </div>
+</section>
+{% endblock %}

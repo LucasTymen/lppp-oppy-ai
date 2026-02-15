@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>{{ content.page_title }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        {% if content.theme_css %}{{ content.theme_css|safe }}{% endif %}
+        :root {
+            --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --lp-section-padding: clamp(3rem, 8vw, 5rem);
+        }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--lp-font-body, Lato, system-ui, sans-serif);
+            margin: 0;
+            min-height: 100vh;
+            background: var(--lp-bg, #FDFEFE);
+            color: var(--lp-text, #333);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            background: color-mix(in srgb, var(--lp-bg) 94%, transparent);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 2px solid color-mix(in srgb, var(--lp-primary) 50%, transparent);
+        }
+        .nav-logo { font-weight: 700; font-size: 1.25rem; color: var(--lp-heading); text-decoration: none; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a:hover { color: var(--lp-primary); }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero.has-bg-video .hero-bg-video {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .hero.has-bg-video .hero-bg-video video {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100vw; height: 56.25vw;
+            min-height: 100vh; min-width: 177.78vh;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            object-fit: cover;
+        }
+        .hero.has-bg-video::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.35);
+            pointer-events: none;
+        }
+        .hero.has-bg-video::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100vh;
+            z-index: 2;
+            background: repeating-linear-gradient(0deg, transparent 0, transparent 2px, rgba(0,0,0,0.12) 2px, rgba(0,0,0,0.12) 4px);
+            pointer-events: none;
+        }
+        .hero.has-bg-video > * { position: relative; z-index: 3; }
+        .hero.has-bg-video h1,
+        .hero.has-bg-video .hero-sub { color: #fff; }
+        .hero h1 {
+            font-family: var(--lp-font-heading, Lato, inherit);
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 0 0 1rem;
+            color: var(--lp-heading);
+            letter-spacing: -0.02em;
+            max-width: 20ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .hero .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--lp-muted, rgba(255,255,255,0.75));
+            margin: 0;
+            max-width: 28ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section {
+            padding: var(--lp-section-padding) 1.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        .section:nth-of-type(odd) {
+            background: color-mix(in srgb, var(--lp-primary) 8%, var(--lp-bg));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section:nth-of-type(even) {
+            background: color-mix(in srgb, var(--lp-secondary) 6%, var(--lp-bg));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--lp-primary);
+        }
+        .section:nth-of-type(even) .section-head { border-left-color: var(--lp-secondary); }
+        .section-num { font-size: 0.85rem; font-weight: 700; color: var(--lp-primary); min-width: 2rem; }
+        .section:nth-of-type(even) .section-num { color: var(--lp-secondary); }
+        .section h2 {
+            font-family: var(--lp-font-heading, inherit);
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 700;
+            margin: 0;
+            color: var(--lp-heading);
+        }
+        .section p { margin: 0 0 0.75rem; }
+        .section p:last-child { margin-bottom: 0; }
+
+        .card {
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary) 6%, var(--lp-bg));
+            border: 1px solid var(--lp-border, rgba(0,0,0,0.08));
+            border-radius: 16px;
+            margin-bottom: 1rem;
+        }
+        .card:last-child { margin-bottom: 0; }
+
+        .yuwell-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 1rem 0; }
+        .yuwell-table th, .yuwell-table td { border: 1px solid var(--lp-border, #ddd); padding: 0.5rem 0.75rem; text-align: left; }
+        .yuwell-table th { background: var(--lp-block-bg, #f0f4f8); font-weight: 600; }
+        .swatch { width: 2.5rem; height: 1.5rem; border-radius: 2px; border: 1px solid rgba(0,0,0,0.1); display: inline-block; vertical-align: middle; }
+        .palette-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0; }
+        .palette-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; }
+        .gamme-block { margin-bottom: 1.5rem; padding: 1rem; background: var(--lp-block-bg, #f0f4f8); border-radius: 12px; }
+        .gamme-block:last-child { margin-bottom: 0; }
+        .gamme-block h3 { margin: 0 0 0.5rem; font-size: 1.05rem; color: var(--lp-heading); }
+        .gamme-block p { margin: 0 0 0.75rem; font-size: 0.9rem; color: var(--lp-muted); }
+        .cta-section { padding: var(--lp-section-padding) 1.5rem; text-align: center; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <a href="#top" class="nav-logo">Yuwell</a>
+        <div class="nav-links">
+            <a href="#contexte">Contexte</a>
+            <a href="#principes">Principes</a>
+            <a href="#gammes">Gammes</a>
+            <a href="#palette-corporate">Palette corporate</a>
+            <a href="#palette-gammes">Palettes</a>
+            <a href="#regles">Règles</a>
+            <a href="#cta">Bénéfices</a>
+        </div>
+    </nav>
+
+    <main id="top">
+        <section class="hero has-bg-video">
+            {% if hero_video_mp4_url or hero_video_webm_url %}
+            <div class="hero-bg-video">
+                <video autoplay muted loop playsinline aria-hidden="true">
+                    {% if hero_video_webm_url %}<source src="{{ hero_video_webm_url }}" type="video/webm">{% endif %}
+                    {% if hero_video_mp4_url %}<source src="{{ hero_video_mp4_url }}" type="video/mp4">{% endif %}
+                </video>
+            </div>
+            {% endif %}
+            <h1>{{ content.hero_headline }}</h1>
+            <p class="hero-sub">{{ content.hero_sub_headline }}</p>
+        </section>
+
+        <section class="section" id="contexte">
+            <div class="section-head"><span class="section-num">01</span><h2>Contexte & objectifs</h2></div>
+            <p>Yuwell est une entreprise internationale de dispositifs médicaux (respiratoire, diagnostic, mobilité, soins à domicile, équipements cliniques). Ce study case propose un <strong>système couleur structurant</strong> permettant d’identifier immédiatement les gammes produits, d’améliorer la lisibilité des supports multi-produits et de garantir une déclinaison homogène (print, packaging, UI), dans le respect des codes du secteur médical.</p>
+        </section>
+
+        <section class="section" id="principes">
+            <div class="section-head"><span class="section-num">02</span><h2>Principes de design</h2></div>
+            <p>La couleur est pensée comme <strong>outil d’orientation</strong> : fonctionnelle, cohérente, prévisible. Architecture en trois niveaux : <strong>couleurs corporate</strong> (marque mère), <strong>couleurs de gammes</strong> (une dominante par famille produit), <strong>couleurs d’usage</strong> (alertes, interactions). Règles : primauté de la marque, une couleur = une information, palette volontairement restreinte, compatibilité multi-supports et accessibilité.</p>
+        </section>
+
+        <section class="section" id="gammes">
+            <div class="section-head"><span class="section-num">03</span><h2>Déclinaison par gamme produit</h2></div>
+            <p>Chaque grande famille dispose d’une couleur dominante déclinée en nuances contrôlées.</p>
+            <ul>
+                <li><strong>Solutions respiratoires</strong> — Bleu clair / cyan (respiration, fluidité).</li>
+                <li><strong>Diagnostic & monitoring</strong> — Vert médical doux (mesure, précision, données).</li>
+                <li><strong>Soins à domicile & chronic care</strong> — Teal doux (confiance, accompagnement long terme).</li>
+                <li><strong>Mobilité & rééducation</strong> — Gris structurant + accent orange (signalisation, sécurité).</li>
+                <li><strong>Équipements cliniques & urgence</strong> — Rouge désaturé (alerte uniquement, jamais en fond).</li>
+            </ul>
+        </section>
+
+        <section class="section" id="palette-corporate">
+            <div class="section-head"><span class="section-num">04</span><h2>Palette corporate (marque mère)</h2></div>
+            <table class="yuwell-table">
+                <thead>
+                    <tr>
+                        <th>Aperçu</th>
+                        <th>Usage</th>
+                        <th>Nom</th>
+                        <th>HEX</th>
+                        <th>RGB</th>
+                        <th>Pantone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in palette_corporate %}
+                    <tr>
+                        <td><span class="swatch" style="background-color: {{ c.hex }};"></span></td>
+                        <td>{{ c.usage }}</td>
+                        <td>{{ c.name }}</td>
+                        <td><code>{{ c.hex }}</code></td>
+                        <td>{{ c.rgb }}</td>
+                        <td>{{ c.pantone }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="palette-gammes">
+            <div class="section-head"><span class="section-num">05</span><h2>Palettes par gamme produit</h2></div>
+            {% for gamme in palette_gammes %}
+            <div class="gamme-block">
+                <h3>{{ gamme.gamme }}</h3>
+                <p>{{ gamme.description }}</p>
+                <div class="palette-grid">
+                    {% for c in gamme.colors %}
+                    <div class="palette-item">
+                        <span class="swatch" style="background-color: {{ c.hex }};"></span>
+                        <span>{{ c.name }} — {{ c.hex }} · {{ c.pantone }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+        <section class="section" id="regles">
+            <div class="section-head"><span class="section-num">06</span><h2>Règles d’usage</h2></div>
+            <p>Une gamme = une couleur dominante. Maximum deux couleurs de gamme sur un même support. Le bleu corporate reste prioritaire. Couleurs de gamme pour orienter, pas décorer. Contraste texte/fond et accessibilité (daltonisme, lisibilité) intégrés dès la conception.</p>
+        </section>
+
+        <section class="section cta-section" id="cta">
+            <div class="section-head"><span class="section-num">07</span><h2>Bénéfices pour Yuwell</h2></div>
+            <p>Meilleure lisibilité du portefeuille produit, identification immédiate des familles, cohérence internationale renforcée, système scalable et maintenable, réduction des erreurs de déclinaison graphique.</p>
+        </section>
+    </main>
+    {% include "landing_pages/includes/scroll_top_on_load.html" %}
+</body>
+</html>

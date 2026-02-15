@@ -50,3 +50,16 @@ Recommandation démo : **OpenAI** `gpt-4o-mini` (bon compromis coût/qualité).
 - [ ] Fichier **maisons-alfort-contenu.txt** rempli (sortie n8n) et uploadé dans le Document Store Flowise.
 
 Une seule clé OpenAI suffit pour embedding + chat ; tu la renseignes dans les deux nœuds (Embeddings et Agent) dans l’interface Flowise.
+
+---
+
+## 5. Clé API Flowise (authentification API / SDK)
+
+Flowise permet de créer des **API Keys** pour authentifier les appels à son API (push documents, exécution de chatflows, etc.). Ces clés sont **distinctes** de la clé OpenAI.
+
+| Quoi | Où | Note |
+|------|-----|------|
+| **Créer / consulter une clé** | Flowise UI → **API Keys** (menu gauche), ou `http://localhost:3010/apikey` | Ex. « DefaultKey » ; la clé s’affiche une fois créée (la copier et la stocker en lieu sûr). |
+| **Utilisation côté LPPP** | Fichier **`.env`** à la racine : `FLOWISE_API_KEY=<ta_clé>` | Utilisée par `flowise_client.push_file_to_flowise()` et toute requête API vers Flowise qui exige un token. **Ne jamais committer la clé** (`.env` est dans `.gitignore`). |
+
+Si Flowise est configuré pour exiger une API key sur ses endpoints, renseigner **`FLOWISE_API_KEY`** dans `.env` puis redémarrer le service qui appelle Flowise (`docker compose restart web` si besoin).

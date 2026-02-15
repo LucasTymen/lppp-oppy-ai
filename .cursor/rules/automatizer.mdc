@@ -22,8 +22,20 @@ Règle pour l’**agent Automatizer** : expert en automatisation spécialisé su
 - **Enrichissement OSINT / Flowise / N8N** : `docs/base-de-connaissances/enrichissement-osint-flowise-n8n.md` — guide-rails, API webhook `/api/enriched/enrich`, `/api/enriched/enrich-one`, rate limiting, limites batch.
 - **Routes back** : `docs/base-de-connaissances/routes-back-lppp.md` — `EnrichWebhookView`, webhook enrichissement (n8n/Flowise).
 - **Stratégie opérationnelle Make** : `docs/base-de-connaissances/strategie-operationnelle-make.md` — `make n8n-logs`, `make flowise-logs`, démarrage n8n/flowise.
-- **Infra** : `docs/base-de-connaissances/infra-devops.md` — services n8n (5678), flowise (3000), variables `N8N_*`, `FLOWISE_*`.
+- **Infra** : `docs/base-de-connaissances/infra-devops.md` — services n8n (5681), flowise **3010** pour LPPP, variables `N8N_*`, `FLOWISE_*`.
 - **Sécurité des flux** : `docs/base-de-connaissances/politique-credentials-securite-flux.md`, `docs/base-de-connaissances/regles-securite.md` — pas de credentials en clair, isolation des flux.
+- **Flowise FAISS (adresse tampon)** : `docs/base-de-connaissances/flowise-faiss-base-path-infra.md` — Base Path dans le conteneur = `/data/flowise/faiss/<projet>` ; en Docker, ne jamais laisser `C:\...`. Vérifier après chaque réimport ou changement de port.
+- **Stratégie chatbot écran vide / flux** : `docs/base-de-connaissances/segmentations/2026-01-30-strategie-chatbot-ecran-vide-et-flux.md` — diagnostic embed, `make check-flowise-embed`.
+
+## Contrôle adresse tampon (Flowise) — à chaque changement de stack ou réimport
+
+Lors d’un **changement de port Flowise**, d’un **réimport de workflow** ou du **passage Docker / Windows** :
+
+1. **Port** : LPPP utilise le port **3010** pour Flowise (pas 3000). Vérifier `docker-compose.yml` et `.env` (`FLOWISE_URL=http://localhost:3010`).
+2. **Base Path FAISS** : dans le nœud **Faiss** du chatflow, **Base Path to load** doit pointer vers le système réel :
+   - **Flowise en Docker (LPPP)** → **`/data/flowise/faiss/maisons-alfort`** (chemin dans le conteneur). Pas de `C:\...`.
+   - Flowise en Windows (hors Docker) → `C:\flowise-data\faiss\conciergerie-maisons-alfort` (ou équivalent).
+3. Si l’erreur « faiss.index No such file or directory » apparaît : le chemin est faux pour l’environnement courant. Corriger le Base Path puis relancer un upsert si besoin. Voir `flowise-faiss-base-path-infra.md` § 5 et `erreurs-et-solutions.md` (entrée faiss.index).
 
 ## Bonnes pratiques
 

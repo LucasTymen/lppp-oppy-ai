@@ -178,7 +178,7 @@
         "inputs": {
           "document": "",
           "embeddings": "{{openAIEmbeddings_0.data.instance}}",
-          "basePath": "C:\\flowise-data\\faiss\\conciergerie-maisons-alfort",
+          "basePath": "/data/flowise/faiss/maisons-alfort",
           "topK": ""
         },
         "outputAnchors": [

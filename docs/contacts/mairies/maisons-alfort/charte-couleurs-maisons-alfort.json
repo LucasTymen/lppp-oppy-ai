@@ -1,0 +1,20 @@
+{
+  "source_url": "https://www.maisons-alfort.fr",
+  "extraction_date": "2026-02-06",
+  "outil": "css_vampire (manage.py css_vampire)",
+  "theme": {
+    "fonts": {
+      "body": "Roboto",
+      "heading": "Roboto"
+    },
+    "colors": {
+      "background": "#000000",
+      "text": "#e6e6e6",
+      "primary": "#ac7fe8",
+      "secondary": "#d2a5ff"
+    },
+    "logo_url": "https://maisons-alfort.fr/wp-content/uploads/2018/12/logo-maisons-alfort.png",
+    "background_image_url": "https://maisons-alfort.fr/wp-content/uploads/2022/02/bg-agenda.jpg?id=22720"
+  },
+  "css_vars": ":root {\n  --lp-font-body: Roboto, system-ui, sans-serif;\n  --lp-font-heading: Roboto, system-ui, sans-serif;\n  --lp-bg: #000000;\n  --lp-text: #e6e6e6;\n  --lp-primary: #ac7fe8;\n  --lp-secondary: #d2a5ff;\n  --lp-border: #262626;\n  --lp-block-bg: #141414;\n  --lp-muted: #999;\n  --lp-heading: #e6e6e6;\n  --lp-cta-text: #0d0d0d;\n}"
+}

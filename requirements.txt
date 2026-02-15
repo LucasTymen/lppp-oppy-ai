@@ -18,3 +18,8 @@ numpy>=1.24,<3
 
 # Rapport complet : rendu Markdown → HTML (page « Consulter le rapport »)
 markdown>=3.5
+
+# Tests et coverage (feature chatbot, intégration)
+pytest>=7.4
+pytest-django>=4.5
+pytest-cov>=4.1

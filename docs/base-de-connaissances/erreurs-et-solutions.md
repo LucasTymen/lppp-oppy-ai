@@ -53,6 +53,42 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | Règle projet : **ne jamais proposer ou documenter une commande Python sur l’hôte sans utiliser `python3`**. Voir `.cursor/rules/pilotage-agents.mdc` (§ Terminal — Python sur l’hôte), `environnement-wsl-linux.md`. Dans les conteneurs Docker, `docker compose exec web python ...` reste valide (image avec `python` en symlink). **Si en plus** `python3 manage.py migrate` échoue avec « Connection refused » (port 5432) : la base PostgreSQL n’est pas démarrée — lancer `make up` ou `docker compose up -d db redis`, attendre quelques secondes, puis réessayer ; ou exécuter la migration dans le conteneur : `docker compose exec web python manage.py migrate`. |
 | **Lien(s)** | `environnement-wsl-linux.md`, `pilotage-agents.mdc` |
 
+### Docker — « Container … is restarting, wait until the container is running » (make migrate)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-09 |
+| **Contexte** | Après `make up`, exécution de `make migrate` ; le conteneur **lppp_web** redémarre en boucle. |
+| **Erreur** | `Error response from daemon: Container ... is restarting, wait until the container is running` — `make migrate` échoue car il ne peut pas exécuter de commande dans le conteneur. |
+| **Cause** | Le conteneur **web** (Django/Gunicorn) plante au démarrage (erreur Python, import, connexion DB, etc.) et Docker le relance en boucle. |
+| **Solution** | 1) **Voir la cause** : `docker compose logs web --tail 100` (ou `docker compose logs web -f` pour suivre). Corriger l’erreur affichée (souvent ImportError, OperationalError DB, ou variable d’environnement). 2) **Attendre que Django soit prêt** : utiliser **`make migrate-wait`** au lieu de `make migrate` — la cible attend que `python manage.py check` réussisse puis lance les migrations. 3) Si le conteneur reste en crash loop : corriger le bug (logs), puis `make clean-containers` et `make up` avant de relancer `make migrate-wait`. |
+| **Prévention** | Après `make up`, attendre 20–30 s avant la première commande dans le conteneur ; privilégier **`make migrate-wait`** pour les migrations. |
+| **Lien(s)** | Makefile (migrate-wait), `pret-a-demarrer.md` |
+
+### PostgreSQL — « password authentication failed for user "…" » (conteneur web en crash loop)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-09 |
+| **Contexte** | Stack Docker LPPP (`make up`) ; conteneur **lppp_web** en crash loop ; logs : `OperationalError: password authentication failed for user "Lucas@dmin"` (ou autre user). |
+| **Erreur** | `FATAL: password authentication failed for user "Lucas@dmin"` — Django (conteneur web) ne peut pas se connecter à PostgreSQL. |
+| **Cause** | **.env** : `DB_USER` / `DB_PASSWORD` doivent être **ceux avec lesquels le volume Postgres a été initialisé** (docker-compose utilise `POSTGRES_USER=${DB_USER:-lpppuser}` au premier démarrage). Si vous voyez **« role "X" does not exist »** : le volume a été créé avec un **autre** user (souvent **lpppuser** par défaut) → mettre dans .env **DB_USER=lpppuser**, **DB_PASSWORD=lppppass123**. Si vous voyez **« password authentication failed »** : le user existe mais le mot de passe est faux. En outre : **DB_HOST=localhost** ou **REDIS_URL=127.0.0.1** empêchent le conteneur web de joindre **db** et **redis** (en Docker : **DB_HOST=db**, **redis://redis:6379**). |
+| **Solution** | **Principe : ne pas détruire les données.** 1) Garder les credentials **existants** du volume : si la base a été créée avec `Lucas@dmin` / `Lucas@dm1n`, laisser **`DB_USER=Lucas@dmin`**, **`DB_PASSWORD=Lucas@dm1n`** dans le .env. 2) En Docker : **`DB_HOST=db`**, **`DB_PORT=5432`**, **`REDIS_URL=redis://redis:6379/0`** (et idem pour Celery). 3) Si l’on souhaite passer à un autre user : d’abord **`make backup`**, puis soit créer l’utilisateur côté Postgres (sans recréer le volume), soit — uniquement sur demande explicite de l’utilisateur — réinitialisation (down -v) après sauvegarde. **Ne jamais proposer `docker compose down -v`** sans sauvegarde et accord explicite. |
+| **Prévention** | **DB_USER** / **DB_PASSWORD** = ceux avec lesquels le volume Postgres a été initialisé (ne pas les changer sans créer l’user côté Postgres ou sans backup + accord). En Docker : **DB_HOST=db**, Redis/Celery avec host **redis**. Voir `protection-donnees-et-sauvegardes.md`, `2026-02-09-brief-devops-auth-postgres-conteneur-web.md`. |
+| **Lien(s)** | `.env.example`, `docker-compose.yml`, `infra-devops.md`, `2026-02-09-brief-devops-auth-postgres-conteneur-web.md` |
+
+### Django — « Your models in app(s): '…' have changes that are not yet reflected in a migration »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-09 |
+| **Contexte** | Après `make migrate` ou `make migrate-wait` : message d’avertissement indiquant qu’un modèle a des changements non reflétés dans une migration. |
+| **Erreur** | `Your models in app(s): 'landing_pages' have changes that are not yet reflected in a migration, and so won't be applied. Run 'manage.py makemigrations' to create new migrations.` |
+| **Cause** | Dérive entre l’état du modèle (code Python) et l’état enregistré par les migrations (souvent après des migrations RunPython sans changement de schéma, ou après modification du modèle sans `makemigrations`). |
+| **Solution** | (1) **Créer les migrations** : `docker compose exec web python manage.py makemigrations landing_pages` (ou l’app concernée). (2) **Appliquer** : `docker compose exec web python manage.py migrate`. Si Django ne propose rien (`No changes detected`) mais l’avertissement reste : créer une migration de synchronisation (ex. `AlterField` sur le champ concerné avec la définition actuelle du modèle) — ex. `0008_sync_model_state.py` pour `landing_pages`. (3) **Mode équipe** : si bloqué, segmenter pour **Dev Django** (migrations, état des modèles) ou **DevOps** (exécution dans le conteneur) ; documenter dans une segmentation et faire exécuter `makemigrations` + `migrate` par l’agent concerné. |
+| **Prévention** | Après toute modification de modèle (champs, choices, Meta) : lancer **`makemigrations`** puis **`migrate`** avant commit. Procédure avant relance : `procedure-avant-migrations-relance.md`. |
+| **Lien(s)** | `procedure-avant-migrations-relance.md`, `apps/landing_pages/migrations/0008_sync_model_state.py` (exemple), registre § Dev Django / DevOps |
+
 ### PostgreSQL « manque » / Connection refused 5432 — tests ou runserver sur l'hôte
 
 | Champ | Contenu |
@@ -337,6 +373,20 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
+### Vercel — 404 NOT_FOUND sur /p/orsys/rapport/ (landing statique ORSYS)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-09 |
+| **Contexte** | Landing ORSYS déployée en statique sur Vercel (repo LPPP_orsys) ; clic sur « Consulter le rapport » ou « Voir l’analyse SEO complète » → URL `/p/orsys/rapport/#analyse-seo-complete`. |
+| **Erreur** | **404: NOT_FOUND** — la page rapport n’existe pas sur le déploiement statique. |
+| **Cause** | L’export statique (`export_landing_static`) n’a pas été lancé avec `--rapport-md`, donc `rapport.html` n’a pas été généré. Le JSON a `rapport_url: "/p/orsys/rapport/"` (URL Django), mais Vercel sert du HTML statique sans Django — aucun fichier ne correspond à ce chemin. |
+| **Solution** | 1) Réexporter avec `--rapport-md` : `python manage.py export_landing_static orsys --json docs/contacts/orsys/landing-proposition-aboubakar.json --output deploy/static-orsys-vercel/index.html --rapport-md docs/contacts/orsys/rapport-complet-orsys.md`. 2) Vérifier que `rapport.html` existe dans le dossier. 3) `vercel.json` doit contenir des rewrites : `{ "source": "/p/orsys/rapport/", "destination": "/rapport.html" }`. 4) Copier `rapport.html` dans le repo LPPP_orsys, pousser, redeploy Vercel. |
+| **Prévention** | Toujours inclure `--rapport-md` dans l’export pour les landings qui proposent un lien « Consulter le rapport ». Voir `deploy/PUSH-ORSYS.md`, `deploy/static-orsys-vercel/vercel.json`. |
+| **Lien(s)** | `deploy/PUSH-ORSYS.md`, `deploy/static-orsys-vercel/vercel.json`, `strategie-deploiement-git-vercel.md` |
+
+---
+
 ### Vercel — No Output Directory named "public" after Build
 
 | Champ | Contenu |
@@ -440,10 +490,22 @@ Pour chaque erreur documentée, indiquer :
 | **Erreur** | `$'\r': command not found`, `set: -: invalid option`, `cd: $'deploy/..\r': No such file or directory`, `fatal: remote error: is not a valid repository name`, `fatal: invalid refspec 'main?'`, `syntax error: unexpected end of file` |
 | **Cause** | Fins de ligne **CRLF** (Windows) dans les fichiers `.sh` ; bash interprète le `\r` comme caractère, ce qui casse les commandes et les variables (REPO_DIR, refspec `main`). |
 | **Solution** | 1) Convertir les scripts en **LF uniquement** : sous PowerShell `[System.IO.File]::ReadAllText("deploy\push-standalone-p4s.sh") -replace "`r`n", "`n" -replace "`r", "`n"` puis `WriteAllText` ; ou sous WSL `sed -i 's/\r$//' deploy/push-standalone-p4s.sh deploy/push-standalone-ackuracy.sh`. 2) `.gitattributes` avec `deploy/*.sh text eol=lf` pour que Git conserve le LF à l’avenir. |
-| **Prévention** | Ne pas éditer les `.sh` avec un éditeur qui force le CRLF ; laisser `.gitattributes` gérer `eol=lf` pour `deploy/*.sh`. Après correction, les scripts s’exécutent correctement (push P4S et ACKURACY vers GitHub + GitLab, Vercel rebuild). |
-| **Lien(s)** | `deploy/README-standalone.md`, `deploy/push-standalone-p4s.sh`, `deploy/push-standalone-ackuracy.sh` |
+| **Prévention** | Ne pas éditer les `.sh` avec un éditeur qui force le CRLF ; laisser `.gitattributes` gérer `eol=lf` pour `deploy/*.sh` et `scripts/*.sh`. Après correction, les scripts s’exécutent correctement (push P4S et ACKURACY vers GitHub + GitLab, Vercel rebuild). |
+| **Lien(s)** | `deploy/README-standalone.md`, `deploy/push-standalone-p4s.sh`, `scripts/deploy-contabo.sh` |
 
 ---
+
+### Deploy Contabo — rsync exclut .env.example (cp: cannot stat '.env.example')
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-07 |
+| **Contexte** | Exécution de `make deploy-contabo` ; rsync envoie le projet vers Contabo. |
+| **Erreur** | Sur le serveur : `cp: cannot stat '.env.example': No such file or directory`. |
+| **Cause** | Rsync `--exclude='.env.*'` exclut tous les fichiers `.env.*`, y compris `.env.example`. |
+| **Solution** | Exclusions explicites : `--exclude='.env'`, `--exclude='.env.local'`, `--exclude='.env.production'`. Ne pas exclure .env.example. |
+| **Prévention** | Vérifier qu'un pattern d'exclusion rsync ne supprime pas les templates (.env.example). |
+| **Lien(s)** | `scripts/deploy-contabo.sh` |
 
 ---
 

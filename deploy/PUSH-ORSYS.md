@@ -9,10 +9,11 @@
 À la **racine du repo LPPP** :
 
 ```bash
-python manage.py export_landing_static orsys --json docs/contacts/orsys/landing-proposition-aboubakar.json --output deploy/static-orsys-vercel/index.html
+python manage.py export_landing_static orsys --json docs/contacts/orsys/landing-proposition-aboubakar.json --output deploy/static-orsys-vercel/index.html --rapport-md docs/contacts/orsys/rapport-complet-orsys.md
 ```
 
-(Vers Windows : `python` au lieu de `python3` si besoin.)
+- `--rapport-md` : génère `rapport.html` et définit le lien « Consulter le rapport » vers cette page. Sans ça, `/p/orsys/rapport/` renvoie 404 sur Vercel.
+- Windows : `python` au lieu de `python3` si besoin.
 
 ---
 
@@ -26,7 +27,7 @@ Si tu as déjà fait « Create repository » sur GitHub (éventuellement avec le
 # À la racine du repo LPPP
 rm -rf deploy/repo-orsys
 git clone https://github.com/LucasTymen/LPPP_orsys.git deploy/repo-orsys
-cp deploy/static-orsys-vercel/index.html deploy/repo-orsys/
+cp deploy/static-orsys-vercel/index.html deploy/static-orsys-vercel/rapport.html deploy/repo-orsys/
 cp deploy/static-orsys-vercel/vercel.json deploy/repo-orsys/
 cp deploy/static-orsys-vercel/README.md deploy/repo-orsys/
 cd deploy/repo-orsys
@@ -39,7 +40,7 @@ git push -u origin main
 ```powershell
 Remove-Item -Recurse -Force deploy/repo-orsys -ErrorAction SilentlyContinue
 git clone https://github.com/LucasTymen/LPPP_orsys.git deploy/repo-orsys
-Copy-Item deploy/static-orsys-vercel/index.html deploy/repo-orsys/
+Copy-Item deploy/static-orsys-vercel/index.html, deploy/static-orsys-vercel/rapport.html deploy/repo-orsys/
 Copy-Item deploy/static-orsys-vercel/vercel.json deploy/repo-orsys/
 Copy-Item deploy/static-orsys-vercel/README.md deploy/repo-orsys/
 cd deploy/repo-orsys

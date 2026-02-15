@@ -41,6 +41,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - Analyser les tendances web design (2026)
 - Arbitrer entre fonctionnalités (ROI vs risque)
 - Coordonner les agents (répartir les tâches)
+- **Contrôler les dépendances de tâches** : s'assurer que les tâches qui ne peuvent commencer qu'après d'autres sont identifiées et ordonnées (FS, SS, SF, FF) ; en cas de nombreuses dépendances, utiliser une vue type diagramme de Gantt ou préciser l'ordre dans les segmentations pour visualiser la chronologie.
 - Maintenir la documentation projet (TODO, logs, boîte à idées)
 - **S'assurer que les logs** (`log-projet.md`, `log-ia.md`) **et le registre erreurs/solutions** (`erreurs-et-solutions.md`) **sont mis à jour** après chaque correction ou session — pour éviter de reproduire les erreurs ; l'agent qui assiste le chef de projet peut effectuer ces mises à jour.
 - Valider les livrables avant mise en production
@@ -51,6 +52,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 **Outils** :
 - `docs/TODO.md`, `docs/boite-a-idees.md`
+- **Segmentations** : `docs/base-de-connaissances/segmentations/` (ordre des tâches, dépendances entre livrables)
 - `docs/logs/log-projet.md`, `docs/logs/log-ia.md`
 - **Registre erreurs et solutions** : `docs/base-de-connaissances/erreurs-et-solutions.md` (consulter en cas de blocage ; mettre à jour après chaque correction)
 - **Stratégie qualité contenu landings** : `docs/base-de-connaissances/strategie-qualite-contenu-landings.md` (qualité P4S, contenu dynamique, checklist)
@@ -294,40 +296,60 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ---
 
+### 11. **Infographiste / Data Viz (InfographicCraft)**
+**Expertise** : Infographies modernes type Pictochart (un seul fichier HTML autonome, vanilla, print-friendly), résumé des chiffres clés pour rapports, landings et présentations.
+
+**Responsabilités** :
+- **Assister le Chef de Projet et le Rédacteur** pour rendre les pages plus dynamiques et intéressantes en résumant les **chiffres clés** par des infographies (KPI cards, TL;DR, timeline, mini-dashboard, actions).
+- Produire **un seul fichier** `infographie.html` (HTML + CSS + JS inline) : design éditorial, hiérarchie nette, pictos SVG, animations sobres, respect de `prefers-reduced-motion`.
+- Travailler à partir d’un **brief** (THEME, AUDIENCE, TON, SECTIONS, DATA, CONSTRAINTS) ; livrer d’abord un **plan court** (6–10 lignes), puis le code complet. Si DATA vide : emplacements « À compléter » sans inventer de chiffres.
+- Déposer dans `docs/contacts/<slug>/` ou emplacement défini ; responsive, accessibilité, print-friendly.
+
+**Outils** :
+- **Règle** : `.cursor/rules/infographiste-dataviz.mdc`
+- **Brief** : `docs/base-de-connaissances/brief-infographiccraft.md`
+- Données : `docs/contacts/`, rapports dans `docs/base-de-connaissances/`
+
+**Dépendances** :
+- Chef de Projet (validation, priorité), Rédacteur (contenu et chiffres), Designer (charte si intégration), Expert SEO (données).
+
+---
+
 ## 📊 Matrice de responsabilité (RACI)
 
-| Tâche | Conseiller | Chef Projet | Dev Django | Designer | Data Analyst | Growth | DevOps | Rédacteur | Expert SEO | Automatizer |
-|-------|------------|-------------|------------|----------|--------------|--------|--------|-----------|------------|-------------|
+| Tâche | Conseiller | Chef Projet | Dev Django | Designer | Data Analyst | Growth | DevOps | Rédacteur | Expert SEO | Automatizer | Infographiste |
+|-------|------------|-------------|------------|----------|--------------|--------|--------|-----------|------------|-------------|----------------|
 | **Définir stratégie feature (accord avant code)** | **R** | A | C | C | C | C | I | I | I | I | I |
-| **Définir features prioritaires** | C | **R** | C | C | C | C | I | I | C | I |
+| **Définir features prioritaires** | C | **R** | C | C | C | C | I | I | C | I | I |
 | **Créer modèles Django** | I | I | **R** | I | C | I | I | I | I | I | I |
-| **Designer templates landing** | I | A | I | **R** | I | I | I | C | I | I |
-| **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I | I |
-| **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I | C |
-| **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I | I |
-| **Fin de landing : initialiser repo au nom de la société (git init, 1er commit, push)** | I | A | C | I | I | I | **R** | I | I | I |
-| **Fin de landing : vérifier déploiement et page OK** | I | A | I | I | I | I | **R** | I | I | I |
-| **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I | I |
-| **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** | I |
-| **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** | I |
-| **Recommandations visibilité robots / IA** | I | A | I | I | I | I | I | C | **R** | I |
-| **Intégrer / maintenir stack SEO sémantique (Python)** | I | A | C | I | I | I | C | I | **R** | I |
-| **Intégrer Tailwind CSS** | I | I | C | **R** | I | I | I | I | I | I |
-| **Créer tâches Celery enrichissement** | I | I | **R** | I | I | C | I | I | I | C |
-| **Développer / maintenir workflows N8N/Flowise/MCP** | I | A | C | I | I | C | C | I | I | **R** |
-| **Optimiser tokens et traces performances (workflows)** | I | A | I | I | C | C | I | I | I | **R** |
-| **Analyser taux de conversion** | I | A | I | I | **R** | C | I | C | I | I |
-| **Configurer CI/CD GitHub Actions** | I | A | C | I | I | I | **R** | I | I | I |
-| **Documenter base de connaissances** | C | **R** | C | C | C | C | C | C | C | C |
+| **Designer templates landing** | I | A | I | **R** | I | I | I | C | I | I | I |
+| **Développer algorithmes scoring** | I | A | C | I | **R** | C | I | I | I | I | I |
+| **Configurer pipelines OSINT** | I | A | C | I | C | **R** | C | I | I | C | I |
+| **Déployer sur Vercel/Contabo** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Fin de landing : initialiser repo au nom de la société (git init, 1er commit, push)** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Fin de landing : vérifier déploiement et page OK** | I | A | I | I | I | I | **R** | I | I | I | I |
+| **Rédiger contenus landing** | I | A | I | C | I | I | I | **R** | I | I | I |
+| **Analyser statistiques SEO / visibilité IA** | C | A | I | I | C | I | I | I | **R** | I | I |
+| **Produire rapport lead magnet (SEO / AI-GEO)** | I | A | I | C | I | I | I | C | **R** | I | I |
+| **Recommandations visibilité robots / IA** | I | A | I | I | I | I | I | C | **R** | I | I |
+| **Intégrer / maintenir stack SEO sémantique (Python)** | I | A | C | I | I | I | C | I | **R** | I | I |
+| **Intégrer Tailwind CSS** | I | I | C | **R** | I | I | I | I | I | I | I |
+| **Créer tâches Celery enrichissement** | I | I | **R** | I | I | C | I | I | I | C | I |
+| **Développer / maintenir workflows N8N/Flowise/MCP** | I | A | C | I | I | C | C | I | I | **R** | I |
+| **Optimiser tokens et traces performances (workflows)** | I | A | I | I | C | C | I | I | I | **R** | I |
+| **Analyser taux de conversion** | I | A | I | I | **R** | C | I | C | I | I | I |
+| **Configurer CI/CD GitHub Actions** | I | A | C | I | I | I | **R** | I | I | I | I |
+| **Documenter base de connaissances** | C | **R** | C | C | C | C | C | C | C | C | I |
 | **Documenter erreurs et solutions / Mettre à jour logs après correction** | I | **R** | I | I | I | I | I | I | I | I | I |
-| **Checklist pré-prod / qualité et intégrité avant push prod (piloter)** | I | **A** | R (qualité) | I | I | I | R (intégrité + fonctionnel) | I | I | I |
-| **Études concurrentielles** | I | A | I | I | C | **R** | I | I | I | I |
-| **Analyses SWOT (porteurs de SWOT)** | I | A | I | I | C | **R** | I | I | I | I |
-| **Analyse funnel conversion (concurrence/marché)** | I | A | I | I | C | **R** | I | I | I | I |
-| **Positionnement concurrence / analyse marché** | I | A | I | I | C | **R** | I | I | I | I |
-| **KPIs et leviers croissance (analyse)** | I | A | I | I | C | **R** | I | I | I | I |
-| **Performances campagnes Ads / optimisation** | I | A | I | I | C | **R** | I | I | I | I |
-| **Pistes nouveaux marchés** | I | A | I | I | C | **R** | I | I | I | I |
+| **Checklist pré-prod / qualité et intégrité avant push prod (piloter)** | I | **A** | R (qualité) | I | I | I | R (intégrité + fonctionnel) | I | I | I | I |
+| **Études concurrentielles** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **Analyses SWOT (porteurs de SWOT)** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **Analyse funnel conversion (concurrence/marché)** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **Positionnement concurrence / analyse marché** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **KPIs et leviers croissance (analyse)** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **Performances campagnes Ads / optimisation** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **Pistes nouveaux marchés** | I | A | I | I | C | **R** | I | I | I | I | I |
+| **Créer infographies dynamiques / data viz (HTML/CSS/JS)** | I | A | I | C | I | I | I | C | C | I | **R** |
 
 **Légende** :
 - **R** = Responsible (réalise la tâche)

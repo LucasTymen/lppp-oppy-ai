@@ -24,6 +24,7 @@ Secteur = domaine ou type de prospect ciblé.
 | `juridique` | Cabinets avocats, ART, juridique |
 | `industrie` | Industrie, manufacturing |
 | `low-tech` | Boîtes low tech, sans tech |
+| **`mairie`** | **Mairie / Collectivités territoriales** (ex. équipes municipales 94, Conciergerie IA Maisons-Alfort) |
 | `autre` | Non classé ou autre segment |
 
 **Implémentation** : liste prédéfinie (choices) ou modèle `Sector` (nom, slug). Pour rester simple au début : champ `sector` (CharField avec choices).

@@ -27,6 +27,7 @@ CYAN   = \033[0;36m
 NC     = \033[0m
 
 .PHONY: help start go relance relance-safe full-setup services-urls info backup restore backup-clean
+.PHONY: test-cov test-cov-docker test-cov-docker-build
 .PHONY: up down stop restart full build build-no-cache pull update clean-containers
 .PHONY: migrate migrate-wait makemigrations showmigrations dbshell
 .PHONY: shell createsuperuser landing-p4s static check
@@ -34,7 +35,7 @@ NC     = \033[0m
 .PHONY: start-win services-urls-win ps logs logs-web logs-celery logs-n8n logs-flowise health health-check
 .PHONY: celery-restart celery-beat-restart
 .PHONY: venv venv-install runserver dev docker-up-seq ensure-env
-.PHONY: secret-key clean security-check
+.PHONY: deploy-contabo secret-key clean security-check
 
 # =============================================================================
 # Prérequis Docker (.env requis par docker-compose env_file)
@@ -252,13 +253,17 @@ help:
 	@echo "  make sync-landing-p4s — Copier landing-proposition-joel.json vers standalone + frontend"
 	@echo "  make push-both    — Push sur origin main + gitlab main (WSL/Git Bash)"
 	@echo "  make commit-push MSG=\"...\" — add ., commit, push sur les deux remotes"
+	@echo "  make deploy-contabo — Déployer LPPP sur Contabo (rsync + SSH + docker)"
 	@echo "  make push-standalone-p4s — push landing P4S vers LPPP_P4S-Architecture (GitHub + GitLab)"
 	@echo "  make static       — Collecter les fichiers statiques"
 	@echo "  make check        — Vérifier la config Django"
+	@echo "  make check-flowise-embed — Diagnostic chatbot (URL embed, .env, port 3010)"
 	@echo ""
 	@echo "$(CYAN)Tests et qualité:$(NC)"
-	@echo "  make test         — pytest (local, SQLite)"
-	@echo "  make test-docker  — pytest dans le conteneur"
+	@echo "  make test             — pytest (local ; tests DB échouent sans PostgreSQL)"
+	@echo "  make test-docker      — pytest dans le conteneur"
+	@echo "  make test-cov-docker  — pytest + coverage dans le conteneur (PostgreSQL)"
+	@echo "  make test-cov-docker-build — rebuild image web puis test-cov-docker (si No module named pytest)"
 	@echo "  make lint         — flake8, black, isort (check)"
 	@echo "  make lint-fix     — Formatage auto"
 	@echo "  make validate     — check + test + lint + prod-check"
@@ -385,6 +390,10 @@ static:
 check:
 	$(DOCKER) exec web python manage.py check
 
+# Diagnostic chatbot (écran vide) : URL d'embed, .env, optionnel --ping Flowise. Voir docs/base-de-connaissances/segmentations/2026-01-30-strategie-chatbot-ecran-vide-et-flux.md
+check-flowise-embed:
+	$(DOCKER) exec web python manage.py check_flowise_embed
+
 # =============================================================================
 # Tests et qualité
 # =============================================================================
@@ -394,6 +403,30 @@ test:
 
 test-docker:
 	$(DOCKER) exec web python -m pytest apps/ -v --tb=short 2>/dev/null || true
+
+# Coverage (feature chatbot, intégration, flux). Local : tests sans DB. Docker : tous les tests + coverage.
+test-cov:
+	@echo "$(CYAN)📊 Tests avec couverture (apps/)$(NC)"
+	PYTHONPATH=".:apps" python3 -m pytest apps/ -v --tb=short --cov=apps --cov-report=term-missing --cov-report=html:htmlcov \
+		--cov-config=.coveragerc 2>/dev/null || PYTHONPATH=".:apps" python -m pytest apps/ -v --tb=short --cov=apps --cov-report=term-missing --cov-report=html:htmlcov \
+		--cov-config=.coveragerc 2>/dev/null || (echo "$(YELLOW)Installer : pip install -r requirements-test.txt$(NC)" && exit 1)
+
+# Coverage dans le conteneur web (PostgreSQL dispo → tous les tests). Requiert image à jour (pytest dans requirements.txt).
+# Si "No module named pytest" : rebuild d'abord avec make build puis make test-cov-docker.
+test-cov-docker:
+	@echo "$(CYAN)📊 Tests + coverage dans Docker (apps/)$(NC)"
+	$(DOCKER) exec web python -m pytest apps/ -v --tb=short --cov=apps --cov-report=term-missing --cov-report=html:htmlcov --cov-config=.coveragerc
+
+# Rebuild de l'image web (installe pytest, pytest-django, pytest-cov) puis tests + coverage
+test-cov-docker-build:
+	@echo "$(YELLOW)🔨 Rebuild image web (pytest inclus)...$(NC)"
+	$(DOCKER) build web
+	@echo "$(CYAN)📊 Tests + coverage...$(NC)"
+	$(MAKE) test-cov-docker
+
+# Rapport HTML coverage (après make test-cov ou make test-cov-docker) : ouvrir htmlcov/index.html
+coverage-report: test-cov
+	@echo "$(GREEN)Rapport HTML : htmlcov/index.html$(NC)"
 
 lint:
 	@echo "=== flake8 ===" && (flake8 apps/ lppp/ --max-line-length=120 --exclude=migrations 2>/dev/null || echo "flake8: pip install flake8")
@@ -470,12 +503,12 @@ health-check:
 backup:
 	@mkdir -p backups
 	@echo "$(CYAN)💾 Sauvegarde de la base...$(NC)"
-	$(DOCKER) exec db pg_dump -U lpppuser lppp > backups/backup_$$(date +%Y%m%d_%H%M%S).sql
+	$(DOCKER) exec db pg_dump -U $(DB_USER) $(DB_NAME) > backups/backup_$$(date +%Y%m%d_%H%M%S).sql
 	@echo "$(GREEN)✅ Sauvegarde créée dans backups/$(NC)"
 
 restore:
 	@echo "$(YELLOW)📥 Restauration — Lister les sauvegardes :$(NC)"
-	@ls -la backups/ 2>/dev/null || echo "Aucune sauvegarde. Usage : $(DOCKER) exec -i db psql -U lpppuser lppp < backups/backup_XXX.sql"
+	@ls -la backups/ 2>/dev/null || echo "Aucune sauvegarde. Usage : $(DOCKER) exec -i db psql -U $(DB_USER) $(DB_NAME) < backups/backup_XXX.sql"
 
 backup-clean:
 	@echo "$(CYAN)🧹 Nettoyage sauvegardes > 7 jours$(NC)"
@@ -518,10 +551,10 @@ venv-install:
 	@if [ -f .venv/bin/pip ]; then .venv/bin/pip install -r requirements.txt; elif [ -f .venv/Scripts/pip.exe ]; then .venv/Scripts/pip install -r requirements.txt; else pip3 install -r requirements.txt || pip install -r requirements.txt; fi
 	@echo "$(GREEN)✅ Venv prêt. Lancer : make runserver$(NC)"
 
-# runserver — Lance Django en local (utilise .venv si présent, sinon python3)
+# runserver — Lance Django en local sur le port 8010 (SquidResearch garde le 8000)
 # WSL/Linux : après make venv-install, make runserver fonctionne sans activer le venv à la main
 runserver:
-	@if [ -f .venv/bin/python ]; then PYTHONPATH=".:apps" .venv/bin/python manage.py runserver; elif [ -f .venv/Scripts/python.exe ]; then PYTHONPATH=".:apps" .venv/Scripts/python.exe manage.py runserver; else PYTHONPATH=".:apps" python3 manage.py runserver 2>/dev/null || PYTHONPATH=".:apps" python manage.py runserver; fi
+	@if [ -f .venv/bin/python ]; then PYTHONPATH=".:apps" .venv/bin/python manage.py runserver 8010; elif [ -f .venv/Scripts/python.exe ]; then PYTHONPATH=".:apps" .venv/Scripts/python.exe manage.py runserver 8010; else PYTHONPATH=".:apps" python3 manage.py runserver 8010 2>/dev/null || PYTHONPATH=".:apps" python manage.py runserver 8010; fi
 
 # =============================================================================
 # Utilitaires
@@ -544,6 +577,13 @@ clean:
 # Ou : git add . && git commit -m "ton message" && make push-both
 
 .PHONY: push-both commit-push push-standalone-p4s
+
+# deploy-contabo — orchestration du déploiement LPPP sur Contabo (rsync + SSH + docker)
+# Prérequis : clé ~/.ssh/contabo_key. Réf. segmentations/2026-02-07-sprint-deploiement-contabo-lppp.md
+deploy-contabo:
+	@echo "$(CYAN)Orchestration déploiement LPPP sur Contabo...$(NC)"
+	@bash scripts/deploy-contabo.sh
+	@echo "$(GREEN)✅ Déploiement terminé. Vérifier http://173.249.4.106:8010/$(NC)"
 
 push-both:
 	git push origin main

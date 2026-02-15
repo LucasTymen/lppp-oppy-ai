@@ -39,7 +39,7 @@ Toute commande opérationnelle passe par `make` — les agents et l'utilisateur 
 | Commande | Rôle | Description | Pilote |
 |----------|------|-------------|--------|
 | `make start` | **Lancer tout en une commande** | Démarrage séquentiel, attente Django, migrate, health-check, URLs. Usage quotidien recommandé. Pas de venv requis. | DevOps |
-| `make go` | **Démarrage à froid complet** | down -v, build, démarrage séquentiel (db→redis→web→celery→n8n,flowise), attente Django, migrate, collectstatic, health-check, affichage URLs | DevOps |
+| `make go` | **Démarrage à froid complet** | down -v, build, démarrage séquentiel (db→redis→web→celery→n8n,flowise), attente Django, migrate, collectstatic, health-check, affichage URLs. **Attention** : `down -v` **supprime les volumes** (données Postgres, Redis, n8n, Flowise, etc.) — à utiliser uniquement si réinitialisation voulue ; sinon faire **`make backup`** avant, ou privilégier **`make relance`** pour redémarrer sans perte. | DevOps |
 | `make relance` | Redémarrer sans rebuild | Redémarrage séquentiel des services (containers déjà construits) | DevOps |
 | `make full-setup` | Configuration complète initiale | build + up + migrate + static + health-check | DevOps |
 | `make services-urls` | Afficher les URLs | Liste Django, admin, essais, n8n, Flowise, PostgreSQL, Redis | Tous |
@@ -265,7 +265,7 @@ Toute nouvelle segmentation impliquant des opérations système doit :
 
 Stratégies reprises du Makefile SquidResearch (chemin WSL : `\\wsl.localhost\Ubuntu-22.04\home\lucas\tools\squidResearch`) :
 
-- **`go`** : démarrage à froid complet (down -v, build, up séquentiel, migrate, collectstatic, health)
+- **`go`** : démarrage à froid complet (down -v, build, up séquentiel, migrate, collectstatic, health) — **destructif** (supprime les volumes) ; faire `make backup` avant ou préférer `relance`
 - **`relance`** : redémarrage sans rebuild (plus rapide)
 - **Démarrage séquentiel** : db redis → web → celery → n8n flowise (éviter race conditions)
 - **Attente Django** : boucle `until docker compose exec web python manage.py check` avant migrate

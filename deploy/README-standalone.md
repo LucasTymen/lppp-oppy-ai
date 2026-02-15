@@ -14,6 +14,7 @@
 |---------|-----------------|--------------|
 | **P4S** | **Page statique** (un seul `index.html` généré par Django) — voir `deploy/static-p4s-vercel/` et `PUSH-POUR-VERSION-COMPLETE.md` | GitHub LPPP_P4S-Architecture + GitLab lppp_p4s_architecture |
 | **ACKURACY** | App Next.js (`deploy/standalone-ackuracy/`) — `bash deploy/push-standalone-ackuracy.sh` | GitHub LPPP_Ackuracy + GitLab lppp_ackuracy |
+| **Yuwell (portfolio)** | **Site statique** (5 pages HTML + `static/`) — `deploy/yuwell-portfolio/`, génération : `python manage.py export_yuwell_static --output deploy/yuwell-portfolio`. Vercel : Framework = **Other**, Build = vide. Voir `PUSH-YUWELL.md`. | GitHub LPPP_yuwell_portfolio + GitLab lppp_yuwell_portfolio |
 
 **Sans WSL/Git Bash (PowerShell)** — deux options :
 
@@ -46,6 +47,13 @@ Après le push, Vercel rebuild automatiquement. Vérifier l’URL du projet (ex.
 - **Repo** : [LPPP_P4S-Architecture](https://github.com/LucasTymen/LPPP_P4S-Architecture).
 - **Contenu déployé** : **un seul fichier HTML** (`index.html`) = la page rendue par Django sur `/p/p4s-archi/`. Génération : `python manage.py export_landing_static p4s-archi --output deploy/static-p4s-vercel/index.html`. Puis copier `deploy/static-p4s-vercel/*` dans le repo et push. Vercel : Framework = **Other**, Build Command = vide.
 - **Procédure détaillée** : `deploy/PUSH-POUR-VERSION-COMPLETE.md`.
+
+---
+
+## Yuwell : portfolio (site statique 5 pages)
+
+- **Repo** : [LPPP_yuwell_portfolio](https://github.com/LucasTymen/LPPP_yuwell_portfolio) (GitHub) · [lppp_yuwell_portfolio](https://gitlab.com/LucasTymen/lppp_yuwell_portfolio) (GitLab).
+- **Contenu déployé** : **5 pages HTML** (index.html = Présentation, study-case.html, study-case-2.html, charte-graphique.html, a-propos.html) + dossier `static/` (fonts Oswald, images). Génération : `python manage.py export_yuwell_static --output deploy/yuwell-portfolio`. Le dossier `deploy/yuwell-portfolio/` est poussé tel quel sur les deux remotes (ou copié dans un clone du repo). **Vercel** : importer le repo GitHub LPPP_yuwell_portfolio → Framework = **Other**, Build Command = vide, Output Directory = `.`. Voir `deploy/PUSH-YUWELL.md` et `deploy/yuwell-portfolio/vercel.json`.
 
 ---
 

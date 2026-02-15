@@ -26,7 +26,7 @@ Un agent unique « QA / Release » serait redondant avec ces responsabilités d�
 | Branche | Contenu | Qui fait (R) | Qui pilote (A) |
 |---------|---------|--------------|----------------|
 | **Qualité** | Tests passants, pas de régression connue, Definition of Done respectée, doc impactée à jour | Dev Django (tests, code) ; Chef de Projet (validation DoD) | Chef de Projet |
-| **Intégrité** | Secrets hors dépôt, config prod OK (DEBUG, ALLOWED_HOSTS, HTTPS), migrations appliquées, checklist sécurité § 9 | DevOps (config, déploiement) ; Pentester (C pour sécurité) ; Dev Django (migrations) | Chef de Projet |
+| **Intégrité** | Secrets hors dépôt, config prod OK (DEBUG, ALLOWED_HOSTS, HTTPS), migrations appliquées, checklist sécurité § 9. **DEBUG off en prod** : Chef de Projet, DevOps et Architecte réseau (ingénieur réseau) doivent passer les pages en debug mode off (`DEBUG=False`) avant tout push en prod. | DevOps (config, déploiement) ; Pentester (C pour sécurité) ; Dev Django (migrations) ; Chef de Projet + DevOps + Architecte réseau (vérif. DEBUG off) | Chef de Projet |
 | **Fonctionnel** | Page accessible, pas d'erreur (404, 5xx), déploiement réussi (Vercel/Contabo) | DevOps | Chef de Projet |
 
 Le **Chef de Projet** ne réalise pas lui-même chaque case : il **s'assure** que Dev Django a validé qualité, que DevOps a validé intégrité (config, secrets) et fonctionnel (page OK), et que Pentester a été consulté sur la sécurité si besoin. En cas de doute ou de push urgent, c'est lui qui arbitre (bloquer ou accepter le risque).
@@ -46,7 +46,7 @@ Le **Chef de Projet** ne réalise pas lui-même chaque case : il **s'assure** qu
 ### 3.2 Intégrité (DevOps + Dev Django + Pentester en appui)
 
 - [ ] **Secrets** : aucun secret, token ou clé dans le dépôt ; `.env` non versionné ; variables prod dans Vercel/Contabo/CI.
-- [ ] **Config prod** : `DEBUG=False`, `SECRET_KEY` forte, `ALLOWED_HOSTS` explicite, HTTPS activé (voir `regles-securite.md` § 9).
+- [ ] **Config prod** : `DEBUG=False`, `SECRET_KEY` forte, `ALLOWED_HOSTS` explicite, HTTPS activé (voir `regles-securite.md` § 9). **Chef de Projet, DevOps et Architecte réseau (ingénieur réseau)** doivent s'assurer que les pages sont en debug mode off avant push en prod.
 - [ ] **Migrations** : migrations Django appliquées en environnement cible si changement de modèles.
 - [ ] **Sécurité** : checklist `regles-securite.md` § 9 parcourue ; Pentester consulté (C) pour les flux sensibles (API, webhooks, n8n/Flowise).
 

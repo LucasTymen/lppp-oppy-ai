@@ -87,6 +87,7 @@ Voir `organisation-donnees-contacts.md` (un contact = un dossier, données isol�
 
 | Document | Usage |
 |----------|--------|
+| **`attentes-contenu-et-enrichissement-qualite.md`** | **Référence unique** : contenu (qualité P4S, vivant, éditorial) + qualité enrichissement + rôle conseiller ; pour ne pas recommencer, s’y tenir. |
 | `schema-landing-proposition.md` | Structure des champs `content_json` ; rappel : contenu toujours par contact. |
 | `organisation-donnees-contacts.md` | Un contact = un dossier ; où ranger les JSON et rapports. |
 | `reconstitution-landing-p4s-personnalisation.md` | Degrés de personnalisation (hero, thème, style perso, contenu). |

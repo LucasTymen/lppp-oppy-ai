@@ -1,0 +1,141 @@
+{
+  "meta": {
+    "strategie": "Modernisation de l'Action Publique / Stratégie Cheval de Troie",
+    "profil_candidat": "Growth Engineer (Expert Python & Automation)",
+    "zone_focus": "Maisons-Alfort & Communes Limitrophes (94)",
+    "methode_entree": "Vacations / Contrats Courts / Alternance / Mission Audit",
+    "classification": {
+      "secteur": "mairie",
+      "sous_categories": ["personnes", "services"],
+      "classement": "par ville → mairie de [Ville] & élus / services"
+    }
+  },
+  "municipalites": [
+    {
+      "ville": "Maisons-Alfort",
+      "poids_strategique": "PRIORITÉ ABSOLUE (Ancrage Local)",
+      "personnes": [
+        {
+          "nom": "Marie-France PARRAIN",
+          "titre": "5ème Adjointe - Admin Générale & Relations Publiques",
+          "angle": "Concierge IA pour la Relation Citoyen (désengorgement accueil)."
+        },
+        {
+          "nom": "Romain MARIA",
+          "titre": "Adjoint à la Jeunesse (Boss du QJ)",
+          "angle": "Automatisation du sourcing d'emplois pour les jeunes alfortais via IA."
+        }
+      ],
+      "services": [
+        {
+          "nom": "Direction des Systèmes d'Information (DSI)",
+          "titre": "Service Informatique - Hôtel de Ville",
+          "angle": "Interopérabilité : créer des ponts (Python/API) entre les logiciels métiers."
+        }
+      ],
+      "portes_entree_cheval_de_troie": [
+        "SMAE (Accompagnement Emploi) : Agent administratif / Conseiller.",
+        "État Civil / Accueil : Front-office citoyen (idéal pour identifier les FAQ à automatiser).",
+        "Support Informatique : Maintenance et déploiement Smart City / Fibre."
+      ],
+      "coordonnees": {
+        "adresse": "118 avenue du Général de Gaulle, 94700",
+        "tel": "01 43 96 77 11",
+        "email_recrutement": "recrutement.ville@maisons-alfort.fr"
+      },
+      "growth_hook": "Connecteur léger Python pour répondre aux questions répétitives via données municipales."
+    },
+    {
+      "ville": "Charenton-le-Pont",
+      "poids_strategique": "Priorité 1 (Haut de gamme)",
+      "personnes": [
+        { "nom": "Hervé GICQUEL", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "Modernisation Smart City et automatisation des alertes riverains (risques bords de Marne).",
+      "coordonnees": { "adresse": "48 Rue de Paris, 94220", "tel": "01 46 76 46 76" }
+    },
+    {
+      "ville": "Vincennes",
+      "poids_strategique": "Priorité 1 (Tech-Advanced)",
+      "personnes": [
+        { "nom": "Charlotte LIBERT-ALBANEL", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "IA de tri automatique des emails pour les services scolaires et petite enfance.",
+      "coordonnees": { "adresse": "53 Bis Rue de Fontenay, 94300", "tel": "01 43 98 65 00" }
+    },
+    {
+      "ville": "Saint-Maur-des-Fossés",
+      "poids_strategique": "Priorité 2 (Veille Locale)",
+      "personnes": [
+        { "nom": "Sylvain BERRIOS", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "Dashboard de pilotage des flux de circulation et dashboarding data urbaine.",
+      "coordonnees": { "adresse": "Place Charles de Gaulle, 94100", "tel": "01 45 11 65 00" }
+    },
+    {
+      "ville": "Saint-Mandé",
+      "poids_strategique": "Priorité 2 (Budget Agile)",
+      "personnes": [
+        { "nom": "Julien WEIL", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "Digitalisation complète des processus de commande publique pour petite mairie riche.",
+      "coordonnees": { "adresse": "10 Place Charles Digeon, 94160", "tel": "01 49 57 78 00" }
+    },
+    {
+      "ville": "Créteil",
+      "poids_strategique": "Priorité 3 (Volume DSI)",
+      "personnes": [],
+      "services": [
+        { "nom": "DSI Ville de Créteil", "titre": "Direction Informatique", "angle": "" }
+      ],
+      "angle_attaque": "Audit de sécurité (Ransomware) et automatisation des back-offices préfectoraux.",
+      "coordonnees": { "adresse": "1 Place Salvador Allende, 94000", "tel": "01 49 80 92 94" }
+    },
+    {
+      "ville": "Ivry-sur-Seine",
+      "poids_strategique": "Priorité 3 (Social Tech)",
+      "personnes": [
+        { "nom": "Philippe BOUYSSOU", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "Inclusion numérique : Assistant IA multilingue pour l'accès aux droits sociaux.",
+      "coordonnees": { "adresse": "Esplanade Georges Marrane, 94200", "tel": "01 49 60 25 08" }
+    },
+    {
+      "ville": "Vitry-sur-Seine",
+      "poids_strategique": "Priorité 3 (Urbain)",
+      "personnes": [
+        { "nom": "Pierre BELL-LLOCH", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "Automatisation du suivi des signalements de maintenance urbaine via IA.",
+      "coordonnees": { "adresse": "2 Avenue Henri Barbusse, 94400", "tel": "01 46 82 80 00" }
+    },
+    {
+      "ville": "Bonneuil-sur-Marne",
+      "poids_strategique": "Priorité 3 (Eco-Local)",
+      "personnes": [
+        { "nom": "Denis ÖZTURK", "titre": "Maire", "angle": "" }
+      ],
+      "services": [],
+      "angle_attaque": "Mise en relation automatisée commerçants locaux et Port de Bonneuil.",
+      "coordonnees": { "adresse": "7 Rue d'Estienne d'Orves, 94380", "tel": "01 45 13 88 00" }
+    }
+  ],
+  "organismes_territoriaux_complementaires": [
+    {
+      "nom": "Paris Est Marne & Bois (Territoire T10)",
+      "lieu": "Joinville-le-Pont",
+      "opportunite": "Mutualisation informatique de 13 communes. Idéal pour profil expert Python / Glue."
+    },
+    {
+      "nom": "ANSES",
+      "lieu": "Maisons-Alfort",
+      "opportunite": "Besoin de veille digitale automatisée (Appel d'offre 2026)."
+    }
+  ]
+}

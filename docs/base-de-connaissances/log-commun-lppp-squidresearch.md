@@ -38,4 +38,4 @@ Dans le dépôt SquidResearch : **`docs/infrastructure/AVIS_SOLUTIONS_AGENTS_LPP
 
 ---
 
-*Dernière synchro de ce pointeur : 2026-02-05. Source : dépôt SquidResearch (log commun § 5.3, § 5.4, AVIS_SOLUTIONS).*
+*Dernière synchro de ce pointeur : 2026-02-07. Source : dépôt SquidResearch (log commun § 5.3, § 5.4, AVIS_SOLUTIONS). Pour la séparation LPPP/SquidResearch, les domaines et la config Nginx, voir `deploiement-contabo-lppp-securite.md` § 4–5.*

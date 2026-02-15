@@ -62,7 +62,22 @@ Dès que le **Base Path** est renseigné dans Flowise (ex. `/data/flowise/faiss/
 
 ---
 
-## 5. Erreur 401 « Invalid model key » (hors FAISS)
+## 5. Flowise en Docker (LPPP) vs Windows — adresse tampon
+
+| Contexte | Base Path à mettre dans le nœud FAISS (Flowise) |
+|----------|--------------------------------------------------|
+| **LPPP : Flowise en Docker** (port 3010, `lppp_flowise`) | **`/data/flowise/faiss/maisons-alfort`** (chemin **dans le conteneur**) |
+| **Flowise en Windows (hors Docker)** | `C:\flowise-data\faiss\conciergerie-maisons-alfort` (ou équivalent sur le host) |
+
+**Règle** : quand Flowise tourne dans Docker, le système de fichiers du conteneur est Linux. Un chemin **`C:\...`** n’existe pas → erreur **« could not open C:\flowise-data\faiss\.../faiss.index for reading: No such file or directory »**.
+
+**Après réimport d’un workflow** (ex. après changement de port ou réinstallation) : vérifier dans le canvas que le nœud **Faiss** a bien **Base Path to load** = **`/data/flowise/faiss/maisons-alfort`** (et non `C:\flowise-data\...`). Puis relancer un upsert si l’index n’existe pas encore dans ce dossier (Document Store → Load / Upsert vers ce chemin).
+
+**Contrôle (agent Automatizer)** : à chaque changement de stack (port Flowise, passage Docker/Windows, réimport), vérifier que l’adresse tampon (Base Path) pointe vers le bon système — voir `automatizer.mdc` et `segmentations/2026-01-30-strategie-chatbot-ecran-vide-et-flux.md`.
+
+---
+
+## 6. Erreur 401 « Invalid model key » (hors FAISS)
 
 Si Flowise affiche **« 401 Invalid model key or Incorrect local model configuration »** au chargement d’une page, le souci vient en général du **LLM ou de l’embedding** (clé API OpenAI invalide, modèle inexistant, ou mauvaise config d’un modèle local). Ce n’est pas lié au Base Path FAISS. Vérifier :
 

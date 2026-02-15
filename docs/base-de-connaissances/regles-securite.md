@@ -4,6 +4,8 @@ Règles de sécurité évidentes à respecter dans le projet. Aligné avec les r
 
 **Règle unique pour tous les agents en charge** : en fin de session, livraison ou déploiement, **toujours** repasser en debug mode off (`DEBUG=False`) et s’assurer des mesures de protection (checklist § 9). Cette règle s’applique à tous les agents (Dev Django, DevOps, Chef de Projet, Orchestrateur, etc.). Voir aussi `.cursor/rules/pilotage-agents.mdc` § Sécurité.
 
+**Obligation pour le push en prod** : quand on pousse les pages en production, le **Chef de Projet**, le **DevOps** et l'**Architecte réseau** (ingénieur réseau) doivent **s'assurer que DEBUG=False** (et que la checklist § 9 est respectée). Aucun déploiement prod sans cette vérification par au moins un de ces trois rôles.
+
 ---
 
 ## 1. Secrets et credentials

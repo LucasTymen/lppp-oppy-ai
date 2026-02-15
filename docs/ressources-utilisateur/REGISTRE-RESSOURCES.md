@@ -26,7 +26,8 @@
 | 2025-01-30 | etudes | 2 — Relance après événement + liste prospects | Réf. Downloads : 2_exemple de relance apres evennement… | Segment prospection : relance post-événement. |
 | 2025-01-30 | etudes | 3 — Prospection boîtes low tech + leads | Réf. Downloads : 3_prospection de boites low tech_plus_leads | Segment prospection : low tech + leads. |
 | 2025-01-30 | etudes | 4 — Concept low tech, idées | Réf. Downloads : 4_concept pour la low tech_beaucoup d'idées | Segment prospection : concept et idées low tech. |
-| 2026-01-30 | textes | Prospection commando — ROI immédiat (boîtes low tech) | `textes/2026-01-30_prospection-commando-lowtech.json` | Base de ciblage low tech (liste entreprises + hooks). |
+| 2026-01-30 | textes | Prospection commando — sociétés low-tech / sous-digitalisées (Créteil + 15 km) | `textes/2026-01-30_prospection-commando-lowtech.json` | Base de ciblage : meta (stratégie, zone_focus, exclusions), opportuniteEmbauche (MISSION_THEN_CDI, alternance Rocket School), entreprises_ciblees (nom, ville, segment, mode_ciblage_principal, besoin, priorite), plan_action_proof_of_value. Exploitable en script Python/Node (filtrer par priorité/segment) ; voir `textes/README-prospection-lowtech.md`. |
+| 2026-01-30 | etudes | Yuwell — portfolio / étude graphique (structure + palettes) | `etudes/yuwell-portfolio-etude-graphique.md` + PDF source `portfolio Yuwell_1.pdf` (Downloads) | Landing portfolio design graphique : système couleur par gamme produit ; structure, objectifs, palettes HEX/RGB/Pantone ; URL `/yuwell/`. |
 
 **Note** : les chemins « Réf. Downloads » pointent vers tes Downloads. Pour versionner dans le dépôt : copier les fichiers dans `etudes/` ou `autres/` avec un nom explicite, puis mettre à jour la colonne « Fichier ».
 

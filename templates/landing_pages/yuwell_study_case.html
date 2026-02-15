@@ -1,0 +1,85 @@
+{% extends "landing_pages/yuwell_base.html" %}
+{% block yuwell_title %}{{ content.page_title }}{% endblock %}
+{% block yuwell_hero %}
+    <h1>Study case — Yuwell</h1>
+    <p class="hero-sub">Structuration chromatique par gamme de dispositifs médicaux</p>
+{% endblock %}
+{% block yuwell_content %}
+<section class="section" id="contexte">
+    <div class="section-head"><span class="section-num">01</span><h2>Contexte & objectifs</h2></div>
+    <p>Yuwell est une entreprise internationale de dispositifs médicaux (respiratoire, diagnostic, mobilité, soins à domicile, équipements cliniques). Ce study case propose un <strong>système couleur structurant</strong> permettant d’identifier immédiatement les gammes produits, d’améliorer la lisibilité des supports multi-produits et de garantir une déclinaison homogène (print, packaging, UI), dans le respect des codes du secteur médical.</p>
+</section>
+
+<section class="section" id="principes">
+    <div class="section-head"><span class="section-num">02</span><h2>Principes de design</h2></div>
+    <p>La couleur est pensée comme <strong>outil d’orientation</strong> : fonctionnelle, cohérente, prévisible. Architecture en trois niveaux : <strong>couleurs corporate</strong> (marque mère), <strong>couleurs de gammes</strong> (une dominante par famille produit), <strong>couleurs d’usage</strong> (alertes, interactions). Règles : primauté de la marque, une couleur = une information, palette volontairement restreinte, compatibilité multi-supports et accessibilité.</p>
+</section>
+
+<section class="section" id="gammes">
+    <div class="section-head"><span class="section-num">03</span><h2>Déclinaison par gamme produit</h2></div>
+    <p>Chaque grande famille dispose d’une couleur dominante déclinée en nuances contrôlées.</p>
+    <ul>
+        <li><strong>Solutions respiratoires</strong> — Bleu clair / cyan (respiration, fluidité).</li>
+        <li><strong>Diagnostic & monitoring</strong> — Vert médical doux (mesure, précision, données).</li>
+        <li><strong>Soins à domicile & chronic care</strong> — Teal doux (confiance, accompagnement long terme).</li>
+        <li><strong>Mobilité & rééducation</strong> — Gris structurant + accent orange (signalisation, sécurité).</li>
+        <li><strong>Équipements cliniques & urgence</strong> — Rouge désaturé (alerte uniquement, jamais en fond).</li>
+    </ul>
+</section>
+
+<section class="section" id="palette-corporate">
+    <div class="section-head"><span class="section-num">04</span><h2>Palette corporate (marque mère)</h2></div>
+    <table class="yuwell-table">
+        <thead>
+            <tr>
+                <th>Aperçu</th>
+                <th>Usage</th>
+                <th>Nom</th>
+                <th>HEX</th>
+                <th>RGB</th>
+                <th>Pantone</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in palette_corporate %}
+            <tr>
+                <td><span class="swatch" style="background-color: {{ c.hex }};"></span></td>
+                <td>{{ c.usage }}</td>
+                <td>{{ c.name }}</td>
+                <td><code>{{ c.hex }}</code></td>
+                <td>{{ c.rgb }}</td>
+                <td>{{ c.pantone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<section class="section" id="palette-gammes">
+    <div class="section-head"><span class="section-num">05</span><h2>Palettes par gamme produit</h2></div>
+    {% for gamme in palette_gammes %}
+    <div class="gamme-block">
+        <h3>{{ gamme.gamme }}</h3>
+        <p>{{ gamme.description }}</p>
+        <div class="palette-grid">
+            {% for c in gamme.colors %}
+            <div class="palette-item">
+                <span class="swatch" style="background-color: {{ c.hex }};"></span>
+                <span>{{ c.name }} — {{ c.hex }} · {{ c.pantone }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+<section class="section" id="regles">
+    <div class="section-head"><span class="section-num">06</span><h2>Règles d’usage</h2></div>
+    <p>Une gamme = une couleur dominante. Maximum deux couleurs de gamme sur un même support. Le bleu corporate reste prioritaire. Couleurs de gamme pour orienter, pas décorer. Contraste texte/fond et accessibilité (daltonisme, lisibilité) intégrés dès la conception.</p>
+</section>
+
+<section class="section" id="cta">
+    <div class="section-head"><span class="section-num">07</span><h2>Bénéfices pour Yuwell</h2></div>
+    <p>Meilleure lisibilité du portefeuille produit, identification immédiate des familles, cohérence internationale renforcée, système scalable et maintenable, réduction des erreurs de déclinaison graphique.</p>
+</section>
+{% endblock %}

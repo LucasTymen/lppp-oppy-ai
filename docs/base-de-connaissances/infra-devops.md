@@ -89,7 +89,7 @@ Document de référence pour l’architecte DevOps / ingénieur système : flux,
 | Cible | Usage typique | Secrets / config |
 |-------|----------------|------------------|
 | **Vercel** | **Frontend Next.js** (landing pages) — déploiement natif Next.js, liaison Git, déploiement auto. **Espace projet** : [vercel.com/lucas-tymens-projects](https://vercel.com/lucas-tymens-projects). Voir `stack-frontend-nextjs-react.md`. | Env vars dans le dashboard Vercel ; token CLI créé dans Vercel (Account → Tokens), jamais dans le dépôt |
-| **Contabo** | VPS pour Django, Docker, PostgreSQL, Redis, Celery, n8n, Flowise | SSH + `.env` sur le serveur ; docker-compose ou stack déployée via CI ou manuellement |
+| **Contabo** | VPS pour Django, Docker, PostgreSQL, Redis, Celery, n8n, Flowise. **Coexistence avec Squid Research** : voir `deploiement-contabo-lppp-securite.md` (isolation, sécurisation DevOps/Pentester). | SSH + `.env` sur le serveur ; docker-compose ou stack déployée via CI ou manuellement |
 
 - **CI (optionnel)** : GitHub Actions / GitLab CI pour tests, lint, puis déploiement (build Docker, push, ou SSH vers Contabo). Les secrets (tokens, clés SSH déploy) sont dans les variables CI, jamais dans le code.
 

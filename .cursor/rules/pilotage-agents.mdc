@@ -15,6 +15,13 @@ alwaysApply: true
 - **Coexistence LPPP / SquidResearch** : toute décision ou recommandation touchant Docker, ports, .env ou les deux projets doit s’appuyer sur le **log commun**. Pointeur : `docs/base-de-connaissances/log-commun-lppp-squidresearch.md` (document canonique dans le dépôt SquidResearch). **Agents de coordination** (Chef de Projet, Orchestrateur, Conseiller en mode coordination, DevOps) le consultent **systématiquement** dans ce contexte.
 - **Priorité SquidResearch** : pour toute modification de **conteneurs** ou de **credentials**, **SquidResearch a la priorité**. LPPP **s’adapte**. Ne jamais risquer d’endommager la prod ou l’écosystème SquidResearch. En cas de conflit (ex. noms de conteneurs, ports), ne modifier que les conteneurs LPPP (`lppp_*`) ; jamais toucher aux conteneurs ou au .env SquidResearch. Décision : `decisions.md` ; infra : `infra-devops.md` § 1.
 
+## Agents non destructifs — protection des données
+
+- **Tous les agents sont non destructifs** : ne jamais proposer ni exécuter une action qui supprime ou réinitialise des données (bases, volumes, fichiers métier) sans **sauvegarde préalable** et **demande explicite** de l’utilisateur.
+- **Interdictions** : pas de `docker compose down -v` (suppression des volumes), pas de recréation de base ou de volume « pour repartir à zéro », pas de suppression de données utilisateur ou de workflows sans backup et accord.
+- **Si un correctif implique de toucher aux données** : (1) proposer d’abord une solution **sans perte** (aligner .env sur l’existant, créer un utilisateur côté Postgres, etc.) ; (2) si une réinitialisation est vraiment demandée par l’utilisateur, rappeler la procédure de **sauvegarde** (`make backup`, voir `protection-donnees-et-sauvegardes.md`) puis obtenir son accord avant toute action destructive.
+- **Sauvegardes** : avant migrations ou relance à risque, rappeler ou exécuter `make backup` ; les procédures de sauvegarde (PostgreSQL, workflows Flowise/n8n) sont dans `docs/base-de-connaissances/` (voir `protection-donnees-et-sauvegardes.md`, `sauvegarde-workflows-flowise-n8n.md`).
+
 ## Anti-hallucination
 
 - Ne jamais inventer de fichiers, d’API, de variables ou de fonctionnalités qui n’existent pas dans le dépôt.
@@ -30,13 +37,15 @@ alwaysApply: true
 
 ## Terminal — WSL (bash) par défaut
 
-- **Contexte LPPP** : environnement **Windows avec WSL installé** ; le travail se fait **dans WSL**. **Par défaut** : exécuter les commandes (git, make, python, pip, docker, etc.) dans **WSL (bash)**. PowerShell est possible mais l’utilisateur le privilégie beaucoup moins — ne proposer PowerShell qu’en secours. Chemin projet WSL : `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`. Voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+- **Contexte LPPP** : environnement **Windows avec WSL installé** ; le travail se fait **dans WSL**. **Par défaut** : exécuter les commandes (git, make, python3, pip, docker, etc.) dans **WSL (bash)**. PowerShell est possible mais l’utilisateur le privilégie beaucoup moins — ne proposer PowerShell qu’en secours. Chemin projet WSL : `/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`. Voir `docs/base-de-connaissances/environnement-wsl-linux.md`.
+- **Python sur l’hôte (WSL/Linux)** : **ne jamais** proposer ou écrire une commande commençant par `python` ; utiliser **`python3`** (commande système officielle). Sur WSL/Linux, `python` n’existe souvent pas (`command not found`) ou pointe ailleurs. Ex. : `python3 manage.py migrate`, `python3 manage.py runserver`, `python3 -c "..."`. (Dans les conteneurs Docker : `docker compose exec web python ...` reste valide.)
 - Si l’utilisateur demande explicitement PowerShell ou Windows, utiliser alors le shell Windows.
 - **Git** : **penser à l'installer ou à le rendre disponible** (WSL, Git Bash) pour les commit et push. En clôture de livraison ou de feature : **commit + push sur les deux remotes** (origin + gitlab), **tout le temps**. Commandes : `make push-both` ou `make commit-push MSG="..."`. Réf. `git-remotes-github-gitlab.md`, template de segmentation § Règle Git.
 
-## Référence éditoriale
+## Référence éditoriale et design
 
 - Pour tout contenu rédigé (landing, docs, messages) : appliquer les bonnes pratiques dans `docs/bonnes-pratiques.md` (éditorial anti-détection IA, humanisation).
+- **Design** : toutes les pages doivent être responsives (règle explicite pour tous les projets — `docs/bonnes-pratiques.md` § 5). Designer prioritaire ; Orchestrateur rappel ; Chef de Projet validation.
 
 ## Sécurité
 
@@ -53,7 +62,7 @@ alwaysApply: true
 ## Rangement, nettoyage et organisation
 
 - **Nettoyer derrière soi** : ne jamais laisser de fichiers temporaires, scripts one-shot ou debug en fin de session ; les supprimer.
-- **Rien d’inutile à la racine** : ne pas créer de fichiers ou dossiers à la racine sauf ceux prévus (README, Makefile, manage.py, docker-compose, requirements, .env.example, .gitignore, dossiers apps/, lppp/, docs/, docker/, templates/, .cursor/). Voir `docs/bonnes-pratiques.md` § 5.
+- **Rien d’inutile à la racine** : ne pas créer de fichiers ou dossiers à la racine sauf ceux prévus (README, Makefile, manage.py, docker-compose, requirements, .env.example, .gitignore, dossiers apps/, lppp/, docs/, docker/, templates/, .cursor/). Voir `docs/bonnes-pratiques.md` § 6.
 - **Pas de scripts temporaires** : interdiction de créer des scripts « pour tester » ou « au cas où » qui restent dans le dépôt. Script utile → intégrer au bon endroit (commande Django, Makefile, ou dossier `scripts/` documenté) ; sinon supprimer.
 - **Organisation** : code métier dans `apps/<app>/`, doc dans `docs/`, config dans `lppp/` et `docker/`. Un fichier = un rôle clair ; pas de doublons ni de fichiers inutiles.
 
@@ -63,6 +72,7 @@ alwaysApply: true
   1. **Git init** (si besoin), **premier commit**, **push** vers un **nouveau repo au nom de la société** (ex. `landing-p4s-archi`) pour s'en rappeler et retrouver facilement le projet.
   2. **S'assurer que le déploiement se fait** (ex. Vercel) et que **la page fonctionne** (URL accessible, pas d'erreur).
 - **C’est aux agents DevOps et Architecte réseau de se charger de ça et de tout créer et actionner** (repo, git init, commit, push, Vercel, vérification déploiement et page). Dev Django / Designer fournissent le code ; Chef de Projet valide la checklist. Référence : `docs/base-de-connaissances/procedure-fin-landing-repo-deploiement.md`, `agents-roles-responsabilites.md` (RACI, Phase 5).
+- **Sécurité (DEBUG en prod)** : quand on pousse les pages en prod, le **Chef de Projet**, le **DevOps** et l'**Architecte réseau** (ingénieur réseau) doivent **passer les pages en debug mode off** (`DEBUG=False`) et s'assurer que la checklist `regles-securite.md` § 9 est respectée. Aucun déploiement prod sans cette vérification.
 
 ## Orchestrateur et registre des ressources
 

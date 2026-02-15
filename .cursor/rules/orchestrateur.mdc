@@ -38,6 +38,7 @@ Règle pour l’**agent orchestrateur** : maintenir en temps réel le registre d
 - S’assurer que chaque règle dans `.cursor/rules/` est listée dans le registre avec le rôle concerné.
 - S’assurer que les guides Chef de Projet et Agents référencent le registre pour « ressources à disposition ».
 - S’assurer que la procédure « ajouter un nouvel agent » dans le registre est appliquée à chaque ajout.
+- **Rappel Designer / projets** : toutes les pages doivent être responsives (règle explicite pour tous les projets — `docs/bonnes-pratiques.md` § 5).
 
 ## Références croisées à maintenir
 
