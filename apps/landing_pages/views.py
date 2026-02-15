@@ -1,3 +1,4 @@
+import json
 from itertools import groupby
 from pathlib import Path
 
@@ -201,7 +202,19 @@ def landing_public(request, slug):
     lp = get_object_or_404(LandingPage, slug=slug)
     if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
         raise Http404("Landing non publiée")
-    content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+    # FitClem : source de vérité = fichier JSON (modifications visibles sans --update)
+    if lp.slug == "fitclem":
+        fitclem_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / "fitclem" / "landing-proposition-fitclem.json"
+        if fitclem_json_path.exists():
+            try:
+                with open(fitclem_json_path, encoding="utf-8") as f:
+                    content = _content_with_defaults(json.load(f), lp.template_key)
+            except (json.JSONDecodeError, OSError):
+                content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+        else:
+            content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+    else:
+        content = _content_with_defaults(lp.content_json or {}, lp.template_key)
     # Pour les slugs enregistrés (ex. orsys), le thème vient de themes.py → les modifs sont visibles sans --update
     if lp.slug in LANDING_THEMES:
         theme_dict, theme_css = LANDING_THEMES[lp.slug]

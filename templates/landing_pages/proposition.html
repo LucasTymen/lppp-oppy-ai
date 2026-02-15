@@ -20,13 +20,17 @@
         :root {
             --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
             --lp-section-padding: clamp(3rem, 8vw, 5rem);
-            /* Breakpoints (équipe style : déclinaisons tablette / desktop / HD) */
+            /* Mobile-first : base = mobile ; min-width pour tablette, desktop, HD */
+            --lp-bp-mobile: 480px;
             --lp-bp-tablet: 768px;
             --lp-bp-desktop: 1024px;
             --lp-bp-hd: 1440px;
         }
         * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
         body {
             font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif);
             margin: 0;
@@ -35,26 +39,38 @@
             color: var(--lp-text, #e6e6e6);
             line-height: 1.6;
             font-size: 1rem;
+            overflow-x: hidden;
+            width: 100%;
         }
 
-        /* ===== Nav sticky — bordure couleur société ===== */
+        /* ===== Nav sticky — mobile-first, responsive tous devices ===== */
         .nav {
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 1.5rem;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
             background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent);
+            width: 100%;
+            max-width: 100%;
         }
-        .nav-logo { max-height: 36px; width: auto; display: block; }
-        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 0.75rem;
+            align-items: center;
+            justify-content: flex-end;
+        }
         .nav-links a {
-            font-size: 0.9rem;
+            font-size: clamp(0.8rem, 2.2vw, 0.9rem);
             font-weight: 500;
             color: var(--lp-muted, #999);
             text-decoration: none;
@@ -84,17 +100,20 @@
             font-weight: 600;
         }
 
-        /* ===== Hero pleine hauteur (effet waouh) ===== */
+        /* ===== Hero pleine hauteur — mobile-first ===== */
         .hero {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem 1.5rem 4rem;
+            padding: 1.5rem 1rem 3rem;
             position: relative;
             overflow: hidden;
+            width: 100%;
+            max-width: 100%;
         }
         /* Hero (Aérosection) : ton image en background 100 %, parallaxe, assombrissement léger uniquement */
         .hero.has-bg-image {
@@ -278,10 +297,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== Sections (style page perso : aérées, couleurs, effets) ===== */
+        /* ===== Sections — mobile-first, responsive (max-width 100%) ===== */
         .section {
-            padding: var(--lp-section-padding) 1.5rem;
+            width: 100%;
             max-width: 720px;
+            padding: var(--lp-section-padding) 1rem;
             margin: 0 auto;
             animation: sectionReveal 0.7s var(--lp-ease) both;
         }
@@ -334,9 +354,10 @@
         .section p:last-child { margin-bottom: 0; }
 
         .icebreaker {
+            width: 100%;
             max-width: 720px;
             margin: 0 auto 1rem;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1rem;
             background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d));
             border-left: 4px solid var(--lp-primary, #4a9eff);
             border-radius: 0 12px 12px 0;
@@ -347,7 +368,9 @@
         .pain-list li { margin-bottom: 0.5rem; }
 
         .card {
-            padding: 1.5rem;
+            width: 100%;
+            max-width: 100%;
+            padding: 1.25rem 1rem;
             background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
             border: 1px solid var(--lp-border, rgba(255,255,255,0.08));
             border-radius: 16px;
@@ -401,6 +424,9 @@
             background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
             border-radius: 16px;
             border-left: 4px solid var(--lp-primary, #4a9eff);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            max-width: 100%;
         }
         .services-panels .services-panel h3 { font-size: 1.1rem; margin: 0 0 0.5rem; color: var(--lp-heading, #fff); }
         .services-panels .services-panel p { margin: 0; }
@@ -498,6 +524,18 @@
             box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
         }
 
+        /* Contenu principal : ne jamais déborder */
+        main#top { width: 100%; max-width: 100%; overflow-x: hidden; }
+
+        /* ===== Responsive : petit mobile (480px–767px) — base = mobile < 480px ===== */
+        @media (min-width: 480px) {
+            .nav { padding: 0.85rem 1.25rem; }
+            .hero { padding: 2rem 1.25rem 3.5rem; }
+            .section { padding: var(--lp-section-padding) 1.25rem; }
+            .icebreaker { padding: 1rem 1.25rem; }
+            .card { padding: 1.35rem 1.25rem; }
+        }
+
         /* ===== Responsive : tablette (768px) ===== */
         @media (min-width: 768px) {
             .nav { padding: 1rem 2rem; }
@@ -545,6 +583,42 @@
             .cta-wrap .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
         }
 
+        /* ===== Carousel chiffres clés (infographies animées + graphiques) ===== */
+        .key-figures-section { padding: var(--lp-section-padding) 1rem; max-width: 720px; margin: 0 auto; width: 100%; }
+        .key-figures-carousel { position: relative; overflow: hidden; border-radius: 20px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)); border: 1px solid var(--lp-border, rgba(255,255,255,0.08)); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .key-figures-track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .key-figures-slide { min-width: 100%; padding: 2rem 1.25rem; text-align: center; }
+        .key-figures-slide .kpi-value { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; color: var(--lp-primary, #4a9eff); margin: 0 0 0.25rem; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .key-figures-slide.visible .kpi-value { opacity: 1; transform: translateY(0); }
+        .key-figures-slide .kpi-unit { font-size: 1rem; font-weight: 600; color: var(--lp-secondary, #5ebeff); margin-bottom: 0.5rem; }
+        .key-figures-slide .kpi-label { font-size: 0.9rem; color: var(--lp-muted, #999); max-width: 26ch; margin: 0 auto; line-height: 1.45; }
+        .key-figures-nav { display: flex; justify-content: center; align-items: center; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+        .key-figures-nav button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--lp-primary, #4a9eff); background: transparent; color: var(--lp-primary, #4a9eff); font-size: 1.4rem; cursor: pointer; line-height: 1; transition: background 0.2s ease, color 0.2s ease; }
+        .key-figures-nav button:hover { background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); }
+        .key-figures-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.5rem; }
+        .key-figures-dots span { width: 8px; height: 8px; border-radius: 50%; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+        .key-figures-dots span.active { background: var(--lp-primary, #4a9eff); transform: scale(1.25); }
+        .key-figures-slide.chart-slide { padding: 1.5rem; }
+        .key-figures-slide.chart-slide h3 { font-size: 1rem; margin: 0 0 1rem; color: var(--lp-heading, #fff); text-transform: uppercase; letter-spacing: 0.04em; }
+        .key-figures-bar-chart { display: flex; align-items: flex-end; justify-content: center; gap: 1.25rem; height: 140px; padding: 0 0.5rem; }
+        .key-figures-bar-group { text-align: center; }
+        .key-figures-bar { width: 48px; border-radius: 10px 10px 0 0; margin: 0 auto 0.4rem; height: 0; background: linear-gradient(180deg, var(--lp-primary, #4a9eff), var(--lp-secondary, #5ebeff)); transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        .key-figures-slide.visible .key-figures-bar { height: var(--bar-h, 60%); }
+        .key-figures-bar-group .bar-val { font-size: 0.8rem; font-weight: 600; color: var(--lp-primary, #4a9eff); }
+        .key-figures-timeline { display: flex; flex-direction: column; gap: 0.75rem; max-width: 300px; margin: 0 auto; }
+        .key-figures-timeline-item { display: flex; align-items: flex-start; gap: 0.75rem; text-align: left; padding: 0.65rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-radius: 12px; border-left: 4px solid var(--lp-primary, #4a9eff); opacity: 0; transform: translateX(-12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .key-figures-slide.visible .key-figures-timeline-item { opacity: 1; transform: translateX(0); }
+        .key-figures-slide.visible .key-figures-timeline-item:nth-child(1) { transition-delay: 0.08s; }
+        .key-figures-slide.visible .key-figures-timeline-item:nth-child(2) { transition-delay: 0.2s; }
+        .key-figures-timeline-item .t-period { font-weight: 700; color: var(--lp-primary, #4a9eff); min-width: 4.5rem; font-size: 0.95rem; }
+        .key-figures-timeline-item .t-desc { font-size: 0.85rem; color: var(--lp-muted, #999); margin: 0; line-height: 1.4; }
+        @media (prefers-reduced-motion: reduce) {
+            .key-figures-track { transition: none; }
+            .key-figures-slide .kpi-value, .key-figures-slide.visible .kpi-value { transition: none; opacity: 1; transform: none; }
+            .key-figures-slide.visible .key-figures-bar { transition: none; }
+            .key-figures-timeline-item, .key-figures-slide.visible .key-figures-timeline-item { transition: none; opacity: 1; transform: none; }
+        }
+
         /* ===== Responsive : HD (1440px) ===== */
         @media (min-width: 1440px) {
             body { font-size: 1.0625rem; }
@@ -579,6 +653,7 @@
         <span style="font-weight:700; color: var(--lp-text);">{{ landing_page.prospect_company|default:content.page_title|default:"Landing" }}</span>
         {% endif %}
         <div class="nav-links">
+            {% if content.key_figures_carousel %}<a href="#chiffres-cles">Chiffres clés</a>{% endif %}
             {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
             {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
             {% if content.loom_embed_url %}<a href="#demo">Démo</a>{% endif %}
@@ -636,6 +711,54 @@
 
         {% if content.icebreaker %}<p class="icebreaker">{{ content.icebreaker }}</p>{% endif %}
         {% if content.intro %}<p class="icebreaker">{{ content.intro }}</p>{% elif content.hero_title %}<p class="icebreaker">{{ content.hero_title }}</p>{% endif %}
+
+        {% if content.key_figures_carousel %}
+        <section class="section key-figures-section" id="chiffres-cles">
+            <div class="section-head"><span class="section-num">00</span><h2>Chiffres clés</h2></div>
+            <div class="key-figures-carousel" role="region" aria-label="Carrousel chiffres clés et graphiques">
+                <div class="key-figures-track" id="key-figures-track">
+                    {% for item in content.key_figures_carousel %}
+                    <div class="key-figures-slide" data-index="{{ forloop.counter0 }}">
+                        <p class="kpi-value">{{ item.value }}</p>
+                        {% if item.unit %}<p class="kpi-unit">{{ item.unit }}</p>{% endif %}
+                        <p class="kpi-label">{{ item.label }}</p>
+                    </div>
+                    {% endfor %}
+                    <div class="key-figures-slide chart-slide" data-index="{{ content.key_figures_carousel|length }}">
+                        <h3>Manque à gagner SEO (fourchette)</h3>
+                        <div class="key-figures-bar-chart">
+                            <div class="key-figures-bar-group">
+                                <div class="key-figures-bar" style="--bar-h: 41%;" aria-hidden="true"></div>
+                                <p class="bar-val">132 k€/an</p>
+                            </div>
+                            <div class="key-figures-bar-group">
+                                <div class="key-figures-bar" style="--bar-h: 100%;" aria-hidden="true"></div>
+                                <p class="bar-val">324 k€/an</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="key-figures-slide chart-slide" data-index="{{ content.key_figures_carousel|length|add:1 }}">
+                        <h3>Plan d'action 30/60 jours</h3>
+                        <div class="key-figures-timeline">
+                            <div class="key-figures-timeline-item">
+                                <span class="t-period">0–30 j</span>
+                                <p class="t-desc">Audit claims, matrice créa, 3 LP dédiées, A/B tests</p>
+                            </div>
+                            <div class="key-figures-timeline-item">
+                                <span class="t-period">30–60 j</span>
+                                <p class="t-desc">CRM post-achat (J+7/14/28), bundles, retargeting par objectif</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="key-figures-nav">
+                    <button type="button" class="key-figures-prev" aria-label="Slide précédent">‹</button>
+                    <button type="button" class="key-figures-next" aria-label="Slide suivant">›</button>
+                </div>
+                <div class="key-figures-dots" id="key-figures-dots" aria-hidden="true"></div>
+            </div>
+        </section>
+        {% endif %}
 
         {% if content.pain_points or content.activite_pain_points %}
         <section class="section" id="enjeux">
@@ -731,20 +854,24 @@
         </section>
         {% endif %}
 
-        {% if content.seo_resume and content.rapport_url %}
+        {% if content.seo_resume %}
         <section class="section" id="resume-seo">
             <div class="section-head"><span class="section-num">03b</span><h2>{{ content.seo_resume.title|default:"Résumé SEO" }}</h2></div>
             <div class="card seo-resume-card">
                 {% if content.seo_resume.manque_annuel %}
                 <p class="seo-manque">Manque à gagner SEO estimé : {{ content.seo_resume.manque_annuel }}</p>
                 {% endif %}
+                {% if content.seo_resume.intro %}
+                <p>{{ content.seo_resume.intro }}</p>
+                {% endif %}
                 {% if content.seo_resume.problemes_cles %}
-                <p>{{ content.seo_resume.intro|default:"Problèmes principaux identifiés :" }}</p>
                 <ul>
                     {% for item in content.seo_resume.problemes_cles %}<li>{{ item }}</li>{% endfor %}
                 </ul>
                 {% endif %}
-                <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">{{ content.seo_resume.lien_analyse|default:"Voir l'analyse SEO complète →" }}</a>
+                {% if content.seo_resume.lien_analyse and content.rapport_url %}
+                <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">{{ content.seo_resume.lien_analyse }}</a>
+                {% endif %}
             </div>
         </section>
         {% endif %}
@@ -798,7 +925,7 @@
         <section class="section" id="coordonnees">
             <div class="section-head"><span class="section-num">07</span><h2>Coordonnées</h2></div>
             <div class="card">
-                <p class="coordonnees-intro">Pour échanger ou planifier un Diagnostic Flash, retrouvez mes coordonnées ci-dessous.</p>
+                <p class="coordonnees-intro">{% if content.coordonnees_intro %}{{ content.coordonnees_intro }}{% else %}Pour échanger ou planifier un Diagnostic Flash, retrouvez mes coordonnées ci-dessous.{% endif %}</p>
                 <ul class="coordonnees-list">
                     {% if content.contact_email or content.contact_gmail %}<li>Gmail : <span class="coordonnees-email" style="user-select:all">{% firstof content.contact_email content.contact_gmail|mailto_to_email %}</span></li>{% endif %}
                     {% if content.contact_linkedin %}<li><a href="{{ content.contact_linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>{% endif %}
@@ -826,6 +953,37 @@
             <a href="#" class="contact-modal-close">Fermer</a>
         </div>
     </div>
+    {% endif %}
+
+    {% if content.key_figures_carousel %}
+    <script>
+    (function() {
+        var track = document.getElementById('key-figures-track');
+        var dotsEl = document.getElementById('key-figures-dots');
+        if (!track || !dotsEl) return;
+        var slides = track.querySelectorAll('.key-figures-slide');
+        var total = slides.length;
+        var current = 0;
+        function goTo(i) {
+            current = (i + total) % total;
+            track.style.transform = 'translateX(-' + current * 100 + '%)';
+            for (var s = 0; s < slides.length; s++) slides[s].classList.toggle('visible', s === current);
+            var dots = dotsEl.querySelectorAll('span');
+            for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('active', d === current);
+        }
+        var prev = document.querySelector('.key-figures-prev');
+        var next = document.querySelector('.key-figures-next');
+        if (prev) prev.addEventListener('click', function() { goTo(current - 1); });
+        if (next) next.addEventListener('click', function() { goTo(current + 1); });
+        for (var i = 0; i < total; i++) {
+            var span = document.createElement('span');
+            span.setAttribute('data-index', i);
+            span.addEventListener('click', function() { goTo(parseInt(this.getAttribute('data-index'), 10)); });
+            dotsEl.appendChild(span);
+        }
+        goTo(0);
+    })();
+    </script>
     {% endif %}
 
     {% include "landing_pages/includes/scroll_top_on_load.html" %}
