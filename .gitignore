@@ -30,6 +30,9 @@ data/flowise/faiss/*/
 # ---- Sauvegardes PostgreSQL (make backup) — ne pas versionner les dumps ----
 backups/
 
+# ---- Message de commit temporaire (script) ----
+.git_commit_msg.txt
+
 # ---- Deploy (clones temporaires) ----
 deploy/repo-p4s/
 deploy/repo-*/
