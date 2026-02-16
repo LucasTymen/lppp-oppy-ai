@@ -1,6 +1,6 @@
 {
   "page_title": "Lucas Tymen — Candidature Responsable Marketing Digital FitClem",
-  "hero_headline": "FitClem, et si le marketing digital s'appuyait sur la data et le growth sans perdre l'ADN communautaire ?",
+  "hero_headline": "Et si chez FitClem, le marketing digital s'appuyait sur la data et le growth sans perdre l'ADN communautaire ?",
   "hero_sub_headline": "Candidature Responsable Marketing Digital — Étude marketing, SEO, KPI",
   "hero_subtitle": "Pour FitClem — Clémentine Sarlat",
   "hero_video_url": "https://www.youtube.com/watch?v=u1ZrZZHOYXU",
@@ -14,8 +14,19 @@
     "CRM et segmentation : resegmenter par objectif (silhouette / digestion / beauté / énergie) et par stade (nouveau / client) pour augmenter CTR et LTV.",
     "Compliance et scale : aligner les claims (ads) avec le positionnement « responsable » via un playbook safe/medium/risky pour sécuriser la diffusion."
   ],
-  "solution_workflow": "J'ai structuré mon approche en trois piliers. (1) Étude marketing : analyse PESTEL (réglementation compléments, transparence influenceurs, fitness at home, body positive, UX app, RGPD), SWOT (forces : identité fondatrice, modèle diversifié ; faiblesses : dépendance fondatrice, marché saturé ; opportunités : Plaisirs Gourmands, rétention ; menaces : plateformes gratuites, algorithmes), Porter (concurrence forte, substituts, rôle État) et étude concurrentielle (Trainsweateat, Luce Citron, retailers). (2) Growth et positionnement : alignement Ads → Landing (1 angle = 1 LP), preuve digestible (proof bites, UGC), playbook claims pour sécuriser le scale. (3) Plan 30/60 j : 0–30 j audit claims, matrice créa, 3 LP dédiées, A/B tests ; 30–60 j CRM post-achat, bundles, retargeting par objectif. Ce livrable en est la synthèse actionnable.",
-  "cta_text": "On en parle ?",
+  "solution_workflow": "J'ai structuré mon approche en trois piliers. Ce livrable en est la synthèse actionnable.",
+  "solution_piliers": [
+    {"title": "Étude marketing", "desc": "PESTEL, SWOT, Porter et étude concurrentielle (Trainsweateat, Luce Citron, retailers). Réglementation compléments, transparence influenceurs, fitness at home, body positive, RGPD."},
+    {"title": "Growth & positionnement", "desc": "Alignement Ads → Landing (1 angle = 1 LP). Preuve digestible (proof bites, UGC). Playbook claims pour sécuriser le scale."},
+    {"title": "Plan 30/60 j", "desc": "0–30 j : audit claims, matrice créa, 3 LP dédiées, A/B tests. 30–60 j : CRM post-achat, bundles, retargeting par objectif."}
+  ],
+  "solution_steps": [
+    {"num": 1, "label": "Audit claims & conformité"},
+    {"num": 2, "label": "Matrice créa (hooks × angles)"},
+    {"num": 3, "label": "3 LP dédiées + A/B tests"},
+    {"num": 4, "label": "CRM post-achat & retargeting"}
+  ],
+  "cta_text": "JE DÉCOUVRE",
   "cta_url": "",
   "contact_email": "lucas.tymen@gmail.com",
   "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Candidature Responsable Marketing Digital — FitClem",
@@ -30,9 +41,9 @@
     { "value": "0–30 j", "unit": "", "label": "Audit claims, matrice créa, 3 LP, A/B tests" },
     { "value": "30–60 j", "unit": "", "label": "CRM post-achat (J+7/14/28), bundles, retargeting par objectif" }
   ],
-  "alert_banner": "Candidature Responsable Marketing Digital — Livrable multipage (étude marketing, SEO, graphique, KPI)",
+  "alert_banner": "CANDIDATURE RESPONSABLE MARKETING DIGITAL — LIVRABLE COMPLET (ÉTUDE MARKETING, SEO, KPI)",
   "seo_resume": {
-    "title": "Résumé — Audit SEO et manque à gagner",
+    "title": "OPPORTUNITÉ SEO",
     "manque_annuel": "132–324 k€/an (estimation sur conversion, performance, visibilité)",
     "intro": "Erreurs techniques (429, lenteur), absence de H1 sur pages clés, images sans alt : le site agit comme un entonnoir percé. Manque à gagner quantifié : 132–324 k€/an. Axes prioritaires : performance (LCP, Speed Index), résolution des 429, H1 sur chaque page cible, alt sur toutes les images. Clusters à préempter : cellulite, rétention d'eau, digestion, collagène marin, routine. Recommandations : corriger la technique, structurer les pages (H1, alt), aligner le copy (tu/nous) et intégrer la preuve sociale (UGC, étude clinique) partout. L'étude est exposée ici en entier.",
     "problemes_cles": [
@@ -41,7 +52,7 @@
       "H1 manquants",
       "Alt images"
     ],
-    "lien_analyse": ""
+    "lien_analyse": "DÉCOUVRIR L'ÉTUDE →"
   },
   "coordonnees_intro": "Pour un échange ou recevoir le livrable complet :",
   "about_me_title": "Qui je suis",

@@ -43,52 +43,81 @@
             width: 100%;
         }
 
-        /* ===== Nav sticky — mobile-first, responsive tous devices ===== */
+        /* ===== Nav sticky top — mobile-first, responsive harmonieux, effet waouh ===== */
         .nav {
             position: sticky;
             top: 0;
-            z-index: 100;
+            left: 0;
+            right: 0;
+            z-index: 1000;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 0.75rem;
             padding: 0.75rem 1rem;
-            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent);
+            min-height: 52px;
+            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 92%, transparent);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 100%;
+            transition: background 0.35s var(--lp-ease), box-shadow 0.35s var(--lp-ease), border-color 0.35s var(--lp-ease);
+        }
+        .nav.nav--scrolled {
+            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 97%, transparent);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            border-bottom-color: color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+        @keyframes nav-enter {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav { animation: nav-enter 0.45s var(--lp-ease) both; }
+        @media (prefers-reduced-motion: reduce) {
+            .nav { animation: none; }
         }
         .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem 0.75rem;
+            gap: 0.35rem 0.6rem;
             align-items: center;
             justify-content: flex-end;
         }
+        /* Mobile-first : zone de touch min 44px pour accessibilité */
         .nav-links a {
             font-size: clamp(0.8rem, 2.2vw, 0.9rem);
             font-weight: 500;
             color: var(--lp-muted, #999);
             text-decoration: none;
-            transition: color 0.2s var(--lp-ease);
+            padding: 0.5rem 0.4rem;
+            min-height: 44px;
+            min-width: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: color 0.2s var(--lp-ease), background 0.2s var(--lp-ease);
         }
-        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, transparent); }
         .nav-cta {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
             padding: 0.5rem 1rem;
             background: var(--lp-primary, #4a9eff);
             color: var(--lp-cta-text, #fff);
             font-weight: 600;
             font-size: 0.9rem;
-            border-radius: 8px;
+            border-radius: 12px;
             text-decoration: none;
-            transition: transform 0.2s var(--lp-ease), box-shadow 0.2s var(--lp-ease);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease), background 0.2s var(--lp-ease);
         }
-        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent); }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
 
         /* ===== Bandeau alerte (style 0Flaw : bandeau teal sous la nav) ===== */
         .alert-banner {
@@ -122,29 +151,30 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-        /* Hero fond vidéo : parallaxe (fixed) comme page concierge — reste en place au scroll */
+        /* Hero fond vidéo : uniquement dans la section hero, avec parallaxe au scroll */
         .hero.has-bg-video .hero-bg-video,
         .hero.has-bg-video .hero-bg-thumbnail {
-            position: fixed;
-            top: 0;
-            left: 0;
+            position: absolute;
+            inset: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             z-index: 0;
             overflow: hidden;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            will-change: transform;
         }
         .hero.has-bg-video .hero-bg-video iframe,
         .hero.has-bg-video .hero-bg-video video {
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 100vw;
-            height: 56.25vw;
-            min-height: 100vh;
-            min-width: 177.78vh;
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
             transform: translate(-50%, -50%);
             pointer-events: none;
             border: 0;
@@ -176,11 +206,8 @@
         }
         .hero.has-bg-video::before {
             content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            position: absolute;
+            inset: 0;
             z-index: 1;
             background: rgba(0, 0, 0, 0.35);
             pointer-events: none;
@@ -193,7 +220,7 @@
             background: rgba(0, 0, 0, 0.15);
             pointer-events: none;
         }
-        /* Scanlines légères (texture) — image et vidéo */
+        /* Texture légère (optionnelle) : limitée au hero uniquement, pas au scroll */
         .hero.has-bg-image::after {
             content: '';
             position: absolute;
@@ -203,25 +230,23 @@
                 0deg,
                 transparent 0,
                 transparent 2px,
-                rgba(0, 0, 0, 0.12) 2px,
-                rgba(0, 0, 0, 0.12) 4px
+                rgba(0, 0, 0, 0.04) 2px,
+                rgba(0, 0, 0, 0.04) 4px
             );
             pointer-events: none;
         }
+        /* Scanlines uniquement dans le hero : position absolute pour ne pas recouvrir le contenu en dessous au scroll */
         .hero.has-bg-video::after {
             content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
+            position: absolute;
+            inset: 0;
             z-index: 2;
             background: repeating-linear-gradient(
                 0deg,
                 transparent 0,
                 transparent 2px,
-                rgba(0, 0, 0, 0.12) 2px,
-                rgba(0, 0, 0, 0.12) 4px
+                rgba(0, 0, 0, 0.04) 2px,
+                rgba(0, 0, 0, 0.04) 4px
             );
             pointer-events: none;
         }
@@ -527,21 +552,22 @@
         /* Contenu principal : ne jamais déborder */
         main#top { width: 100%; max-width: 100%; overflow-x: hidden; }
 
-        /* ===== Responsive : petit mobile (480px–767px) — base = mobile < 480px ===== */
+        /* ===== Responsive : mobile-first — 480px ===== */
         @media (min-width: 480px) {
-            .nav { padding: 0.85rem 1.25rem; }
+            .nav { padding: 0.85rem 1.25rem; min-height: 56px; }
             .hero { padding: 2rem 1.25rem 3.5rem; }
             .section { padding: var(--lp-section-padding) 1.25rem; }
             .icebreaker { padding: 1rem 1.25rem; }
             .card { padding: 1.35rem 1.25rem; }
         }
 
-        /* ===== Responsive : tablette (768px) ===== */
+        /* ===== Responsive : tablette 768px — waouh espacement ===== */
         @media (min-width: 768px) {
-            .nav { padding: 1rem 2rem; }
+            .nav { padding: 1rem 2rem; min-height: 60px; }
             .nav-logo { max-height: 42px; }
-            .nav-links a { font-size: 1rem; }
-            .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; }
+            .nav-links { gap: 0.5rem 1rem; }
+            .nav-links a { font-size: 1rem; padding: 0.5rem 0.6rem; }
+            .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; border-radius: 14px; }
             .hero { padding: 3rem 2rem 5rem; }
             .hero h1 { font-size: clamp(2.25rem, 5.5vw, 3.5rem); max-width: 22ch; }
             .hero .hero-sub { font-size: 1.15rem; max-width: 32ch; }
@@ -557,9 +583,9 @@
             .cta-wrap { padding: var(--lp-section-padding) 2rem; }
         }
 
-        /* ===== Responsive : desktop (1024px) ===== */
+        /* ===== Responsive : desktop 1024px — waouh confort lecture ===== */
         @media (min-width: 1024px) {
-            .nav { padding: 1.25rem 2.5rem; }
+            .nav { padding: 1.25rem 2.5rem; min-height: 64px; }
             .nav-logo { max-height: 48px; }
             .nav-links { gap: 0.75rem 1.5rem; }
             .hero { padding: 4rem 2.5rem 6rem; }
@@ -619,13 +645,13 @@
             .key-figures-timeline-item, .key-figures-slide.visible .key-figures-timeline-item { transition: none; opacity: 1; transform: none; }
         }
 
-        /* ===== Responsive : HD (1440px) ===== */
+        /* ===== Responsive : HD 1440px — waouh large écran ===== */
         @media (min-width: 1440px) {
             body { font-size: 1.0625rem; }
-            .nav { padding: 1.5rem 3rem; }
+            .nav { padding: 1.5rem 3rem; min-height: 68px; }
             .nav-logo { max-height: 52px; }
             .nav-links a { font-size: 1.05rem; }
-            .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; }
+            .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; border-radius: 16px; }
             .hero { padding: 5rem 3rem 7rem; }
             .hero h1 { font-size: 3.75rem; max-width: 26ch; }
             .hero .hero-sub { font-size: 1.25rem; max-width: 40ch; }
@@ -761,26 +787,66 @@
         {% endif %}
 
         {% if content.pain_points or content.activite_pain_points %}
-        <section class="section" id="enjeux">
+        <section class="section{% if landing_page.slug == 'fitclem' %} content-player{% endif %}" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
+            <div class="content-player-text">
             {% if content.enjeux_lead %}<p class="section-lead">{{ content.enjeux_lead }}</p>{% endif %}
             {% if content.pain_points %}
             <ul class="pain-list">
                 {% for item in content.pain_points|as_list %}<li>{{ item }}</li>{% endfor %}
             </ul>
             {% else %}<p>{{ content.activite_pain_points }}</p>{% endif %}
+            </div>
+            {% if landing_page.slug == 'fitclem' %}
+            <div class="content-player-visual content-player-flowchart" aria-hidden="true">
+                <span class="flow-step">Pain point</span><span class="flow-arrow">→</span>
+                <span class="flow-step">Impact</span><span class="flow-arrow">→</span>
+                <span class="flow-step">Solution</span>
+            </div>
+            {% endif %}
         </section>
         {% endif %}
 
-        {% if content.solution_workflow or content.positionnement %}
-        <section class="section" id="solution">
+        {% if content.solution_workflow or content.positionnement or content.solution_piliers %}
+        <section class="section{% if landing_page.slug == 'fitclem' %} content-player solution-segmented{% endif %}" id="solution">
             <div class="section-head"><span class="section-num">02</span><h2>Comment je transforme le chaos en système</h2></div>
+            {% if landing_page.slug == 'fitclem' and content.solution_piliers %}
+            {# FitClem : boxes segmentées + infographie pour rythmer #}
+            {% if content.solution_workflow %}<p class="solution-lead">{{ content.solution_workflow }}</p>{% endif %}
+            <div class="solution-boxes">
+                {% for pilier in content.solution_piliers %}
+                <div class="solution-box">
+                    <h3 class="solution-box-title">{{ pilier.title }}</h3>
+                    <p class="solution-box-desc">{{ pilier.desc }}</p>
+                </div>
+                {% if forloop.counter == 2 %}
+            </div>
+            <div class="solution-infographic content-player-visual content-player-diagram" aria-hidden="true">
+                <p class="solution-infographic-label">Plan d'action opérationnel</p>
+                <div class="process-steps">
+                    {% for step in content.solution_steps %}
+                    <div class="process-step"><span class="process-num">{{ step.num }}</span>{{ step.label }}</div>
+                    {% empty %}
+                    <div class="process-step"><span class="process-num">1</span>Audit claims & conformité</div>
+                    <div class="process-step"><span class="process-num">2</span>Matrice créa (hooks × angles)</div>
+                    <div class="process-step"><span class="process-num">3</span>3 LP dédiées + A/B tests</div>
+                    <div class="process-step"><span class="process-num">4</span>CRM post-achat & retargeting</div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="solution-boxes solution-boxes-after">
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% else %}
+            {# Autres landings : comportement classique #}
             <div class="card">
                 <p>{{ content.solution_workflow|default:content.positionnement }}</p>
                 {% if content.workflow_image_url %}
                 <figure class="workflow-figure"><img src="{{ content.workflow_image_url }}" alt="Workflow" loading="lazy"></figure>
                 {% endif %}
             </div>
+            {% endif %}
         </section>
         {% endif %}
 
@@ -833,7 +899,7 @@
         {% endif %}
 
         {% if content.services %}
-        <section class="section" id="services">
+        <section class="section{% if landing_page.slug == 'fitclem' %} content-player{% endif %}" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             {% if content.rapport_url %}
             <div class="rapport-cta-block">
@@ -855,7 +921,7 @@
         {% endif %}
 
         {% if content.seo_resume %}
-        <section class="section" id="resume-seo">
+        <section class="section content-player{% if landing_page.slug == 'fitclem' %} fitclem-seo-grid{% endif %}" id="resume-seo">
             <div class="section-head"><span class="section-num">03b</span><h2>{{ content.seo_resume.title|default:"Résumé SEO" }}</h2></div>
             <div class="card seo-resume-card">
                 {% if content.seo_resume.manque_annuel %}
@@ -873,6 +939,14 @@
                 <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">{{ content.seo_resume.lien_analyse }}</a>
                 {% endif %}
             </div>
+            {% if landing_page.slug == 'fitclem' %}
+            <div class="content-player-dashboard" aria-hidden="true">
+                <div class="kpi-row"><span class="kpi-label">Performance (LCP)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 60%;"></div></div></div>
+                <div class="kpi-row"><span class="kpi-label">Erreurs 429</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 90%;"></div></div></div>
+                <div class="kpi-row"><span class="kpi-label">H1 manquants</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 75%;"></div></div></div>
+                <div class="kpi-row"><span class="kpi-label">Alt images</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 55%;"></div></div></div>
+            </div>
+            {% endif %}
         </section>
         {% endif %}
 
@@ -986,6 +1060,33 @@
     </script>
     {% endif %}
 
+    <!-- Nav sticky : effet waouh au scroll (classe .nav--scrolled) -->
+    <script>
+    (function() {
+        var nav = document.querySelector('.nav');
+        if (!nav) return;
+        function updateNav() { nav.classList.toggle('nav--scrolled', window.scrollY > 30); }
+        updateNav();
+        window.addEventListener('scroll', function() { requestAnimationFrame(updateNav); }, { passive: true });
+    })();
+    </script>
+    <!-- Parallaxe vidéo hero : la vidéo ne bouge que dans le hero et se décale légèrement au scroll -->
+    <script>
+    (function() {
+        var hero = document.querySelector('.hero.has-bg-video');
+        var videoLayer = hero && hero.querySelector('.hero-bg-video');
+        if (!videoLayer) return;
+        var factor = 0.28;
+        function updateParallax() {
+            var y = window.scrollY;
+            var maxY = hero.offsetHeight;
+            var translate = y <= maxY ? -y * factor : -maxY * factor;
+            videoLayer.style.transform = 'translate3d(0, ' + translate + 'px, 0)';
+        }
+        updateParallax();
+        window.addEventListener('scroll', function() { requestAnimationFrame(updateParallax); }, { passive: true });
+    })();
+    </script>
     {% include "landing_pages/includes/scroll_top_on_load.html" %}
 </body>
 </html>
