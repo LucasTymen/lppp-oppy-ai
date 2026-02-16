@@ -345,20 +345,21 @@ def _contact_dir(slug):
 def _rapport_html(slug):
     """
     Lit le rapport Markdown du dossier contact, retourne HTML ou None.
-    Priorité : rapport-teaser*.md (extrait public pour montrer le sérieux) si présent,
-    sinon rapport-complet*.md (source unique, généré une seule fois, trace pour réutilisation).
+    Priorité : rapport-teaser*.md, puis rapport-complet*.md, puis tout rapport-*.md.
     """
     contact = _contact_dir(slug)
     if not contact.is_dir():
         return None
-    # Teaser en priorité (1–2 éléments pour prouver qu'on a des données, sans tout dévoiler)
     teasers = list(contact.glob("rapport-teaser*.md"))
     rapports = list(contact.glob("rapport-complet*.md"))
+    autres = list(contact.glob("rapport-*.md"))
     path = None
     if teasers:
         path = teasers[0]
     elif rapports:
         path = rapports[0]
+    elif autres:
+        path = sorted(autres)[0]
     if not path:
         return None
     try:
@@ -379,13 +380,58 @@ def _common_landing_context(lp):
     }
 
 
+def _fallback_landing_from_contact(slug):
+    """
+    Si la landing n'existe pas en base, construit un objet minimal depuis docs/contacts/<slug>/
+    (ex. landing-proposition-fitclem.json) pour permettre d'afficher rapport / proposition.
+    Retourne (lp_mock, content) ou (None, None) si pas de dossier ou pas de JSON.
+    """
+    contact = _contact_dir(slug)
+    if not contact.is_dir():
+        return None, None
+    jsons = list(contact.glob("landing-proposition*.json"))
+    if not jsons:
+        jsons = list(contact.glob("landing-*.json"))
+    if not jsons:
+        return None, None
+    try:
+        with open(jsons[0], encoding="utf-8") as f:
+            content = json.load(f)
+    except Exception:
+        return None, None
+    # Objet minimal compatible avec _common_landing_context et template rapport
+    class MockLanding:
+        slug = slug
+        title = content.get("page_title", "Landing")
+        prospect_company = content.get("prospect_company", slug)
+        prospect_name = content.get("prospect_name", "")
+        content_json = content
+        template_key = "proposition"
+        is_published = True
+
+    return MockLanding(), content
+
+
 def landing_rapport(request, slug):
-    """Page « Consulter le rapport » : rendu du rapport complet Markdown (fiche + stratégie + SEO)."""
-    lp = get_object_or_404(LandingPage, slug=slug)
-    if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
-        raise Http404("Landing non publiée")
+    """Page « Consulter le rapport » : rendu du rapport complet Markdown. Fonctionne avec ou sans landing en base."""
+    lp = LandingPage.objects.filter(slug=slug).first()
+    if lp is None:
+        lp, content_from_json = _fallback_landing_from_contact(slug)
+        if lp is None:
+            raise Http404("Landing ou contact introuvable")
+        content = content_from_json
+        use_perso_style = _use_perso_style(lp)
+        ctx = {
+            "landing_page": lp,
+            "content": content,
+            "use_perso_style": use_perso_style,
+        }
+    else:
+        if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
+            raise Http404("Landing non publiée")
+        ctx = _common_landing_context(lp)
+
     report_html = _rapport_html(slug)
-    ctx = _common_landing_context(lp)
     ctx["report_html"] = report_html
     ctx["report_available"] = bool(report_html)
     response = render(request, "landing_pages/rapport.html", ctx)
