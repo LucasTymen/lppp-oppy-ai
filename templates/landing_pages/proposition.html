@@ -20,6 +20,9 @@
         :root {
             --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
             --lp-section-padding: clamp(3rem, 8vw, 5rem);
+            /* Contraste : fond clair → texte sombre, fond foncé → texte clair (voir docs/base-de-connaissances/contraste-textes-landing.md) */
+            --lp-text-on-light: #1a1a1a;
+            --lp-text-on-dark: #f5f5f5;
             /* Mobile-first : base = mobile ; min-width pour tablette, desktop, HD */
             --lp-bp-mobile: 480px;
             --lp-bp-tablet: 768px;
@@ -429,7 +432,8 @@
             color: var(--lp-heading, #fff);
             letter-spacing: -0.02em;
         }
-        .section p { margin: 0 0 0.75rem; }
+        /* Contraste : sections fond foncé par défaut → paragraphes clairs (voir contraste-textes-landing.md) */
+        .section p { margin: 0 0 0.75rem; color: var(--lp-text-on-dark, var(--lp-text, #e6e6e6)); }
         .section p:last-child { margin-bottom: 0; }
 
         .icebreaker {

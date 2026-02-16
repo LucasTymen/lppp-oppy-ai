@@ -80,6 +80,13 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Collaboration** : Chef de Projet (priorité, validation), Rédacteur (contenu et chiffres), Designer (charte si intégration), Expert SEO / Dev Django (données, intégration).
 - **Comment le solliciter** : `docs/base-de-connaissances/brief-infographiccraft.md` (format du brief THEME/AUDIENCE/TON/SECTIONS/DATA/CONSTRAINTS).
 
+### Designer UI/UX & Front-End (graphiste)
+
+- **Contraste textes / fond (obligatoire)** : `docs/base-de-connaissances/contraste-textes-landing.md` — fond clair → couleur de paragraphe sombre (`--lp-text-on-light`), fond foncé → couleur de paragraphe claire (`--lp-text-on-dark`) ; à appliquer partout et tout le temps sur les landings.
+- **Thématisation** : `docs/base-de-connaissances/theming-landing-prospect.md` ; thèmes dans `apps/landing_pages/themes.py`.
+- **Registre (ce fichier)** : `docs/base-de-connaissances/registre-agents-ressources.md`
+- **Règle** : `pilotage-agents.mdc`, `editorial.mdc` (contenus)
+
 ### Conseiller
 
 - **Registre (ce fichier)** : `docs/base-de-connaissances/registre-agents-ressources.md`
@@ -224,6 +231,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 | `generation-landing-nextjs-contenu-hero.md` | **Génération landing Next.js** : contenu depuis JSON contact → `src/content/landing.json` ; hero avec image (JSON ou défaut), parallax + scanlines **actifs par défaut** ; template = `standalone-ackuracy` — à appliquer automatiquement à chaque nouvelle landing | **Chef de Projet** (vérif.), Dev Django, Designer |
 | `reconstitution-landing-p4s-personnalisation.md` | **Reconstitution landing P4S** : tous les degrés de personnalisation (hero background, thème CSS Vampire, style perso, contenu complet) ; export statique aligné sur la vue Django ; procédure pour ne plus déployer un squelette | **DevOps**, Dev Django, Chef de Projet |
 | `css-vampire.md` | **CSS Vampire** : extraction du style du site cible (polices, couleurs, logo, fond) ; commande `css_vampire <url> [--slug] [--apply]` ; thème injecté dans content_json | Dev Django, Designer |
+| `contraste-textes-landing.md` | **Contraste textes / fond** : fond clair → paragraphe sombre (`--lp-text-on-light`), fond foncé → paragraphe clair (`--lp-text-on-dark`) ; à appliquer partout sur les landings. Réf. graphiste / Designer. | **Designer**, Dev Django |
 | `design-brief-landing-reference-cv.md` | **Brief design** : référence visuelle (landing CV / page perso Vercel) pour aligner la landing proposition sur ce niveau de design + style société (CSS Vampire) | **Designer** (priorité), Dev Django |
 | `docs/contacts/0flow/style-voix-et-design-0flaw.md` | **Style voix + design 0Flaw** : brief Rédacteur & Designer pour la landing 0flow — ton, vocabulaire, CTA alignés sur 0flaw.fr ; procédure CSS Vampire (https://0flaw.fr/ --slug 0flow --apply) | **Rédacteur**, **Designer**, Chef de Projet |
 | `formules-et-algorithmes-reference.md` | **Spec canonique** : formules mathématiques et algorithmes (score prospect, complétude, matching, normalisation) — s'en inspirer pour implémenter | Data Analyst (logique métier + algorithmes), Dev Django |
