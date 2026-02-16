@@ -119,6 +119,60 @@
         }
         .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
 
+        /* Mobile : waffle (hamburger) + drawer ; nav reste sticky */
+        .nav-waffle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--lp-text, #e6e6e6);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s var(--lp-ease), color 0.2s var(--lp-ease);
+        }
+        .nav-waffle:hover { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, transparent); color: var(--lp-primary, #4a9eff); }
+        .nav-waffle-icon { display: flex; flex-direction: column; gap: 5px; }
+        .nav-waffle-icon span { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 1px; transition: transform 0.25s var(--lp-ease), opacity 0.25s var(--lp-ease); }
+        .nav.nav--open .nav-waffle-icon span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav.nav--open .nav-waffle-icon span:nth-child(2) { opacity: 0; }
+        .nav.nav--open .nav-waffle-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        @media (max-width: 767px) {
+            .nav-waffle { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 52px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 999;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: flex-start;
+                gap: 0;
+                padding: 1rem;
+                background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 98%, transparent);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+                transform: translateX(100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s;
+                overflow-y: auto;
+            }
+            .nav.nav--open .nav-links { transform: translateX(0); opacity: 1; visibility: visible; }
+            .nav-links a { min-height: 48px; justify-content: flex-start; padding: 0.75rem 1rem; border-radius: 10px; }
+        }
+        @media (min-width: 768px) {
+            .nav-waffle { display: none !important; }
+        }
+
         /* ===== Bandeau alerte (style 0Flaw : bandeau teal sous la nav) ===== */
         .alert-banner {
             background: var(--lp-primary, #00C2CB);
@@ -678,6 +732,9 @@
         {% else %}
         <span style="font-weight:700; color: var(--lp-text);">{{ landing_page.prospect_company|default:content.page_title|default:"Landing" }}</span>
         {% endif %}
+        <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span class="nav-waffle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
         <div class="nav-links">
             {% if content.key_figures_carousel %}<a href="#chiffres-cles">Chiffres clés</a>{% endif %}
             {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
@@ -709,16 +766,8 @@
             {% elif content.hero_video_url %}
             {% with embed_url=content.hero_video_url|youtube_embed_background watch_url=content.hero_video_url|youtube_watch_url %}
             <div class="hero-bg-video">
-                <iframe
-                    src="{{ embed_url }}"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                    title="Fond hero"
-                    aria-hidden="true"
-                ></iframe>
+                <iframe src="{{ embed_url }}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond hero" aria-hidden="true"></iframe>
             </div>
-            {% if watch_url %}<a href="{{ watch_url }}" target="_blank" rel="noopener noreferrer" class="hero-video-fallback">Ouvrir sur YouTube</a>{% endif %}
             {% endwith %}
             {% endif %}
             {% if content.theme and content.theme.logo_url and not content.hero_background_url and not content.hero_video_url and not content.hero_video_mp4_url and not content.hero_video_webm_url %}
@@ -899,13 +948,96 @@
         {% endif %}
 
         {% if content.services %}
-        <section class="section{% if landing_page.slug == 'fitclem' %} content-player{% endif %}" id="services">
+        <section class="section{% if landing_page.slug == 'fitclem' %} content-player services-segmented{% endif %}" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             {% if content.rapport_url %}
             <div class="rapport-cta-block">
                 <a href="{{ content.rapport_url }}" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
             </div>
             {% endif %}
+            {% if landing_page.slug == 'fitclem' and content.services_segments %}
+            {# FitClem : boxes fragmentées + infographies pour aérer #}
+            <div class="services-segments">
+                {% for seg in content.services_segments %}
+                {% if seg.type == 'box' %}
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">{{ seg.title }}</h3>
+                    {% if seg.format == 'pestel' and seg.items %}
+                    <div class="pestel-grid">
+                        {% for item in seg.items %}<div class="pestel-item"><span class="pestel-letter">{{ item.letter }}</span><span class="pestel-desc">{{ item.desc }}</span></div>{% endfor %}
+                    </div>
+                    {% elif seg.format == 'swot' and seg.items %}
+                    <div class="swot-grid">
+                        {% for item in seg.items %}<div class="swot-item"><span class="swot-type">{{ item.type }}</span><span class="swot-desc">{{ item.desc }}</span></div>{% endfor %}
+                    </div>
+                    {% elif seg.format == 'table' and seg.rows %}
+                    <table class="concurrentiel-table">
+                        <thead><tr><th>Acteur</th><th>Type</th><th>FitClem vs</th></tr></thead>
+                        <tbody>{% for row in seg.rows %}<tr><td>{{ row.0 }}</td><td>{{ row.1 }}</td><td>{{ row.2 }}</td></tr>{% endfor %}</tbody>
+                    </table>
+                    {% elif seg.bullets %}
+                    <ul class="services-segment-bullets">
+                        {% for b in seg.bullets %}<li>{{ b }}</li>{% endfor %}
+                    </ul>
+                    {% elif seg.desc %}<p>{{ seg.desc }}</p>{% endif %}
+                </div>
+                {% elif seg.type == 'infographic' %}
+                <div class="services-segment-infographic" aria-hidden="true">
+                    {% if seg.label %}<p class="services-infographic-label">{{ seg.label }}</p>{% endif %}
+                    {% if seg.visual == 'positioning-matrix' %}
+                    <div class="positioning-matrix" aria-hidden="true">
+                        <div class="matrix-axis-x"><span class="axis-label">Contenu gratuit</span><span class="axis-label">Produit premium</span></div>
+                        <div class="matrix-grid">
+                            <div class="matrix-cell matrix-cell-tl"><span class="matrix-player">YouTube / TikTok</span></div>
+                            <div class="matrix-cell matrix-cell-tr"><span class="matrix-player">Retailers</span></div>
+                            <div class="matrix-cell matrix-cell-bl"><span class="matrix-player">Luce Citron</span></div>
+                            <div class="matrix-cell matrix-cell-br"><span class="matrix-player matrix-player-fitclem">FitClem</span><span class="matrix-legend">Sport + nutrition + accessoires</span></div>
+                        </div>
+                        <div class="matrix-axis-y"><span class="axis-label">Prix bas</span><span class="axis-label">Prix élevé</span></div>
+                    </div>
+                    {% elif seg.visual == 'competitive-diagram' %}
+                    <div class="competitive-diagram" aria-hidden="true">
+                        <div class="comp-flow">
+                            <div class="comp-node comp-node-leader"><span class="comp-name">Trainsweateat</span><span class="comp-desc">Leader FR, app avancée</span></div>
+                            <span class="comp-arrow">→</span>
+                            <div class="comp-node comp-node-fitclem"><span class="comp-name">FitClem</span><span class="comp-desc">Approche douce, bienveillance</span></div>
+                        </div>
+                        <div class="comp-flow comp-flow-alt">
+                            <div class="comp-node"><span class="comp-name">Luce Citron</span><span class="comp-desc">Nutrition</span></div>
+                            <span class="comp-arrow">vs</span>
+                            <div class="comp-node comp-node-fitclem"><span class="comp-name">FitClem</span><span class="comp-desc">Sport + accessoires + compléments</span></div>
+                        </div>
+                        <div class="comp-flow comp-flow-alt">
+                            <div class="comp-node"><span class="comp-name">Retailers</span><span class="comp-desc">Prix, logistique</span></div>
+                            <span class="comp-arrow">vs</span>
+                            <div class="comp-node comp-node-fitclem"><span class="comp-name">FitClem</span><span class="comp-desc">Caution experte, routines</span></div>
+                        </div>
+                    </div>
+                    {% elif seg.visual == 'framework' %}
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">PESTEL</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">SWOT</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Porter</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Concurrentiel</span>
+                    </div>
+                    {% elif seg.visual == 'kpi-bars' %}
+                    <div class="content-player-dashboard">
+                        <div class="kpi-row"><span class="kpi-label">Performance (LCP)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 60%;"></div></div></div>
+                        <div class="kpi-row"><span class="kpi-label">Erreurs 429</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 90%;"></div></div></div>
+                        <div class="kpi-row"><span class="kpi-label">H1 manquants</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 75%;"></div></div></div>
+                        <div class="kpi-row"><span class="kpi-label">Alt images</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 55%;"></div></div></div>
+                    </div>
+                    {% elif seg.visual == 'timeline' %}
+                    <div class="key-figures-timeline">
+                        <div class="key-figures-timeline-item"><span class="t-period">0–30 j</span><p class="t-desc">Audit claims, matrice créa, 3 LP, A/B tests</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">30–60 j</span><p class="t-desc">CRM post-achat, bundles, retargeting</p></div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% else %}
             <div class="services-tabs">
                 {% for service in content.services %}
                 <input type="radio" name="services-tab" id="service-{{ forloop.counter0 }}" {% if forloop.first %}checked{% endif %}>
@@ -917,6 +1049,7 @@
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
         </section>
         {% endif %}
 
@@ -1060,7 +1193,7 @@
     </script>
     {% endif %}
 
-    <!-- Nav sticky : effet waouh au scroll (classe .nav--scrolled) -->
+    <!-- Nav sticky : effet waouh au scroll (classe .nav--scrolled) + waffle mobile -->
     <script>
     (function() {
         var nav = document.querySelector('.nav');
@@ -1068,6 +1201,17 @@
         function updateNav() { nav.classList.toggle('nav--scrolled', window.scrollY > 30); }
         updateNav();
         window.addEventListener('scroll', function() { requestAnimationFrame(updateNav); }, { passive: true });
+        var waffle = nav.querySelector('.nav-waffle');
+        if (waffle) {
+            waffle.addEventListener('click', function() {
+                var open = nav.classList.toggle('nav--open');
+                waffle.setAttribute('aria-expanded', open);
+                waffle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+            });
+            nav.querySelectorAll('.nav-links a').forEach(function(a) {
+                a.addEventListener('click', function() { nav.classList.remove('nav--open'); waffle.setAttribute('aria-expanded', 'false'); waffle.setAttribute('aria-label', 'Ouvrir le menu'); });
+            });
+        }
     })();
     </script>
     <!-- Parallaxe vidéo hero : la vidéo ne bouge que dans le hero et se décale légèrement au scroll -->

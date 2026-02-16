@@ -283,11 +283,101 @@ h4 { font-weight: 400 !important; text-transform: none !important; }
   color: #fff !important;
 }
 .section h2, .section .section-head, .section-num, .section-lead, .section p, .section .card,
-.pain-list, .pain-list li, .coordonnees-intro, .coordonnees-list, .mission-flash-content,
-.why-quote, .stack-label, .stack-tag, .seo-resume-card p, .seo-manque, .rapport-cta-link {
+.pain-list, .pain-list li, .coordonnees-intro, .coordonnees-list, .stack-label, .seo-resume-card p, .seo-manque, .rapport-cta-link {
   color: #fff !important;
 }
+/* Zones à fond clair (color-mix avec lp-bg blanc) → texte SOMBRE pour contraste */
+.section#services .services-panel,
+.section#services .services-panel h3,
+.section#services .services-panel p {
+  color: #000 !important;
+  background: rgba(255,255,255,0.95) !important;
+  border-left-color: var(--fitclem-magenta) !important;
+}
+.section#services .services-panel h3 { color: var(--fitclem-magenta) !important; }
+/* Services segmentés (FitClem) — boxes + infographies alternées */
+.section#services.services-segmented .services-segments { display: flex; flex-direction: column; gap: 2rem; margin-top: 1rem; }
+.section#services .services-segment-box {
+  padding: 1.5rem 2rem; background: rgba(255,255,255,0.95) !important;
+  border-radius: 16px; border-left: 4px solid var(--fitclem-magenta);
+  color: #000 !important;
+}
+.section#services .services-segment-box h3.services-segment-title { color: var(--fitclem-magenta) !important; margin: 0 0 0.75rem 0 !important; font-size: 1.1rem !important; }
+.section#services .services-segment-box p { color: #000 !important; margin: 0 0 0.5rem 0; }
+.section#services .services-segment-box .services-segment-bullets { margin: 0; padding-left: 1.25rem; color: #000 !important; }
+.section#services .services-segment-box .services-segment-bullets li { color: #000 !important; margin-bottom: 0.4rem; }
+/* PESTEL format traditionnel */
+.section#services .pestel-grid { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; margin: 0; }
+.section#services .pestel-item { display: contents; }
+.section#services .pestel-letter { font-weight: 800; color: var(--fitclem-magenta) !important; font-size: 1rem; min-width: 1.5rem; }
+.section#services .pestel-desc { color: #000 !important; font-size: 0.95rem; line-height: 1.45; }
+/* SWOT format traditionnel */
+.section#services .swot-grid { display: flex; flex-direction: column; gap: 0.6rem; margin: 0; }
+.section#services .swot-item { display: flex; gap: 0.75rem; align-items: flex-start; }
+.section#services .swot-type { font-weight: 700; color: var(--fitclem-magenta) !important; min-width: 6rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.section#services .swot-desc { color: #000 !important; font-size: 0.95rem; line-height: 1.45; }
+/* Table concurrentiel */
+.section#services .concurrentiel-table { width: 100%; border-collapse: collapse; margin: 0; font-size: 0.95rem; }
+.section#services .concurrentiel-table th, .section#services .concurrentiel-table td { padding: 0.5rem 0.75rem; text-align: left; border: 1px solid rgba(0,0,0,0.15); color: #000 !important; }
+.section#services .concurrentiel-table th { background: rgba(216,27,96,0.12); font-weight: 700; color: var(--fitclem-magenta) !important; }
+.section#services .services-segment-infographic {
+  padding: 1.5rem; background: rgba(0,0,0,0.15) !important; border-radius: 20px;
+}
+.section#services .services-segment-infographic .services-infographic-label {
+  margin: 0 0 1rem 0 !important; font-size: 0.9rem !important; font-weight: 600 !important; text-transform: uppercase !important; color: rgba(255,255,255,0.95) !important;
+}
+.section#services .services-segment-infographic .content-player-flowchart .flow-step { color: #fff; background: rgba(255,255,255,0.2); }
+.section#services .services-segment-infographic .content-player-flowchart .flow-arrow { color: rgba(255,255,255,0.8); }
+.section#services .services-segment-infographic .content-player-dashboard .kpi-label { color: rgba(255,255,255,0.95) !important; }
+.section#services .services-segment-infographic .content-player-dashboard .kpi-bar { background: rgba(255,255,255,0.3); }
+.section#services .services-segment-infographic .key-figures-timeline {
+  display: flex; flex-direction: column; gap: 0.75rem; max-width: 320px; margin: 0 auto;
+}
+.section#services .services-segment-infographic .key-figures-timeline-item {
+  background: rgba(255,255,255,0.15) !important; border-left-color: rgba(255,255,255,0.6) !important;
+}
+.section#services .services-segment-infographic .key-figures-timeline-item .t-period,
+.section#services .services-segment-infographic .key-figures-timeline-item .t-desc { color: rgba(255,255,255,0.95) !important; }
+/* Infographie : axe de placement (matrice positionnement 2×2) */
+.section#services .positioning-matrix { max-width: 420px; margin: 0 auto; }
+.section#services .positioning-matrix .matrix-axis-x { display: flex; justify-content: space-between; font-size: 0.75rem; color: rgba(255,255,255,0.9); margin-bottom: 0.5rem; padding: 0 0.5rem; }
+.section#services .positioning-matrix .matrix-axis-y { display: flex; justify-content: space-between; font-size: 0.75rem; color: rgba(255,255,255,0.9); margin-top: 0.5rem; padding: 0 0.5rem; }
+.section#services .positioning-matrix .matrix-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 0.75rem; min-height: 140px; }
+.section#services .positioning-matrix .matrix-cell { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.75rem; background: rgba(255,255,255,0.15); border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); text-align: center; }
+.section#services .positioning-matrix .matrix-player { font-weight: 700; font-size: 0.9rem; color: #fff; }
+.section#services .positioning-matrix .matrix-player-fitclem { color: var(--fitclem-orange) !important; }
+.section#services .positioning-matrix .matrix-legend { font-size: 0.72rem; color: rgba(255,255,255,0.9); margin-top: 0.25rem; line-height: 1.2; }
+/* Infographie : diagramme concurrence */
+.section#services .competitive-diagram { display: flex; flex-direction: column; gap: 1rem; }
+.section#services .competitive-diagram .comp-flow { display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.section#services .competitive-diagram .comp-node { padding: 0.75rem 1rem; background: rgba(255,255,255,0.15); border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); min-width: 120px; text-align: center; }
+.section#services .competitive-diagram .comp-node-fitclem { background: rgba(255,102,51,0.35) !important; border-color: var(--fitclem-orange) !important; }
+.section#services .competitive-diagram .comp-name { display: block; font-weight: 700; font-size: 0.95rem; color: #fff; }
+.section#services .competitive-diagram .comp-desc { display: block; font-size: 0.8rem; color: rgba(255,255,255,0.9); margin-top: 0.2rem; }
+.section#services .competitive-diagram .comp-arrow { color: rgba(255,255,255,0.8); font-weight: 700; }
+.section .mission-flash,
+.section .mission-flash .tag-line,
+.section .mission-flash .mission-flash-content {
+  color: #000 !important;
+  background: rgba(255,255,255,0.92) !important;
+  border-color: var(--fitclem-magenta) !important;
+}
+.section .mission-flash .tag-line { color: var(--fitclem-magenta) !important; }
+.section .why-quote {
+  color: #000 !important;
+  background: rgba(255,255,255,0.92) !important;
+  border-left-color: var(--fitclem-magenta) !important;
+}
+.section .stack-tag {
+  color: #000 !important;
+  background: rgba(255,255,255,0.85) !important;
+  border-color: var(--fitclem-magenta) !important;
+}
 .section h2 { text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+/* Sections fond lavande/clair : renforcer ombre titre pour lisibilité */
+.section:nth-of-type(4n+3) h2, .section:nth-of-type(4n) h2 {
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.3) !important;
+}
 .section a:not(.cta):not(.nav-cta):not(.seo-cta) { color: rgba(255,255,255,0.95); text-decoration: underline; }
 .section a:not(.cta):not(.nav-cta):not(.seo-cta):hover { color: #fff; }
 /* Alternance nuances de rose */

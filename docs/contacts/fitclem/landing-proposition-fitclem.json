@@ -58,6 +58,18 @@
   "about_me_title": "Qui je suis",
   "about_me": "Growth Engineer orienté data et B2B/B2C : acquisition, conversion, SEO, automatisation. Je livre des analyses actionnables et des plans structurés — pas des rapports figés. Pour FitClem, j'ai produit ce livrable opérationnel (PESTEL, SWOT, Porter, concurrentiel, KPI, plan 30/60 j) pour montrer comment j'aborderais le poste de Responsable Marketing Digital.",
   "prestations_headline": "L'étude complète — ce que je vous livre pour la candidature",
+  "services_segments": [
+    {"type": "box", "title": "PESTEL", "format": "pestel", "items": [{"letter": "P", "desc": "Réglementations compléments alimentaires, transparence influenceurs"}, {"letter": "E", "desc": "Fitness at home en croissance ; arbitrage budgétaire (solutions digitales)"}, {"letter": "S", "desc": "Body positive, bien-être holistique, communauté Fitfam"}, {"letter": "T", "desc": "UX app mobile, RGPD"}, {"letter": "E", "desc": "Packaging éco, ingrédients naturels"}, {"letter": "L", "desc": "Droit consommation (abonnements), normes accessoires sport"}]},
+    {"type": "box", "title": "SWOT", "format": "swot", "items": [{"type": "Forces", "desc": "Identité fondatrice, modèle diversifié (digital + physique + nutrition), discours déculpabilisant"}, {"type": "Faiblesses", "desc": "Dépendance à l'image fondatrice, marché compléments saturé"}, {"type": "Opportunités", "desc": "Gamme Plaisirs Gourmands, optimisation rétention / programme fidélité"}, {"type": "Menaces", "desc": "YouTube/TikTok gratuits, algorithmes limitant la portée organique"}]},
+    {"type": "infographic", "visual": "positioning-matrix", "label": "Axe de placement — Positionnement produit et concurrence"},
+    {"type": "box", "title": "Porter", "format": "text", "desc": "Concurrence très forte (Nike Training, Freeletics, influenceurs). Nouveaux entrants : barrières faibles (contenu), élevées (app). Pouvoir clients moyen. Substituts forts (salles, cours, plein air). Rôle État : contrôles sur produits minceur."},
+    {"type": "infographic", "visual": "competitive-diagram", "label": "Étude concurrence — Positionnement FitClem vs acteurs clés"},
+    {"type": "box", "title": "Concurrentiel", "format": "table", "rows": [["Trainsweateat", "Leader FR", "FitClem = approche plus douce"], ["Luce Citron", "Nutrition", "FitClem = sport + accessoires + compléments"], ["Retailers", "Prix, logistique", "FitClem = caution experte, routines clés en main"]]},
+    {"type": "box", "title": "Étude SEO", "bullets": ["Manque à gagner : 132–324 k€/an (conversion, performance, visibilité).", "Problèmes : performance (LCP), erreurs 429, H1 manquants, alt images.", "Clusters : cellulite, rétention d'eau, digestion, collagène marin, routine.", "Recommandations : corriger technique, structurer pages, preuve sociale (UGC)."]},
+    {"type": "infographic", "visual": "kpi-bars", "label": "Priorités SEO"},
+    {"type": "box", "title": "Proposition KPI & plan 30/60 j", "bullets": ["6 KPI : CAC, CVR landing, AOV, LTV, email revenue share, rétention D30/D60.", "0–30 j : audit claims, matrice créa, 3 LP dédiées, A/B tests.", "30–60 j : CRM post-achat (J+7/14/28), bundles, retargeting par objectif."]},
+    {"type": "infographic", "visual": "timeline", "label": "Plan d'action"}
+  ],
   "services": [
     {
       "title": "Étude marketing",
