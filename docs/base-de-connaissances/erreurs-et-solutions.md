@@ -41,6 +41,18 @@ Pour chaque erreur documentée, indiquer :
 
 *(Les entrées seront ajoutées au fur et à mesure des corrections.)*
 
+### Next.js — Avis Red Hat / CVE (failles de sécurité, correctifs)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Avis Red Hat (ou autre scan de vulnérabilités) signalant des CVE sur Next.js (ex. 2 vulnérabilités medium sur `next@16.0.7`). |
+| **Erreur** | Rapport du type : « 2 Unique vulnerabilities » sur `next`, « No remediations available » (Red Hat TPA). |
+| **Cause** | Next.js 15.x / 16.x a connu des CVE (RSC DoS CVE-2025-55184, exposition de code source CVE-2025-55183, Image Optimizer DoS CVE-2025-59471). Les versions non mises à jour restent signalées comme vulnérables. |
+| **Solution** | **Dans LPPP** (Next.js 15.1.x) : passer à **`next@15.1.11`** minimum (correctifs du 11 déc. 2025). **Si un autre projet utilise Next.js 16.0.7** : passer à **`next@16.1.5`** ou **`next@16.1.6`** (corrige 16.0.10 + Image Optimizer). Commandes : `npm install next@15.1.11` ou `npm install next@16.1.5` ; puis `npm audit` et redéploiement (ex. Vercel). Outil officiel : `npx fix-react2shell-next` pour vérifier et mettre à jour. |
+| **Prévention** | Suivre les advisories Next.js : [nextjs.org/blog/security-update-2025-12-11](https://nextjs.org/blog/security-update-2025-12-11), [CVE-2025-66478](https://nextjs.org/blog/CVE-2025-66478). Vérifier périodiquement `npm audit` et les alertes Red Hat / Snyk sur les projets Next.js (LPPP et landings Vercel). |
+| **Lien(s)** | `regles-securite.md`, `stack-frontend-nextjs-react.md`, [Next.js Security Advisories](https://github.com/vercel/next.js/security/advisories) |
+
 ### WSL/Linux : « python: command not found » — toujours utiliser python3
 
 | Champ | Contenu |
