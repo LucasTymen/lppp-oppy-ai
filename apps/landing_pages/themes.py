@@ -114,7 +114,7 @@ THEME_FITCLEM = {
     "fonts": {"body": "Inter", "heading": "Montserrat"},
     "colors": {
         "background": "#FFFFFF",
-        "text": "#1A1A1A",
+        "text": "#000000",
         "primary": "#FF6633",
         "secondary": "#FFA385",
         "gray_light": "#F9F9F9",
@@ -130,24 +130,24 @@ THEME_CSS_FITCLEM = """@import url('https://fonts.googleapis.com/css2?family=Int
   --fitclem-orange: #FF6633;
   --fitclem-peach: #FFA385;
   --fitclem-white: #FFFFFF;
-  --fitclem-black: #1A1A1A;
+  --fitclem-black: #000000;
   --fitclem-gray-light: #F9F9F9;
   --fitclem-magenta: #D81B60;
   --fitclem-lavender: #B9A9D0;
   --fitclem-pastel-pink: #FFE4E1;
   --fitclem-green: #57B894;
   --fitclem-blue: #7EB8DA;
-  /* Mapping LP */
+  /* Mapping LP — texte noir partout (pas de gestion de contraste) */
   --lp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --lp-font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
   --lp-bg: #FFFFFF;
-  --lp-text: #1A1A1A;
+  --lp-text: #000000;
   --lp-primary: #FF6633;
   --lp-secondary: #FFA385;
   --lp-border: rgba(255, 102, 51, 0.35);
   --lp-block-bg: #F9F9F9;
-  --lp-muted: #5c5c5c;
-  --lp-heading: #1A1A1A;
+  --lp-muted: #333333;
+  --lp-heading: #000000;
   --lp-cta-text: #ffffff;
   --lp-font-delius: "Delius", cursive;
   --lp-font-sniglet: "Sniglet", system-ui, sans-serif;
@@ -203,7 +203,7 @@ html, body { overflow-x: hidden !important; }
   transform: translate(-50%, -50%) !important;
 }
 
-/* Titres — blanc sur fonds colorés ; rose/magenta sur fond blanc (éviter texte sombre) */
+/* Titres — blanc sur fonds colorés ; magenta sur fond blanc */
 h1 {
   font-family: var(--lp-font-delius) !important;
   font-weight: 400 !important;
@@ -211,7 +211,6 @@ h1 {
   letter-spacing: 0.5px !important;
   color: var(--fitclem-magenta) !important;
 }
-/* H2, H3, H4 : Delius (cursive) et Sniglet (rounded, playful) */
 h2 {
   font-family: var(--lp-font-delius) !important;
   font-weight: 400 !important;
@@ -390,15 +389,15 @@ h4 { font-weight: 400 !important; text-transform: none !important; }
   background: rgba(0,0,0,0.15) !important;
   border-color: rgba(255,255,255,0.3) !important;
 }
-/* Icebreaker et CTA wrap — fond clair : texte en ROSE (éviter contraste sombre) */
+/* Icebreaker et CTA wrap — fond clair : texte noir */
 .icebreaker {
   background: var(--fitclem-peach) !important;
-  color: var(--fitclem-magenta) !important;
+  color: #000 !important;
   border-left: 5px solid var(--fitclem-magenta) !important;
 }
 .cta-wrap {
   background: linear-gradient(180deg, var(--fitclem-lavender) 0%, var(--fitclem-pastel-pink) 100%) !important;
-  color: var(--fitclem-magenta) !important;
+  color: #000 !important;
 }
 .cta-wrap .cta { color: #fff !important; }
 
@@ -442,8 +441,10 @@ h4 { font-weight: 400 !important; text-transform: none !important; }
   color: white !important;
 }
 
-/* Contraste : zones fond blanc/clair → texte en ROSE (pas de texte sombre) */
-body { color: var(--fitclem-black); }
+/* Paragraphes et corps : texte noir (H1–H4 restent gérés comme au-dessus) */
+body { color: #000 !important; }
+p { color: #000 !important; }
+.section p { color: #000 !important; }
 .report-unavailable { color: var(--fitclem-magenta) !important; font-weight: 600; }
 
 /* ===== Desktop : occuper l'espace, content players deux colonnes (brief § 4–5) ===== */
