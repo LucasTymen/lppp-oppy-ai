@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chiffres clés — Candidature FitClem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fitclem-orange: #FF6633;
+      --fitclem-peach: #FFA385;
+      --fitclem-white: #FFFFFF;
+      --fitclem-black: #1A1A1A;
+      --fitclem-gray: #F9F9F9;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--fitclem-gray);
+      color: var(--fitclem-black);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .infographic-header {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      background: var(--fitclem-white);
+      border-bottom: 4px solid var(--fitclem-peach);
+    }
+    .infographic-header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.25rem, 4vw, 1.5rem);
+      margin: 0 0 0.25rem;
+      color: var(--fitclem-black);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .infographic-header p { margin: 0; font-size: 0.9rem; color: #555; }
+
+    /* Carousel */
+    .carousel-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      background: var(--fitclem-white);
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s var(--ease);
+    }
+    .carousel-slide {
+      min-width: 100%;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .carousel-slide.kpi-card .kpi-value {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(2.5rem, 10vw, 4rem);
+      font-weight: 700;
+      color: var(--fitclem-orange);
+      line-height: 1.1;
+      margin: 0 0 0.25rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+    .carousel-slide.kpi-card.visible .kpi-value {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .carousel-slide .kpi-unit {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      font-weight: 600;
+      color: var(--fitclem-peach);
+      margin-bottom: 0.75rem;
+    }
+    .carousel-slide .kpi-label {
+      font-size: 0.95rem;
+      color: #444;
+      max-width: 28ch;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+    }
+    .carousel-nav button {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 2px solid var(--fitclem-orange);
+      background: var(--fitclem-white);
+      color: var(--fitclem-orange);
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: background 0.2s var(--ease), color 0.2s var(--ease);
+    }
+    .carousel-nav button:hover {
+      background: var(--fitclem-orange);
+      color: var(--fitclem-white);
+    }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .carousel-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--fitclem-peach);
+      opacity: 0.4;
+      transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .carousel-dots span.active {
+      opacity: 1;
+      background: var(--fitclem-orange);
+      transform: scale(1.2);
+    }
+
+    /* Graph slides */
+    .chart-slide {
+      padding: 1.5rem;
+    }
+    .chart-slide h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      margin: 0 0 1.25rem;
+      color: var(--fitclem-black);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 1rem;
+      height: 160px;
+      padding: 0 1rem;
+    }
+    .bar-group {
+      text-align: center;
+    }
+    .bar {
+      width: 56px;
+      background: linear-gradient(180deg, var(--fitclem-orange), var(--fitclem-peach));
+      border-radius: 12px 12px 0 0;
+      margin: 0 auto 0.5rem;
+      height: 0;
+      transition: height 0.8s var(--ease);
+    }
+    .carousel-slide.visible .bar { height: var(--bar-height, 60%); }
+    .bar-group .bar-label { font-size: 0.75rem; font-weight: 600; color: #555; }
+    .bar-group .bar-value { font-size: 0.85rem; color: var(--fitclem-orange); font-weight: 600; }
+
+    .timeline-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+      padding: 0.75rem 1rem;
+      background: var(--fitclem-gray);
+      border-radius: 16px;
+      border-left: 4px solid var(--fitclem-orange);
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+    .carousel-slide.visible .timeline-item { opacity: 1; transform: translateX(0); }
+    .carousel-slide.visible .timeline-item:nth-child(1) { transition-delay: 0.1s; }
+    .carousel-slide.visible .timeline-item:nth-child(2) { transition-delay: 0.25s; }
+    .timeline-item .timeline-period {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--fitclem-orange);
+      min-width: 5rem;
+    }
+    .timeline-item .timeline-desc { font-size: 0.9rem; color: #444; margin: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .carousel-track { transition: none; }
+      .carousel-slide.kpi-card .kpi-value,
+      .carousel-slide.kpi-card.visible .kpi-value,
+      .carousel-slide.visible .bar,
+      .timeline-item,
+      .carousel-slide.visible .timeline-item { transition: none; }
+      .carousel-slide.kpi-card .kpi-value { opacity: 1; transform: none; }
+      .carousel-slide.visible .bar { height: var(--bar-height, 60%); }
+      .timeline-item { opacity: 1; transform: none; }
+    }
+
+    @media (min-width: 768px) {
+      .carousel-slide { padding: 3rem 2rem; }
+      .chart-slide { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="infographic-header">
+    <h1>Chiffres clés — Candidature FitClem</h1>
+    <p>Manque à gagner SEO, KPI, plan 30/60 j</p>
+  </header>
+
+  <div class="carousel-wrap">
+    <div class="carousel" id="carousel" role="region" aria-label="Carrousel chiffres clés">
+      <div class="carousel-track" id="track">
+        <div class="carousel-slide kpi-card" data-index="0">
+          <p class="kpi-value">132–324</p>
+          <p class="kpi-unit">k€/an</p>
+          <p class="kpi-label">Manque à gagner SEO estimé (conversion, perfs, visibilité)</p>
+        </div>
+        <div class="carousel-slide kpi-card" data-index="1">
+          <p class="kpi-value">6</p>
+          <p class="kpi-unit">KPI</p>
+          <p class="kpi-label">À piloter : CAC, CVR, AOV, LTV, email revenue share, rétention D30/D60</p>
+        </div>
+        <div class="carousel-slide kpi-card" data-index="2">
+          <p class="kpi-value">3</p>
+          <p class="kpi-unit">LP</p>
+          <p class="kpi-label">Landing pages dédiées (digestion / silhouette / beauté)</p>
+        </div>
+        <div class="carousel-slide chart-slide" data-index="3">
+          <h3>Manque à gagner SEO (fourchette)</h3>
+          <div class="bar-chart">
+            <div class="bar-group">
+              <div class="bar" style="--bar-height: 41%;" aria-hidden="true"></div>
+              <p class="bar-label">Min</p>
+              <p class="bar-value">132 k€/an</p>
+            </div>
+            <div class="bar-group">
+              <div class="bar" style="--bar-height: 100%;" aria-hidden="true"></div>
+              <p class="bar-label">Max</p>
+              <p class="bar-value">324 k€/an</p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-slide chart-slide" data-index="4">
+          <h3>Plan d'action 30/60 jours</h3>
+          <div class="timeline-chart">
+            <div class="timeline-item">
+              <span class="timeline-period">0–30 j</span>
+              <p class="timeline-desc">Audit claims, matrice créa (hooks × angles × preuves), 3 LP dédiées, A/B tests</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-period">30–60 j</span>
+              <p class="timeline-desc">CRM post-achat (J+7/14/28), bundles & abonnements, retargeting par objectif</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-nav">
+        <button type="button" id="prev" aria-label="Slide précédent">‹</button>
+        <button type="button" id="next" aria-label="Slide suivant">›</button>
+      </div>
+      <div class="carousel-dots" id="dots" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var track = document.getElementById('track');
+      var prev = document.getElementById('prev');
+      var next = document.getElementById('next');
+      var dotsEl = document.getElementById('dots');
+      var slides = track ? track.querySelectorAll('.carousel-slide') : [];
+      var total = slides.length;
+      var current = 0;
+
+      function updateCarousel() {
+        if (!track) return;
+        track.style.transform = 'translateX(-' + current * 100 + '%)';
+        slides.forEach(function(s, i) {
+          s.classList.toggle('visible', i === current);
+        });
+        [].forEach.call(dotsEl.querySelectorAll('span'), function(d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+
+      function buildDots() {
+        if (!dotsEl || !total) return;
+        for (var i = 0; i < total; i++) {
+          var d = document.createElement('span');
+          d.setAttribute('data-index', i);
+          d.addEventListener('click', function() {
+            current = parseInt(this.getAttribute('data-index'), 10);
+            updateCarousel();
+          });
+          dotsEl.appendChild(d);
+        }
+      }
+
+      if (prev) prev.addEventListener('click', function() {
+        current = current <= 0 ? total - 1 : current - 1;
+        updateCarousel();
+      });
+      if (next) next.addEventListener('click', function() {
+        current = current >= total - 1 ? 0 : current + 1;
+        updateCarousel();
+      });
+
+      buildDots();
+      slides[0] && slides[0].classList.add('visible');
+      updateCarousel();
+    })();
+  </script>
+</body>
+</html>

@@ -5,6 +5,12 @@ alwaysApply: true
 
 # Pilotage des agents LPPP
 
+## Règle absolue (tous les agents)
+
+- **Ne jamais détruire ni endommager le code existant** : le **protéger** et l’**améliorer**.
+- **Être toujours protecteur plutôt que destructeur** : toute modification doit préserver ou renforcer ce qui fonctionne ; en cas de refactor ou de correctif, privilégier l’ajout, l’encapsulation ou l’amélioration ciblée plutôt que la suppression ou la réécriture hasardeuse.
+- En cas de doute : conserver le comportement actuel et proposer une évolution incrémentale (ou demander validation à l’utilisateur) au lieu d’agir de façon destructive.
+
 ## Agir en équipe (interface, pas tout faire soi-même)
 
 - **L’agent en conversation est l’interface** avec l’utilisateur, pas le seul exécutant. Il coordonne l’équipe au lieu de prendre toutes les initiatives lui-même.
@@ -49,6 +55,7 @@ alwaysApply: true
 
 ## Sécurité
 
+- **Superuser Django** : **ne jamais inventer** les identifiants (username, email, mot de passe). Utiliser **uniquement** ceux fournis explicitement par l’utilisateur. Si l’utilisateur demande de « recréer le superuser », demander username et email ; pour le mot de passe, l’utilisateur le définit lui-même (commande `changepassword` en interactif ou mot de passe fourni dans le prompt). Référence : `politique-credentials-securite-flux.md`.
 - **Rien de sensible committé** : pas de secrets, mots de passe, clés privées ou tokens dans le dépôt. Respecter le `.gitignore` (cf. `docs/base-de-connaissances/infra-devops.md` § Conventions).
 - **Règles de sécurité** : appliquer les règles dans `docs/base-de-connaissances/regles-securite.md` (Django prod, CSRF/XSS/injection, auth, API, checklist prod). En cas de modification de config ou d’API, vérifier l’impact sécurité.
 - **Debug mode off et mesures de protection (règle unique pour tous les agents en charge)** : en fin de session, avant commit de livraison ou avant tout déploiement, **toujours** s’assurer que le mode DEBUG est désactivé (`DEBUG=False` en prod/staging) et que les mesures de protection sont en place (ALLOWED_HOSTS explicite, HTTPS, cookies sécurisés, pas de secret dans le code). C’est une **règle unique** s’appliquant à **tous les agents** (Dev Django, DevOps, Chef de Projet, Orchestrateur, etc.) : quiconque touche à la config, au déploiement ou livre du code doit vérifier / remettre DEBUG off et la checklist `regles-securite.md` § 9. Référence : `docs/base-de-connaissances/regles-securite.md`, `make prod-check`.

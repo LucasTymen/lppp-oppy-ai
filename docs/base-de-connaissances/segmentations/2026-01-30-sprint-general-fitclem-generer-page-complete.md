@@ -1,5 +1,7 @@
 # Sprint général — Générer la page complète FitClem (landing multipage + infographie)
 
+**Nom du livrable** : **LPPP-FitClem**.
+
 **Date** : 2026-01-30  
 **Statut** : 🟡 En cours  
 **Pilote** : **Chef de Projet**. **Orchestrateur** : s’assurer que chaque rôle livre sa part.  

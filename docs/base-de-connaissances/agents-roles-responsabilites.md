@@ -93,7 +93,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 **Responsabilités** :
 - Créer les **composants et pages Next.js/React** des landing pages (stack frontend standard — voir `stack-frontend-nextjs-react.md`)
 - **Qualité contenu** : les templates doivent afficher toutes les sections à partir des données (content / content_json) ; pas de texte en dur lié à un prospect ; popup contact et liens conditionnels (rapport) intégrés. Voir `strategie-qualite-contenu-landings.md`.
-- **Thématisation prospect** : reprendre le style (CSS, polices, couleurs, thème) de la société contactée ; fallback charte graphique SquidResearch si trop moche (voir `docs/base-de-connaissances/theming-landing-prospect.md`)
+- **Thématisation prospect** : reprendre le style (CSS, polices, couleurs, thème) de la société contactée ; fallback charte graphique SquidResearch si trop moche (voir `docs/base-de-connaissances/theming-landing-prospect.md`). **Pour FITCLEM** : coller à la charte graphique documentée dans `docs/contacts/fitclem/charte-graphique-fitclem.md`.
 - Développer les composants React réutilisables (hero, CTA, formulaires) pour l'effet « waouh »
 - Implémenter le design system (couleurs, typographie, espacements)
 - Optimiser l'expérience mobile (responsive)
@@ -103,6 +103,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 **Outils** :
 - `templates/landing_pages/`, `static/css/`, `static/js/`
 - **Thématisation** : `docs/base-de-connaissances/theming-landing-prospect.md` ; SquidResearch (charte graphique fallback, chemin dans `sources.md`)
+- **Charte FITCLEM** : `docs/contacts/fitclem/charte-graphique-fitclem.md` (palette, typo, CSS corporate « Soft Wellness » — à respecter pour toute landing ou support FITCLEM)
 - Tailwind CSS, Alpine.js (optionnel), Figma (maquettes)
 
 **Dépendances** :

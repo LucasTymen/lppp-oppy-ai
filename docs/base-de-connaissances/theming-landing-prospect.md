@@ -37,7 +37,14 @@ Référence SquidResearch : `docs/base-de-connaissances/sources.md` (chemin dép
 
 ---
 
-## 4. Thème prospect — approche cible
+## 4. Charte prospect documentée : FITCLEM
+
+- Pour les **landings et supports FITCLEM**, le Designer **doit s’appuyer sur la charte graphique canonique** : `docs/contacts/fitclem/charte-graphique-fitclem.md`.
+- Cette charte définit palette (orange corail, pêche, blanc, noir), typographie (Montserrat/Poppins, Inter/Open Sans), variables CSS « Fitclem Style », boutons, sections douces, border-radius élevés et ombres légères. **Coller à cette charte** pour toute production design FITCLEM.
+
+---
+
+## 5. Thème prospect — approche cible (général)
 
 - **Idéal** : réutiliser le **style CSS, polices et couleurs** (et thème général) du site de la société contactée.
 - **Données possibles** : URL du site prospect, couleurs extraites (manuel ou outil), polices identifiées, éventuellement extraits de données enrichies (si champ dédié existe côté enrichissement).
@@ -46,7 +53,7 @@ Référence SquidResearch : `docs/base-de-connaissances/sources.md` (chemin dép
 
 ---
 
-## 5. Lien avec le système de templates multiples
+## 6. Lien avec le système de templates multiples
 
 - La segmentation **« Système de templates multiples »** (`docs/base-de-connaissances/segmentations/2025-01-30-systeme-templates-multiples.md`) définit les templates de base (modern, minimal, corporate).
 - La **thématisation prospect** (ce document) s’applique **en plus** : chaque template peut recevoir les couleurs, polices et thème soit du prospect, soit de la charte SquidResearch (fallback).
@@ -54,14 +61,14 @@ Référence SquidResearch : `docs/base-de-connaissances/sources.md` (chemin dép
 
 ---
 
-## 6. Switch clair/sombre (interface landingsgenerator)
+## 7. Switch clair/sombre (interface landingsgenerator)
 
 - L'interface **landingsgenerator** (/essais/) a un **switch clair/sombre**. Le **Designer** doit **vérifier individuellement** chaque page : tous les **fonds en noir** pour le mode nuit, **passage correct** en mode jour.
 - **Se méfier** des contenus qui supportent mal le switch (comme sur SquidResearch) — tester et corriger au cas par cas. Référence : `reponses-validees-strategie.md`, segmentation `2025-01-30-interface-landingsgenerator.md`.
 
 ---
 
-## 7. Prochaines étapes (Designer / Chef de Projet)
+## 8. Prochaines étapes (Designer / Chef de Projet)
 
 - [ ] Designer : prendre connaissance de ce document, de la segmentation « templates multiples » et de la segmentation « interface landingsgenerator » (switch clair/sombre, vérification page par page).
 - [ ] Designer : identifier dans SquidResearch les fichiers de la charte graphique (CSS, polices, couleurs) pour le fallback.
@@ -70,4 +77,4 @@ Référence SquidResearch : `docs/base-de-connaissances/sources.md` (chemin dép
 
 ---
 
-*Document rédigé par le Conseiller. Dernière mise à jour : 2025-01-30. Référence : décision utilisateur (thème prospect + fallback charte SquidResearch) ; coordination Designer.*
+*Document rédigé par le Conseiller. Dernière mise à jour : 2026-02-15 (ajout § 4 charte FITCLEM). Référence : décision utilisateur (thème prospect + fallback charte SquidResearch) ; coordination Designer.*

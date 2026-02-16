@@ -23,7 +23,24 @@
   `docker compose exec -i db psql -U <DB_USER> <DB_NAME> < backups/backup_XXX.sql`
 - **Nettoyage** : `make backup-clean` supprime les sauvegardes de plus de 7 jours.
 
+**Procédure avant migrations/relance** : l’étape « Sauvegarder l’état » inclut désormais **1a)** `make backup` puis **1b)** commit + push. Voir `procedure-avant-migrations-relance.md` § 2.1.  
 **Référence** : `Makefile` (cibles `backup`, `restore`, `backup-clean`), `strategie-operationnelle-make.md`.
+
+---
+
+## 2.1 Sauvegarde automatique (cron / Planificateur de tâches)
+
+- **Script** : **`scripts/backup-auto.sh`** — exécute `make backup` puis `make backup-clean` (ne garde que les 7 derniers jours). À lancer depuis la **racine du projet** ; les conteneurs Docker (**db**) doivent être démarrés.
+- **Crontab (WSL / Linux)** : pour une sauvegarde quotidienne à 2 h du matin :
+  ```bash
+  crontab -e
+  # Ajouter (adapter PROJECT_ROOT) :
+  0 2 * * * cd /home/lucas/tools/homelucastoolsLandingsPagesPourProspections && bash scripts/backup-auto.sh >> backups/cron-backup.log 2>&1
+  ```
+  Si le projet est sous Windows (accès depuis WSL) : remplacer le chemin par le chemin WSL vers le projet (ex. `/mnt/c/home/lucas/tools/homelucastoolsLandingsPagesPourProspections`).
+- **Windows (Planificateur de tâches)** : créer une tâche qui lance WSL puis le script, ex. :
+  `wsl -e bash -c "cd /mnt/c/home/lucas/tools/homelucastoolsLandingsPagesPourProspections && bash scripts/backup-auto.sh"`.
+- **Prérequis** : Docker en cours d’exécution et conteneur **lppp_db** démarré au moment de l’exécution. Si la machine est éteinte à l’heure du cron, la sauvegarde ne tourne pas ce jour-là.
 
 ---
 
@@ -47,8 +64,8 @@
 
 | Données              | Sauvegarde                                      | Pilote / règle                    |
 |----------------------|--------------------------------------------------|-----------------------------------|
-| Base PostgreSQL      | `make backup` → `backups/backup_*.sql`           | DevOps ; avant migrations/relance |
+| Base PostgreSQL      | `make backup` → `backups/backup_*.sql` ; **automatique** : `scripts/backup-auto.sh` (cron / Planificateur) | DevOps ; avant migrations/relance |
 | Workflows Flowise    | Export JSON → `docs/flowise-workflows/backups/`  | Automatizer, voir sauvegarde-workflows-flowise-n8n.md |
 | Workflows n8n        | Export → `docs/n8n-workflows/`                   | Idem                              |
 
-*Document créé pour formaliser la protection des données et les procédures de sauvegarde (2026-02-09).*
+*Document créé pour formaliser la protection des données et les procédures de sauvegarde (2026-02-09). Sauvegarde automatique (script + cron) ajoutée 2026-01-30.*

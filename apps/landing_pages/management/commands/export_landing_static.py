@@ -86,23 +86,31 @@ class Command(BaseCommand):
             content = _content_with_defaults(dict(lp.content_json or {}), lp.template_key)
             use_perso_style = _use_perso_style(lp)
             self.stdout.write(f"Landing trouvée en base : {lp.title} (use_perso_style={use_perso_style})")
-        except LandingPage.DoesNotExist:
+        except (LandingPage.DoesNotExist, Exception) as e:
+            if isinstance(e, LandingPage.DoesNotExist):
+                pass
+            else:
+                self.stdout.write(self.style.WARNING(f"Base non accessible ({e!r}), fallback JSON si fourni."))
             if json_path and Path(json_path).exists():
                 with open(json_path, encoding="utf-8") as f:
                     content = _content_with_defaults(json.load(f), "proposition")
                 # Objet minimal pour le template + _use_perso_style (content_json, template_key)
+                _slug, _content = slug, content
                 class MockLanding:
-                    title = content.get("page_title", "Landing")
-                    slug = slug
-                    prospect_company = content.get("prospect_company", "P4S Architecture")
-                    prospect_name = content.get("prospect_name", "Joël Courtois")
+                    title = _content.get("page_title", "Landing")
+                    slug = _slug
+                    prospect_company = _content.get("prospect_company", "P4S Architecture")
+                    prospect_name = _content.get("prospect_name", "Joël Courtois")
                     template_key = "proposition"
-                    content_json = content
+                    content_json = _content
 
                 lp = MockLanding()
                 if slug == "orsys":
                     lp.prospect_company = "ORSYS"
                     lp.prospect_name = "Aboubakar"
+                elif slug == "fitclem":
+                    lp.prospect_company = "FitClem"
+                    lp.prospect_name = "Clémentine Sarlat"
                 use_perso_style = _use_perso_style(lp)
                 self.stdout.write(f"Contenu chargé depuis {json_path} (use_perso_style={use_perso_style})")
             else:

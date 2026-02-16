@@ -1,5 +1,7 @@
 # Sprint général — Landing commerciale multipage FitClem (candidature)
 
+**Nom du livrable** : **LPPP-FitClem**.
+
 **Date** : 2026-02-09  
 **Statut** : 🟡 En cours  
 **Pilote** : **Chef de Projet** (validation, livraison). **Orchestrateur** : s’assurer que **chacun fait sa part** (rédaction, design, dev, SEO) et que les tâches sont clairement réparties.

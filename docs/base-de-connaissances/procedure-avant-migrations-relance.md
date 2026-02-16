@@ -11,7 +11,7 @@
 
 | Étape | Action | Qui | Commande / détail |
 |-------|--------|-----|--------------------|
-| **1** | **Sauvegarder l’état** | DevOps / Chef de Projet | Commit + push (origin + gitlab) pour ne pas perdre l’état actuel si la suite se passe mal. |
+| **1** | **Sauvegarder l’état** | DevOps / Chef de Projet | **1a)** `make backup` (dump PostgreSQL → `backups/backup_*.sql`). **1b)** Commit + push (origin + gitlab) pour ne pas perdre l’état actuel. Voir § 2.1. |
 | **2** | **Migrations** (si changement de modèles) | Dev Django | `make makemigrations` puis `make migrate` (ou exécuter dans le conteneur `web`). |
 | **3** | **Relancer le système** | DevOps | `make relance` (sans rebuild) ou `make start` (démarrage + migrate automatique). |
 
@@ -19,9 +19,19 @@
 
 ## 2. Détail des étapes
 
-### 2.1 Commit et push (avant toute migration ou relance risquée)
+### 2.1 Sauvegarde (base de données + dépôt) avant toute migration ou relance risquée
 
-À faire **depuis WSL ou Git Bash** (ou tout environnement où `git` est disponible) :
+À faire **depuis la racine du projet** (conteneurs **db** et **web** démarrés).
+
+**1. Sauvegarde de la base PostgreSQL**
+
+```bash
+make backup
+```
+
+→ Crée `backups/backup_YYYYMMDD_HHMMSS.sql`. Nettoyage : `make backup-clean` (garde 7 jours). Voir `protection-donnees-et-sauvegardes.md`.
+
+**2. Commit et push (état du code)**
 
 ```bash
 cd /chemin/vers/homelucastoolsLandingsPagesPourProspections   # ou ton chemin projet
@@ -76,7 +86,7 @@ Après relance : `make health-check` et `make services-urls` pour vérifier que 
 
 ## 4. Références
 
-- **Make** : `make help`, `Makefile` (racine)
+- **Make** : `make help`, `Makefile` (racine) ; **backup BDD** : `make backup`, `make backup-clean`, `make restore` — voir `protection-donnees-et-sauvegardes.md`
 - **Stratégie opérationnelle** : `strategie-operationnelle-make.md`
 - **Checklist pré-prod** : `checklist-pre-prod-integrite.md` (migrations, intégrité)
 - **Git (deux remotes)** : `git-remotes-github-gitlab.md`, `make push-both`

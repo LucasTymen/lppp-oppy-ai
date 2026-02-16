@@ -18,7 +18,8 @@
 **Sprint structure (référence)** : `docs/base-de-connaissances/segmentations/2026-02-09-sprint-general-fitclem-landing-multipage.md`  
 **Sprint prioritaire (Orchestrateur pilote, rend des comptes)** : `docs/base-de-connaissances/segmentations/2026-02-15-sprint-fitclem-convaincre-embaucher-etude-complete.md` — objectif : convaincre d'embaucher, étude complète exposée, visibilité depuis le fichier JSON (pas de --update).  
 **Sprint éditorial / webdesign / infographique** : `docs/base-de-connaissances/segmentations/2026-02-15-sprint-fitclem-editorial-webdesign-infographique.md` — remplir, illustrer, animer le contenu (Rédacteur, Designer, Infographiste, sous Chef de Projet).  
-**Sprint « générer la page complète »** : `docs/base-de-connaissances/segmentations/2026-01-30-sprint-general-fitclem-generer-page-complete.md` (contenu réel partout, étude SEO alimentée, infographie InfographicCraft).
+**Sprint « générer la page complète »** : `docs/base-de-connaissances/segmentations/2026-01-30-sprint-general-fitclem-generer-page-complete.md` (contenu réel partout, étude SEO alimentée, infographie InfographicCraft).  
+**Sprint graphique et éditorial** : `docs/base-de-connaissances/segmentations/2026-01-30-sprint-fitclem-graphique-editorial.md` — alignement visuel et ton avec fitclem.fr (Soft Wellness / girly).
 
 **Charte graphique (Designer)** : `charte-graphique-fitclem.md` — palette, typo, CSS corporate « Soft Wellness » ; à respecter pour toute landing ou support FITCLEM.
 
