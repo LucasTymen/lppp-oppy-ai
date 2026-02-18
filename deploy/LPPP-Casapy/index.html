@@ -1,22 +1,17 @@
-{% load landing_filters %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>{{ content.page_title|default:landing_page.title }}</title>
+    <title>Lucas Tymen — Projet Casapy (audit SEO, e-commerce)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    {% if use_perso_style %}
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    {% include "landing_pages/includes/perso_style.html" %}
-    {% endif %}
+    
     <style>
-        {% if not use_perso_style and content.theme_css %}
-        {{ content.theme_css|safe }}
-        {% endif %}
+        
         :root {
             --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
             --lp-section-padding: clamp(3rem, 8vw, 5rem);
@@ -746,82 +741,94 @@
         }
     </style>
 </head>
-<body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+<body class="">
     <!-- Nav sticky (ancres style page perso) -->
     <nav class="nav">
-        {% if content.theme and content.theme.logo_url %}
-        <a href="#top"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" class="nav-logo" loading="lazy"></a>
-        {% else %}
-        <span style="font-weight:700; color: var(--lp-text);">{{ landing_page.prospect_company|default:content.page_title|default:"Landing" }}</span>
-        {% endif %}
+        
+        <a href="#top"><img src="https://www.casapy.com/wp-content/uploads/2025/04/logo-casapy-HD-1.pdf-1.png" alt="Casapy" class="nav-logo" loading="lazy"></a>
+        
         <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false">
             <span class="nav-waffle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
         <div class="nav-links">
-            {% if content.key_figures_carousel %}<a href="#chiffres-cles">Chiffres clés</a>{% endif %}
-            {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
-            {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
-            {% if content.loom_embed_url %}<a href="#demo">Démo</a>{% endif %}
-            {% if flowise_embed_url %}<a href="#demo-concierge">Démo Conciergerie</a>{% endif %}
-            {% if content.services %}<a href="#services">Services</a>{% endif %}
-            {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
-            {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
-            {% if content.diagram_url or content.funnel_image_url %}<a href="#diagramme-funnel">En un coup d'œil</a>{% endif %}
-            {% if content.rapport_url %}<a href="{{ content.rapport_url }}" target="_blank" rel="noopener noreferrer">Consulter le rapport</a>{% endif %}
-            {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="#coordonnees">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
+            <a href="#chiffres-cles">Chiffres clés</a>
+            <a href="#enjeux">Enjeux</a>
+            <a href="#solution">Solution</a>
+            
+            
+            <a href="#services">Services</a>
+            
+            
+            
+            <a href="rapport.html" target="_blank" rel="noopener noreferrer">Consulter le rapport</a>
+            <a href="#coordonnees">Me contacter</a>
         </div>
     </nav>
-    {% if content.alert_banner %}
-    <div class="alert-banner">{{ content.alert_banner }}</div>
-    {% endif %}
+    
+    <div class="alert-banner">PROJET CASAPY — AUDIT SEO COMPLET + ÉTUDE MARKETING + PLAN D&#x27;ACTION</div>
+    
 
     <main id="top">
         <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
-        <section class="hero{% if content.hero_video_mp4_url or content.hero_video_webm_url or content.hero_video_url %} has-bg-video{% elif content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
-            {% if content.hero_video_mp4_url or content.hero_video_webm_url %}
+        <section class="hero has-bg-video">
+            
             <div class="hero-bg-video">
                 <video autoplay muted loop playsinline aria-hidden="true">
-                    {% if content.hero_video_webm_url %}<source src="{{ content.hero_video_webm_url }}" type="video/webm">{% endif %}
-                    {% if content.hero_video_mp4_url %}<source src="{{ content.hero_video_mp4_url }}" type="video/mp4">{% endif %}
+                    
+                    <source src="https://www.casapy.com/wp-content/uploads/2026/02/video-quali-55.mp4" type="video/mp4">
                 </video>
             </div>
-            {% elif content.hero_video_url %}
-            {% with embed_url=content.hero_video_url|youtube_embed_background watch_url=content.hero_video_url|youtube_watch_url %}
-            <div class="hero-bg-video">
-                <iframe src="{{ embed_url }}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond hero" aria-hidden="true"></iframe>
-            </div>
-            {% endwith %}
-            {% endif %}
-            {% if content.theme and content.theme.logo_url and not content.hero_background_url and not content.hero_video_url and not content.hero_video_mp4_url and not content.hero_video_webm_url %}
-            {% if not content.theme.background_image_url or content.theme.logo_url != content.theme.background_image_url %}
-            <p class="hero-logo"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" loading="lazy"></p>
-            {% endif %}
-            {% endif %}
-            <h1>{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
-            <p class="hero-sub">{{ content.hero_sub_headline|default:'' }}{% if not content.hero_sub_headline and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
-            {% if content.cta_text %}
-            {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
-            <a href="#contact-email-modal" class="cta">{{ content.cta_text }}</a>
-            {% endif %}
-            {% endif %}
+            
+            
+            <h1>Audit SEO et performances — Casapy</h1>
+            <p class="hero-sub">Diagnostic technique, opportunités et plan d&#x27;action pour votre e-commerce.</p>
+            
+            
+            <a href="#contact-email-modal" class="cta">VOIR LE RAPPORT COMPLET</a>
+            
+            
         </section>
 
-        {% if content.icebreaker %}<p class="icebreaker">{{ content.icebreaker }}</p>{% endif %}
-        {% if content.intro %}<p class="icebreaker">{{ content.intro }}</p>{% elif content.hero_title %}<p class="icebreaker">{{ content.hero_title }}</p>{% endif %}
+        <p class="icebreaker">Casapy : e-commerce WooCommerce + Elementor sur hébergement mutualisé o2switch. Le TTFB à 3,7 s prouve que le goulot d&#x27;étranglement est serveur/backend. Avant toute optimisation front, une migration ou optimisation infrastructure est prioritaire — le ROI en est quasi immédiat.</p>
+        <p class="icebreaker">Ce livrable regroupe un diagnostic SEO complet (TTFB ~3,7 s, performances, indexation), une estimation chiffrée du manque à gagner (25–50 % de conversion perdue, scénarios 18–180 k€/mois selon trafic et panier), une étude marketing en clean room (faits vs hypothèses) et un plan d&#x27;action priorisé (serveur → cache → front). Qualité de contenu alignée sur FitClem : infographies parlantes, chiffres sourcés, visuels explicites.</p>
 
-        {% if content.key_figures_carousel %}
+        
         <section class="section key-figures-section" id="chiffres-cles">
             <div class="section-head"><span class="section-num">00</span><h2>Chiffres clés</h2></div>
             <div class="key-figures-carousel" role="region" aria-label="Carrousel chiffres clés et graphiques">
                 <div class="key-figures-track" id="key-figures-track">
-                    {% for item in content.key_figures_carousel %}
-                    <div class="key-figures-slide" data-index="{{ forloop.counter0 }}">
-                        <p class="kpi-value">{{ item.value }}</p>
-                        {% if item.unit %}<p class="kpi-unit">{{ item.unit }}</p>{% endif %}
-                        <p class="kpi-label">{{ item.label }}</p>
+                    
+                    <div class="key-figures-slide" data-index="0">
+                        <p class="kpi-value">3,7</p>
+                        <p class="kpi-unit">s</p>
+                        <p class="kpi-label">TTFB (Homepage, PDP) — critique</p>
                     </div>
-                    {% endfor %}
-                    <div class="key-figures-slide chart-slide" data-index="{{ content.key_figures_carousel|length }}">
+                    
+                    <div class="key-figures-slide" data-index="1">
+                        <p class="kpi-value">25–50</p>
+                        <p class="kpi-unit">%</p>
+                        <p class="kpi-label">Perte conversion estimée (TTFB + LCP)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="2">
+                        <p class="kpi-value">54</p>
+                        <p class="kpi-unit">k€/mois</p>
+                        <p class="kpi-label">Scénario conservateur (10 k visites, 2 %, panier 900 €)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="3">
+                        <p class="kpi-value">3</p>
+                        <p class="kpi-unit">étapes</p>
+                        <p class="kpi-label">Plan : Serveur → DB → Front</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="4">
+                        <p class="kpi-value">0</p>
+                        <p class="kpi-unit">trace</p>
+                        <p class="kpi-label">Pub Meta/Google (constat clean room)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide chart-slide" data-index="5">
                         <h3>Manque à gagner SEO (fourchette)</h3>
                         <div class="key-figures-bar-chart">
                             <div class="key-figures-bar-group">
@@ -834,7 +841,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="key-figures-slide chart-slide" data-index="{{ content.key_figures_carousel|length|add:1 }}">
+                    <div class="key-figures-slide chart-slide" data-index="6">
                         <h3>Plan d'action 30/60 jours</h3>
                         <div class="key-figures-timeline">
                             <div class="key-figures-timeline-item">
@@ -855,26 +862,20 @@
                 <div class="key-figures-dots" id="key-figures-dots" aria-hidden="true"></div>
             </div>
         </section>
-        {% endif %}
+        
 
-        {% if content.pain_points or content.activite_pain_points %}
-        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' %} content-player{% endif %}" id="enjeux">
+        
+        <section class="section content-player" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
-            {% if content.enjeux_lead %}<p class="section-lead">{{ content.enjeux_lead }}</p>{% endif %}
-            {% if content.pain_points %}
+            <p class="section-lead">Points identifiés dans le cadre du projet :</p>
+            
             <ul class="pain-list">
-                {% for item in content.pain_points|as_list %}<li>{{ item }}</li>{% endfor %}
+                <li>TTFB ~3,7 s (Homepage et PDP) — problème serveur/backend, pas prioritairement front. LCP à 32 s en découle.</li><li>Hébergement mutualisé o2switch : ressources partagées, PHP-FPM partagé, base MySQL partagée — insuffisant pour WooCommerce + Elementor.</li><li>Perte conversion estimée : 25–50 %. Scénario conservateur 30 % → 54 k€/mois potentiellement impactés (10 k visites, 2 % conv., panier 900 €).</li><li>Indexation et technique : canoniques, hreflang, structure URLs, clusters sémantiques à renforcer.</li><li>Étude marketing : aucune trace pub Meta/Google ; funnel AARRR, SWOT et positionnement à compléter avec preuves.</li>
             </ul>
-            {% else %}<p>{{ content.activite_pain_points }}</p>{% endif %}
+            
             </div>
-            {% if landing_page.slug == 'fitclem' %}
-            <div class="content-player-visual content-player-flowchart" aria-hidden="true">
-                <span class="flow-step">Pain point</span><span class="flow-arrow">→</span>
-                <span class="flow-step">Impact</span><span class="flow-arrow">→</span>
-                <span class="flow-step">Solution</span>
-            </div>
-            {% elif landing_page.slug == 'casapy' %}
+            
             <div class="enjeux-visuals" aria-hidden="true">
                 <div>
                     <p class="enjeux-visual-label">TTFB — Casapy vs référence (bon &lt; 500 ms)</p>
@@ -901,89 +902,26 @@
                     </div>
                 </div>
             </div>
-            {% endif %}
+            
         </section>
-        {% endif %}
+        
 
-        {% if content.solution_workflow or content.positionnement or content.solution_piliers %}
-        <section class="section{% if landing_page.slug == 'fitclem' %} content-player solution-segmented{% endif %}" id="solution">
+        
+        <section class="section" id="solution">
             <div class="section-head"><span class="section-num">02</span><h2>Harmonisons le chaos et boostons vos perfs.</h2></div>
-            {% if landing_page.slug == 'fitclem' and content.solution_piliers %}
-            {# FitClem : boxes segmentées + infographie pour rythmer #}
-            {% if content.solution_workflow %}<p class="solution-lead">{{ content.solution_workflow }}</p>{% endif %}
-            <div class="solution-boxes">
-                {% for pilier in content.solution_piliers %}
-                <div class="solution-box">
-                    <h3 class="solution-box-title">{{ pilier.title }}</h3>
-                    <p class="solution-box-desc">{{ pilier.desc }}</p>
-                </div>
-                {% if forloop.counter == 2 %}
-            </div>
-            <div class="solution-infographic content-player-visual content-player-diagram" aria-hidden="true">
-                <p class="solution-infographic-label">Plan d'action opérationnel</p>
-                <div class="process-steps">
-                    {% for step in content.solution_steps %}
-                    <div class="process-step"><span class="process-num">{{ step.num }}</span>{{ step.label }}</div>
-                    {% empty %}
-                    <div class="process-step"><span class="process-num">1</span>Audit claims & conformité</div>
-                    <div class="process-step"><span class="process-num">2</span>Matrice créa (hooks × angles)</div>
-                    <div class="process-step"><span class="process-num">3</span>3 LP dédiées + A/B tests</div>
-                    <div class="process-step"><span class="process-num">4</span>CRM post-achat & retargeting</div>
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="solution-boxes solution-boxes-after">
-                {% endif %}
-                {% endfor %}
-            </div>
-            {% else %}
-            {# Autres landings : comportement classique #}
+            
+            
             <div class="card">
-                <p>{{ content.solution_workflow|default:content.positionnement }}</p>
-                {% if content.workflow_image_url %}
-                <figure class="workflow-figure"><img src="{{ content.workflow_image_url }}" alt="Workflow" loading="lazy"></figure>
-                {% endif %}
+                <p>Plan d&#x27;action en trois étapes. Ce livrable en est la synthèse actionnable.</p>
+                
             </div>
-            {% endif %}
+            
         </section>
-        {% endif %}
+        
 
-        {% if content.loom_embed_url %}
-        <section class="section" id="demo">
-            <div class="section-head"><span class="section-num">02b</span><h2>Démo 60 sec</h2></div>
-            <div class="card">
-                {% if content.demo_video_caption %}<p class="coordonnees-intro">{{ content.demo_video_caption }}</p>{% endif %}
-                <div class="workflow-figure" style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;">
-                    <iframe src="{{ content.loom_embed_url }}" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="Démo vidéo"></iframe>
-                </div>
-            </div>
-        </section>
-        {% endif %}
+        
 
-        {% if flowise_embed_url %}
-        <section class="section" id="demo-concierge">
-            <div class="section-head"><span class="section-num">02c</span><h2>Démo : ce que je peux implanter pour vous</h2></div>
-            <div class="card">
-                <p class="section-lead">Un assistant IA qui répond aux questions des citoyens à partir de vos documents officiels (RAG). Ci-dessous, une démo basée sur les démarches passeport et CNI. Les réponses sont ancrées dans vos textes, pas inventées.</p>
-                <div class="workflow-figure flowise-embed-wrap" style="position:relative;min-height:420px;height:600px;overflow:hidden;border-radius:12px;background:#111;">
-                    {% if flowise_api_host and flowise_chatflow_id %}
-                    <script type="module">
-                        import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
-                        Chatbot.initFull({
-                            chatflowid: "{{ flowise_chatflow_id|escapejs }}",
-                            apiHost: "{{ flowise_api_host|escapejs }}",
-                        });
-                    </script>
-                    <flowise-fullchatbot></flowise-fullchatbot>
-                    {% else %}
-                    <iframe src="{{ flowise_embed_url }}" title="Assistant Conciergerie IA" allow="clipboard-write" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
-                    {% endif %}
-                </div>
-                <p style="margin-top:0.75rem;font-size:0.9rem;color:var(--lp-muted,#999);">Élargir les thèmes, déployer en prod, connecter vos outils : on en parle.</p>
-                <p style="margin-top:0.5rem;font-size:0.85rem;"><a href="{{ flowise_embed_url }}" target="_blank" rel="noopener">Ouvrir le chat dans un nouvel onglet</a> si le cadre reste vide.</p>
-            </div>
-        </section>
-        {% else %}
+        
         <section class="section" id="demo-concierge">
             <div class="section-head"><span class="section-num">02c</span><h2>Démo : ce que je peux implanter pour vous</h2></div>
             <div class="card">
@@ -994,113 +932,97 @@
                 </div>
             </div>
         </section>
-        {% endif %}
+        
 
-        {% if content.services %}
-        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' %} content-player services-segmented{% endif %}" id="services">
+        
+        <section class="section content-player services-segmented" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
-            {% if content.rapport_url %}
+            
             <div class="rapport-cta-block">
-                <a href="{{ content.rapport_url }}" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
+                <a href="rapport.html" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
             </div>
-            {% endif %}
-            {% if content.services_segments %}
-            {# FitClem : boxes fragmentées + infographies pour aérer #}
+            
+            
+            
             <div class="services-segments">
-                {% for seg in content.services_segments %}
-                {% if seg.type == 'box' %}
+                
+                
                 <div class="services-segment-box">
-                    <h3 class="services-segment-title">{{ seg.title }}</h3>
-                    {% if seg.format == 'pestel' and seg.items %}
-                    <div class="pestel-grid">
-                        {% for item in seg.items %}<div class="pestel-item"><span class="pestel-letter">{{ item.letter }}</span><span class="pestel-desc">{{ item.desc }}</span></div>{% endfor %}
-                    </div>
-                    {% elif seg.format == 'swot' and seg.items %}
-                    <div class="swot-grid">
-                        {% for item in seg.items %}<div class="swot-item"><span class="swot-type">{{ item.type }}</span><span class="swot-desc">{{ item.desc }}</span></div>{% endfor %}
-                    </div>
-                    {% elif seg.format == 'table' and seg.rows %}
-                    <table class="concurrentiel-table">
-                        <thead><tr>{% if seg.table_headers %}{% for h in seg.table_headers %}<th>{{ h }}</th>{% endfor %}{% else %}<th>Acteur</th><th>Type</th><th>FitClem vs</th>{% endif %}</tr></thead>
-                        <tbody>{% for row in seg.rows %}<tr><td>{{ row.0 }}</td><td>{{ row.1 }}</td><td>{{ row.2 }}</td></tr>{% endfor %}</tbody>
-                    </table>
-                    {% elif seg.bullets %}
-                    <ul class="services-segment-bullets">
-                        {% for b in seg.bullets %}<li>{{ b }}</li>{% endfor %}
-                    </ul>
-                    {% elif seg.desc %}<p>{{ seg.desc }}</p>{% endif %}
+                    <h3 class="services-segment-title">Diagnostic TTFB</h3>
+                    <p>TTFB Homepage ~3,77 s, PDP ~3,63 s. Référence : bon &lt; 500 ms, critique &gt; 2 s. Casapy en zone rouge. Problème serveur/backend, pas prioritairement JS/CSS. LCP 32 s en découle (Elementor + WooCommerce + scripts + images + SQL).</p>
                 </div>
-                {% elif seg.type == 'infographic' %}
+                
+                
+                
                 <div class="services-segment-infographic" aria-hidden="true">
-                    {% if seg.label %}<p class="services-infographic-label">{{ seg.label }}</p>{% endif %}
-                    {% if seg.visual == 'positioning-matrix' %}
-                    <div class="positioning-matrix" aria-hidden="true">
-                        <div class="matrix-axis-x"><span class="axis-label">Contenu gratuit</span><span class="axis-label">Produit premium</span></div>
-                        <div class="matrix-grid">
-                            <div class="matrix-cell matrix-cell-tl"><span class="matrix-player">YouTube / TikTok</span></div>
-                            <div class="matrix-cell matrix-cell-tr"><span class="matrix-player">Retailers</span></div>
-                            <div class="matrix-cell matrix-cell-bl"><span class="matrix-player">Luce Citron</span></div>
-                            <div class="matrix-cell matrix-cell-br"><span class="matrix-player matrix-player-fitclem">FitClem</span><span class="matrix-legend">Sport + nutrition + accessoires</span></div>
-                        </div>
-                        <div class="matrix-axis-y"><span class="axis-label">Prix bas</span><span class="axis-label">Prix élevé</span></div>
-                    </div>
-                    {% elif seg.visual == 'competitive-diagram' %}
-                    <div class="competitive-diagram" aria-hidden="true">
-                        <div class="comp-flow">
-                            <div class="comp-node comp-node-leader"><span class="comp-name">Trainsweateat</span><span class="comp-desc">Leader FR, app avancée</span></div>
-                            <span class="comp-arrow">→</span>
-                            <div class="comp-node comp-node-fitclem"><span class="comp-name">FitClem</span><span class="comp-desc">Approche douce, bienveillance</span></div>
-                        </div>
-                        <div class="comp-flow comp-flow-alt">
-                            <div class="comp-node"><span class="comp-name">Luce Citron</span><span class="comp-desc">Nutrition</span></div>
-                            <span class="comp-arrow">vs</span>
-                            <div class="comp-node comp-node-fitclem"><span class="comp-name">FitClem</span><span class="comp-desc">Sport + accessoires + compléments</span></div>
-                        </div>
-                        <div class="comp-flow comp-flow-alt">
-                            <div class="comp-node"><span class="comp-name">Retailers</span><span class="comp-desc">Prix, logistique</span></div>
-                            <span class="comp-arrow">vs</span>
-                            <div class="comp-node comp-node-fitclem"><span class="comp-name">FitClem</span><span class="comp-desc">Caution experte, routines</span></div>
-                        </div>
-                    </div>
-                    {% elif seg.visual == 'framework' %}
-                    <div class="content-player-flowchart">
-                        <span class="flow-step">PESTEL</span><span class="flow-arrow">→</span>
-                        <span class="flow-step">SWOT</span><span class="flow-arrow">→</span>
-                        <span class="flow-step">Porter</span><span class="flow-arrow">→</span>
-                        <span class="flow-step">Concurrentiel</span>
-                    </div>
-                    {% elif seg.visual == 'kpi-bars' %}
-                    <div class="content-player-dashboard">
-                        <div class="kpi-row"><span class="kpi-label">Performance (LCP)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 60%;"></div></div></div>
-                        <div class="kpi-row"><span class="kpi-label">Erreurs 429</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 90%;"></div></div></div>
-                        <div class="kpi-row"><span class="kpi-label">H1 manquants</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 75%;"></div></div></div>
-                        <div class="kpi-row"><span class="kpi-label">Alt images</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 55%;"></div></div></div>
-                    </div>
-                    {% elif seg.visual == 'timeline' %}
-                    <div class="key-figures-timeline">
-                        <div class="key-figures-timeline-item"><span class="t-period">0–30 j</span><p class="t-desc">Audit claims, matrice créa, 3 LP, A/B tests</p></div>
-                        <div class="key-figures-timeline-item"><span class="t-period">30–60 j</span><p class="t-desc">CRM post-achat, bundles, retargeting</p></div>
-                    </div>
-                    {% elif seg.visual == 'ttfb-kpi-bars' %}
+                    <p class="services-infographic-label">Priorités techniques — Niveau de criticité</p>
+                    
                     <div class="content-player-dashboard">
                         <div class="kpi-row"><span class="kpi-label">TTFB (~3,7 s)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 95%;"></div></div><span class="kpi-bad">Critique</span></div>
                         <div class="kpi-row"><span class="kpi-label">LCP mobile (32 s)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 100%;"></div></div><span class="kpi-bad">Bloquant</span></div>
                         <div class="kpi-row"><span class="kpi-label">Hébergement mutualisé</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 85%;"></div></div><span class="kpi-bad">Inadapté</span></div>
                         <div class="kpi-row"><span class="kpi-label">Perte conversion (25–50 %)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 75%;"></div></div><span class="kpi-bad">Business</span></div>
                     </div>
-                    {% elif seg.visual == 'flowchart-serveur' %}
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Hébergement identifié</h3>
+                    <p>o2switch PowerBoost v3 (mutualisé), reverse DNS odns.fr. Ressources partagées, CPU limité, PHP-FPM partagé, DB partagée. Pour WooCommerce + Elementor → insuffisant.</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Chaîne de blocage — Serveur → DB → Front</p>
+                    
                     <div class="content-player-flowchart">
                         <span class="flow-step">Serveur (TTFB 3,7 s)</span><span class="flow-arrow">→</span>
                         <span class="flow-step">DB (sessions, index)</span><span class="flow-arrow">→</span>
                         <span class="flow-step">Front (LCP, JS)</span>
                     </div>
-                    {% elif seg.visual == 'plan-timeline-casapy' %}
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Manque à gagner (scénarios)</h3>
+                    
+                    <table class="concurrentiel-table">
+                        <thead><tr><th>Scénario</th><th>Ventes perdues (30 %)</th><th>Impact mensuel</th></tr></thead>
+                        <tbody><tr><td>5 k visites, 2 %, panier 900 €</td><td>30 ventes</td><td>27 k€/mois</td></tr><tr><td>10 k visites, 2 %, panier 900 €</td><td>60 ventes</td><td>54 k€/mois</td></tr><tr><td>10 k visites, 5 %, panier 1 200 €</td><td>150 ventes</td><td>180 k€/mois</td></tr></tbody>
+                    </table>
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Plan d&#x27;action priorisé</p>
+                    
                     <div class="key-figures-timeline">
                         <div class="key-figures-timeline-item"><span class="t-period">Étape 1</span><p class="t-desc">Serveur — Redis cache / migration VPS</p></div>
                         <div class="key-figures-timeline-item"><span class="t-period">Étape 2</span><p class="t-desc">Base de données — nettoyage, index, transients</p></div>
                         <div class="key-figures-timeline-item"><span class="t-period">Étape 3</span><p class="t-desc">Front-end — LCP image, défer JS, optimisation</p></div>
                     </div>
-                    {% elif seg.visual == 'funnel-aarrr' %}
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Étude marketing (clean room)</h3>
+                    <p>Faits vs hypothèses. Constat factuel : aucune trace de pub Meta ou Google (Meta Ads Library, Google Ads Transparency). Marché ameublement concurrentiel ; funnel AARRR, SWOT et positionnement à compléter avec preuves (5 éléments factuels à fournir).</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Funnel AARRR (Retail) — Acquisition, Activation, Rétention, Revenue, Referral</p>
+                    
                     <div class="content-player-flowchart">
                         <span class="flow-step">Acquisition</span><span class="flow-arrow">→</span>
                         <span class="flow-step">Activation</span><span class="flow-arrow">→</span>
@@ -1108,137 +1030,107 @@
                         <span class="flow-step">Revenue</span><span class="flow-arrow">→</span>
                         <span class="flow-step">Referral</span>
                     </div>
-                    {% endif %}
+                    
                 </div>
-                {% endif %}
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="services-tabs">
-                {% for service in content.services %}
-                <input type="radio" name="services-tab" id="service-{{ forloop.counter0 }}" {% if forloop.first %}checked{% endif %}>
-                <label for="service-{{ forloop.counter0 }}">{{ service.title }}</label>
-                {% endfor %}
-                <div class="services-panels">
-                    {% for service in content.services %}
-                    <div class="services-panel"><h3>{{ service.title }}</h3><p>{{ service.description }}</p></div>
-                    {% endfor %}
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Marché &amp; concurrence</h3>
+                    <p>Ameublement en ligne : acteurs omnicanaux, marketplaces, pure players, seconde main. Concurrents directs (catégories, prix, livraison) et substituts à établir avec sources. Acquisition : SEO, SEA/Shopping (aucune trace Meta/Google), Social organique.</p>
                 </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Positionnement &amp; SWOT</h3>
+                    <p>USP et promesse à extraire du site. Persona : hypothèse à valider. SWOT défendable : chaque Force avec preuve (livraison, avis, labels). Opportunités : UGC, SEO longue traîne, feed Shopping. Recommandations Growth : contenu, tracking GA4, CRO.</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Recommandations serveur</h3>
+                    
+                    <ul class="services-segment-bullets">
+                        <li>Option A : Redis object cache, page cache WooCommerce, OPcache, PHP 8.2.</li><li>Option B (recommandé) : migration VPS ou hébergement WooCommerce optimisé.</li><li>Puis : nettoyage DB (sessions, transients, révisions), optimisation front (LCP, défer JS).</li>
+                    </ul>
+                    
+                </div>
+                
+                
             </div>
-            {% endif %}
+            
         </section>
-        {% endif %}
+        
 
-        {% if content.seo_resume %}
-        <section class="section content-player{% if landing_page.slug == 'fitclem' %} fitclem-seo-grid{% endif %}" id="resume-seo">
-            <div class="section-head"><span class="section-num">03b</span><h2>{{ content.seo_resume.title|default:"Résumé SEO" }}</h2></div>
+        
+        <section class="section content-player" id="resume-seo">
+            <div class="section-head"><span class="section-num">03b</span><h2>DIAGNOSTIC SEO</h2></div>
             <div class="card seo-resume-card">
-                {% if content.seo_resume.manque_annuel %}
-                <p class="seo-manque">Manque à gagner SEO estimé : {{ content.seo_resume.manque_annuel }}</p>
-                {% endif %}
-                {% if content.seo_resume.intro %}
-                <p>{{ content.seo_resume.intro }}</p>
-                {% endif %}
-                {% if content.seo_resume.problemes_cles %}
+                
+                <p class="seo-manque">Manque à gagner SEO estimé : ~54–648 k€/an (scénarios 5–20 k visites/mois, 2–5 % conversion, panier 600–1 200 €)</p>
+                
+                
+                <p>TTFB ~3,7 s prouve un goulot serveur/backend. Hébergement mutualisé o2switch insuffisant pour WooCommerce + Elementor. Perte conversion 25–50 % ; scénario conservateur 30 %. Avant toute optimisation front, priorité absolue : serveur (Redis, migration VPS), puis base de données, puis front (LCP, images). ROI migration quasi immédiat.</p>
+                
+                
                 <ul>
-                    {% for item in content.seo_resume.problemes_cles %}<li>{{ item }}</li>{% endfor %}
+                    <li>TTFB ~3,7 s (critique)</li><li>Hébergement mutualisé</li><li>LCP 32 s mobile</li><li>Perte conversion 25–50 %</li>
                 </ul>
-                {% endif %}
-                {% if content.seo_resume.lien_analyse and content.rapport_url %}
-                <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">{{ content.seo_resume.lien_analyse }}</a>
-                {% endif %}
+                
+                
+                <a href="rapport.html#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">DÉCOUVRIR LE RAPPORT COMPLET →</a>
+                
             </div>
-            {% if landing_page.slug == 'fitclem' %}
-            <div class="content-player-dashboard" aria-hidden="true">
-                <div class="kpi-row"><span class="kpi-label">Performance (LCP)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 60%;"></div></div></div>
-                <div class="kpi-row"><span class="kpi-label">Erreurs 429</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 90%;"></div></div></div>
-                <div class="kpi-row"><span class="kpi-label">H1 manquants</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 75%;"></div></div></div>
-                <div class="kpi-row"><span class="kpi-label">Alt images</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 55%;"></div></div></div>
-            </div>
-            {% endif %}
+            
         </section>
-        {% endif %}
+        
 
-        {% if content.expertise_stack %}
-        <section class="section" id="stack">
-            <div class="section-head"><span class="section-num">04</span><h2>Stack technique</h2></div>
-            {% for key, labels in content.expertise_stack.items %}
-            {% if labels %}
-            <div class="stack-group">
-                <p class="stack-label">{{ key|capfirst }}</p>
-                <div class="stack-tags">{% for item in labels %}<span class="stack-tag">{{ item }}</span>{% endfor %}</div>
-            </div>
-            {% endif %}{% endfor %}
-        </section>
-        {% endif %}
+        
 
-        {% if content.mission_flash or content.produit_commercial %}
-        <section class="section" id="offre">
-            <div class="section-head"><span class="section-num">05</span><h2>Mission Flash</h2></div>
-            <div class="mission-flash">
-                <p class="tag-line">Offre pour vous</p>
-                <div class="mission-flash-content">{{ content.mission_flash|default:content.produit_commercial|linebreaksbr }}</div>
-            </div>
-        </section>
-        {% endif %}
+        
 
-        {% if content.why_growth_engineer %}
-        <section class="section" id="why-ge">
-            <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
-            <blockquote class="why-quote">{{ content.why_growth_engineer }}</blockquote>
-        </section>
-        {% endif %}
+        
 
-        {% comment %} Diagrammes / Funnels (optionnel) : graphiques et infographiques du projet perso (perso_ref_path). Pas utilisés systématiquement, gardés pour réutilisation. {% endcomment %}
-        {% if content.diagram_url or content.funnel_image_url %}
-        <section class="section" id="diagramme-funnel">
-            <div class="section-head"><span class="section-num">06</span><h2>En un coup d'œil</h2></div>
-            <div class="card workflow-figure">
-                {% if content.diagram_url %}
-                <figure><img src="{{ content.diagram_url }}" alt="Diagramme" loading="lazy" style="max-width:100%; height:auto; border-radius:12px;"></figure>
-                {% endif %}
-                {% if content.funnel_image_url %}
-                <figure><img src="{{ content.funnel_image_url }}" alt="Funnel" loading="lazy" style="max-width:100%; height:auto; border-radius:12px;"></figure>
-                {% endif %}
-            </div>
-        </section>
-        {% endif %}
+        
+        
 
-        {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
+        
         <section class="section" id="coordonnees">
             <div class="section-head"><span class="section-num">07</span><h2>Coordonnées</h2></div>
             <div class="card">
-                <p class="coordonnees-intro">{% if content.coordonnees_intro %}{{ content.coordonnees_intro }}{% else %}Pour échanger ou planifier un Diagnostic Flash, retrouvez mes coordonnées ci-dessous.{% endif %}</p>
+                <p class="coordonnees-intro">Pour un échange ou recevoir les livrables :</p>
                 <ul class="coordonnees-list">
-                    {% if content.contact_email or content.contact_gmail %}<li>Gmail : <span class="coordonnees-email" style="user-select:all">{% firstof content.contact_email content.contact_gmail|mailto_to_email %}</span></li>{% endif %}
-                    {% if content.contact_linkedin %}<li><a href="{{ content.contact_linkedin }}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>{% endif %}
-                    {% if content.contact_github %}<li><a href="{{ content.contact_github }}" target="_blank" rel="noopener noreferrer">GitHub</a></li>{% endif %}
-                    {% if content.contact_linktree %}<li><a href="{{ content.contact_linktree }}" target="_blank" rel="noopener noreferrer">Linktree</a></li>{% endif %}
+                    <li>Gmail : <span class="coordonnees-email" style="user-select:all">lucas.tymen@gmail.com</span></li>
+                    <li><a href="https://www.linkedin.com/in/lucas-tymen-310255123/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    
+                    
                 </ul>
             </div>
         </section>
-        {% endif %}
+        
 
-        {% if content.cta_text %}
-        {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
+        
+        
         <div class="cta-wrap">
-            <a href="#contact-email-modal" class="cta">{{ content.cta_text }}</a>
+            <a href="#contact-email-modal" class="cta">VOIR LE RAPPORT COMPLET</a>
         </div>
-        {% endif %}
-        {% endif %}
+        
+        
     </main>
 
-    {% if content.contact_email or content.contact_gmail %}
+    
     <div id="contact-email-modal" class="contact-modal" aria-hidden="true">
         <a href="#" class="contact-modal-overlay" aria-label="Fermer"></a>
         <div class="contact-modal-content">
-            <p>Vous pouvez me contacter par Mail à cette adresse : <span class="contact-modal-email">{% firstof content.contact_email content.contact_gmail|mailto_to_email %}</span></p>
+            <p>Vous pouvez me contacter par Mail à cette adresse : <span class="contact-modal-email">lucas.tymen@gmail.com</span></p>
             <a href="#" class="contact-modal-close">Fermer</a>
         </div>
     </div>
-    {% endif %}
+    
 
-    {% if content.key_figures_carousel %}
+    
     <script>
     (function() {
         var track = document.getElementById('key-figures-track');
@@ -1267,7 +1159,7 @@
         goTo(0);
     })();
     </script>
-    {% endif %}
+    
 
     <!-- Nav sticky : effet waouh au scroll (classe .nav--scrolled) + waffle mobile -->
     <script>
@@ -1307,6 +1199,20 @@
         window.addEventListener('scroll', function() { requestAnimationFrame(updateParallax); }, { passive: true });
     })();
     </script>
-    {% include "landing_pages/includes/scroll_top_on_load.html" %}
+    
+<script>
+(function() {
+    if (typeof window === 'undefined') return;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) window.scrollTo(0, 0);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+    });
+})();
+</script>
+
 </body>
 </html>

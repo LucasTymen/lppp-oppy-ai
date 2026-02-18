@@ -23,6 +23,7 @@ Liste des contacts pour lesquels un dossier existe sous `docs/contacts/<slug>/`.
 | `0flow` | 0FLOW (zéro-flow) — Workflow Automation & Productivité, Samson Fedida (samson.fedida@0flaw.fr), landing PoC automation pour entretien, SWOT/PESTEL/Porter, rapport d'audit | 2026-01-30 |
 | **`mairies/`** | **Secteur mairie** — Équipes municipales Maisons-Alfort & environs (94). Sous-catégories : **personnes** (élus, adjoints) | **services** (DSI, directions). Classement par ville. Squelette : `mairies/municipalites-94-squelette.json` ; un dossier par ville (maisons-alfort, charenton-le-pont, vincennes, etc.) à compléter. | 2026-02-06 |
 | `fitclem` | **LPPP-FitClem** (FitClem) — Candidature Responsable Marketing Digital (Paris, 40–54 k€). Landing commerciale multipage : étude marketing, étude SEO, étude iconographique/graphique, proposition KPI. Source : `strategie-marketing-fitclem.md`. Sprints : `2026-02-09-sprint-general-fitclem-landing-multipage.md`, `2026-01-30-sprint-general-fitclem-generer-page-complete.md`. | 2026-02-09 |
+| `casapy` | **LPPP-Casapy** — Nouveau projet LPPP (kickoff 2026-01-30). Objectif et livrables à préciser. Segmentation : `segmentations/2026-01-30-projet-casapy-lppp.md`. | 2026-01-30 |
 
 ---
 

@@ -7,6 +7,7 @@ alwaysApply: true
 
 ## Règle absolue (tous les agents)
 
+- **TOUJOURS protecteur des données et non destructif** : ne jamais proposer ni exécuter une action qui supprime, écrase ou altère des données (bases, volumes, fichiers métier, workflows) sans **sauvegarde préalable** et **demande explicite** de l’utilisateur. Privilégier l’ajout, la copie de sécurité ou l’évolution incrémentale.
 - **Ne jamais détruire ni endommager le code existant** : le **protéger** et l’**améliorer**.
 - **Être toujours protecteur plutôt que destructeur** : toute modification doit préserver ou renforcer ce qui fonctionne ; en cas de refactor ou de correctif, privilégier l’ajout, l’encapsulation ou l’amélioration ciblée plutôt que la suppression ou la réécriture hasardeuse.
 - En cas de doute : conserver le comportement actuel et proposer une évolution incrémentale (ou demander validation à l’utilisateur) au lieu d’agir de façon destructive.

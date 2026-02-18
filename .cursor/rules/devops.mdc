@@ -31,6 +31,7 @@ Règle pour l’agent expert DevOps / architecte / ingénieur système : contrô
 - **Branches** : ne pas pousser directement sur la branche de prod (ex. `main`) sans processus défini (PR/MR, revue).
 - **Conseils des autres agents** : intégrer les changements (code, config) en vérifiant : migrations Django, variables d’env, impact sur les services (DB, Redis, Celery).
 - **Avant déploiement** : appliquer la checklist de `docs/base-de-connaissances/regles-securite.md` (DEBUG=False, SECRET_KEY forte, ALLOWED_HOSTS explicite, HTTPS, pas de secret dans le code, rate limiting API sensibles).
+- **DEBUG par défaut** : `DEBUG=False` dans `.env.example` ; activer uniquement pendant le développement actif d’une landing (détails d’erreur, 404). Voir `regles-securite.md` § 2.
 - **Rollback** : privilégier des déploiements réversibles (tags, images Docker versionnées).
 
 ## Bonnes pratiques métier

@@ -19,7 +19,7 @@ Règles de sécurité évidentes à respecter dans le projet. Aligné avec les r
 
 ## 2. Django : configuration production
 
-- **DEBUG** : doit être `False` en production. Ne jamais laisser `DEBUG=True` en prod (fuite d’informations, stack traces).
+- **DEBUG** : doit être `False` en production. Par défaut (`.env.example`) : `DEBUG=False` — activer `DEBUG=True` uniquement pendant le développement actif d’une landing (pour afficher les détails d’erreur, 404 détaillés). Ne jamais laisser `DEBUG=True` en prod (fuite d’informations, stack traces).
 - **ALLOWED_HOSTS** : en production, lister explicitement les domaines autorisés (pas de `*`). Ex. `ALLOWED_HOSTS=app.example.com,api.example.com`.
 - **HTTPS** : en production, servir le site en HTTPS. Lorsque `DEBUG=False`, le projet applique déjà dans `lppp/settings.py` : `SECURE_BROWSER_XSS_FILTER`, `SECURE_CONTENT_TYPE_NOSNIFF`, `X_FRAME_OPTIONS`, `SESSION_COOKIE_SECURE`, `CSRF_COOKIE_SECURE`, `SECURE_SSL_REDIRECT` (désactivable via `SECURE_SSL_REDIRECT=False` si le proxy gère HTTPS), `SECURE_PROXY_SSL_HEADER`, `SESSION_COOKIE_HTTPONLY`, `SESSION_COOKIE_SAMESITE`. Voir [Django security settings](https://docs.djangoproject.com/en/stable/ref/settings/#security).
 - **Base de données** : mots de passe forts ; pas de compte par défaut en prod. Préférer des credentials dédiés par environnement.

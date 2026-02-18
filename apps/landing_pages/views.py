@@ -213,6 +213,17 @@ def landing_public(request, slug):
                 content = _content_with_defaults(lp.content_json or {}, lp.template_key)
         else:
             content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+    # Casapy : source de vérité = fichier JSON (docs/contacts/casapy/landing-proposition-casapy.json)
+    elif lp.slug == "casapy":
+        casapy_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / "casapy" / "landing-proposition-casapy.json"
+        if casapy_json_path.exists():
+            try:
+                with open(casapy_json_path, encoding="utf-8") as f:
+                    content = _content_with_defaults(json.load(f), lp.template_key)
+            except (json.JSONDecodeError, OSError):
+                content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+        else:
+            content = _content_with_defaults(lp.content_json or {}, lp.template_key)
     else:
         content = _content_with_defaults(lp.content_json or {}, lp.template_key)
     # Pour les slugs enregistrés (ex. orsys), le thème vient de themes.py → les modifs sont visibles sans --update

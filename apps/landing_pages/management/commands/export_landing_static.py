@@ -102,6 +102,9 @@ class Command(BaseCommand):
             elif slug == "fitclem":
                 lp.prospect_company = "FitClem"
                 lp.prospect_name = "Clémentine Sarlat"
+            elif slug == "casapy":
+                lp.prospect_company = "Casapy"
+                lp.prospect_name = ""
             use_perso_style = _use_perso_style(lp)
             self.stdout.write(f"Contenu chargé depuis {json_path} (use_perso_style={use_perso_style})")
         else:

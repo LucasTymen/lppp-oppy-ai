@@ -113,10 +113,67 @@ Une **structure complémentaire**, orientée « accroche entreprise » et très 
 
 ---
 
-## 6. Références
+## 6. Types de fiches par famille de poste
+
+En plus de la structure canonique (0 → 5), **adapter les sections et le contenu** selon le type de poste. Deux familles supplémentaires à intégrer quand c’est le cas.
+
+### 6.1 Infogérant informatique (niveau 1 & niveau 2)
+
+Pour un poste **infogérant / support informatique N1 et N2** :
+
+- **Conserver** : info-box, sections 0 (présentation), 1 (formalités), 4 (questions à poser), 5 (entreprise).
+- **Section 2** : remplacer / compléter par **Q/R et savoir-faire Infogérant** :
+  - **Niveau 1** : prise en charge des demandes (ticketing, première ligne), résolution courante (mot de passe, accès, imprimante, poste), escalade au N2, outils (GLPI, Zendesk, RDS, etc.), procédures et délais SLA.
+  - **Niveau 2** : diagnostic avancé, administration (Active Directory, GPO, DNS, DHCP), supervision, déploiement (patches, images), participation à la roadmap infra.
+- **Section 3** : **Tests techniques / questions techniques** adaptées : différences N1 vs N2, exemples de tickets, gestion des priorités, relation avec les utilisateurs et les équipes internes, bonnes pratiques (documentation, traçabilité, communication).
+- **Lexique** : SLA, ticket, escalade, N1/N2/N3, RDS, AD, GPO, hotline, infogérance, supervision, PRA/PCA.
+
+### 6.2 Consultant SEO
+
+Pour un poste **consultant SEO**, ajouter **obligatoirement** les blocs suivants (en section 2 ou en sous-accordéons dédiés). Ne pas oublier le **rappel des règles de base** et l’**avenir du SEO**.
+
+- **Rappel — SEO technique (règles de base)**  
+  Crawlabilité et indexation (robots.txt, sitemap, balisage HTML sémantique, H1 unique, meta title/description), Core Web Vitals (LCP, FID/INP, CLS), structure des URLs, canonical, hreflang, gestion des erreurs (4xx, 5xx), maillage interne, HTTPS, mobile-first. Outils : Search Console, Screaming Frog, Lighthouse.
+
+- **Rappel — SEO sémantique (règles de base)**  
+  Intention de recherche (informatif, transactionnel, navigationnel), sujets et entités (topics, clusters), densité et pertinence du contenu, champs sémantiques et synonymes, E-E-A (Experience, Expertise, Authoritativeness), structuration (schémas, FAQ, HowTo). Différence avec le keyword stuffing ; alignement contenu / requêtes / pages.
+
+- **Avenir du SEO — adaptation aux robots et évolution**  
+  - **Adapter au robot** : crawlers et indexation (Googlebot, Bingbot), rendu JavaScript, directives et balisage pour les snippets (featured snippets, PAA), signaux E-E-A et YMYL ; pénalités et bonnes pratiques face aux mises à jour (algorithme, spam).  
+  - **Avenir du SEO** : recherche vocale, SGE / Search Generative Experience, intégration IA dans les SERP, zero-click, rôle du contenu « expert » et de la marque ; tendances (sémantique, entités, passage du keyword au topic).  
+
+L’Assistant Entretien Emploi doit **toujours inclure** ces trois blocs (SEO technique, SEO sémantique, avenir du SEO) dans toute fiche « Consultant SEO ». S’appuyer sur `rapport-seo-prospect.md`, `seo-semantique-outils-open-source.md` et la base de connaissances pour rester aligné avec le projet (sans inventer).
+
+### 6.3 Pentesting et cybersécurité (notions de base à avancées)
+
+Pour un poste ou un **onglet dédié pentesting / cybersécurité**, inclure les blocs suivants (section 2 ou 3, ou onglet accordéon dédié).
+
+- **Notions de base** : objectifs du pentest (identification des vulnérabilités, rapport d’exploitation, recommandations), différences Red Team / Blue Team / Purple Team, périmètre et autorisation (scope, lettre de mission), méthodologies (OWASP, PTES, NIST), phases (reconnaissance, scanning, exploitation, post-exploitation, reporting).
+- **Notions un peu avancées** : vecteurs d’attaque courants (injection, XSS, CSRF, élévation de privilèges), exploitation de services (credentials, services exposés), social engineering, bonnes pratiques de rédaction de rapport (criticité, preuves, reproductibilité).
+- **Préceptes cybersécurité** : défense en profondeur, principe du moindre privilège, segmentation, durcissement (hardening), gestion des secrets et des accès, conformité (RGPD, ISO 27001, ANSSI), cycle de vie des vulnérabilités (découverte → correction → vérification).
+- **Modes d’action recommandés** : cadrage (scope, règles d’engagement), tests non destructifs en priorité, traçabilité des actions, communication avec le commanditaire, livrables (rapport exécutif, technique, plan de remédiation).
+- **Guides en cas d’attaque** : détection et confinement (isoler les systèmes compromis, préserver les preuves), analyse post-incident (forensic, logs), communication de crise, déclaration (CNIL, ANSSI si applicable), retour d’expérience et amélioration des contrôles.
+
+**Lexique** : CVE, CWE, CVSS, OWASP Top 10, PTES, NIST CSF, Red/Blue/Purple Team, scope, PoC, rapport d’exploitation, remédiation.
+
+### 6.4 IoT (Internet of Things)
+
+Pour un poste ou un **onglet touchant à l’IoT**, inclure :
+
+- **Notions de base** : définition (objets connectés, capteurs, actuateurs, passerelles), architectures (capteur → passerelle → cloud, edge), protocoles courants (MQTT, CoAP, HTTP/HTTPS, LoRa, Zigbee, BLE), enjeux (latence, bande passante, énergie, sécurité).
+- **Sécurité IoT** : surfaces d’attaque (firmware, interfaces web/API, radio), bonnes pratiques (mise à jour, authentification, chiffrement, durcissement par défaut), standards et cadres (ETSI EN 303 645, NIST IoT, OWASP IoT Top 10).
+- **Cas d’usage et tendances** : industrie (IIoT, supervision), bâtiment (smart building), santé (objets médicaux), domotique ; convergence IT/OT, gestion des vulnérabilités et des mises à jour à grande échelle.
+
+**Lexique** : MQTT, CoAP, edge, firmware, OTA (Over-The-Air), IIoT, OT.
+
+---
+
+## 7. Références
 
 - **Espace fiches** : `docs/ressources-utilisateur/fiches-entretien-emploi/` (README, un dossier par entreprise).
 - **Modèle canonique** : `docs/ressources-utilisateur/fiches-entretien-emploi/_modele-canonique_prepa_entretien.html`
+- **Types de poste** : § 6 — **Infogérant N1/N2**, **Consultant SEO** (rappel SEO technique, sémantique, avenir du SEO), **Pentesting / Cybersécurité** (notions base à avancées, préceptes, modes d’action, guides en cas d’attaque), **IoT** (notions, sécurité, cas d’usage). À inclure selon le poste ciblé.
 - **Règle Assistant** : `.cursor/rules/assistant-entretien-emploi.mdc`
 - **Registre** : `docs/base-de-connaissances/registre-agents-ressources.md`
 - **Rôles (Rédacteur = agent RH)** : `docs/base-de-connaissances/agents-roles-responsabilites.md` § Rédacteur, § Assistant Entretien Emploi.
+- **SEO (contenu)** : `rapport-seo-prospect.md`, `seo-semantique-outils-open-source.md` pour rester aligné avec le projet.

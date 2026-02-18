@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapport — société, stratégie, SEO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --lp-bg: #0a0a0f; --lp-text: #e8e8ed; --lp-heading: #fff; --lp-muted: #9898a8; --lp-primary: #6366f1; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, sans-serif; margin: 0; min-height: 100vh; background: var(--lp-bg); color: var(--lp-text); line-height: 1.65; padding: clamp(2rem, 5vw, 4rem); max-width: 900px; margin: 0 auto; }
+        a { color: var(--lp-primary); }
+        h1, h2, h3 { color: var(--lp-heading); }
+        table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
+        th, td { border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 0.75rem; text-align: left; }
+        th { background: rgba(99, 102, 241, 0.2); }
+        blockquote { border-left: 4px solid var(--lp-primary); margin: 1rem 0; padding-left: 1rem; color: var(--lp-muted); }
+        .back-link { display: inline-block; margin-bottom: 2rem; color: var(--lp-primary); text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-link">← Retour à la proposition</a>
+    <div class="rapport-body">
+<h1>Rapport complet Casapy — Audit SEO &amp; Étude marketing</h1>
+<p><strong>Date</strong> : 2026-01-30<br />
+<strong>Source</strong> : <code>SEO_Casapy_rapport_performances_et_diagnostique.md</code>, <code>etude-marketing-casapy-clean-room.md</code>.<br />
+<strong>Usage</strong> : Landing Casapy, page rapport, livrables projet LPPP.</p>
+<hr />
+<h2>Contexte</h2>
+<p>Casapy est un e-commerce (canapés convertibles, ameublement) sur stack <strong>WordPress / WooCommerce / Elementor</strong>, hébergé sur <strong>o2switch PowerBoost v3</strong> (mutualisé). Ce rapport regroupe le diagnostic technique SEO, l’estimation du manque à gagner et l’analyse marketing en clean room (faits vs hypothèses).</p>
+<hr />
+<h2>1. Diagnostic technique — TTFB</h2>
+<h3>TTFB mesuré (médiane sur 5 prises)</h3>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th>TTFB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Homepage</td>
+<td>~3,77 s</td>
+</tr>
+<tr>
+<td>Page produit</td>
+<td>~3,63 s</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Référence SEO :</strong><br />
+- Bon : &lt; 500 ms<br />
+- Problème : &gt; 1 s<br />
+- Critique : &gt; 2 s<br />
+- Casapy : <strong>~3,7 s</strong></p>
+<h3>Lecture stratégique</h3>
+<p>Le problème principal est <strong>serveur/backend</strong>, pas prioritairement JS/CSS.</p>
+<p>Le LCP à 32 s devient logique :<br />
+1. 3,7 s pour commencer à répondre<br />
+2. Elementor + WooCommerce chargent<br />
+3. Scripts multiples<br />
+4. Images lourdes<br />
+5. Requêtes SQL</p>
+<p>→ Effondrement mobile.</p>
+<h3>Hébergement identifié</h3>
+<ul>
+<li><strong>Stack</strong> : o2switch PowerBoost v3 (mutualisé)</li>
+<li><strong>Reverse DNS</strong> : odns.fr</li>
+</ul>
+<p>Pour WooCommerce + Elementor, un mutualisé reste insuffisant : ressources partagées, CPU limité, PHP-FPM partagé, base MySQL partagée.</p>
+<hr />
+<h2>2. Impact business et manque à gagner</h2>
+<p>Avec un TTFB de 3,7 s :<br />
+- Perte SEO (Core Web Vitals)<br />
+- Baisse du crawl efficiency<br />
+- Augmentation du taux de rebond<br />
+- <strong>Perte de conversion mobile massive</strong><br />
+- CPC Ads plus chers</p>
+<p><strong>Perte de conversion estimée : 25 à 50 %</strong> — hypothèse conservatrice : <strong>30 % de conversions perdues</strong>.</p>
+<h3>Scénarios chiffrés (hypothèses réalistes)</h3>
+<p>Panier moyen secteur canapés : 600 € (bas) | 900 € (moyen) | 1 200 € (haut).</p>
+<h4>Cas 1 — 5 000 visiteurs / mois</h4>
+<table>
+<thead>
+<tr>
+<th>Conversion</th>
+<th>Perte 30 %</th>
+<th>Perte mensuelle (600 €)</th>
+<th>Perte mensuelle (900 €)</th>
+<th>Perte mensuelle (1 200 €)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 %</td>
+<td>30 ventes</td>
+<td>18 000 €</td>
+<td>27 000 €</td>
+<td>36 000 €</td>
+</tr>
+<tr>
+<td>5 %</td>
+<td>75 ventes</td>
+<td>45 000 €</td>
+<td>67 500 €</td>
+<td>90 000 €</td>
+</tr>
+</tbody>
+</table>
+<h4>Cas 2 — 10 000 visiteurs / mois</h4>
+<table>
+<thead>
+<tr>
+<th>Conversion</th>
+<th>Perte 30 %</th>
+<th>Perte mensuelle (600 €)</th>
+<th>Perte mensuelle (900 €)</th>
+<th>Perte mensuelle (1 200 €)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2 %</td>
+<td>60 ventes</td>
+<td>36 000 €</td>
+<td>54 000 €</td>
+<td>72 000 €</td>
+</tr>
+<tr>
+<td>5 %</td>
+<td>150 ventes</td>
+<td>90 000 €</td>
+<td>135 000 €</td>
+<td>180 000 €</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Lecture conservatrice</strong> : 10 000 visiteurs, 2 % conversion, panier 900 € → <strong>~54 000 € / mois</strong> potentiellement impactés.</p>
+<p>Un hébergement mutualisé à 30 €/mois qui provoque 30 000 € de perte mensuelle → <strong>ROI d’une migration serveur quasi immédiat</strong>.</p>
+<hr />
+<h2>3. Plan d’action (ordre prioritaire)</h2>
+<h3>Étape 1 — Serveur (priorité absolue)</h3>
+<ul>
+<li><strong>Option A</strong> : Redis object cache, page cache WooCommerce intelligent, OPcache, PHP 8.2</li>
+<li><strong>Option B</strong> : Migration vers VPS ou hébergement WooCommerce optimisé (recommandé)</li>
+</ul>
+<h3>Étape 2 — Base de données</h3>
+<ul>
+<li>Nettoyage sessions WooCommerce</li>
+<li>Révision index MySQL</li>
+<li>Nettoyage transients</li>
+<li>Suppression révisions massives</li>
+</ul>
+<h3>Étape 3 — Front-end (après serveur)</h3>
+<ul>
+<li>Optimisation LCP image</li>
+<li>Défer JS Elementor</li>
+<li>Supprimer jQuery Migrate si possible</li>
+<li>Audit Bootstrap 3</li>
+</ul>
+<hr />
+<h2>4. Étude marketing (clean room)</h2>
+<p><strong>Constat factuel</strong> : aucune trace de publicité Meta ou Google (Meta Ads Library, Google Ads Transparency).</p>
+<h3>Marché et positionnement</h3>
+<ul>
+<li>Secteur ameublement en ligne : concurrentiel (acteurs omnicanaux, marketplaces, pure players).</li>
+<li>USP, persona et concurrents : à extraire du site et à valider (voir <code>etude-marketing-casapy-clean-room.md</code>).</li>
+</ul>
+<h3>Funnel AARRR (retail)</h3>
+<ul>
+<li><strong>Acquisition</strong> : SEO (pages catégories, filtres crawlables, contenus, maillage) ; SEA/Shopping (actuellement non actif ou non visible) ; social (organique, UGC).</li>
+<li><strong>Activation</strong> : checklist fiche produit (photos HD, dimensions, avis, réassurance livraison/retours).</li>
+<li><strong>Rétention</strong> : post-achat, email, reco, inspiration.</li>
+</ul>
+<h3>SWOT</h3>
+<ul>
+<li>Forces, faiblesses, opportunités, menaces à remplir avec preuves (voir doc clean room).</li>
+</ul>
+<hr />
+<h2>5. Proposition de valeur — Ce que ce livrable apporte</h2>
+<ul>
+<li><strong>Diagnostic technique</strong> : TTFB, LCP, hébergement, plan d’action priorisé.</li>
+<li><strong>Estimation chiffrée</strong> : scénarios manque à gagner (conservateurs).</li>
+<li><strong>Étude marketing clean room</strong> : faits vs hypothèses, champs à compléter.</li>
+</ul>
+<hr />
+<p><em>Document maintenu par Rédacteur / Expert SEO. Dernière mise à jour : 2026-01-30.</em></p>
+    </div>
+</body>
+</html>

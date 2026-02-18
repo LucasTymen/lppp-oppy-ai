@@ -53,6 +53,18 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | Suivre les advisories Next.js : [nextjs.org/blog/security-update-2025-12-11](https://nextjs.org/blog/security-update-2025-12-11), [CVE-2025-66478](https://nextjs.org/blog/CVE-2025-66478). Vérifier périodiquement `npm audit` et les alertes Red Hat / Snyk sur les projets Next.js (LPPP et landings Vercel). |
 | **Lien(s)** | `regles-securite.md`, `stack-frontend-nextjs-react.md`, [Next.js Security Advisories](https://github.com/vercel/next.js/security/advisories) |
 
+### Vercel — Projets LPPP_* qui ne s’affichent plus dans le dashboard
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Sur Vercel (Lucas Tymen's projects), des projets dont le nom commence par **LPPP_** semblent avoir disparu de la liste (comparaison avec une vue antérieure ou « 4 commits avant »). |
+| **Erreur** | Projets landing LPPP_* absents de la liste des projets Vercel. |
+| **Cause** | Les commits Git ne modifient pas la liste des projets Vercel. Une disparition vient en général de : projet **supprimé** ou **déconnecté** sur Vercel, filtre/vue (list vs grid), ou autre compte/équipe. Les 7 projets LPPP_* documentés (P4S, Ackuracy, Yuwell, FitClem, 0flow, Maisons-Alfort, Orsys) sont listés dans `deploy/README-standalone.md` et `strategie-deploiement-git-vercel.md`. |
+| **Solution** | 1) **Vérifier sur GitHub** : [github.com/LucasTymen](https://github.com/LucasTymen?tab=repositories) → filtrer par « LPPP » ; lister tous les repos `LPPP_*`. 2) **Réimporter sur Vercel** : Add New → Project → Import Git Repository → choisir le repo GitHub manquant ; configurer (Root Directory, Framework Other si statique). 3) Vérifier la vue (list/grid) et qu’aucun filtre ne cache des projets. |
+| **Prévention** | Documenter tout nouveau repo LPPP_* dans `deploy/README-standalone.md` et dans la stratégie Git/Vercel ; en cas de doute, comparer la liste GitHub (LPPP_*) à la liste des projets Vercel. |
+| **Lien(s)** | `deploy/README-standalone.md`, `strategie-deploiement-git-vercel.md` |
+
 ### WSL/Linux : « python: command not found » — toujours utiliser python3
 
 | Champ | Contenu |
@@ -214,6 +226,20 @@ Pour chaque erreur documentée, indiquer :
 | **Solution** | Pour le RAG Concierge Maisons-Alfort : **ne pas câbler** les nœuds. Utiliser la section **Document Stores** pour l'ingestion (Loader → Splitter → Embedding → Vector Store, sans fils). Sur le **Chatflow**, mettre un seul nœud **Agent** et configurer **Knowledge** via la liste déroulante (sélection du Document Store), pas par un câble. |
 | **Prévention** | Suivre la recette `docs/flowise-workflows/workflow-complet-concierge-maisons-alfort.md` § « Pourquoi les nœuds ne se raccordent pas ». Règle : Document → Document uniquement ; ChatMessage/string → même type. Vérifier les libellés des prises avant de connecter. |
 | **Lien(s)** | `docs/flowise-workflows/workflow-complet-concierge-maisons-alfort.md`, `flowise-concierge-ia-maisons-alfort-guide.md` |
+
+---
+
+### LPPP — service web arrêté + « failed to resolve host db » + container name already in use
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-17 |
+| **Contexte** | WSL, stack LPPP partiellement arrêtée. `docker compose exec web` → service web non démarré. `python3 manage.py` depuis l'hôte → failed to resolve host 'db'. `docker compose up -d db` → Conflict, container name already in use. |
+| **Erreur** | Combinaison : web arrêté ; hôte ne résout pas « db » ; compose refuse de créer car conteneurs existent. |
+| **Cause** | Conteneurs LPPP existent mais sont arrêtés ; compose tente de recréer (conflit) ; exécution depuis l'hôte utilise DB_HOST=db (résolu uniquement dans le réseau Docker). |
+| **Solution** | **Option A (non destructive)** : `docker start lppp_db lppp_redis && sleep 5 && docker start lppp_web && sleep 8 && docker exec lppp_web python manage.py create_landing_casapy --publish`. Touche uniquement lppp_* (pas SquidResearch). **Option B** : `make clean-containers` puis `make start` (conteneurs supprimés, volumes préservés). |
+| **Prévention** | Toujours exécuter les commandes Django dans le conteneur : `docker exec lppp_web python manage.py ...` ou `docker compose exec web python manage.py ...`. |
+| **Lien(s)** | `log-commun-lppp-squidresearch.md`, `Makefile`, `pilotage-agents.mdc` |
 
 ---
 

@@ -18,6 +18,14 @@ L’agent y crée et met à jour les **fiches Résumé** (HTML avec accordéons)
   - **résumé** : fichier texte ou Markdown des points clés à réviser.
   - **versions** : copies datées des fiches avant mise à jour (ou sous-dossier `versions/`).
 
+## Types de poste (sections à adapter)
+
+- **Général** : structure canonique 0 → 5 (présentation, formalités, Q/R stratégiques, tests techniques, questions à poser, entreprise).
+- **Infogérant informatique N1/N2** : sections dédiées (ticketing, escalade, N1 vs N2, AD, GPO, SLA, supervision). Détail : `fiches-entretien-emploi-modele-et-veille.md` § 6.1.
+- **Consultant SEO** : rappel SEO technique, rappel SEO sémantique, avenir du SEO. Détail : doc § 6.2.
+- **Pentesting / Cybersécurité** : onglet ou section — notions de base à avancées, préceptes, modes d’action recommandés, **guides en cas d’attaque** (confinement, preuves, post-incident, communication de crise). Détail : doc § 6.3.
+- **IoT** : notions de base (architectures, protocoles), sécurité IoT, cas d’usage et tendances. Détail : doc § 6.4.
+
 ## Exemples de référence
 
 - **Structure HTML** : modèle canonique (titre, info-box, accordéons `.accordion` / `.sub-accordion`, `.panel` / `.sub-panel`, classes `.highlight`, `.success`, `.warning`, `.info`, `.tip`).

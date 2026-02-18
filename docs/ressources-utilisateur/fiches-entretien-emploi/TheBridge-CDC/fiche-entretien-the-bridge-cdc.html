@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préparation Entretien - The Bridge / Caisse des Dépôts - Lucas Tymen</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; background-color: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        h1 { text-align: center; color: #333; font-size: 2.5em; margin-bottom: 10px; }
+        .subtitle { text-align: center; color: #666; font-size: 1.2em; margin-bottom: 30px; }
+        .info-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin-bottom: 30px; }
+        .info-box h3 { margin-top: 0; }
+        .accordion { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; cursor: pointer; padding: 15px; width: 100%; border: none; text-align: left; outline: none; font-size: 18px; font-weight: bold; transition: 0.4s; margin-top: 10px; border-radius: 8px; }
+        .active, .accordion:hover { background: linear-gradient(135deg, #764ba2 0%, #667eea 100%); transform: translateX(5px); }
+        .panel { padding: 20px; display: none; background-color: #f8f9fa; overflow: hidden; border-left: 4px solid #667eea; margin-bottom: 10px; }
+        .sub-accordion { background-color: #e9ecef; padding: 12px; font-size: 16px; margin: 10px 0; cursor: pointer; border-radius: 5px; font-weight: 600; color: #495057; transition: 0.3s; }
+        .sub-accordion:hover { background-color: #dee2e6; transform: translateX(3px); }
+        .sub-panel { padding: 15px; display: none; background-color: white; margin: 10px 0; border-radius: 5px; border-left: 3px solid #6c757d; }
+        .highlight { background-color: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; margin: 10px 0; border-radius: 5px; }
+        .success { background-color: #d4edda; padding: 10px; border-left: 4px solid #28a745; margin: 10px 0; border-radius: 5px; }
+        .warning { background-color: #f8d7da; padding: 10px; border-left: 4px solid #dc3545; margin: 10px 0; border-radius: 5px; }
+        .info { background-color: #d1ecf1; padding: 10px; border-left: 4px solid #17a2b8; margin: 10px 0; border-radius: 5px; }
+        .tip { background-color: #e7f3ff; border-left: 4px solid #2196F3; padding: 12px; margin: 10px 0; border-radius: 5px; }
+        .tip::before { content: "💡 "; font-weight: bold; }
+        code { background-color: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-family: 'Courier New', monospace; color: #e83e8c; }
+        ul { line-height: 1.8; } li { margin: 8px 0; } strong { color: #667eea; }
+        a { color: #667eea; text-decoration: none; } a:hover { text-decoration: underline; }
+        /* Onglets cliquables : un onglet = un thème ; à l'intérieur, chaque entrée = une notion de cours à ouvrir au fil des questions */
+        .tabs-legend { font-size: 0.95em; color: #555; margin-bottom: 12px; padding: 10px; background: #f0f4f8; border-radius: 8px; border-left: 4px solid #17a2b8; }
+        .tabs-container { margin-top: 15px; }
+        .tab-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; border-bottom: 2px solid #dee2e6; padding-bottom: 0; }
+        .tab-btn { padding: 12px 20px; font-size: 16px; font-weight: 600; cursor: pointer; border: none; border-radius: 8px 8px 0 0; background: #e9ecef; color: #495057; transition: 0.3s; }
+        .tab-btn:hover { background: #dee2e6; color: #333; }
+        .tab-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-bottom: 2px solid transparent; margin-bottom: -2px; }
+        .tab-content { padding: 5px 0; }
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>🏛️ Préparation Entretien The Bridge / Caisse des Dépôts</h1>
+    <div class="subtitle">Consultant SEO & Growth · Profil hybride Dev + IT + Design · Mission d'intérêt général</div>
+
+    <div class="info-box">
+        <h3>📋 Rappel rapide</h3>
+        <p><strong>Disponibilité :</strong> À préciser selon votre situation</p>
+        <p><strong>Prétentions :</strong> À adapter (institution = grille possible)</p>
+        <p><strong>Localisation :</strong> Paris 7e (quartier de prestige — discours structuré)</p>
+        <p><strong>Télétravail :</strong> Selon offre</p>
+        <p><strong>Contrat :</strong> CDI / mission</p>
+        <p style="margin-bottom:0;"><strong>📑 Sections 3 (SEO) et 4 (Cybersécurité) :</strong> onglets cliquables (Sémantique | Technique | Avenir ; Pentesting | IT N1-N2). Cliquez sur chaque notion pour le cours détaillé. <strong>Section 5 :</strong> Tests techniques (Python, Django, Growth, Concepts). <strong>Sections 8–9 :</strong> Checklist finale avant entretien + Lexique des abréviations. Tout est sur cette fiche.</p>
+    </div>
+
+    <!-- 0. VOTRE PRÉSENTATION -->
+    <button class="accordion">👤 0. VOTRE PRÉSENTATION — Lucas Tymen</button>
+    <div class="panel">
+
+        <button class="sub-accordion">🎯 Pitch 30 secondes (The Bridge / CDC)</button>
+        <div class="sub-panel">
+            <div class="highlight">
+                <p><strong>Version structurée :</strong></p>
+                <p><em>"Je suis Lucas Tymen : 22 ans d’IT et de rigueur système, reconversion en développement et growth. Je ne suis pas un pur expert SEO — je suis le traducteur entre le marketing, le design et la technique. À la Caisse des Dépôts, le SEO est une mission de service public : faire en sorte que l’usager trouve l’information officielle avant les sites de phishing ou de désinformation. J’apporte l’audit technique sur de gros volumes, l’automatisation du reporting pour les décideurs, et une culture de la fiabilité des données. Je parle le langage de vos DSI et je peux livrer des solutions, pas seulement des listes de problèmes."</em></p>
+            </div>
+        </div>
+
+        <button class="sub-accordion">💪 Le 4-en-1 (ton offre de valeur)</button>
+        <div class="sub-panel">
+            <div class="success">
+                <p><strong>A. Consultant SEO / Growth</strong></p>
+                <p>« Je ne fais pas du SEO de mots-clés, je fais du SEO de données. Mon but : positionner la CDC comme l’autorité absolue sur les sujets de confiance (E-E-A-T). » Levier : passage au <strong>GEO (Generative Engine Optimization)</strong> — préparer les contenus pour qu’ils soient cités par les IA génératives (ChatGPT, Gemini) que les usagers utilisent pour s’informer sur leurs droits.</p>
+            </div>
+            <div class="success">
+                <p><strong>B. Développeur (avantage injuste)</strong></p>
+                <p>« Je parle le langage de vos DSI. » Le SEO bloque souvent à l’implémentation technique. Avec Django, Python et les APIs, je peux prototyper des outils d’audit internes et dialoguer avec les équipes dev pour que les recommandations soient réellement mises en ligne. Référence : <strong>SaaS SquidResearch</strong> (performance, Core Web Vitals, sécurité).</p>
+            </div>
+            <div class="success">
+                <p><strong>C. Brand / Content / Design</strong></p>
+                <p>« La confiance passe par l’image. » Contenu institutionnel mais moderne : chaîne graphique (Adobe CC + IA générative), assets visuels qui renforcent l’autorité des articles SEO en respectant la charte. Optimisation du poids des images (WebP, compression) pour le SEO sans sacrifier la qualité.</p>
+            </div>
+            <div class="success">
+                <p><strong>D. Expert IT (gage de sécurité)</strong></p>
+                <p>« La rigueur des systèmes. » 22 ans en gestion de parc et systèmes : culture de la sécurité et de la protection des données (RGPD), vitale pour une institution. « Je ne suis pas un Growth Hacker qui casse tout, je suis un consultant qui sécurise ses déploiements. »</p>
+            </div>
+        </div>
+
+        <button class="sub-accordion">📞 Coordonnées</button>
+        <div class="sub-panel">
+            <p><strong>Email :</strong> lucas.tymen@gmail.com</p>
+            <p><strong>Téléphone :</strong> 06 62 09 82 57</p>
+            <p><strong>LinkedIn :</strong> <a href="https://www.linkedin.com/in/lucas-tymen-310255123/" target="_blank">linkedin.com/in/lucas-tymen-310255123</a></p>
+        </div>
+    </div>
+
+    <!-- 1. FORMALITÉS -->
+    <button class="accordion">📑 1. FORMALITÉS ADMINISTRATIVES</button>
+    <div class="panel">
+        <button class="sub-accordion">💼 Disponibilité · Prétentions · Lieu</button>
+        <div class="sub-panel">
+            <p>À adapter selon votre situation. Paris 7e : soigner la tenue et le discours. Utiliser la maturité (22 ans IT) comme gage de sagesse face aux profils trop « start-up nation ».</p>
+        </div>
+    </div>
+
+    <!-- 2. Q/R STRATÉGIQUES + CE QUE TU APPORTES + QUESTION PIÈGE -->
+    <button class="accordion">🎯 2. Q/R STRATÉGIQUES — Mots-clés, ROI, Question piège</button>
+    <div class="panel">
+
+        <button class="sub-accordion">🏷️ Mots-clés institutionnels (à placer)</button>
+        <div class="sub-panel">
+            <ul>
+                <li><strong>Intérêt général</strong> / <strong>Tiers de confiance</strong></li>
+                <li><strong>Transition écologique et démographique</strong></li>
+                <li><strong>Logement social</strong> / <strong>Banque des Territoires</strong></li>
+                <li><strong>Souveraineté numérique</strong></li>
+            </ul>
+        </div>
+
+        <button class="sub-accordion">💰 Ce que tu apportes (vendre le ROI)</button>
+        <div class="sub-panel">
+            <ul>
+                <li><strong>SEO technique :</strong> Audit de crawl sur de gros volumes, optimisation des Core Web Vitals (via background Dev).</li>
+                <li><strong>Automatisation :</strong> Gain de temps sur le reporting Data (Python / n8n) pour les décideurs.</li>
+                <li><strong>Créativité rigoureuse :</strong> Production d’infographies institutionnelles « SEO-friendly ».</li>
+                <li><strong>Fiabilité :</strong> 22 ans d’IT = 0 risque sur la manipulation des données.</li>
+            </ul>
+        </div>
+
+        <button class="sub-accordion">⚠️ QUESTION PIÈGE — « Pourquoi vous et pas un pur expert SEO ? »</button>
+        <div class="sub-panel">
+            <div class="warning">
+                <p><strong>Réponse à tenir :</strong></p>
+                <p><em>« Parce qu’un pur expert SEO vous donnera une liste de problèmes. Avec mon profil de Dev et d’ancien Responsable IT, je vous apporte les solutions et la capacité technique de les intégrer sans perturber vos systèmes. »</em></p>
+            </div>
+        </div>
+
+        <button class="sub-accordion">🔥 Power phrases (à placer en entretien)</button>
+        <div class="sub-panel">
+            <ol>
+                <li><strong>Hybridation :</strong> <em>« Je suis un traducteur entre le marketing, le design et la technique. Je réduis les frictions entre ces départements. »</em></li>
+                <li><strong>SEO institutionnel :</strong> <em>« Le SEO pour la CDC, c’est une mission de service public : s’assurer que l’usager trouve la bonne information officielle avant les sites de phishing ou de désinformation. »</em></li>
+                <li><strong>IA :</strong> <em>« L’IA n’est pas un gadget pour moi, c’est un levier d’industrialisation du contenu et de l’analyse de données, comme je le fais avec mes agents autonomes sur mes projets personnels. »</em></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- 3. SEO — Sémantique, Technique, Avenir (détaillé) -->
+    <button class="accordion">📊 3. SEO — Sémantique, Technique, Avenir projeté (Consultant SEO)</button>
+    <div class="panel">
+
+        <p class="tabs-legend"><strong>💡 Utilisation :</strong> Cliquez sur un onglet (Sémantique, Technique, Avenir) pour afficher les notions du thème. Puis cliquez sur chaque notion pour ouvrir le cours détaillé — au fur et à mesure des questions en entretien.</p>
+        <div class="tabs-container" id="seo-tabs">
+            <div class="tab-buttons">
+                <button type="button" class="tab-btn active" data-tab="seo-semantique">🧠 Sémantique</button>
+                <button type="button" class="tab-btn" data-tab="seo-technique">🔧 Technique</button>
+                <button type="button" class="tab-btn" data-tab="seo-avenir">🚀 Avenir (GEO, réseaux)</button>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="seo-semantique">
+            <button class="sub-accordion">Intention de recherche (informatif, transactionnel, navigationnel)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Ce que l’utilisateur cherche vraiment derrière la requête. Trois types principaux : <strong>informatif</strong> (comprendre, apprendre), <strong>transactionnel</strong> (acheter, s’inscrire), <strong>navigationnel</strong> (atteindre un site précis).<br>
+                    <strong>Exemple :</strong> « Livret A taux » = informatif (comprendre le taux actuel) ; « Ouvrir un Livret A en ligne » = transactionnel ; « Caisse des Dépôts » = navigationnel (aller sur le site officiel).<br>
+                    <strong>Cas d’usage :</strong> Adapter le format et le contenu de la page à l’intention. Pour la CDC : majorité d’intention informative (droits, démarches) → contenu clair, structuré, E-E-A. Analyser les SERP, featured snippets et PAA (People Also Ask) pour inférer l’intention avant de rédiger.
+                </div>
+            </div>
+            <button class="sub-accordion">Topics, entités et clusters de contenu</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Topic</strong> = sujet maître (ex. « épargne retraite »), <strong>entités</strong> = personnes, organisations, concepts (Knowledge Graph), <strong>clusters</strong> = ensemble de pages liées couvrant un topic.<br>
+                    <strong>Exemple :</strong> Topic « Livret A » → page pilier /livret-a ; clusters : plafond Livret A, taux Livret A, ouvrir un Livret A, simulation. Entité « Caisse des Dépôts » = organisation reconnue par Google.<br>
+                    <strong>Cas d’usage :</strong> Structurer le site en piliers + clusters. Pour la CDC : topics = Livret A, logement social, Mon Compte Formation, retraites ; renforcer l’entité CDC (Organization schema, backlinks officiels). Éviter le keyword stuffing : privilégier la couverture sémantique et l’autorité.
+                </div>
+            </div>
+            <button class="sub-accordion">E-E-A et E-E-A-T (Experience, Expertise, Authoritativeness, Trustworthiness)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Signaux que Google utilise pour évaluer la qualité et la fiabilité du contenu. <strong>Experience</strong> = expérience de première main, <strong>Expertise</strong> = compétence reconnue, <strong>Authoritativeness</strong> = autorité sur le sujet, <strong>Trustworthiness</strong> = confiance (sécurité, transparence).<br>
+                    <strong>Exemple :</strong> Page « Comment utiliser Mon Compte Formation » : auteur identifié (nom + fonction), date de mise à jour visible, liens vers textes officiels (Loi, décrets), charte graphique CDC = signaux E-E-A-T forts.<br>
+                    <strong>Cas d’usage :</strong> Pour la CDC, l’institution apporte autorité et confiance ; renforcer par auteur identifié, sources officielles, dates de mise à jour, accessibilité RGAA, clarté des démarches. Pages YMYL (Your Money Your Life) = E-E-A-T critique.
+                </div>
+            </div>
+            <button class="sub-accordion">Structuration : schémas (FAQ, HowTo, Organization)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Données structurées (JSON-LD) pour aider les moteurs à comprendre et afficher des extraits enrichis (FAQ, étapes, organisation).<br>
+                    <strong>Exemple :</strong> <code>FAQPage</code> avec question/réponse sur « Quel est le plafond du Livret A ? » ; <code>HowTo</code> pour « Comment activer mon CPF » avec étapes numérotées ; <code>Organization</code> pour la CDC (nom, logo, URL, réseaux sociaux).<br>
+                    <strong>Cas d’usage :</strong> FAQPage sur les pages de questions fréquentes (droits, démarches), HowTo pour les tutoriels officiels (MCF, retraites), Organization sur la homepage. Augmente les chances de featured snippet et de citation dans les réponses IA (GEO).
+                </div>
+            </div>
+            <button class="sub-accordion">E-E-A-T &amp; YMYL (confiance) : comment le vendre en entretien</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>YMYL :</strong> contenus qui impactent finances, sécurité, droits. Exige un niveau de confiance élevé. <strong>E-E-A-T :</strong> Experience, Expertise, Authoritativeness, Trust.<br><br>
+                    <strong>Sur un site institutionnel :</strong>
+                    <ul>
+                        <li><strong>Author</strong> (qui écrit), <strong>date</strong>, <strong>sources</strong>, <strong>process éditorial</strong> (validation juridique/réglementaire).</li>
+                        <li>Pages « auteurs / équipes », contacts, mentions, gouvernance.</li>
+                        <li>Politique de mise à jour + historique des versions (quand c’est critique).</li>
+                    </ul>
+                    <strong>Question piège :</strong> « E-E-A-T, c’est du bla-bla. » → « Non : ça se matérialise dans les signaux de confiance (auteurs, sources, mise à jour, cohérence inter-sites, anti-phishing) et ça limite le risque d’être dépassé par des sites opportunistes. »
+                </div>
+            </div>
+            <button class="sub-accordion">Maillage interne : méthode simple pour “gros portail”</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>But :</strong> distribuer l’autorité vers les pages « service public » sans dépendre de backlinks externes.<br>
+                    <strong>Méthode opérationnelle :</strong>
+                    <ul>
+                        <li>1 page « hub » par thème (ex. : aides logement) + pages « enfants » (démarches, simulateurs, FAQ).</li>
+                        <li>Liens contextuels dans le corps (pas seulement footer).</li>
+                        <li>Limiter les « orphelines » (pages sans liens entrants).</li>
+                        <li>Ancres : explicites (éviter « cliquez ici »).</li>
+                    </ul>
+                    <strong>Piège :</strong> « On a un mega-menu, ça suffit. » → « Non : le menu aide, mais le maillage contextuel et la structure hub/cluster font la différence sur la compréhension thématique. »
+                </div>
+            </div>
+            <button class="sub-accordion">Cannibalisation : définition, signaux, diagnostic rapide</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> plusieurs pages du site se positionnent sur la <strong>même intention</strong> / requête cible → dispersion des signaux, instabilité.<br>
+                    <strong>Signaux :</strong> positions qui oscillent entre 2 URLs ; une requête dans GSC sur plusieurs pages avec impressions/clics répartis ; contenu très proche (mêmes sections, titres) ; CTR bas. <strong>Diagnostic :</strong> GSC > Performance, filtrer une requête, regarder les pages qui remontent ; vérifier si même intention ou distinctes ; contrôler titles/H1, canonicals, maillage. « 2 pages sur la même requête = mauvais ? » → Non si les intentions sont différentes (définition vs guide vs service).
+                </div>
+            </div>
+            <button class="sub-accordion">Cannibalisation : arbitrage (fusion / repositionnement / redirection / canonical / noindex)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>But :</strong> 1 intention = 1 page principale. <strong>Arbres de décision :</strong> Deux pages très proches → fusion + 301. Deux pages utiles mais floues → repositionnement (angles distincts). Page faible (tag, filtre) → noindex ou 410. Pages paramétrées → noindex/canonical/robots. Canonical n’est pas une « solution de fusion » : c’est un signal. Choisir une page maître et aligner contenu, title/H1, maillage, sitemap, redirections.
+                </div>
+            </div>
+            <button class="sub-accordion">Keyword mapping : 1 intention = 1 page + livrable attendu</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Objectif :</strong> associer chaque page à une intention principale. <strong>Méthode :</strong> 1) Lister les pages (types : catégories, guides, FAQ, fiches). 2) Par page : intention principale + 3 à 10 variantes. 3) Contrôler la SERP (quel format Google met en avant). 4) Ajuster title/H1, plan, maillage. <strong>Livrable :</strong> tableau URL | Intention | Mot-clé principal | Variantes | Format SERP | Priorité | Actions. « Tu te bases sur le volume ? » → je priorise l’intention + la valeur métier, puis le volume. « Une page peut cibler 20 mots clés ? » → oui si variantes d’une même intention ; non si ça mélange plusieurs intentions.
+                </div>
+            </div>
+            <button class="sub-accordion">Brief SEO sémantique : structure qui répond aux tests “connaissance”</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Dans un brief :</strong> Intent (qui cherche quoi) ; Promesse de la page (answer-first en 2-3 lignes) ; Plan Hn (H1 + H2/H3 + sections) ; FAQ (questions réelles + réponses courtes) ; Éléments de preuve (sources, chiffres, dates) ; Maillage (5 liens sortants internes, 5 entrants à créer) ; CTA. « SEO = écrire plus long ? » → non : répondre mieux, avec structure et preuves.
+                </div>
+            </div>
+            <button class="sub-accordion">Backlinks : qualité, risques, réponse propre en entretien</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Bon lien :</strong> pertinence thématique, crédibilité du domaine, lien contextuel (pas seulement footer), ancre naturelle, trafic réel. <strong>Pièges :</strong> « On achète des liens ? » → je privilégie le link earning ; approche payante risquée (spam, pénalités). « nofollow = inutile ? » → non : trafic, confiance, diversité. <strong>Audit :</strong> répartition domaines/ancres/pages ; anomalies (pics, ancres toxiques) ; prioriser liens vers piliers, corriger 404/301 sur pages linkées.
+                </div>
+            </div>
+            <button class="sub-accordion">Stratégie backlinks “propre” : link earning, ressources, partenariats</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Approches stables :</strong> Ressources utiles (guides, simulateurs, données, glossaires) ; Partenariats (réseaux pro, institutions, associations) ; PR / contenus référents (études, baromètres) ; Récupération (liens cassés 404, mentions non linkées). « Tu fais du netlinking en masse ? » → je préfère régularité + qualité : quelques liens solides vers les piliers plutôt qu’une quantité risquée.
+                </div>
+            </div>
+            <button class="sub-accordion">FAQ questions pièges (cannibalisation, mapping, backlinks)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <ul>
+                        <li><strong>« Canonical = solution anti-cannibalisation ? »</strong> → Non, c’est un signal ; vraie solution = clarifier intention, contenu, maillage, puis 301/fusion si besoin.</li>
+                        <li><strong>« On choisit une page cible comment ? »</strong> → Celle qui correspond le mieux à l’intention et au potentiel (contenu, UX, liens internes, historique).</li>
+                        <li><strong>« Un backlink nofollow sert à quoi ? »</strong> → Trafic, crédibilité, diversification, signal indirect.</li>
+                        <li><strong>« Un gros volume = priorité ? »</strong> → Pas forcément : intention + valeur métier d’abord, puis volume et difficulté.</li>
+                    </ul>
+                </div>
+            </div>
+                </div><!-- fin tab-pane Sémantique -->
+                <div class="tab-pane" id="seo-technique">
+            <button class="sub-accordion">Crawlabilité et indexation (robots.txt, sitemap)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>robots.txt</strong> indique aux crawlers quelles URLs peuvent être crawlées (Allow/Disallow). <strong>Sitemap XML</strong> liste les URLs à explorer avec priorité et fréquence. Ne pas bloquer CSS/JS nécessaires au rendu.<br>
+                    <strong>Exemple :</strong> <code>User-agent: * / Disallow: /admin/ / Allow: /</code> ; sitemap index <code>sitemap-index.xml</code> pointant vers <code>sitemap-pages.xml</code>, <code>sitemap-formation.xml</code>, etc. Pour la CDC : dizaines de plateformes → sitemaps par domaine ou section.<br>
+                    <strong>Cas d’usage :</strong> Vérifier en Search Console que les pages importantes sont indexées ; traiter les exclusions (noindex, canonical, 4xx/5xx). Audit crawl (Screaming Frog) sur gros volumes pour détecter les blocages.
+                </div>
+            </div>
+            <button class="sub-accordion">Balisage HTML (H1 unique, meta title, meta description)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>H1</strong> : un seul par page, reflétant le sujet principal ; hiérarchie H2–H6 cohérente. <strong>Meta title</strong> : 50–60 caractères, unique, mot-clé + marque. <strong>Meta description</strong> : 150–160 caractères, résumé incitatif.<br>
+                    <strong>Exemple :</strong> Page Livret A : H1 « Livret A : plafond, taux et ouverture » ; title « Livret A 2025 – Taux, plafond | Caisse des Dépôts » ; description « Découvrez le Livret A, plafond et taux en vigueur. Ouvrez un Livret A en ligne. Informations officielles Caisse des Dépôts. »<br>
+                    <strong>Cas d’usage :</strong> Chaque page = un objectif de requête = un H1 et un title uniques. Pour la CDC : clarté et confiance dans les snippets. Éviter les titres dupliqués sur des dizaines de sous-pages.
+                </div>
+            </div>
+            <button class="sub-accordion">Core Web Vitals (LCP, INP/FID, CLS)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Métriques Google d’expérience utilisateur réelle. <strong>LCP</strong> = temps de chargement du plus grand élément visible (cible &lt; 2,5 s). <strong>INP</strong> = réactivité à la première interaction (cible &lt; 200 ms, remplace FID). <strong>CLS</strong> = stabilité visuelle, pas de décalage (cible &lt; 0,1).<br>
+                    <strong>Exemple :</strong> LCP dégradé par une image hero non optimisée → passer en WebP, dimensions explicites, lazy load en dessous du fold. CLS causé par un bandeau cookie sans réserve d’espace → réserver la hauteur ou charger après LCP.<br>
+                    <strong>Cas d’usage :</strong> Facteur de ranking SEO ; impact conversion (chaque 100 ms de LCP ≈ +1 % conversion). Audit Lighthouse / Search Console ; prioriser LCP et CLS sur les pages stratégiques (landing MCF, retraites).
+                </div>
+            </div>
+            <button class="sub-accordion">Logs &amp; crawl budget (gros sites) : ce qu’on mesure, quoi en déduire</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>But :</strong> prouver ce que Googlebot fait vraiment (et ce qu’il ne fait pas).<br><br>
+                    <strong>À regarder en priorité :</strong>
+                    <ul>
+                        <li><strong>Volume</strong> de hits Googlebot/jour, par répertoire (ex. : /aides/, /actualites/, /simulateurs/).</li>
+                        <li><strong>Codes HTTP</strong> (200/3xx/4xx/5xx) + fréquence des 5xx (risque d’arrêt de crawl).</li>
+                        <li><strong>Temps de réponse</strong> (TTFB) sur les templates critiques (pages « service public »).</li>
+                        <li><strong>Profondeur</strong> : Googlebot va-t-il sur les pages profondes ou reste-t-il en surface ?</li>
+                        <li><strong>Gaspillage</strong> : paramètres d’URL, facettes, recherche interne, duplicates.</li>
+                    </ul>
+                    <strong>Déductions rapides :</strong>
+                    <ul>
+                        <li>Si beaucoup de 3xx/4xx sur URLs « importantes » ⇒ maillage, sitemaps, redirections à nettoyer.</li>
+                        <li>Si Googlebot sur-consomme des URLs « inutiles » ⇒ règles robots + canonicals + noindex ciblés.</li>
+                        <li>Si crawl faible sur pages stratégiques ⇒ profondeur de clic, internal linking, sitemaps par section.</li>
+                    </ul>
+                    <strong>Question piège (réponse courte) :</strong> « Pourquoi les logs plutôt que Screaming Frog ? » → « Screaming Frog simule un crawl, les logs prouvent le crawl réel de Googlebot. »
+                </div>
+            </div>
+            <button class="sub-accordion">Canonicals, duplicate content, pagination : éviter l’index “sale”</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Canonical :</strong> indique l’URL de référence quand plusieurs URLs portent le même contenu (ou très proche).<br>
+                    <strong>Règles pratiques :</strong>
+                    <ul>
+                        <li>Canonical <strong>auto-référent</strong> sur les pages « propres ».</li>
+                        <li>Éviter canonicals contradictoires (A canonicalise vers B, mais B noindex/404).</li>
+                        <li>Sur pages filtrées/tri : canonical vers la page « catégorie » si le contenu est réellement équivalent.</li>
+                    </ul>
+                    <strong>Pagination :</strong>
+                    <ul>
+                        <li>Objectif : que Google comprenne la série (page 1/2/3…) et puisse découvrir les items.</li>
+                        <li>Maillage : liens HTML crawlables vers pages suivantes/précédentes, pas uniquement JS.</li>
+                        <li>Ne pas « canonicaliser tout vers page 1 » si ça empêche la découverte des contenus profonds.</li>
+                    </ul>
+                    <strong>Question piège :</strong> « Canonical ou noindex ? » → « Canonical = consolidation de signaux, noindex = retrait de l’index. On choisit selon l’intention : dupliquer pour l’utilisateur ≠ utile pour Google. »
+                </div>
+            </div>
+            <button class="sub-accordion">Migrations (refonte, changement d’URL) : plan anti-catastrophe</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Check-list minimale :</strong>
+                    <ul>
+                        <li><strong>Inventaire</strong> des URLs (crawl + exports Search Console + logs) + priorisation (trafic / conversions / backlinks).</li>
+                        <li><strong>Mapping 301</strong> 1:1 (ancienne → nouvelle) + suppression des chaînes 301→301.</li>
+                        <li><strong>Recette SEO</strong> : robots, sitemaps, canonicals, titles/Hn, maillage, perf, données structurées.</li>
+                        <li><strong>Mesures</strong> : avant/après sur indexation, erreurs, impressions/clics, CWV, logs.</li>
+                        <li><strong>Rollback</strong> : savoir revenir en arrière si chute brutale.</li>
+                    </ul>
+                    <strong>Piège classique :</strong> « On met tout en noindex en préprod, c’est bon. » → « Oui, mais il faut aussi protéger par authent ou IP, et surtout vérifier qu’aucun asset/JS bloqué ne casse le rendu. »
+                </div>
+            </div>
+            <button class="sub-accordion">International / multi-sites : hreflang (si concerné)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>hreflang :</strong> signale la variante linguistique/régionale d’une page (ex. : fr-FR, fr-CA).<br>
+                    <strong>Règles :</strong>
+                    <ul>
+                        <li>Balises <strong>réciproques</strong> (A pointe vers B et B pointe vers A).</li>
+                        <li>Chaque URL listée doit être <strong>indexable</strong> (pas noindex/404).</li>
+                        <li>Prévoir <strong>x-default</strong> si page « sélecteur » ou fallback.</li>
+                    </ul>
+                    <strong>Question piège :</strong> « hreflang remplace canonical ? » → « Non : hreflang = ciblage langue/pays, canonical = URL de référence. »
+                </div>
+            </div>
+            <button class="sub-accordion">Sécurité &amp; SEO (site de confiance) : HTTPS, headers, phishing, typosquatting</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Pourquoi c’est central pour un acteur public :</strong> le SEO sert aussi à faire gagner l’<strong>info officielle</strong> contre les copies et arnaques.<br><br>
+                    <strong>Points techniques :</strong>
+                    <ul>
+                        <li><strong>HTTPS partout</strong> + pas de mixed content.</li>
+                        <li><strong>HSTS</strong> (si déployé) + redirections propres http→https.</li>
+                        <li>Surveillance des <strong>domaines ressemblants</strong> (typosquatting) et pages qui usurpent la marque.</li>
+                        <li><strong>Headers</strong> utiles : CSP (selon contexte), X-Frame-Options / frame-ancestors, X-Content-Type-Options.</li>
+                    </ul>
+                    <strong>Réponse “piège” :</strong> « Le SEO n’est pas un sujet sécurité. » → « Sur des sujets “droits / aides / démarches”, la confiance et l’anti-phishing font partie de la performance : si l’usager tombe sur un clone, c’est un échec métier. »
+                </div>
+            </div>
+            <button class="sub-accordion">Monitoring SEO : signaux d’alerte + tableau de bord minimal</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>À suivre chaque semaine :</strong>
+                    <ul>
+                        <li>GSC : <strong>pages exclues</strong>, erreurs d’exploration, sitemaps, impressions/clics.</li>
+                        <li>Serveur : <strong>5xx</strong>, pics de latence, anomalies Googlebot.</li>
+                        <li>Contenu : pages « top trafic » qui chutent, cannibalisation, requêtes « brand + arnaque ».</li>
+                        <li>CWV : dégradation brutale sur templates clés.</li>
+                    </ul>
+                    <strong>Quick win :</strong> dashboard Looker Studio (GSC + GA4) + alertes (emails) sur 5xx et chute impressions.
+                </div>
+            </div>
+            <button class="sub-accordion">URLs, canonical, hreflang, erreurs (4xx, 5xx)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>URLs</strong> : courtes, lisibles, hiérarchie logique. <strong>Canonical</strong> : balise indiquant la version canonique en cas de duplication. <strong>Hreflang</strong> : pour versions multilingues/régionales. <strong>4xx/5xx</strong> : à corriger ou rediriger.<br>
+                    <strong>Exemple :</strong> <code>/formation/cpf/mon-compte-formation</code> plutôt que <code>?id=123&amp;sort=date</code>. Page triée par prix : <code>link rel="canonical" href="https://.../page-principale"</code>. Site FR + versions territoires ultra-marins : hreflang fr, fr-GP, fr-MQ, etc.<br>
+                    <strong>Cas d’usage :</strong> Éviter le contenu dupliqué (paramètres de tri, session) via canonical. Pour la CDC : hreflang si versions régionales ; corriger 404 (redirections 301 ou page utile), 5xx (côté serveur). Suivi dans Search Console.
+                </div>
+            </div>
+            <button class="sub-accordion">Outils : Search Console, Screaming Frog, Lighthouse</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Search Console</strong> : indexation, performances (clics, impressions, CTR, position), couverture, sitemaps, CWV. <strong>Screaming Frog</strong> : crawl on-premise (URLs, titres, meta, H1, statuts, liens). <strong>Lighthouse</strong> : audit performance, accessibilité, SEO, bonnes pratiques.<br>
+                    <strong>Exemple :</strong> Search Console : rapport « Pages » pour voir les exclusions ; « Performances » pour identifier les requêtes à fort potentiel. Screaming Frog : crawl 50k URLs CDC, export des pages sans H1 ou avec titre dupliqué. Lighthouse : score LCP/CLS par page type.<br>
+                    <strong>Cas d’usage :</strong> Audit récurrent (mensuel/trimestriel) ; prioriser les erreurs d’indexation et les CWV sur les pages stratégiques. Pour la CDC : Screaming Frog indispensable sur gros volumes ; croiser avec Search Console pour les vraies requêtes.
+                </div>
+            </div>
+            <button class="sub-accordion">Robots.txt vs Meta robots vs X-Robots-Tag (qui fait quoi, et quand)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Idée clé :</strong> 3 niveaux, 3 usages. On confond souvent « crawl » et « indexation ». <strong>1) robots.txt</strong> = contrôle du crawl (autoriser/bloquer l’exploration). N’empêche pas l’indexation si la page est découverte par des liens. Si tu bloques une URL dans robots.txt, Google peut ne pas pouvoir lire le <code>noindex</code>. <strong>2) meta robots</strong> (dans <code>&lt;head&gt;</code>) : index/noindex, follow/nofollow, noarchive, nosnippet, max-snippet, max-image-preview. <strong>3) X-Robots-Tag</strong> (en-tête HTTP) : applicable à tout (PDF, images, endpoints) sans HTML.<br>
+                    <strong>Cas pièges :</strong> Pour désindexer une URL : ne pas bloquer d’abord dans robots.txt ; laisser crawler, mettre noindex (meta ou X-Robots) et/ou 410/404. robots.txt ne sécurise rien : il faut auth ou restriction IP.
+                </div>
+            </div>
+            <button class="sub-accordion">Robots.txt avancé (Allow/Disallow, wildcards, crawl budget)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Rappels :</strong> Fichier par hôte ; Google applique la règle la plus spécifique. Syntaxe : <code>User-agent: *</code>, <code>Disallow: /private/</code>, <code>Allow: /private/page-ok.html</code>, wildcards <code>*</code> et <code>$</code>. Ne pas bloquer les ressources nécessaires au rendu (JS/CSS). Recette/staging : auth + IP allowlist + noindex + robots.txt. Crawl budget : bloquer ce qui aspire du crawl sans valeur (facettes, paramètres).
+                </div>
+            </div>
+            <button class="sub-accordion">Robots.txt : pilotage du budget de crawl &amp; risques SEO</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Contexte :</strong> Le robots.txt est la première porte d’entrée des robots (Googlebot, Bingbot). Mal configuré, il peut devenir un « tueur de visibilité » invisible.<br><br>
+                    <strong>1. Comment le robots.txt peut pénaliser le SEO</strong><br>
+                    <strong>A. Blocage de ressources critiques (le plus fréquent)</strong><br>
+                    Google « rend » la page comme un navigateur. Si vous bloquez les fichiers <code>.css</code>, <code>.js</code> ou certains dossiers d’images, Google ne voit pas la mise en page → page jugée non mobile-friendly ou instable (LCP/CLS dégradés) → chute du positionnement.<br><br>
+                    <strong>B. Confusion crawl vs indexation</strong><br>
+                    Bloquer dans robots.txt n’empêche pas l’indexation si la page a des liens externes : Google l’indexe quand même mais sans pouvoir lire le contenu → « Aucune information n’est disponible pour cette page » en SERP → CTR détruit.<br><br>
+                    <strong>C. Gaspillage du budget de crawl</strong><br>
+                    Laisser crawler des milliers de pages inutiles (filtres, facettes, URLs de tri). Sur un gros site (type CDC), Googlebot sature son temps sur des pages sans valeur → les pages stratégiques mettent des semaines à être découvertes.<br><br>
+                    <strong>2. Bonnes pratiques (Tech-SEO)</strong><br>
+                    <strong>Prioriser le crawl efficiency :</strong> <code>Disallow</code> pour /admin/, /login/, paramètres d’URL inutiles (sessions ID, tri redondant). <code>Crawl-delay</code> pour Bing/Yandex si besoin (Google ne le respecte pas).<br>
+                    <strong>Sitemaps :</strong> Toujours déclarer l’URL absolue du (ou des) sitemaps à la fin du fichier : <code>Sitemap: https://www.domaine.fr/sitemap_index.xml</code><br>
+                    <strong>GEO / bots IA :</strong> Argument entretien : « On peut laisser Googlebot indexer pour le SEO tout en bloquant GPTBot (ou CCBot) pour protéger la propriété intellectuelle des données. »<br>
+                    <strong>Règle d’or du noindex :</strong> Pour qu’une page disparaisse de Google, ne la bloquez pas dans robots.txt — laissez Google y accéder pour qu’il puisse lire la balise <code>&lt;meta name="robots" content="noindex"&gt;</code>.<br><br>
+                    <strong>3. Exemple de fichier optimisé (profil hybride)</strong><br>
+                    <code>User-agent: *</code><br>
+                    <code>Allow: /assets/*.js</code> · <code>Allow: /assets/*.css</code> (rendu complet, CWV)<br>
+                    <code>Disallow: /search/</code> · <code>Disallow: /api/v1/</code> · <code>Disallow: *?sort_by=</code> · <code>Disallow: /admin/</code><br>
+                    <code>User-agent: GPTBot</code> · <code>Disallow: /</code> (optionnel : stratégie data)<br>
+                    <code>Sitemap: https://www.domaine.fr/sitemap_index.xml</code>
+                </div>
+            </div>
+            <button class="sub-accordion">Meta robots (noindex, nofollow, snippets) : règles + erreurs fréquentes</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Exemples :</strong> <code>index,follow</code> ; <code>noindex,follow</code> ; <code>max-snippet:120, max-image-preview:large</code>. <strong>Erreurs :</strong> noindex sur une page qu’on veut ranker ; directives contradictoires (canonical vers une page noindex) ; bloquer dans robots.txt + noindex sur la page (Google ne peut pas la lire). Audit : extraire toutes les pages noindex et vérifier si c’est voulu.
+                </div>
+            </div>
+            <button class="sub-accordion">X-Robots-Tag : cas PDF / images / endpoints</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    Applicable à tout ce qui est servi en HTTP. Exemples : <code>X-Robots-Tag: noindex</code> sur un PDF ; <code>noindex, nofollow</code> ; <code>nosnippet</code>. Gestion à la source (serveur/CDN) = plus robuste. Attention : si un CDN met en cache un header incorrect, risque de désindexation en masse. Valider sur un échantillon (curl/headers) avant déploiement.
+                </div>
+            </div>
+            <button class="sub-accordion">Sitemaps XML : stratégie, index de sitemaps, pages à exclure</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Rôle :</strong> découverte, priorisation, accélération de l’indexation (gros sites). <strong>Bon design :</strong> sitemap index → sitemaps par section ; découper si volume important ; inclure uniquement des URLs indexables (200, canonical cohérente, pas noindex). <code>&lt;loc&gt;</code> obligatoire ; <code>lastmod</code> utile si fiable (sinon ne pas mentir). Contrôles : GSC (statut, URLs découvertes vs indexées) ; croiser avec un crawl (pas de 3xx/4xx/5xx).
+                </div>
+            </div>
+            <button class="sub-accordion">Désindexation : noindex, 301/302, 404, 410 + pièges</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Par cas :</strong> Contenu à retirer mais URL accessible → <code>noindex,follow</code>. Contenu supprimé définitivement → 410 (ou 404). Contenu déplacé → 301 vers la page équivalente. Suppression urgente SERP → outil Search Console (temporaire) + traiter la cause. <strong>Pièges :</strong> Bloquer dans robots.txt en espérant désindexer (mauvais). 302 au lieu de 301 en refonte. Canonical vers une URL 404/410. Valider : Inspection d’URL (GSC), logs Googlebot.
+                </div>
+            </div>
+            <button class="sub-accordion">JS SEO : rendu, indexation, pièges SPA, diagnostic</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    « Je valide le rendu, les liens et les balises côté HTML rendu. » <strong>Risques :</strong> contenu injecté après coup (client-side) ; liens non crawlables (boutons sans <code>&lt;a href&gt;</code>) ; title/meta/canonical générés tardivement ; pagination/facettes SPA sans URLs stables. <strong>Quick wins :</strong> URLs uniques et partageables ; maillage en <code>&lt;a href&gt;</code> ; SSR/SSG pour pages stratégiques. <strong>Diagnostic :</strong> 1) HTML brut vs HTML rendu (Inspection GSC). 2) Crawl : pages sans title/H1/texte, canonicals incohérents. 3) JS trop lourd = impact CWV + rendu retardé. Ne pas bloquer JS/CSS dans robots.txt.
+                </div>
+            </div>
+                </div><!-- fin tab-pane Technique -->
+                <div class="tab-pane" id="seo-avenir">
+            <button class="sub-accordion">GEO (Generative Engine Optimization) — Définition et enjeux</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Optimisation pour les moteurs « génératifs » (ChatGPT, Google SGE, Gemini, Perplexity) qui synthétisent des réponses à partir de sources. Objectif : que votre site soit <strong>cité, référencé ou utilisé</strong> comme source dans ces réponses.<br>
+                    <strong>Exemple :</strong> Requête « Quel est le plafond du Livret A en 2025 ? » → la réponse idéale cite caisse-des-depots.fr avec le chiffre officiel et un lien, plutôt qu’un article de presse ou un forum.<br>
+                    <strong>Cas d’usage :</strong> Pour la CDC : quand un usager demande « Comment utiliser Mon Compte Formation ? » ou « C’est quoi le Livret A ? », la réponse doit s’appuyer sur les pages officielles, pas sur des tiers ou de la désinformation. GEO = prolongement du SEO dans l’ère IA.
+                </div>
+            </div>
+            <button class="sub-accordion">GEO — Comment faire remonter un site dans les réponses IA</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Ensemble de bonnes pratiques pour être sélectionné comme source par les moteurs génératifs : contenu clair et structuré, autorité, données structurées, crawlabilité.<br>
+                    <strong>Exemple :</strong> Page « Plafond Livret A 2025 » : paragraphe d’intro avec le chiffre exact (22 950 €), sous-titres H2 « Plafond », « Taux », « Ouverture », schéma FAQPage avec la question/réponse ; auteur et date en bas de page.<br>
+                    <strong>Cas d’usage :</strong> Contenu factuel et structuré (titres, listes, paragraphes courts) ; E-E-A-T (auteur, sources, mise à jour) ; schémas FAQ, HowTo, Article ; SEO technique solide (indexation, sitemap). Veille sur SGE, ChatGPT Search : les critères de citation évoluent.
+                </div>
+            </div>
+            <button class="sub-accordion">Visibilité site : SGE, featured snippets, zero-click</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>SGE</strong> = réponses génératives dans la SERP Google (sources citées). <strong>Featured snippet</strong> = encadré « position 0 » (paragraphe, liste, tableau). <strong>Zero-click</strong> = l’utilisateur a sa réponse sans cliquer.<br>
+                    <strong>Exemple :</strong> Requête « taux Livret A » → featured snippet avec « Le taux du Livret A est de 3 % depuis le 1er février 2025 » (extrait d’une page) ; SGE peut afficher un bloc avec plusieurs sources dont caisse-des-depots.fr.<br>
+                    <strong>Cas d’usage :</strong> Préparer le contenu pour être la source : réponse directe en tête de section (40–60 mots), données structurées (FAQ, HowTo), autorité E-E-A-T. Même en zero-click, viser que la source citée soit la CDC pour la confiance.
+                </div>
+            </div>
+            <button class="sub-accordion">Visibilité sur les réseaux sociaux (posts, reach, algorithmes)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Faire remonter la visibilité d’un post ou d’un compte (LinkedIn, X, Meta) : plus de reach, d’engagement, meilleure diffusion. Chaque plateforme a ses signaux (interactions, temps de lecture, partages, nouveauté).<br>
+                    <strong>Exemple :</strong> LinkedIn : post avec hook dans la première ligne, question ou chiffre, format court + lien ; commenter les réponses pour prolonger la portée. X : thread avec numéros, visuel, hashtag institutionnel (#LivretA, #CPF).<br>
+                    <strong>Cas d’usage :</strong> Format adapté (vidéo courte, carrousel, texte avec hook), horaires et régularité, réponses aux commentaires. Hashtags pertinents sans surcharge. Posts indexables : bon titre et description ; liens vers le site officiel renforcent l’autorité et le trafic. Pour la CDC : diffusion des campagnes (formation, retraites, territoires).
+                </div>
+            </div>
+            <button class="sub-accordion">Tendances : recherche vocale, entités, passage keyword → topic</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Recherche vocale</strong> : requêtes longues, type question ; contenu en langage naturel + FAQ. <strong>Entités</strong> : Knowledge Graph (personnes, organisations, concepts). <strong>Keyword → topic</strong> : moins de focus mot-clé isolé, plus de couverture thématique.<br>
+                    <strong>Exemple :</strong> Vocale : « Ok Google, quel est le plafond du Livret A en 2025 ? » → page avec réponse en phrase complète et FAQ. Entité CDC : schéma Organization, backlinks officiels (.gouv.fr, partenaires), fiche Google My Business si pertinent.<br>
+                    <strong>Cas d’usage :</strong> Répondre aux formulations question en tête de section (FAQ, paragraphe concis). Renforcer l’entité CDC (Organization, services) pour être la référence. Structurer en topics/clusters plutôt qu’en pages optimisées pour un seul mot-clé.
+                </div>
+            </div>
+            <button class="sub-accordion">Open Graph (OG) &amp; Twitter Cards : pourquoi c’est critique (et erreurs fréquentes)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Rôle :</strong> contrôler l’aperçu quand une URL est partagée (LinkedIn, Facebook, X, Slack…). Sans OG propre : previews moches → baisse de clics, perte de confiance.<br><br>
+                    <strong>Balises minimales :</strong> <code>og:title</code>, <code>og:description</code>, <code>og:image</code>, <code>og:url</code>, <code>og:type</code>. <strong>Twitter Cards :</strong> <code>twitter:card</code> (souvent <code>summary_large_image</code>), <code>twitter:title</code>, <code>twitter:description</code>, <code>twitter:image</code>.<br>
+                    <strong>Erreurs fréquentes :</strong> image trop petite ou ratio illisible ; image bloquée (auth, firewall) ; URL partagée avec paramètres (UTM) → previews incohérentes si <code>og:url</code> et canonical ne cadrent pas ; cache social (ancien aperçu gardé).<br>
+                    <strong>Question piège :</strong> « OG ne change pas le ranking Google directement, mais c’est un levier de CTR social et d’amplification → impact business. »
+                </div>
+            </div>
+            <button class="sub-accordion">OG : check rapide + règles d’implémentation (propre, stable)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Règles :</strong> image dédiée au partage (texte lisible, branding) ; <code>og:image</code> = URL absolue accessible ; <code>og:url</code> = URL propre (souvent canonical) ; éviter des OG différents sur pages filtrées/paramétrées.<br>
+                    <strong>Diagnostic express :</strong> 1) Code source : présence des tags OG et Twitter. 2) Image : 200, chargement rapide. 3) Tester partage sur 2 canaux (LinkedIn + Slack).<br>
+                    <strong>Piège :</strong> « Title + meta description, ça suffit. » → Non : chaque plateforme lit surtout OG/Twitter.
+                </div>
+            </div>
+            <button class="sub-accordion">Social Search (référencement interne des plateformes)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Idée clé :</strong> chaque réseau est un moteur de recherche (LinkedIn, YouTube, TikTok, Instagram). On optimise « on-platform ». <strong>Trio :</strong> Titres / 1ère ligne : mots-clés naturels + promesse ; Description : contexte + termes métiers ; Signaux d’engagement (rétention, commentaires, partages).<br>
+                    <strong>LinkedIn :</strong> profil (titre, À propos, expériences) ; posts : accroche + structure + mots-clés dans les 2-3 premières lignes ; carrousels : titre 1ère slide + CTA.<br>
+                    <strong>YouTube :</strong> titre + description + chapitres + sous-titres ; miniature = CTR. <strong>Hashtags :</strong> 3 à 8 pertinents et stables, pas 30 génériques.
+                </div>
+            </div>
+            <button class="sub-accordion">Social → Web : canonical, UTM, partage propre (éviter la dilution)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Problème :</strong> liens partagés souvent paramétrés (UTM) → URLs multiples pour une même page.<br>
+                    <strong>Règles :</strong> UTM pour la mesure, mais <strong>canonical</strong> vers l’URL propre ; <code>og:url</code> = URL propre (pas UTM) ; éviter des OG différents selon paramètres.<br>
+                    <strong>Question piège :</strong> « UTM = mauvais pour le SEO ? » → Pas si canonical + gestion des paramètres est propre.
+                </div>
+            </div>
+            <button class="sub-accordion">Tracking social : UTM, GA4, attribution (et “dark social”)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>UTM :</strong> <code>utm_source</code> (plateforme), <code>utm_medium</code> (social / paid_social…), <code>utm_campaign</code>, <code>utm_content</code> (variante créa).<br>
+                    <strong>GA4 :</strong> sessions par source/medium/campaign ; conversions par canal ; chemins assistés ; pages de destination.<br>
+                    <strong>Dark social :</strong> partages en messageries (WhatsApp, DM) → trafic « direct » ou mal attribué ; limiter via liens trackés (UTM), pages courtes, cohérence campagnes.<br>
+                    <strong>Réponse :</strong> « Je mesure le social : CTR, trafic, conversions directes et assistées. »
+                </div>
+            </div>
+            <button class="sub-accordion">Checklist express (questions pièges) : OG, social search, tracking</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <ul>
+                        <li><strong>« OG = SEO Google ? »</strong> → Non direct, mais impact majeur sur CTR social et diffusion.</li>
+                        <li><strong>« Hashtags = SEO ? »</strong> → Catégorisation + discovery interne.</li>
+                        <li><strong>« UTM casse le SEO ? »</strong> → Non si canonical et paramètres propres.</li>
+                        <li><strong>« Aperçu pas mis à jour ? »</strong> → Cache plateforme (refresh / re-scrape selon réseau).</li>
+                        <li><strong>« Le social aide le SEO ? »</strong> → Indirectement : marque, citations, liens naturels, trafic qualifié.</li>
+                    </ul>
+                </div>
+            </div>
+            <button class="sub-accordion">SEO procédural (programmatic) : définition + quand c’est pertinent</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> créer/maintenir à grande échelle des pages SEO à partir de <strong>templates</strong> + <strong>données structurées</strong> (catalogue, annuaire, fiches, comparatifs, glossaires), avec contrôle qualité et gouvernance.<br>
+                    <strong>Quand c’est pertinent :</strong> base de données solide ; chaque page répond à une intention utile ; données fiables, contenu unique, UX, maillage, perf.<br>
+                    <strong>Piège :</strong> « programmatic = générer du texte en masse » → Non : sans vraie valeur (données, comparaison, réponse claire) = thin content et dilution.
+                </div>
+            </div>
+            <button class="sub-accordion">Industrialisation : design de templates (anti-duplication / anti-thin content)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Le template doit garantir :</strong> promesse claire (answer-first) en haut ; données différenciantes (champs variables réels) ; sections modulaires (si données existent) ; FAQ (questions récurrentes) ; maillage interne cohérent.<br>
+                    <strong>Anti-duplication :</strong> 1 URL = 1 intention ; limiter combinaisons de filtres indexables ; pas de pages « vides ». <strong>Contrôle indexabilité :</strong> page incomplète/faible → noindex ou exclusion sitemap ; page utile → indexable + sitemap.
+                </div>
+            </div>
+            <button class="sub-accordion">Industrialisation : taxonomies, facettes, paramètres (éviter l’explosion d’URLs)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Risque :</strong> facettes (tri, filtres, pagination) = milliers d’URLs crawlées/indexées, souvent inutiles.<br>
+                    <strong>Stratégie :</strong> taxonomie « propre » (vraies intentions) ; facettes indexables = celles avec demande + valeur + contenu dédié ; paramètres non utiles = crawlable si besoin, mais pas indexés (noindex/canonical) ; pagination contrôlée.<br>
+                    <strong>Piège :</strong> « On laisse Google gérer » → sans règles, perte de contrôle : budget crawl + index bloat.
+                </div>
+            </div>
+            <button class="sub-accordion">Industrialisation : maillage interne procédural (règles simples)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>But :</strong> découverte + hiérarchie + renforcer les piliers. <strong>Règles :</strong> Hub → Spokes (pilier vers sous-pages) ; Spokes → Hub (breadcrumb + liens contextuels) ; liens horizontaux « similaires » (même catégorie/besoin/zone) ; ancres naturelles. <strong>Piège :</strong> maillage auto aléatoire (trop de liens) → dilution ; peu de liens mais pertinents.
+                </div>
+            </div>
+            <button class="sub-accordion">Industrialisation : sitemaps procéduraux (segmentation + qualité)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Principe :</strong> sitemap = URLs indexables et utiles. Sitemap index + sitemaps par type (ex. /categories/, /fiches/) ; option : segmentation par priorité. Exclure : 3xx, 4xx, 5xx, noindex, pages faibles. Chaque URL sitemap : 200, canonical cohérente, contenu complet. <code>lastmod</code> uniquement si fiable.
+                </div>
+            </div>
+            <button class="sub-accordion">Monitoring SEO (industriel) : quoi surveiller en continu</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>1) Santé exploration/indexation :</strong> URLs découvertes vs indexées, exclusions, 5xx, soft 404, sitemaps. <strong>2) Performance :</strong> impressions/clics/CTR/position par type de page / template ; requêtes clés et piliers. <strong>3) Technique :</strong> 5xx, latence TTFB, noindex massif, robots.txt, canonicals. <strong>4) Contenu/qualité :</strong> pages faibles (trafic + engagement + valeur) ; duplications. « Je monitore par templates et familles d’URLs. »
+                </div>
+            </div>
+            <button class="sub-accordion">Monitoring : checklists “alerte rouge” (régressions en refonte)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Signaux d’alerte :</strong> chute brutale impressions/clics sur piliers ; explosion des Exclues (noindex, canonical, soft 404) ; 5xx / pages lentes sur stratégiques ; sitemaps (URLs soumises ≠ valides) ; robots.txt ou X-Robots modifiés. <strong>Réflexe :</strong> isoler par template + vérifier 10 URLs échantillon (code, headers, canonicals, statut HTTP).
+                </div>
+            </div>
+            <button class="sub-accordion">GEO : principes stables sans “promesses magiques”</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Positionnement :</strong> on rend le contenu <strong>fiable, clair, extractible et citable</strong>. <strong>Axes :</strong> Answer-first ; structure nette (titres, sections courtes, listes) ; faits vérifiables (sources, dates) ; pages référence (glossaires, comment faire, définitions) ; gouvernance (auteur, mise à jour). <strong>Piège :</strong> « GEO = bourrage pour IA » → contre-productif ; qualité et structure.
+                </div>
+            </div>
+            <button class="sub-accordion">Contenu “citable” : format standard (répondre aux questions pièges)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Recette :</strong> Définition (1–2 phrases) ; Contexte (quand applicable) ; Étapes (procédure courte) ; Erreurs fréquentes (5 pièges) ; Exemple (1 cas concret) ; Sources (références officielles) ; Mise à jour (date + ce qui a changé). Ce format sert le SEO classique (snippets, UX) et la réutilisation par systèmes automatisés (extraction, citation).
+                </div>
+            </div>
+            <button class="sub-accordion">Industrialisation GEO : pages “référence” + FAQ + données structurées</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>3 briques :</strong> Glossaire (définitions stables, liens vers piliers) ; FAQ (questions réelles : support, PAA, terrain) ; Données structurées (FAQ, Article, Breadcrumb, Organization) quand cohérent. Les données structurées doivent refléter le contenu visible (pas de markup trompeur).
+                </div>
+            </div>
+            <button class="sub-accordion">Mesure GEO : ce qu’on peut mesurer (proxies) et ce qu’on évite de promettre</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Mesurable :</strong> trafic organique, requêtes longues (GSC) ; requêtes brand ; CTR et snippets ; trafic référent (partages, mentions). <strong>À ne pas promettre :</strong> « On va apparaître dans tel assistant IA » ; « On contrôle les réponses ». « Je parle en probabilité et signaux observables, pas en certitudes. »
+                </div>
+            </div>
+            <button class="sub-accordion">FAQ questions pièges : procédural + GEO (réponses 1 phrase)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <ul>
+                        <li><strong>« Programmatic SEO = risque ? »</strong> → Oui si pages faibles ; non si intention utile, données réelles, gouvernance d’indexation.</li>
+                        <li><strong>« Comment éviter l’index bloat ? »</strong> → Règles d’indexabilité par template + sitemaps propres + contrôle facettes/paramètres.</li>
+                        <li><strong>« Monitoring, tu regardes quoi d’abord ? »</strong> → Indexation + erreurs (5xx/soft 404/noindex) + perf sur piliers, par templates.</li>
+                        <li><strong>« GEO, c’est quoi concrètement ? »</strong> → Rendre le contenu citable : définitions claires, structure, sources, mise à jour, pages référence.</li>
+                    </ul>
+                </div>
+            </div>
+                </div><!-- fin tab-pane Avenir -->
+            </div><!-- fin tab-content -->
+        </div><!-- fin tabs-container SEO -->
+    </div>
+
+    <!-- 4. CYBERSÉCURITÉ — Pentesting, IT / Maintenance N1-N2 -->
+    <button class="accordion">🛡️ 4. CYBERSÉCURITÉ — Pentesting &amp; IT / Maintenance N1-N2</button>
+    <div class="panel">
+
+        <!--
+        <div class="info">
+            <h4>📌 Utilisation</h4>
+            <p>Deux blocs : <strong>Pentesting</strong> (notions de base à avancées, préceptes, modes d’action, guides en cas d’attaque), <strong>IT / Technicien maintenance N1-N2</strong> (ticketing, escalade, diagnostic, lexique).</p>
+        </div>
+        -->
+
+        <p class="tabs-legend"><strong>💡 Utilisation :</strong> Cliquez sur un onglet (Pentesting ou IT N1-N2) pour afficher les notions du thème. Puis cliquez sur chaque notion pour ouvrir le cours détaillé — au fur et à mesure des questions en entretien.</p>
+        <div class="tabs-container" id="cyber-tabs">
+            <div class="tab-buttons">
+                <button type="button" class="tab-btn active" data-tab="cyber-pentesting">🔐 Pentesting</button>
+                <button type="button" class="tab-btn" data-tab="cyber-it">🖥️ IT / Maintenance N1-N2</button>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="cyber-pentesting">
+            <button class="sub-accordion">Objectifs du pentest, Red / Blue / Purple Team</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Pentest</strong> : identifier les vulnérabilités exploitables, fournir un rapport et des recommandations sans compromettre la production. <strong>Red Team</strong> = simule l’attaquant (offensif). <strong>Blue Team</strong> = défense, détection, réponse aux incidents. <strong>Purple Team</strong> = collaboration Red + Blue pour améliorer contrôles et détection.<br>
+                    <strong>Exemple :</strong> Red Team : scénario d’attaque réaliste (phishing + exploitation) pour tester la réaction. Blue Team : analyse des logs, règles SIEM, mise en quarantaine. Purple : après un exercice, aligner les TTPs (tactiques, techniques) de la Red avec les règles de détection de la Blue.<br>
+                    <strong>Cas d’usage :</strong> Pour une institution (type CDC) : pentest encadré par scope et autorisation ; Purple Team utile pour faire monter en compétence la Blue et valider les contrôles face aux menaces réelles.
+                </div>
+            </div>
+            <button class="sub-accordion">Périmètre, autorisation, méthodologies (OWASP, PTES, NIST)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Scope</strong> : périmètre défini par contrat (IP, domaines, applications, exclusions). <strong>Autorisation</strong> : écrite, signée, durée, contacts d’urgence. <strong>Méthodologies</strong> : OWASP (Web), PTES (phases complètes), NIST (framework).<br>
+                    <strong>Exemple :</strong> Lettre de mission : « Test sur les applications *.caisse-des-depots.fr en préproduction, exclusion des systèmes de paiement et des données personnelles. Fenêtre : 2–13 décembre 2025. Contact RSSI : … » PTES : phase 1 pré-engagement (scope, RoE), phase 2 renseignement (OSINT), puis exploitation, reporting.<br>
+                    <strong>Cas d’usage :</strong> Ne jamais tester hors scope. Pour un appel d’offres institutionnel : exiger une méthodologie reconnue (OWASP, PTES) et un rapport aligné sur NIST ou ANSSI pour les OIV.
+                </div>
+            </div>
+            <button class="sub-accordion">Phases : reconnaissance, scanning, exploitation, post-exploitation, reporting</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Reconnaissance</strong> : OSINT, cartographie (sous-domaines, technologies), pas d’intrusion. <strong>Scanning</strong> : ports, services, vulnérabilités (Nmap, Nessus, Burp). <strong>Exploitation</strong> : PoC, élévation de privilèges si scope. <strong>Post-exploitation</strong> : pivot, persistance (si autorisé), preuves. <strong>Reporting</strong> : exécutif + technique + plan de remédiation.<br>
+                    <strong>Exemple :</strong> Reconnaissance : sublist3r, certificate transparency pour les sous-domaines. Scanning : <code>nmap -sV -sC cible</code> ; Burp pour les requêtes HTTP. Exploitation : CVE connue sur une version détectée → script Metasploit ou PoC. Rapport : synthèse 2 pages pour la direction, annexe technique avec captures et étapes reproductibles.<br>
+                    <strong>Cas d’usage :</strong> Toujours documenter les preuves (screenshots, logs) pour le rapport. Plan de remédiation priorisé (criticité CVSS, faisabilité). Pour la CDC : reporting exécutif adapté aux décideurs non techniques.
+                </div>
+            </div>
+            <button class="sub-accordion">Préceptes cybersécurité (défense en profondeur, moindre privilège, durcissement)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Défense en profondeur</strong> : plusieurs couches (réseau, hôte, application, données) pour qu’une faille ne suffise pas. <strong>Moindre privilège</strong> : n’accorder que les droits nécessaires. <strong>Durcissement</strong> : réduire la surface d’attaque (services désactivés, patches, config).<br>
+                    <strong>Exemple :</strong> Défense en profondeur : firewall périmétrique + WAF + authentification forte + chiffrement des données. Moindre privilège : compte de service avec droits limités à une DB, pas admin. Hardening : désactiver Telnet, activer uniquement les ports nécessaires, logs centralisés.<br>
+                    <strong>Cas d’usage :</strong> Institution : appliquer ces préceptes sur les plateformes sensibles (MCF, retraites). Audits de conformité (ANSSI, ISO 27001) s’appuient sur ces principes.
+                </div>
+            </div>
+            <button class="sub-accordion">Modes d’action recommandés (cadrage, non-destructif, livrables)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Cadrage</strong> : scope, règles d’engagement (RoE), fenêtre horaire, contacts. <strong>Non-destructif</strong> : pas de DoS, pas de suppression de données ; documenter les risques avant action intrusive. <strong>Livrables</strong> : rapport exécutif + technique + plan de remédiation.<br>
+                    <strong>Exemple :</strong> RoE : « Pas d’exploitation sur la prod sans validation écrite ; pas de social engineering sur les personnels sans accord préalable. » Livrable technique : tableau des vulnérabilités avec CVE, CVSS, PoC, screenshot ; plan de remédiation avec priorité P1/P2/P3 et délais.<br>
+                    <strong>Cas d’usage :</strong> En entretien : montrer que vous pensez « livrable actionnable » et « risque business », pas seulement technique. Pour la CDC : rapport exécutif lisible par la direction, plan de remédiation intégrable au backlog.
+                </div>
+            </div>
+            <button class="sub-accordion">Guides en cas d’attaque (confinement, preuves, communication)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>Confinement</strong> : isoler les systèmes compromis, bloquer les accès, préserver logs et artefacts. <strong>Preuves</strong> : ne pas éteindre brutalement ; dump mémoire si pertinent, copie forensique, chaîne de custode. <strong>Communication</strong> : circuit interne (RSSI, direction, juridique), CNIL si données personnelles, ANSSI si OIV.<br>
+                    <strong>Exemple :</strong> Détection d’un ransomware : isoler la machine du réseau (débrancher ou VLAN dédié), ne pas éteindre tout de suite si possible pour dump mémoire ; copie bit-à-bit du disque pour analyse forensique ; alerter RSSI et direction ; déclaration CNIL sous 72 h si données personnelles concernées.<br>
+                    <strong>Cas d’usage :</strong> Pour une institution (CDC) : avoir un plan de réponse à incident (PRI) à jour ; post-mortem après incident pour mettre à jour les contrôles et la détection. ANSSI et autorités selon cadre OIV/opérateurs vitaux.
+                </div>
+            </div>
+            <button class="sub-accordion">OWASP Top 10 (web) : vulnérabilités à connaître + réponses “test technique”</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>À citer :</strong>
+                    <ul>
+                        <li><strong>Injection</strong> (SQL/NoSQL/command) : entrée non filtrée → exécution non voulue.</li>
+                        <li><strong>Broken Access Control</strong> : accès à des ressources non autorisées (IDOR).</li>
+                        <li><strong>Auth / session</strong> faibles : MFA absent, tokens mal gérés, session fixation.</li>
+                        <li><strong>XSS</strong> : script injecté côté client (reflected/stored/DOM).</li>
+                        <li><strong>SSRF</strong> : le serveur appelle des ressources internes (metadata cloud).</li>
+                        <li><strong>Misconfig</strong> : debug ouvert, headers manquants, permissions excessives.</li>
+                    </ul>
+                    <strong>Question piège :</strong> « Différence XSS vs injection SQL ? » → « XSS = exécution dans le navigateur de la victime, SQLi = exécution dans la base via la requête. »
+                </div>
+            </div>
+            <button class="sub-accordion">Réseau (indispensable) : TCP/UDP, DNS, HTTP(S), ports, VLAN, VPN</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Socle :</strong>
+                    <ul>
+                        <li><strong>TCP</strong> (fiable, handshake) vs <strong>UDP</strong> (rapide, non fiable).</li>
+                        <li><strong>DNS</strong> : résolution nom → IP (pannes fréquentes = “ça marche pas” mais c’est le DNS).</li>
+                        <li><strong>HTTP</strong> stateless ; <strong>HTTPS</strong> = TLS (confidentialité + intégrité).</li>
+                        <li><strong>Ports</strong> : 80/443 web, 53 DNS, 22 SSH, 3389 RDP, 389/636 LDAP/LDAPS, 445 SMB.</li>
+                        <li><strong>VLAN</strong> : segmentation ; <strong>VPN</strong> : tunnel chiffré ; <strong>Proxy</strong> : intermédiaire.</li>
+                    </ul>
+                    <strong>Question piège :</strong> « Pourquoi segmenter ? » → « Réduire la surface d’attaque et empêcher le mouvement latéral. »
+                </div>
+            </div>
+            <button class="sub-accordion">Kali / outils : quoi citer selon le scénario (sans “hacker cosplay”)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Recon / scan :</strong> Nmap (ports/services), WhatWeb, Subfinder/Amass (subdomains), DNS tools.<br>
+                    <strong>Web :</strong> Burp Suite (proxy), Nikto (checks), Gobuster/ffuf (discovery), OWASP ZAP.<br>
+                    <strong>Vuln management :</strong> Nessus / OpenVAS.<br>
+                    <strong>Exploitation :</strong> Metasploit (si autorisé), PoC contrôlées.<br><br>
+                    <strong>Piège :</strong> « Tu lances Metasploit direct ? » → « Non : d’abord scope/RoE, reconnaissance, preuve minimale, et je privilégie le reporting + remédiation. »
+                </div>
+            </div>
+            <button class="sub-accordion">Criticité &amp; reporting : CVSS, preuve, reproduction, remédiation</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Ce que veut un client :</strong> comprendre le risque + quoi corriger en premier.<br>
+                    <strong>Dans le rapport :</strong> Résumé exécutif (risque business) ; Fiches vulnérabilités (prérequis, étapes, preuve, impact) ; Score (ex. CVSS) + priorité (critique si exploitable et data sensible) ; Remédiation (correctif + contournement + validation).<br>
+                    <strong>Question piège :</strong> « CVSS = priorité ? » → « CVSS aide, mais la priorité dépend aussi du contexte : exposition, données, facilité d’exploitation, détection. »
+                </div>
+            </div>
+            <button class="sub-accordion">Cadre légal (France) : ce qu’il faut dire pour ne pas se griller</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Phrase sûre :</strong> « Je ne teste jamais sans autorisation écrite, scope signé et règles d’engagement. »<br>
+                    <strong>À connaître :</strong> hors cadre contractuel = intrusion illégale, même « pour aider ». En entretien : insister sur <strong>traçabilité</strong>, <strong>non-destructif</strong>, <strong>contacts d’urgence</strong>.
+                </div>
+            </div>
+                </div><!-- fin tab-pane Pentesting -->
+                <div class="tab-pane" id="cyber-it">
+            <button class="sub-accordion">Niveau 1 : ticketing, première ligne, escalade</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>N1</strong> = première ligne : prise en charge des demandes (hotline, ticket), résolution des incidents courants (mot de passe, accès, imprimante, poste), diagnostic initial. <strong>Ticketing</strong> : enregistrement systématique (GLPI, Zendesk, ServiceNow), catégorisation, priorisation, SLA. Escalade au N2 si hors délai ou hors périmètre.<br>
+                    <strong>Exemple :</strong> Utilisateur appelle : « Je n’arrive plus à me connecter. » N1 : création du ticket, vérification compte verrouillé / mot de passe expiré, déverrouillage ou réinitialisation selon procédure ; si problème côté serveur d’auth → escalade N2 avec ticket détaillé.<br>
+                    <strong>Cas d’usage :</strong> Documentation des résolutions en base de connaissances pour résoudre plus vite les cas récurrents. Traçabilité pour les indicateurs SLA (temps de réponse, taux de résolution N1). En institution : respect des procédures et de la confidentialité.
+                </div>
+            </div>
+            <button class="sub-accordion">Niveau 2 : diagnostic avancé, administration (AD, GPO, DNS, DHCP)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>N2</strong> = diagnostic approfondi, résolution d’incidents complexes, administration des services (AD, GPO, DNS, DHCP), déploiement (patches, images), supervision. <strong>AD/GPO</strong> : comptes, groupes, stratégies de groupe (sécurité, déploiement, paramètres).<br>
+                    <strong>Exemple :</strong> Ticket escaladé : « Les postes du bâtiment B n’ont pas reçu la dernière GPO. » N2 : vérifier l’OU et les filtres WMI de la GPO, tester sur une machine, forcer <code>gpupdate /force</code>, vérifier la réplication AD ; documenter la cause (ex. filtre incorrect) et la résolution.<br>
+                    <strong>Cas d’usage :</strong> Accès administrateur dans le scope défini ; tout changement de config documenté (changement management). Pour une DSI institutionnelle : conformité, traçabilité des modifications, participation à la roadmap infra (migrations, durcissement).
+                </div>
+            </div>
+            <button class="sub-accordion">Différences N1 vs N2, exemples de tickets, priorités</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>N1</strong> : résolution à distance, scripts et procédures, pas d’accès admin serveurs. <strong>N2</strong> : accès admin (scope défini), modification de config, analyse de logs, résolution définitive.<br>
+                    <strong>Exemple :</strong> N1 : « Mot de passe oublié » → réinit via portail ou procédure ; « Imprimante ne répond pas » → vérification connexion, file d’attente, pilote. N2 : « Serveur de fichiers lent » → analyse perf, logs, capacité disque ; « GPO non appliquée » → diagnostic AD, stratégie, filtres.<br>
+                    <strong>Cas d’usage :</strong> N1 : priorité temps de réponse et satisfaction utilisateur ; résolution en première ligne quand possible. N2 : priorité résolution définitive et conformité ; tout changement documenté pour audit et PRA/PCA.
+                </div>
+            </div>
+            <button class="sub-accordion">Lexique : SLA, ticket, escalade, AD, GPO, PRA/PCA, hotline</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>SLA</strong> = délais contractuels (ex. réponse sous 4 h, résolution sous 24 h). <strong>Ticket</strong> = enregistrement demande/incident avec statut (ouvert, en cours, résolu, clôturé). <strong>Escalade</strong> = transfert vers N2/N3 ou équipe spécialisée. <strong>AD</strong> = Active Directory. <strong>GPO</strong> = Group Policy Object. <strong>PRA/PCA</strong> = Plan de Reprise / Continuité d’Activité. <strong>Hotline</strong> = première ligne.<br>
+                    <strong>Exemple :</strong> SLA typique : P1 (critique) = réponse 1 h, résolution 4 h ; P2 = 4 h / 24 h ; P3 = 24 h / 72 h. Ticket : catégorie « Accès », priorité P2, assigné à N1 puis escaladé à N2 si blocage technique.<br>
+                    <strong>Cas d’usage :</strong> En entretien : montrer que vous maîtrisez le vocabulaire des DSI (SLA, escalade, PRA/PCA). Pour une institution : PRA/PCA essentiels pour la continuité de service (ex. plateformes MCF, retraites).
+                </div>
+            </div>
+            <button class="sub-accordion">Active Directory : bases (objets, OU, groupes, droits) + questions pièges</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Objets :</strong> Users, Computers, Groups, OU (organisation), GPO (politiques).<br>
+                    <strong>Groupes :</strong> <strong>Security groups</strong> (droits) vs <strong>Distribution groups</strong> (mail). Raccourci : droits = via groupes (pas en direct sur user).<br>
+                    <strong>OU :</strong> sert à structurer + déléguer (ex. : support N2 gère une OU « Postes-Paris »).<br>
+                    <strong>Question piège :</strong> « Pourquoi pas mettre les droits directement sur l’utilisateur ? » → « Parce que ça ne scale pas et ça casse l’audit : on gère par groupes, c’est traçable et maintenable. »
+                </div>
+            </div>
+            <button class="sub-accordion">GPO : ordre d’application, diagnostic, commandes utiles</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Ordre :</strong> Local → Site → Domaine → OU (LSDOU). <strong>Conflits :</strong> la dernière règle gagnante (sauf “Enforced/Block Inheritance” selon config).<br><br>
+                    <strong>Diag express :</strong>
+                    <ul>
+                        <li><code>gpupdate /force</code> (réapplique).</li>
+                        <li><code>gpresult /r</code> ou <code>gpresult /h</code> (rapport complet).</li>
+                        <li>Vérifier si la machine est dans la bonne OU + si le compte a les droits d’appliquer la GPO.</li>
+                    </ul>
+                    <strong>Question piège :</strong> « Pourquoi ma GPO ne s’applique pas ? » → « Je vérifie OU, filtrage sécurité, WMI filter, réplication, puis je sors un gpresult pour prouver. »
+                </div>
+            </div>
+            <button class="sub-accordion">DNS : pannes classiques (et pourquoi “c’est toujours le DNS”)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Rôle :</strong> résolution nom ↔ IP. Sans DNS, “internet marche pas”, AD peut dysfonctionner.<br>
+                    <strong>Tests :</strong> <code>nslookup</code>, <code>ping nom</code>, comparer avec <code>ping IP</code>.<br>
+                    <strong>Pannes fréquentes :</strong> mauvais DNS sur poste, cache DNS, enregistrements manquants, DHCP qui pousse un mauvais DNS.<br>
+                    <strong>Commandes :</strong> <code>ipconfig /all</code>, <code>ipconfig /flushdns</code>.
+                </div>
+            </div>
+            <button class="sub-accordion">DHCP : bail, conflits IP, “plus de réseau”</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>DHCP :</strong> attribue IP/masque/passerelle/DNS. Si pool épuisé → postes sans IP.<br>
+                    <strong>Diag :</strong> <code>ipconfig</code> (APIPA 169.254.x.x = souci DHCP), renouvellement <code>ipconfig /release</code> puis <code>/renew</code>.<br>
+                    <strong>Conflit IP :</strong> détection via logs DHCP / alertes / doublons ARP (selon contexte).
+                </div>
+            </div>
+            <button class="sub-accordion">Checklist N2 “poste Windows lent / instable” (rapide et crédible)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Tri rapide :</strong>
+                    <ul>
+                        <li><strong>Ressources</strong> : CPU/RAM/Disque (Task Manager) + espace disque.</li>
+                        <li><strong>Services / démarrage</strong> : surcharge au boot.</li>
+                        <li><strong>Événements</strong> : Event Viewer (erreurs récurrentes).</li>
+                        <li><strong>Santé système</strong> : <code>sfc /scannow</code>, puis <code>DISM</code> si besoin.</li>
+                        <li><strong>Réseau</strong> : DNS, proxy, Wi-Fi/Ethernet, drivers.</li>
+                    </ul>
+                    <strong>Question piège :</strong> « Tu fais quoi en premier ? » → « Je sécurise le service : impact user, data, puis je collecte les signaux (ressources + logs) avant d’appliquer une “recette”. »
+                </div>
+            </div>
+            <button class="sub-accordion">Sécurité côté support : réflexes (phishing, MFA, postes compromis)</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Phishing :</strong> ne jamais “tester” un lien sur poste user ; isoler, faire remonter (RSSI/IT), vérifier headers si procédure.<br>
+                    <strong>MFA :</strong> activer dès que possible, surtout comptes admin / O365.<br>
+                    <strong>Suspicion de compromission :</strong> couper l’accès réseau si demandé par procédure, préserver les éléments, escalader (N3/RSSI).<br>
+                    <strong>Question piège :</strong> « Tu réinstalles direct ? » → « Pas forcément : on suit procédure incident, on préserve les preuves si nécessaire, puis remédiation. »
+                </div>
+            </div>
+                </div><!-- fin tab-pane IT -->
+            </div><!-- fin tab-content -->
+        </div><!-- fin tabs-container Cybersécurité -->
+    </div>
+
+    <!-- 5. TESTS TECHNIQUES (niveau Clever Age : Définition + Exemple + Cas d'usage) -->
+    <button class="accordion">💻 5. TESTS TECHNIQUES — Python, Django, Growth, Concepts</button>
+    <div class="panel">
+        <p class="tabs-legend"><strong>💡 Utilisation :</strong> Même niveau de détail que la prépa Clever Age. Cliquez sur chaque thème puis sur chaque question pour afficher la réponse complète (Définition, Exemple, Cas d'usage) — au fil des questions en entretien.</p>
+
+        <button class="sub-accordion">🐍 Python — Questions courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Liste vs tuple ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Liste = mutable (modifiable), tuple = immutable (non modifiable).<br>
+                    <strong>Exemple :</strong> <code>liste = [1, 2, 3]</code> → <code>liste.append(4)</code> OK ; <code>tuple = (1, 2, 3)</code> ne peut pas être modifié.<br>
+                    <strong>Cas d'usage :</strong> Tuple pour données fixes (coordonnées, config), liste pour données dynamiques (panier, historique). Tuples plus rapides et moins mémoire.
+                </div>
+            </div>
+            <button class="sub-accordion">Q2: Qu'est-ce qu'un décorateur ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Fonction qui prend une fonction en paramètre et retourne une fonction modifiée. Ajoute des fonctionnalités sans modifier le code original.<br>
+                    <strong>Exemple :</strong> <code>@login_required</code> vérifie l'authentification avant d'exécuter la vue Django.<br>
+                    <strong>Cas d'usage :</strong> Logging, timing, authentification, validation, caching. Très utilisé dans Django pour les vues.
+                </div>
+            </div>
+            <button class="sub-accordion">Q3: Différence entre is et == ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <code>==</code> compare les valeurs, <code>is</code> compare l'identité en mémoire (même objet).<br>
+                    <strong>Exemple :</strong> <code>a = [1,2,3]</code>, <code>b = [1,2,3]</code> → <code>a == b</code> True, <code>a is b</code> False.<br>
+                    <strong>Cas d'usage :</strong> Utiliser <code>is</code> pour <code>None</code> (<code>if x is None</code>), <code>==</code> pour les valeurs.
+                </div>
+            </div>
+            <button class="sub-accordion">Q4: List comprehension ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Syntaxe concise pour créer des listes à partir d'itérables avec condition optionnelle.<br>
+                    <strong>Exemple :</strong> <code>[i**2 for i in range(10) if i % 2 == 0]</code> → carrés des nombres pairs.<br>
+                    <strong>Cas d'usage :</strong> Plus lisible et souvent plus rapide qu'une boucle for. Variantes : dict comprehension, set comprehension.
+                </div>
+            </div>
+            <button class="sub-accordion">Q5: Gestion des exceptions ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Structure <code>try/except/else/finally</code> pour gérer les erreurs de manière contrôlée.<br>
+                    <strong>Exemple :</strong> <code>try: result = 10/0</code> puis <code>except ZeroDivisionError: ...</code><br>
+                    <strong>Cas d'usage :</strong> Fichiers, appels API, validation. Capturer des exceptions spécifiques, logger l'erreur. <code>finally</code> pour le nettoyage.
+                </div>
+            </div>
+        </div>
+
+        <button class="sub-accordion">🎸 Django — Questions courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Architecture MVT ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> MVT = Model-View-Template (variante de MVC). Model = données (ORM), View = logique métier, Template = présentation (HTML).<br>
+                    <strong>Exemple :</strong> Requête → URL → View (logique) → Model (données) → Template (rendu) → Réponse.<br>
+                    <strong>Cas d'usage :</strong> Models = structure DB, views = logique, templates = affichage. Séparation claire des responsabilités.
+                </div>
+            </div>
+            <button class="sub-accordion">Q2: ORM Django, pourquoi ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Object-Relational Mapping — manipuler la base avec du code Python au lieu de SQL brut.<br>
+                    <strong>Exemple :</strong> <code>User.objects.filter(email='test@example.com')</code> au lieu de <code>SELECT * FROM users WHERE ...</code><br>
+                    <strong>Cas d'usage :</strong> Protection injections SQL, portabilité SGBD, code lisible. Permet de changer de base sans modifier le code.
+                </div>
+            </div>
+            <button class="sub-accordion">Q3: Migration Django ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Fichier Python décrivant les changements de schéma DB (création/modification de tables, colonnes).<br>
+                    <strong>Exemple :</strong> <code>makemigrations</code> crée les fichiers, <code>migrate</code> les applique.<br>
+                    <strong>Cas d'usage :</strong> Chaque modification de model génère une migration. Versioning du schéma, réversibilité, collaboration. Commiter les migrations avec le code.
+                </div>
+            </div>
+            <button class="sub-accordion">Q4: Problème N+1 ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> 1 requête pour N objets + N requêtes pour leurs relations = problème de performance.<br>
+                    <strong>Exemple :</strong> <code>for user in User.objects.all(): print(user.profile.bio)</code> → 1 + N requêtes.<br>
+                    <strong>Cas d'usage :</strong> Utiliser <code>select_related</code> (ForeignKey) ou <code>prefetch_related</code> (ManyToMany) quand on accède aux relations dans une boucle.
+                </div>
+            </div>
+        </div>
+
+        <button class="sub-accordion">🚀 Growth &amp; SEO — Questions courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: Growth hacking ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Approche axée sur la croissance rapide et mesurable, techniques créatives et low-cost (Build → Measure → Learn).<br>
+                    <strong>Exemple :</strong> Dropbox : programme de parrainage pour passer de 100K à 4M utilisateurs en 15 mois.<br>
+                    <strong>Cas d'usage :</strong> Startups, scale-ups, e-commerce avec budget limité. Data-driven, expérimentation rapide.
+                </div>
+            </div>
+            <button class="sub-accordion">Q2: Funnel de conversion ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Parcours utilisateur de la découverte à l'action finale (achat, inscription). Étapes : Awareness → Interest → Consideration → Purchase → Retention.<br>
+                    <strong>Exemple :</strong> E-commerce : Visite → Ajout panier → Checkout → Paiement → Confirmation. Taux de conversion par étape.<br>
+                    <strong>Cas d'usage :</strong> Identifier les goulots d'étranglement, optimiser les étapes critiques. Métriques : taux de conversion, abandon, temps entre étapes.
+                </div>
+            </div>
+            <button class="sub-accordion">Q3: A/B testing ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Comparer deux versions (A et B) d'une page/feature pour déterminer laquelle performe le mieux. Trafic divisé, résultats statistiquement significatifs.<br>
+                    <strong>Exemple :</strong> Tester deux couleurs de bouton « Acheter » : rouge vs vert, mesurer les conversions.<br>
+                    <strong>Cas d'usage :</strong> Landing pages, formulaires, CTAs, emails. Outils : Google Optimize, Optimizely, VWO.
+                </div>
+            </div>
+            <button class="sub-accordion">Q4: SEO technique ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Optimisation du code, de l'infrastructure et des performances pour le référencement (vitesse, mobile, structure HTML, sitemap, CWV).<br>
+                    <strong>Exemple :</strong> LCP &lt; 2,5 s, mobile-first, corriger les 404. Différence : SEO technique = infra/code, SEO contenu = mots-clés/contenu.<br>
+                    <strong>Cas d'usage :</strong> Développeurs impliqués dans le SEO. Pour la CDC : audit technique sur gros volumes, Core Web Vitals sur les pages stratégiques.
+                </div>
+            </div>
+            <button class="sub-accordion">Q5: CRO (Conversion Rate Optimization) ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Optimiser le taux de conversion pour maximiser le nombre de visiteurs qui effectuent l'action désirée.<br>
+                    <strong>Exemple :</strong> Réduire les champs d'un formulaire de 7 à 3 peut augmenter les conversions de 20-30 %.<br>
+                    <strong>Cas d'usage :</strong> A/B testing, heatmaps, parcours utilisateur. E-commerce, SaaS, landing pages. Outils : Hotjar, Crazy Egg, Google Analytics.
+                </div>
+            </div>
+            <button class="sub-accordion">Q6: Core Web Vitals ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Métriques Google d'expérience utilisateur : LCP (chargement &lt; 2,5 s), FID/INP (réactivité &lt; 100 ms), CLS (stabilité &lt; 0,1).<br>
+                    <strong>Exemple :</strong> LCP dégradé par une grosse image hero → WebP, dimensions, lazy load. CLS par bandeau cookie → réserver l'espace.<br>
+                    <strong>Cas d'usage :</strong> Facteur de ranking SEO ; impact conversion (≈ +1 % par 100 ms de LCP). Audit Lighthouse, prioriser les pages stratégiques.
+                </div>
+            </div>
+        </div>
+
+        <button class="sub-accordion">🔧 Concepts généraux — Questions courantes</button>
+        <div class="sub-panel">
+            <button class="sub-accordion">Q1: CI/CD ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Continuous Integration / Continuous Deployment — automatisation des tests et du déploiement à chaque commit.<br>
+                    <strong>Exemple :</strong> Commit → tests automatiques → build → tests d'intégration → déploiement si succès. Outils : GitHub Actions, GitLab CI, Jenkins.<br>
+                    <strong>Cas d'usage :</strong> Détection précoce des bugs, déploiements fréquents et sûrs. Pipeline reproductible.
+                </div>
+            </div>
+            <button class="sub-accordion">Q2: Docker ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> Conteneurisation : packager une application avec ses dépendances dans un conteneur isolé. Dockerfile → Image → Container.<br>
+                    <strong>Exemple :</strong> <code>docker build -t myapp .</code> puis <code>docker run myapp</code>. Docker Compose pour orchestrer plusieurs services.<br>
+                    <strong>Cas d'usage :</strong> Dev local = prod, déploiement simplifié, CI/CD, microservices. Standard pour la conteneurisation.
+                </div>
+            </div>
+            <button class="sub-accordion">Q3: HTTP vs HTTPS ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> HTTP = non chiffré ; HTTPS = HTTP + SSL/TLS (chiffrement, authentification serveur, intégrité).<br>
+                    <strong>Exemple :</strong> <code>http://example.com</code> (données en clair) vs <code>https://example.com</code> (certificat SSL).<br>
+                    <strong>Cas d'usage :</strong> HTTPS obligatoire pour e-commerce, auth, données sensibles. SEO (Google favorise HTTPS), conformité RGPD.
+                </div>
+            </div>
+            <button class="sub-accordion">Q4: Codes statut HTTP principaux ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> 2xx (200 OK, 201 Created), 4xx (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found), 5xx (500, 502, 503).<br>
+                    <strong>Exemple :</strong> API REST : 200 pour succès, 201 après création, 404 si ressource introuvable, 500 erreur serveur.<br>
+                    <strong>Cas d'usage :</strong> Utiliser les codes appropriés dans les APIs pour indiquer clairement le résultat de chaque requête.
+                </div>
+            </div>
+            <button class="sub-accordion">Q5: Git merge vs rebase ?</button>
+            <div class="sub-panel">
+                <div class="tip">
+                    <strong>Définition :</strong> <strong>merge</strong> = commit de fusion qui combine les branches (historique complet). <strong>rebase</strong> = réécrit l'historique en appliquant les commits sur la branche cible (historique linéaire).<br>
+                    <strong>Exemple :</strong> <code>merge</code> pour branches partagées (main, develop). <code>rebase</code> pour branche locale avant merge (historique propre).<br>
+                    <strong>Cas d'usage :</strong> merge = sûr pour branches partagées ; rebase = ne pas rebaser une branche déjà poussée (risque de réécriture).
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. QUESTIONS À POSER -->
+    <button class="accordion">❓ 6. QUESTIONS À POSER</button>
+    <div class="panel">
+        <button class="sub-accordion">Exemples</button>
+        <div class="sub-panel">
+            <ul>
+                <li>Comment s’articule la collaboration entre équipes SEO, DSI et éditorial sur les plateformes (Banque des Territoires, MCF, Retraites) ?</li>
+                <li>Quelles sont les priorités 2025 en matière d’accessibilité (RGAA) et de centralisation de l’information ?</li>
+                <li>Y a-t-il des chantiers en cours sur la souveraineté numérique ou l’optimisation pour les moteurs de type IA (GEO) ?</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 7. THE BRIDGE / CAISSE DES DÉPÔTS — CE QUE VOUS DEVEZ SAVOIR -->
+    <button class="accordion">🏛️ 7. THE BRIDGE / CAISSE DES DÉPÔTS — Ce que vous devez savoir</button>
+    <div class="panel">
+
+        <button class="sub-accordion">🪪 Fiche d’identité CDC</button>
+        <div class="sub-panel">
+            <ul>
+                <li><strong>Surnom :</strong> « Le bras armé de l’État ».</li>
+                <li><strong>Missions :</strong> Gère l’épargne des Français (Livret A), finance le logement social, la transition écologique, accompagne les territoires.</li>
+                <li><strong>Enjeux SEO actuels :</strong> Des dizaines de plateformes (Banque des Territoires, Mon Compte Formation, Retraites, etc.). Défi = <strong>centralisation</strong>, <strong>accessibilité</strong> (RGAA), <strong>clarté de l’information</strong> face à une concurrence privée agressive.</li>
+                <li><strong>Culture :</strong> Rigueur, sécurité, pérennité. Ils n’aiment pas les « bidouilleurs » mais adorent les « techniciens structurés ».</li>
+            </ul>
+        </div>
+
+        <button class="sub-accordion">💡 Conseil final</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <p>Le 7e arrondissement est un quartier de prestige. Sois très structuré dans ton discours. Utilise ta maturité (expérience IT) comme un gage de sagesse face aux profils trop « start-up nation ».</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8. CHECKLIST FINALE AVANT ENTRETIEN -->
+    <button class="accordion">✅ 8. CHECKLIST FINALE AVANT ENTRETIEN</button>
+    <div class="panel">
+        <button class="sub-accordion">📋 Documents à préparer</button>
+        <div class="sub-panel">
+            <ul>
+                <li>✅ CV actualisé (PDF)</li>
+                <li>✅ Portfolio / GitHub à jour</li>
+                <li>✅ Landing page personnelle (SquidResearch, projets)</li>
+                <li>✅ Bloc-notes + stylo</li>
+                <li>✅ PC portable chargé (si test technique)</li>
+            </ul>
+        </div>
+        <button class="sub-accordion">🎯 Points clés à retenir</button>
+        <div class="sub-panel">
+            <div class="highlight">
+                <h4>✨ Votre message principal (The Bridge / CDC)</h4>
+                <p><strong>« Je suis un consultant SEO &amp; Growth avec un profil hybride Dev + IT + Design. Je traduis entre le marketing, le design et la technique. À la CDC, le SEO est une mission de service public : faire gagner l’info officielle contre la désinformation. J’apporte l’audit technique sur de gros volumes, l’automatisation du reporting, et une culture de la fiabilité des données. »</strong></p>
+            </div>
+            <h4>🎨 Vos atouts uniques</h4>
+            <ol>
+                <li><strong>4-en-1 :</strong> SEO/Growth + Dev (Django, Python) + Brand/Design + Expert IT (22 ans).</li>
+                <li><strong>Solutions, pas seulement des listes de problèmes</strong> : capacité à implémenter (DSI).</li>
+                <li><strong>Institution :</strong> rigueur, E-E-A-T, GEO, sécurité des données.</li>
+            </ol>
+            <h4>🎯 Alignement The Bridge / CDC</h4>
+            <ul>
+                <li>✅ Intérêt général, tiers de confiance, transition écologique et démographique.</li>
+                <li>✅ Centralisation, accessibilité (RGAA), clarté de l’information.</li>
+                <li>✅ Souveraineté numérique, GEO (contenus citables par les IA).</li>
+            </ul>
+        </div>
+        <button class="sub-accordion">💬 Questions à ne pas poser (et comment reformuler)</button>
+        <div class="sub-panel">
+            <div class="warning">
+                <h4>❌ À éviter</h4>
+                <ul>
+                    <li>Questions sur le salaire en premier</li>
+                    <li>« Combien de congés ? »</li>
+                    <li>Questions dont la réponse est sur le site CDC / The Bridge</li>
+                </ul>
+            </div>
+            <div class="success">
+                <h4>✅ Reformuler en</h4>
+                <ul>
+                    <li>« Quel est le package global (formation, mobilité, télétravail) ? »</li>
+                    <li>« Comment s’articule la collaboration SEO / DSI / éditorial sur les plateformes ? »</li>
+                    <li>« Quelles sont les priorités 2025 en accessibilité et GEO ? »</li>
+                </ul>
+            </div>
+        </div>
+        <button class="sub-accordion">🎬 Derniers conseils</button>
+        <div class="sub-panel">
+            <h4>🌟 Attitude &amp; posture</h4>
+            <ul>
+                <li>✅ <strong>Confiance sans arrogance</strong></li>
+                <li>✅ <strong>Discours structuré</strong> (Paris 7e, institution)</li>
+                <li>✅ <strong>Écoute active</strong> : reformuler pour montrer que vous comprenez</li>
+                <li>✅ <strong>Honnêteté :</strong> si vous ne savez pas, dites-le</li>
+                <li>✅ <strong>Maturité IT</strong> comme gage de sagesse et fiabilité</li>
+            </ul>
+            <h4>🚫 À éviter</h4>
+            <ul>
+                <li>❌ Critiquer vos anciens employeurs</li>
+                <li>❌ Réponses trop longues</li>
+                <li>❌ Ton « start-up nation » excessif</li>
+            </ul>
+            <div class="success">
+                <p><strong>💪 Motivation finale :</strong> « Vous avez toutes les cartes : profil hybride SEO + Dev + IT, expérience institutionnelle possible. The Bridge cherche des profils structurés pour la CDC. Montrez que vous livrez des solutions, pas seulement des rapports. »</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 9. LEXIQUE DES ABRÉVIATIONS -->
+    <button class="accordion">📖 9. LEXIQUE DES ABRÉVIATIONS</button>
+    <div class="panel">
+        <button class="sub-accordion">🚀 Growth &amp; Marketing</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <h4>KPI Growth</h4>
+                <ul>
+                    <li><strong>CAC :</strong> Customer Acquisition Cost (Coût d'acquisition client)</li>
+                    <li><strong>LTV :</strong> Lifetime Value (Valeur vie client)</li>
+                    <li><strong>CRO :</strong> Conversion Rate Optimization</li>
+                    <li><strong>CTR :</strong> Click-Through Rate (Taux de clic)</li>
+                    <li><strong>CPA, CPC, CPM :</strong> Cost Per Acquisition / Click / Mille</li>
+                </ul>
+                <h4>Frameworks</h4>
+                <ul>
+                    <li><strong>AARRR :</strong> Acquisition, Activation, Retention, Revenue, Referral (Pirate Metrics)</li>
+                    <li><strong>JTBD :</strong> Jobs-to-be-Done</li>
+                    <li><strong>MVP :</strong> Minimum Viable Product</li>
+                </ul>
+            </div>
+        </div>
+        <button class="sub-accordion">⚡ Performance Web &amp; SEO</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <h4>Core Web Vitals</h4>
+                <ul>
+                    <li><strong>LCP :</strong> Largest Contentful Paint</li>
+                    <li><strong>FID / INP :</strong> First Input Delay / Interaction to Next Paint</li>
+                    <li><strong>CLS :</strong> Cumulative Layout Shift</li>
+                    <li><strong>TTFB :</strong> Time to First Byte</li>
+                </ul>
+                <h4>SEO</h4>
+                <ul>
+                    <li><strong>E-E-A-T :</strong> Experience, Expertise, Authoritativeness, Trustworthiness</li>
+                    <li><strong>GEO :</strong> Generative Engine Optimization</li>
+                    <li><strong>YMYL :</strong> Your Money Your Life (contenus sensibles)</li>
+                    <li><strong>OG :</strong> Open Graph (métadonnées partage social)</li>
+                </ul>
+            </div>
+        </div>
+        <button class="sub-accordion">💻 Technologies &amp; Frameworks</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <h4>Backend</h4>
+                <ul>
+                    <li><strong>API, REST, ORM, MVC, MVT, JWT, DRF</strong></li>
+                </ul>
+                <h4>Frontend</h4>
+                <ul>
+                    <li><strong>SPA, SSR, CSR, CDN</strong></li>
+                </ul>
+                <h4>DevOps</h4>
+                <ul>
+                    <li><strong>CI/CD, IaC, Docker</strong></li>
+                </ul>
+            </div>
+        </div>
+        <button class="sub-accordion">🔒 Sécurité &amp; Conformité</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <ul>
+                    <li><strong>CSRF, XSS, SQL Injection, CORS, HTTPS, SSL/TLS, OAuth</strong></li>
+                    <li><strong>RGPD, RGAA, WCAG</strong></li>
+                </ul>
+            </div>
+        </div>
+        <button class="sub-accordion">🛡️ IT &amp; Support</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <ul>
+                    <li><strong>AD :</strong> Active Directory · <strong>GPO :</strong> Group Policy Object</li>
+                    <li><strong>SLA :</strong> Service Level Agreement · <strong>PRA/PCA :</strong> Plan de Reprise / Continuité d'Activité</li>
+                    <li><strong>N1, N2 :</strong> niveaux support (première ligne, diagnostic avancé)</li>
+                </ul>
+            </div>
+        </div>
+        <button class="sub-accordion">🐍 Python &amp; Django</button>
+        <div class="sub-panel">
+            <div class="tip">
+                <ul>
+                    <li><strong>GIL :</strong> Global Interpreter Lock</li>
+                    <li><strong>DRF :</strong> Django Rest Framework</li>
+                    <li><strong>MVT :</strong> Model-View-Template</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.accordion').click(function() { $(this).toggleClass('active'); $(this).next('.panel').slideToggle(); });
+        $('.sub-accordion').click(function() { $(this).toggleClass('active'); $(this).next('.sub-panel').slideToggle(); });
+        $('.tab-btn').click(function() {
+            var tabId = $(this).data('tab');
+            var container = $(this).closest('.tabs-container');
+            container.find('.tab-btn').removeClass('active');
+            container.find('.tab-pane').removeClass('active');
+            $(this).addClass('active');
+            container.find('#' + tabId).addClass('active');
+        });
+        $('html').css('scroll-behavior', 'smooth');
+    });
+</script>
+</body>
+</html>

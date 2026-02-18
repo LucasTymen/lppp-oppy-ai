@@ -1,0 +1,86 @@
+{
+  "page_title": "Lucas Tymen — Projet Casapy (audit SEO, e-commerce)",
+  "prospect_company": "Casapy",
+  "prospect_name": "",
+  "hero_headline": "Audit SEO et performances — Casapy",
+  "hero_sub_headline": "Diagnostic technique, opportunités et plan d'action pour votre e-commerce.",
+  "hero_subtitle": "Projet LPPP — Rapport complet et proposition de valeur",
+  "hero_video_mp4_url": "https://www.casapy.com/wp-content/uploads/2026/02/video-quali-55.mp4",
+  "hero_video_url": "",
+  "theme": {
+    "logo_url": "https://www.casapy.com/wp-content/uploads/2025/04/logo-casapy-HD-1.pdf-1.png"
+  },
+  "intro": "Ce livrable regroupe un diagnostic SEO complet (TTFB ~3,7 s, performances, indexation), une estimation chiffrée du manque à gagner (25–50 % de conversion perdue, scénarios 18–180 k€/mois selon trafic et panier), une étude marketing en clean room (faits vs hypothèses) et un plan d'action priorisé (serveur → cache → front). Qualité de contenu alignée sur FitClem : infographies parlantes, chiffres sourcés, visuels explicites.",
+  "icebreaker": "Casapy : e-commerce WooCommerce + Elementor sur hébergement mutualisé o2switch. Le TTFB à 3,7 s prouve que le goulot d'étranglement est serveur/backend. Avant toute optimisation front, une migration ou optimisation infrastructure est prioritaire — le ROI en est quasi immédiat.",
+  "enjeux_lead": "Points identifiés dans le cadre du projet :",
+  "pain_points": [
+    "TTFB ~3,7 s (Homepage et PDP) — problème serveur/backend, pas prioritairement front. LCP à 32 s en découle.",
+    "Hébergement mutualisé o2switch : ressources partagées, PHP-FPM partagé, base MySQL partagée — insuffisant pour WooCommerce + Elementor.",
+    "Perte conversion estimée : 25–50 %. Scénario conservateur 30 % → 54 k€/mois potentiellement impactés (10 k visites, 2 % conv., panier 900 €).",
+    "Indexation et technique : canoniques, hreflang, structure URLs, clusters sémantiques à renforcer.",
+    "Étude marketing : aucune trace pub Meta/Google ; funnel AARRR, SWOT et positionnement à compléter avec preuves."
+  ],
+  "solution_workflow": "Plan d'action en trois étapes. Ce livrable en est la synthèse actionnable.",
+  "solution_piliers": [
+    {"title": "Rapport SEO complet", "desc": "Diagnostic TTFB, performances, hébergement ; scénarios chiffrés (manque à gagner) ; recommandations techniques et sémantiques."},
+    {"title": "Étude marketing (clean room)", "desc": "Faits vs hypothèses ; constat : aucune trace Meta/Google ; marché, concurrence, funnel AARRR, SWOT défendable."},
+    {"title": "Plan d'action priorisé", "desc": "1. Serveur (cache Redis, migration VPS). 2. Base de données (nettoyage, index). 3. Front-end (LCP, JS, images)."}
+  ],
+  "solution_steps": [
+    {"num": 1, "label": "Serveur — cache Redis / migration VPS"},
+    {"num": 2, "label": "Base de données — nettoyage, index"},
+    {"num": 3, "label": "Front-end — LCP, défer JS, images"}
+  ],
+  "cta_text": "VOIR LE RAPPORT COMPLET",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Projet Casapy — Rapport SEO",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "rapport_url": "/p/casapy/rapport/",
+  "key_figures_carousel": [
+    {"value": "3,7", "unit": "s", "label": "TTFB (Homepage, PDP) — critique"},
+    {"value": "25–50", "unit": "%", "label": "Perte conversion estimée (TTFB + LCP)"},
+    {"value": "54", "unit": "k€/mois", "label": "Scénario conservateur (10 k visites, 2 %, panier 900 €)"},
+    {"value": "3", "unit": "étapes", "label": "Plan : Serveur → DB → Front"},
+    {"value": "0", "unit": "trace", "label": "Pub Meta/Google (constat clean room)"}
+  ],
+  "alert_banner": "PROJET CASAPY — AUDIT SEO COMPLET + ÉTUDE MARKETING + PLAN D'ACTION",
+  "seo_resume": {
+    "title": "DIAGNOSTIC SEO",
+    "manque_annuel": "~54–648 k€/an (scénarios 5–20 k visites/mois, 2–5 % conversion, panier 600–1 200 €)",
+    "intro": "TTFB ~3,7 s prouve un goulot serveur/backend. Hébergement mutualisé o2switch insuffisant pour WooCommerce + Elementor. Perte conversion 25–50 % ; scénario conservateur 30 %. Avant toute optimisation front, priorité absolue : serveur (Redis, migration VPS), puis base de données, puis front (LCP, images). ROI migration quasi immédiat.",
+    "problemes_cles": ["TTFB ~3,7 s (critique)", "Hébergement mutualisé", "LCP 32 s mobile", "Perte conversion 25–50 %"],
+    "lien_analyse": "DÉCOUVRIR LE RAPPORT COMPLET →"
+  },
+  "coordonnees_intro": "Pour un échange ou recevoir les livrables :",
+  "about_me_title": "Contexte",
+  "about_me": "Projet LPPP Casapy : audit SEO et e-commerce, qualité alignée sur FitClem. Rapport complet (TTFB, scénarios chiffrés, plan d'action), étude marketing clean room (faits vs hypothèses), infographies et diagrammes parlants. Données sourcées depuis les rapports du dossier contact.",
+  "prestations_headline": "L'étude complète — ce que ce livrable apporte ",
+  "services_segments": [
+    {"type": "box", "title": "Diagnostic TTFB", "format": "text", "desc": "TTFB Homepage ~3,77 s, PDP ~3,63 s. Référence : bon < 500 ms, critique > 2 s. Casapy en zone rouge. Problème serveur/backend, pas prioritairement JS/CSS. LCP 32 s en découle (Elementor + WooCommerce + scripts + images + SQL)."},
+    {"type": "infographic", "visual": "ttfb-kpi-bars", "label": "Priorités techniques — Niveau de criticité"},
+    {"type": "box", "title": "Hébergement identifié", "format": "text", "desc": "o2switch PowerBoost v3 (mutualisé), reverse DNS odns.fr. Ressources partagées, CPU limité, PHP-FPM partagé, DB partagée. Pour WooCommerce + Elementor → insuffisant."},
+    {"type": "infographic", "visual": "flowchart-serveur", "label": "Chaîne de blocage — Serveur → DB → Front"},
+    {"type": "box", "title": "Manque à gagner (scénarios)", "format": "table", "table_headers": ["Scénario", "Ventes perdues (30 %)", "Impact mensuel"], "rows": [["5 k visites, 2 %, panier 900 €", "30 ventes", "27 k€/mois"], ["10 k visites, 2 %, panier 900 €", "60 ventes", "54 k€/mois"], ["10 k visites, 5 %, panier 1 200 €", "150 ventes", "180 k€/mois"]]},
+    {"type": "infographic", "visual": "plan-timeline-casapy", "label": "Plan d'action priorisé"},
+    {"type": "box", "title": "Étude marketing (clean room)", "format": "text", "desc": "Faits vs hypothèses. Constat factuel : aucune trace de pub Meta ou Google (Meta Ads Library, Google Ads Transparency). Marché ameublement concurrentiel ; funnel AARRR, SWOT et positionnement à compléter avec preuves (5 éléments factuels à fournir)."},
+    {"type": "infographic", "visual": "funnel-aarrr", "label": "Funnel AARRR (Retail) — Acquisition, Activation, Rétention, Revenue, Referral"},
+    {"type": "box", "title": "Marché & concurrence", "format": "text", "desc": "Ameublement en ligne : acteurs omnicanaux, marketplaces, pure players, seconde main. Concurrents directs (catégories, prix, livraison) et substituts à établir avec sources. Acquisition : SEO, SEA/Shopping (aucune trace Meta/Google), Social organique."},
+    {"type": "box", "title": "Positionnement & SWOT", "format": "text", "desc": "USP et promesse à extraire du site. Persona : hypothèse à valider. SWOT défendable : chaque Force avec preuve (livraison, avis, labels). Opportunités : UGC, SEO longue traîne, feed Shopping. Recommandations Growth : contenu, tracking GA4, CRO."},
+    {"type": "box", "title": "Recommandations serveur", "bullets": ["Option A : Redis object cache, page cache WooCommerce, OPcache, PHP 8.2.", "Option B (recommandé) : migration VPS ou hébergement WooCommerce optimisé.", "Puis : nettoyage DB (sessions, transients, révisions), optimisation front (LCP, défer JS)."]}
+  ],
+  "services": [
+    {
+      "title": "Rapport SEO complet",
+      "description": "Diagnostic TTFB (3,7 s), hébergement o2switch, performances LCP. Scénarios chiffrés manque à gagner (18–180 k€/mois selon trafic et panier). Plan d'action : serveur → DB → front. Rapport exposé en entier sur la page rapport."
+    },
+    {
+      "title": "Étude marketing (clean room)",
+      "description": "Faits vs hypothèses ; aucune trace pub Meta/Google. Marché ameublement, funnel AARRR (acquisition, activation, rétention), SWOT défendable. Champs à compléter avec 5 éléments factuels (USP, livraison, PDP, catégories, avis)."
+    },
+    {
+      "title": "Infographies et diagrammes",
+      "description": "Priorités techniques (barres KPI), chaîne de blocage (flowchart serveur→DB→front), plan d'action timeline, table scénarios chiffrés. Qualité visuelle et parlante, alignée sur le livrable FitClem."
+    }
+  ]
+}
