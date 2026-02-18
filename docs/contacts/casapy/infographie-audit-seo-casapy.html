@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audit SEO Casapy — Infographie</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --accent: #06b6d4;
+      --danger: #dc2626;
+      --danger-light: #fef2f2;
+      --success: #059669;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-700: #334155;
+      --gray-900: #0f172a;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'DM Sans', -apple-system, sans-serif; background: var(--gray-50); color: var(--gray-900); min-height: 100vh; overflow-x: hidden; }
+    .wrapper { max-width: 880px; margin: 0 auto; padding: 1.5rem; }
+
+    /* Header */
+    .header { text-align: center; padding: 2rem 1rem; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; border-radius: 20px; margin-bottom: 2rem; box-shadow: 0 10px 40px rgba(37, 99, 235, 0.25); }
+    .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); margin: 0 0 0.5rem; letter-spacing: -0.02em; }
+    .header p { margin: 0; opacity: 0.9; font-size: 0.95rem; }
+
+    /* Section */
+    .section { margin-bottom: 2.5rem; }
+    .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); margin-bottom: 1rem; }
+
+    /* TTFB Comparison — Bar chart */
+    .ttfb-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.04); }
+    .ttfb-chart { display: flex; align-items: flex-end; justify-content: center; gap: 3rem; height: 180px; padding: 1rem 0; }
+    .ttfb-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+    .ttfb-bar { width: 72px; border-radius: 12px 12px 0 0; min-height: 12px; transition: height 0.9s var(--ease); }
+    .ttfb-bar.bon { height: 24px; background: linear-gradient(180deg, var(--success), #34d399); }
+    .ttfb-bar.casapy { height: 160px; background: linear-gradient(180deg, var(--danger), #f87171); animation: barGrow 1s var(--ease) 0.3s both; }
+    @keyframes barGrow { from { height: 0; } to { height: 160px; } }
+    .ttfb-label { font-weight: 600; font-size: 0.95rem; color: var(--gray-700); }
+    .ttfb-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700; }
+    .ttfb-bar-wrap.bon .ttfb-value { color: var(--success); }
+    .ttfb-bar-wrap.casapy .ttfb-value { color: var(--danger); }
+    .ttfb-badge { font-size: 0.75rem; padding: 0.25rem 0.6rem; border-radius: 20px; font-weight: 600; }
+    .ttfb-badge.ok { background: var(--success); color: #fff; }
+    .ttfb-badge.critique { background: var(--danger); color: #fff; }
+    @media (prefers-reduced-motion: reduce) { .ttfb-bar { animation: none; } }
+
+    /* Funnel */
+    .funnel-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); overflow: hidden; }
+    .funnel { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 380px; margin: 0 auto; }
+    .funnel-tier { width: 100%; padding: 1rem 1.25rem; text-align: center; font-size: 0.95rem; border-radius: 12px; margin-bottom: 0.5rem; transition: transform 0.4s var(--ease); }
+    .funnel-tier:hover { transform: scale(1.02); }
+    .funnel-tier:nth-child(1) { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; }
+    .funnel-tier:nth-child(2) { background: color-mix(in srgb, var(--primary) 70%, white); color: #fff; width: 90%; }
+    .funnel-tier:nth-child(3) { background: var(--danger-light); color: var(--danger); border: 2px solid var(--danger); width: 70%; }
+    .funnel-tier:nth-child(4) { background: var(--danger); color: #fff; width: 50%; font-weight: 700; font-size: 1.1rem; }
+    .funnel-tier .val { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .funnel-caption { text-align: center; font-size: 0.85rem; color: var(--gray-700); margin-top: 1rem; }
+    @media (prefers-reduced-motion: reduce) { .funnel-tier:hover { transform: none; } }
+
+    /* Plan d'action */
+    .plan-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .plan-flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+    .plan-step { padding: 1rem 1.5rem; background: var(--gray-100); border-radius: 14px; font-weight: 600; color: var(--gray-900); border-left: 4px solid var(--primary); }
+    .plan-arrow { font-size: 1.5rem; color: var(--primary); font-weight: 300; }
+    .plan-step:nth-child(1) { border-color: var(--danger); }
+    .plan-step:nth-child(3) { border-color: var(--accent); }
+    .plan-step:nth-child(5) { border-color: var(--success); }
+
+    /* KPI Grid */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; }
+    .kpi-card { background: #fff; border-radius: 16px; padding: 1.25rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
+    .kpi-card .val { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--primary); }
+    .kpi-card .unit { font-size: 0.9rem; color: var(--gray-700); margin-bottom: 0.35rem; }
+    .kpi-card .label { font-size: 0.8rem; color: var(--gray-700); line-height: 1.35; }
+    .kpi-card.danger .val { color: var(--danger); }
+
+    /* TL;DR */
+    .tldr { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: #fff; border-radius: 20px; padding: 2rem; margin-bottom: 2rem; }
+    .tldr h3 { font-family: 'Space Grotesk', sans-serif; margin: 0 0 1rem; font-size: 1.1rem; }
+    .tldr ul { margin: 0; padding-left: 1.25rem; line-height: 1.8; opacity: 0.95; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 1.5rem; font-size: 0.85rem; color: var(--gray-700); }
+
+    @media (min-width: 640px) { .wrapper { padding: 2rem; } }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1>Audit SEO — Casapy</h1>
+      <p>Diagnostic technique, manque à gagner, plan d'action</p>
+    </header>
+
+    <div class="tldr">
+      <h3>En 3 points</h3>
+      <ul>
+        <li><strong>TTFB ~3,7 s</strong> → problème serveur, pas le front</li>
+        <li><strong>~30 % de conversions perdues</strong> → 54 k€/mois impactés (scénario 10 k visites)</li>
+        <li><strong>Priorité 1</strong> : serveur (Redis, migration VPS) avant toute optimisation front</li>
+      </ul>
+    </div>
+
+    <section class="section">
+      <h2 class="section-title">TTFB — Casapy vs référence</h2>
+      <div class="ttfb-card">
+        <div class="ttfb-chart">
+          <div class="ttfb-bar-wrap bon">
+            <div class="ttfb-bar bon"></div>
+            <span class="ttfb-label">Référence (bon)</span>
+            <span class="ttfb-value">0,5 s</span>
+            <span class="ttfb-badge ok">OK</span>
+          </div>
+          <div class="ttfb-bar-wrap casapy">
+            <div class="ttfb-bar casapy"></div>
+            <span class="ttfb-label">Casapy</span>
+            <span class="ttfb-value">~3,7 s</span>
+            <span class="ttfb-badge critique">Critique</span>
+          </div>
+        </div>
+        <p style="text-align:center;margin:0;font-size:0.9rem;color:var(--gray-700);">×7,4 plus lent que la cible — goulot d'étranglement serveur/backend</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Funnel — Impact sur les conversions</h2>
+      <div class="funnel-card">
+        <p class="funnel-caption">Scénario : 10 000 visiteurs/mois, 2 % conversion, panier 900 €, perte 30 %</p>
+        <div class="funnel">
+          <div class="funnel-tier"><span class="val">10 000</span>visiteurs / mois</div>
+          <div class="funnel-tier"><span class="val">200</span>ventes potentielles</div>
+          <div class="funnel-tier"><span class="val">60</span>ventes perdues (30 %)</div>
+          <div class="funnel-tier"><span class="val">54 k€</span>impact / mois</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Chiffres clés</h2>
+      <div class="kpi-grid">
+        <div class="kpi-card danger"><span class="val">3,7 s</span><p class="unit">TTFB</p><p class="label">Homepage, PDP — critique</p></div>
+        <div class="kpi-card danger"><span class="val">32 s</span><p class="unit">LCP mobile</p><p class="label">Bloquant</p></div>
+        <div class="kpi-card"><span class="val">25–50 %</span><p class="unit">Perte conv.</p><p class="label">Estimée (TTFB + LCP)</p></div>
+        <div class="kpi-card"><span class="val">54 k€</span><p class="unit">/ mois</p><p class="label">Scénario conservateur</p></div>
+        <div class="kpi-card"><span class="val">3</span><p class="unit">étapes</p><p class="label">Plan d'action</p></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Plan d'action priorisé</h2>
+      <div class="plan-card">
+        <div class="plan-flow">
+          <div class="plan-step">1. Serveur<br><small style="font-weight:400;opacity:0.9">Redis, migration VPS</small></div>
+          <span class="plan-arrow">→</span>
+          <div class="plan-step">2. Base de données<br><small style="font-weight:400;opacity:0.9">Nettoyage, index</small></div>
+          <span class="plan-arrow">→</span>
+          <div class="plan-step">3. Front-end<br><small style="font-weight:400;opacity:0.9">LCP, JS, images</small></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">Casapy — Audit SEO LPPP · Source : SEO_Casapy_rapport_performances_et_diagnostique.md</footer>
+  </div>
+</body>
+</html>
