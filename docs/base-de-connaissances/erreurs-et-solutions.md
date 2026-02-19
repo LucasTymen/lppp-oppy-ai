@@ -2,7 +2,7 @@
 
 **Objectif** : Répertorier les erreurs rencontrées et les solutions trouvées pour éviter de les reproduire et guider les agents qui rencontrent des soucis.
 
-**Maintenu par** : Agent qui assiste le Chef de Projet (mise à jour au fur et à mesure des corrections).  
+**Maintenu par** : **Agent en charge des erreurs** (qui assiste le Chef de Projet) — mise à jour au fur et à mesure des corrections ; il actualise aussi la base de connaissances (voir § ci-dessous).  
 **Consulté par** : Tous les agents — en cas de blocage ou d’erreur, consulter ce registre avant de réinventer ; après une correction, ajouter une entrée.  
 **Référence** : `agents-roles-responsabilites.md` (§ Chef de Projet, RACI « Documenter erreurs et solutions »), `pilotage-agents.mdc` (Data-driven et logs).
 
@@ -15,8 +15,9 @@
 2. Si une entrée existe : appliquer la solution et les précautions indiquées.
 3. Si aucune entrée : après résolution, **ajouter une entrée** (voir format ci‑dessous) et mettre à jour les logs (`log-projet.md` ou `log-ia.md`).
 
-### Pour l’agent qui assiste le Chef de Projet
+### Pour l’agent en charge des erreurs (qui assiste le Chef de Projet)
 - **À chaque correction d’erreur** : ajouter ou compléter une entrée dans ce registre et mettre à jour les logs pour que l’équipe ne reproduise pas l’erreur.
+- **Actualiser la base de connaissances** : selon le cas — mettre à jour ou créer les docs concernés dans `docs/base-de-connaissances/` : `decisions.md` (décision liée à l’erreur ou à la prévention), `sources.md` si une source externe est utilisée, procédures dédiées, segmentations si une équipe est mobilisée, et le **registre agents/ressources** si une nouvelle ressource ou référence est créée. L’objectif est que la correction et sa prévention soient retrouvables par tous les agents.
 - **Interaction** : le Chef de Projet valide que la doc est à jour ; l’Orchestrateur peut référencer ce doc dans le registre agents/ressources.
 
 ---

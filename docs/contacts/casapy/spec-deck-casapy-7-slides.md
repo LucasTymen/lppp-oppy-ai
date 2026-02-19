@@ -1,96 +1,134 @@
-# Spec deck Casapy — 7 slides + 1 one-pager (approche consultant-grade)
+# Deck 7 slides + 1 one-pager — Spec exécutable (consultant-grade)
 
-**Date** : 2026-02-19  
-**Approche** : Problème → Pourquoi → Ce que ça coûte → Ce qu'on fait → Ce que ça débloque  
-**Principe** : 1 slide = 1 idée | max 35 mots | badges Rouge/Orange/Vert | encadré « So what » (impact business)
-
----
-
-## Slide 0 — Ce que j'offre (optionnel)
-
-- 3 cartes : Audit technique perf (TTFB/LCP) | Audit SEO technique & sémantique | Audit Growth (AARRR + tracking + reco)
-- CTA : « Consulter le rapport complet → »
+**Date** : 2026-01-30  
+**Principe** : 1 idée/slide | ≤35 mots/slide | visuel recommandé + **So what** au même endroit (bas droite) | Wave = slide à part (pas bonus décoratif)
 
 ---
 
-## Slide 1 — Impact perf → Impact business
+## Règles de design
 
-**Headline** : Le frein #1 est serveur : il dégrade l'UX et la conversion.
+- **So what** : toujours au **même endroit** (bas droite) sur toutes les slides.
+- **Chiffres** : indiquer « Hypothèse / à valider » à côté de chaque chiffre non issu de GA4.
+- **Wave** : slide dédiée (slide 7) — illustre **TTFB/LCP** (axe Y : plus bas = mieux) *ou* **CVR/CA** (axe Y : plus haut = mieux) selon choix ; par défaut **TTFB/LCP** pour alignement diagnostic.
 
-**Chaîne** : Hébergement mutualisé → TTFB ~3,7 s → LCP 32 s → Friction UX → -25 à -50 % conversion
+### Contraste et couleurs (fond sombre)
 
-**So what** : Scénario conservateur -30 % = ~54 k€/mois (10k visites / 2 % / 900 €)
-
----
-
-## Slide 2 — Diagnostic : TTFB vs Front
-
-**Headline** : Le goulot n'est pas d'abord le front : c'est la réponse serveur.
-
-**Waterfall** : DNS court (vert) | TTFB très long (rouge) | Download moyen | Render/LCP long (orange)
-
-**Contexte** : TTFB bon < 0,5 s / critique > 2 s → Casapy en zone rouge. LCP élevé en découle.
+- **Fond sombre** → **texte blanc** pour tous les textes (lisibilité).
+- **Mise en valeur** (chiffres clés, So what, accents) → **couleurs claires** : jaune, orangé, ou **bleu turquoise** (pas de texte sombre sur fond sombre).
 
 ---
 
-## Slide 3 — Mutualisé vs stack adaptée
+## Slide 1 — Problème : performance serveur
 
-**Headline** : WooCommerce + Elementor = besoin de ressources stables.
-
-**Gauche** : Mutualisé (CPU/RAM partagés, perf variable) | ❌ risque élevé  
-**Droite** : Stack adaptée (VPS, Redis, DB optimisée) | ✅ perf stable  
-**Métaphore** : Immeuble vs maison
-
----
-
-## Slide 4 — Priorités + plan d'action
-
-**Headline** : Plan en 3 étapes : serveur, puis DB, puis front.
-
-**Table criticité** : TTFB (critique) | LCP mobile (bloquant) | Hébergement (inadapté) | Perte conv (business)
-
-**Roadmap** : 1. Serveur (VPS/Redis) | 2. DB (transients, index) | 3. Front (LCP, defer JS)
-
-**So what** : Amélioration UX + baisse abandon + SEO (CWV) + ROAS meilleur
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Le frein #1 est serveur, pas le front |
+| **Texte (≤35 mots)** | Hébergement mutualisé → TTFB ~3,7s → LCP ~32s. Résultat : pages perçues "cassées/lentes", friction, perte de confiance et d'intention d'achat. |
+| **Visuel** | Chaîne cause→effet (icônes) |
+| **So what** | -30% conv ≈ **54k€/mois** (hypothèse à valider GA4) |
 
 ---
 
-## Slide 5 — Manque à gagner (3 cartes)
+## Slide 2 — Pourquoi : preuve par diagnostic (TTFB)
 
-Carte 1 : 5k / 2 % / 900 € → **27 k€/mois**  
-Carte 2 : 10k / 2 % / 900 € → **54 k€/mois**  
-Carte 3 : 10k / 5 % / 1200 € → **180 k€/mois**
-
-*Scénarios pour cadrer l'ordre de grandeur — à recalibrer avec GA4 + taux conversion réel.*
-
----
-
-## Slide 6 — Marketing clean room (FACT vs HYPOTHESIS)
-
-**Headline** : On sépare faits et hypothèses.
-
-**FACT** : Aucune trace pub Meta/Google | Marché concurrentiel  
-**HYPOTHESIS** : Persona, positionnement, concurrents, funnel AARRR
-
-**Next inputs** : USP, page livraison, PDP, catégories, avis
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Le goulot = temps de réponse serveur |
+| **Texte** | TTFB bon <0,5s / critique >2s. Casapy est en zone rouge : la page attend le serveur avant de pouvoir afficher (LCP). |
+| **Visuel** | Waterfall simplifié (TTFB rouge dominant) |
+| **So what** | Priorité = backend/DB/hosting |
 
 ---
 
-## One-pager — Dashboard exécutif
+## Slide 3 — Cause racine : mutualisé inadapté à WooCommerce
 
-**Gauche** : Jauges TTFB/LCP | Impact 54 k€/mois | Cause racine mutualisé  
-**Droite** : Roadmap serveur → DB → front | Marketing clean room | KPIs à suivre
-
----
-
-## Graphique sinusoïde — Progression avant/après fix
-
-**Modèle** : y(t) = (b + mt) + A·sin(2πt/T + φ) avec amplitude qui baisse après J30 (fix)
-
-**Usage** : Avant fix = volatilité haute (mutualisé) | Après fix = baseline meilleure + volatilité réduite
-
-**Fichier** : casapy-wave-progression.png (Matplotlib)
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Mutualisé = performance instable sur WooCommerce |
+| **Texte** | Ressources partagées (CPU/PHP-FPM/DB) + WooCommerce/Elementor = latence variable, pics, lenteur structurelle. |
+| **Visuel** | "Immeuble vs maison" (mutualisé vs VPS/stack) |
+| **So what** | Stabiliser = améliorer UX + conversion |
 
 ---
 
-*Spec pour Graphiste + Rédacteur. Réf. brief-visuels-enjeux-casapy-slides.md.*
+## Slide 4 — Plan : 1-2-3 (serveur → DB → front)
+
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Plan d'action priorisé |
+| **Texte** | 1. Serveur : migration ou cache (Redis/OPcache). 2. DB : nettoyage transients/sessions + index. 3. Front : LCP image + defer JS + optimisation Elementor. |
+| **Visuel** | 3 blocs numérotés |
+| **So what** | Gains rapides + base saine pour CRO/SEO |
+
+---
+
+## Slide 5 — Ce que ça coûte : scénarios (cartes)
+
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Manque à gagner (ordre de grandeur) |
+| **Texte** | 3 scénarios montrent l'impact potentiel d'une perte de conversion à -30%. À recalibrer avec trafic réel + CVR + AOV (GA4). |
+| **Visuel** | 3 cards (27k / 54k / 180k) |
+| **So what** | La perf est un sujet **business**, pas technique |
+
+---
+
+## Slide 6 — Marketing : clean room (faits vs hypothèses)
+
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Audit marketing : ce qui est prouvé vs à valider |
+| **Texte** | FACT : pas de traces Meta/Google (à date des bibliothèques). HYPOTHESIS : persona, USP, funnel, canaux. Next : collecter 5 preuves site + tracking. |
+| **Visuel** | Split "FACT / HYPOTHESIS" |
+| **So what** | Décisions basées sur données, pas intuitions |
+
+---
+
+## Slide 7 — Ce que ça débloque : progression + cycles (Wave)
+
+| Élément | Contenu |
+|--------|---------|
+| **Titre** | Après fix : baseline meilleure + volatilité plus faible |
+| **Texte** | Les cycles (saisonnalité, stock, créas) restent, mais une infra saine augmente le niveau moyen et réduit les "creux". |
+| **Visuel** | Sinusoïde + tendance, amplitude réduite après J0 (marqueur vertical "Fix (J0)" si possible) |
+| **So what** | Amélioration durable : CVR, SEO (CWV), ROAS |
+
+**Wave — choix d’axe** :
+- **Option A (recommandée)** : **TTFB/LCP** — axe Y = temps (plus bas = mieux) ; avant fix = courbe haute, après fix = courbe plus basse + moins volatile.
+- **Option B** : **CVR/CA** — axe Y = conversion ou CA (plus haut = mieux) ; après fix = niveau moyen plus haut + creux moins profonds.
+
+---
+
+# One-pager — Dashboard exécutif
+
+| Bloc | Position | Contenu |
+|------|----------|---------|
+| **1 — Symptôme** | Top-left | TTFB ~3,7s ; LCP ~32s → zone rouge |
+| **2 — Cause** | Top-right | Mutualisé + WooCommerce/Elementor → latence/variabilité |
+| **3 — Impact** | Middle (gros chiffre) | Scénario conservateur : **~54k€/mois** (à valider GA4) |
+| **4 — Plan 30 jours** | Bottom-left | Serveur/cache → DB → Front (3 étapes) |
+| **5 — Marketing clean room** | Bottom-right | FACT/HYPOTHESIS + "5 preuves à fournir" + KPIs à installer (GA4/GTM) |
+
+---
+
+## Icônes cohérentes (suggestion)
+
+- Serveur / hosting : serveur, datacenter, cloud
+- DB : base de données, cylindre
+- UX / front : écran, curseur, page
+- Panier / conversion : panier, caddie, flèche
+- SEO / CWV : graphique, jauge, Core Web Vitals
+- Rouge = problème | Orange = moyen | Vert = objectif
+
+---
+
+## Rôles
+
+| Rôle | Mission |
+|------|---------|
+| **Infographiste** | Illustrer les 7 slides + one-pager avec la même approche que précédemment (fond transparent, consultant-grade, visuels recommandés ci-dessus). |
+| **Rédacteur en chef** | Texte explicatif très court et synthétique pour recontextualiser ; éviter la sensation "je ne comprends pas" pour quelqu'un pas du métier. |
+
+---
+
+*Spec prête à exécuter. Réf. brief-visuels-enjeux-casapy-slides.md, notes-infographie-necessaires.md. Segmentation : segmentations/2026-01-30-casapy-deck-7-slides-infographiste-redacteur.md.*

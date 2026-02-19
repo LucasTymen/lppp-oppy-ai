@@ -40,7 +40,7 @@ alwaysApply: true
 - S’appuyer sur les données du projet : modèles, templates, `docs/`, `README.md`.
 - Toute décision ou fait documenté doit être enregistré dans `docs/base-de-connaissances/` (decisions.md, sources.md).
 - Le chef de projet / agent pilote met à jour les logs (`docs/logs/log-projet.md`, `docs/logs/log-ia.md`), la base de connaissances, `docs/TODO.md` et `docs/boite-a-idees.md` après les sessions.
-- **Lors d’une correction d’erreur** : mettre à jour les logs et le **registre erreurs/solutions** (`docs/base-de-connaissances/erreurs-et-solutions.md`) pour éviter de reproduire l’erreur. L’agent qui assiste le chef de projet s’en charge ; tout agent peut y contribuer en ajoutant une entrée après résolution.
+- **Lors d’une correction d’erreur** : mettre à jour les logs et le **registre erreurs/solutions** (`docs/base-de-connaissances/erreurs-et-solutions.md`) pour éviter de reproduire l’erreur. **L’agent en charge des erreurs** (qui assiste le chef de projet) s’en charge et **actualise la base de connaissances** : decisions.md, procédures, segmentations ou registre agents/ressources selon le cas (voir erreurs-et-solutions.md § « Pour l’agent en charge des erreurs »). Tout agent peut contribuer en ajoutant une entrée après résolution.
 
 ## Terminal — WSL (bash) par défaut
 

@@ -79,6 +79,11 @@ Serveur/Hosting → TTFB 3,7 s (rouge) → LCP 32 s (rouge) → UX dégradée (o
 - Chiffres clés en gros : **3,7 s / 32 s / -30 % / 54 k€**.
 - 1 graphique + 1 phrase par slide.
 
+### Contraste (fond sombre)
+
+- **Fond sombre** → **texte blanc** pour tous les textes.
+- **Mise en valeur** (chiffres, So what, accents) → **couleurs claires** : jaune, orangé, ou bleu turquoise.
+
 ---
 
 *Brief maintenu par Rédacteur / Designer. Référence : landing-proposition-casapy.json, rapport-complet-casapy.md.*
