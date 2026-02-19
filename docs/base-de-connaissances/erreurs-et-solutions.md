@@ -561,6 +561,20 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
+### SSH — Host key verification failed (GitHub / GitLab)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Push/pull vers GitHub ou GitLab en SSH : `git push origin main` ou `git push gitlab main` depuis Cursor, PowerShell, Git Bash ou WSL. |
+| **Erreur** | `Host key verification failed. fatal: Could not read from remote repository.` |
+| **Cause** | SSH ne reconnaît pas les clés d'hôte de GitHub/GitLab : `known_hosts` vide, mal configuré, ou environnement (PowerShell vs WSL) utilisant un `~/.ssh` différent. La clé privée peut être valide (ex. SquidResearch) mais le host n'est pas dans `known_hosts`. |
+| **Solution** | **1)** Ajouter GitHub et GitLab à `known_hosts` : `ssh-keyscan -t ed25519 -t rsa github.com gitlab.com >> ~/.ssh/known_hosts` (exécuter depuis le même environnement que `git` — Git Bash ou WSL). **2)** Charger la clé : `ssh-add ~/.ssh/id_ed25519` (ou ta clé existante). **3)** Tester : `ssh -T git@github.com`, `ssh -T git@gitlab.com`. Doc complète : **`ssh-host-key-verification-github-gitlab.md`**. Fallback HTTPS : `git remote set-url origin https://github.com/...` + PAT. |
+| **Prévention** | Exécuter une fois `ssh-keyscan` pour github.com et gitlab.com sur chaque environnement (PowerShell/Git Bash vs WSL). Réutiliser la clé SquidResearch ; s'assurer que l'agent SSH a la clé chargée. |
+| **Lien(s)** | `ssh-host-key-verification-github-gitlab.md`, `git-remotes-github-gitlab.md` |
+
+---
+
 ### CTA / Gmail sur landing statique — mailto: n’ouvre rien (Windows)
 
 | Champ | Contenu |

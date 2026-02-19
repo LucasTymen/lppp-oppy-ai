@@ -119,12 +119,12 @@ export default function Page() {
           </section>
         ) : null}
 
-        {/* 02 Comment je transforme le chaos en système */}
+        {/* 02 Harmonisons le chaos et boostons vos perfs */}
         {(c.solution_workflow ?? c.positionnement) && (
           <section className="section" id="solution">
             <div className="section-head">
               <span className="section-num">02</span>
-              <h2>Comment je transforme le chaos en système</h2>
+              <h2>Harmonisons le chaos et boostons vos perfs.</h2>
             </div>
             <div className="card">
               <p>{c.solution_workflow ?? c.positionnement}</p>

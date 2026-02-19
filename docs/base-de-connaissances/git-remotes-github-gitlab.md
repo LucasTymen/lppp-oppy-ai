@@ -52,6 +52,8 @@ git push -u gitlab main
 
 Vérifier avant le commit qu’**aucun fichier sensible** n’est ajouté (`.env`, `secrets/`, etc.) — le `.gitignore` doit les exclure. En cas d’erreur sur GitLab (conflit), s’assurer que le dépôt GitLab est bien vide (sans README créé par défaut).
 
+**Dépannage SSH — Host key verification failed** : voir **`ssh-host-key-verification-github-gitlab.md`** (ajout de GitHub/GitLab à `known_hosts`, chargement de la clé, environnement PowerShell vs WSL).
+
 **Commit + push sur les deux remotes (à lancer depuis WSL ou Git Bash)** :
 ```bash
 git add .

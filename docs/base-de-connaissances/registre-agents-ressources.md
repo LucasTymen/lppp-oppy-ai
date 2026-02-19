@@ -154,6 +154,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Sprint déploiement Contabo (2026-02-07)** : `segmentations/2026-02-07-sprint-deploiement-contabo-lppp.md` — déploiement LPPP sur serveur Contabo, sous supervision Orchestrateur, Architecte, DevOps ; ref. `deploiement-contabo-lppp-securite.md`, info Contabo dans SquidResearch (aucun secret dans LPPP).
 - **Sprint déploiement stack complète Contabo (2026-01-30)** : `segmentations/2026-01-30-sprint-deploiement-stack-contabo-ssh-landing-chatbot.md` — déployer la stack complète, activer clés SSH, aucun chevauchement SquidResearch, raccorder landing municipale + chatbot. **Piloté par l'Orchestrateur** ; tous les agents en mode **protecteur et non destructif**.
 - **URGENT — Git (init, remotes GitHub/GitLab)** : `docs/base-de-connaissances/git-remotes-github-gitlab.md` — GitHub pilote (`origin`), GitLab miroir (`gitlab`) ; tâche **à exécuter en priorité** : `2025-01-30-devops-git-init-remotes.md` (signalé par l’utilisateur).
+- **SSH — Host key verification failed** : `ssh-host-key-verification-github-gitlab.md` — résolution Host key verification (GitHub, GitLab) : ssh-keyscan, ssh-add, environnement PowerShell vs WSL.
 - **Règle** : `.cursor/rules/devops.mdc`
 - **Orchestration** : `docker-compose.yml`, `.env` (non versionné), CI/CD (GitHub Actions, etc.)
 - **Registre** : ce fichier (pour connaître les agents et impacts sur les services)
