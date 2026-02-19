@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Funnel & positionnement — Casapy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root { --primary: #2563eb; --primary-dark: #1d4ed8; --accent: #06b6d4; --danger: #dc2626; --success: #059669; --gray-50: #f8fafc; --gray-100: #f1f5f9; --gray-700: #334155; --gray-900: #0f172a; --ease: cubic-bezier(0.4, 0, 0.2, 1); }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'DM Sans', sans-serif; background: var(--gray-50); color: var(--gray-900); min-height: 100vh; }
+    .wrapper { max-width: 720px; margin: 0 auto; padding: 1.5rem; }
+
+    .header { text-align: center; padding: 1.5rem; }
+    .header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; margin: 0 0 0.25rem; color: var(--gray-900); }
+    .header p { margin: 0; font-size: 0.9rem; color: var(--gray-700); }
+
+    .section-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); margin: 2rem 0 1rem; }
+
+    /* AARRR Funnel */
+    .aarrr-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); margin-bottom: 2rem; }
+    .aarrr-flow { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; align-items: center; }
+    .aarrr-node { padding: 0.85rem 1.2rem; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border-radius: 12px; font-weight: 600; font-size: 0.95rem; }
+    .aarrr-node.acquisition { background: linear-gradient(135deg, #2563eb, #1d4ed8); }
+    .aarrr-node.activation { background: linear-gradient(135deg, #0891b2, #0e7490); }
+    .aarrr-node.retention { background: linear-gradient(135deg, #059669, #047857); }
+    .aarrr-node.revenue { background: linear-gradient(135deg, #7c3aed, #6d28d9); }
+    .aarrr-node.referral { background: linear-gradient(135deg, #ea580c, #c2410c); }
+    .aarrr-arrow { font-size: 1.2rem; color: var(--gray-700); }
+    .aarrr-desc { text-align: center; font-size: 0.85rem; color: var(--gray-700); margin-top: 1rem; }
+
+    /* Positioning Matrix */
+    .matrix-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .matrix { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 400px; margin: 0 auto; }
+    .matrix-cell { padding: 1rem; border-radius: 12px; text-align: center; font-size: 0.9rem; font-weight: 500; border: 2px solid var(--gray-100); }
+    .matrix-cell.high-price { border-color: var(--primary); background: color-mix(in srgb, var(--primary) 10%, white); }
+    .matrix-cell.low-price { border-color: var(--gray-100); }
+    .matrix-cell.casapy { background: var(--primary); color: #fff; border-color: var(--primary-dark); font-weight: 700; }
+    .matrix-axis { font-size: 0.75rem; font-weight: 600; color: var(--gray-700); margin-bottom: 0.5rem; }
+    .matrix-labels { display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.8rem; color: var(--gray-700); }
+
+    /* Chaîne blocage */
+    .chain-card { background: #fff; border-radius: 20px; padding: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.06); }
+    .chain-flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.75rem; }
+    .chain-step { padding: 1rem 1.25rem; border-radius: 12px; font-weight: 600; }
+    .chain-step.serveur { background: color-mix(in srgb, var(--danger) 15%, white); border-left: 4px solid var(--danger); }
+    .chain-step.db { background: color-mix(in srgb, var(--accent) 15%, white); border-left: 4px solid var(--accent); }
+    .chain-step.front { background: color-mix(in srgb, var(--success) 15%, white); border-left: 4px solid var(--success); }
+    .chain-arrow { font-size: 1.5rem; color: var(--gray-700); }
+
+    .footer { text-align: center; padding: 1.5rem; font-size: 0.8rem; color: var(--gray-700); }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1>Funnel & positionnement — Casapy</h1>
+      <p>Étude marketing clean room · AARRR · Chaîne technique</p>
+    </header>
+
+    <h2 class="section-title">Funnel AARRR (Retail)</h2>
+    <div class="aarrr-card">
+      <div class="aarrr-flow">
+        <span class="aarrr-node acquisition">Acquisition</span>
+        <span class="aarrr-arrow">→</span>
+        <span class="aarrr-node activation">Activation</span>
+        <span class="aarrr-arrow">→</span>
+        <span class="aarrr-node retention">Rétention</span>
+        <span class="aarrr-arrow">→</span>
+        <span class="aarrr-node revenue">Revenue</span>
+        <span class="aarrr-arrow">→</span>
+        <span class="aarrr-node referral">Referral</span>
+      </div>
+      <p class="aarrr-desc">SEO, SEA/Shopping, Social — levier Acquisition prioritaire (aucune trace pub Meta/Google constatée)</p>
+    </div>
+
+    <h2 class="section-title">Chaîne de blocage technique</h2>
+    <div class="chain-card">
+      <div class="chain-flow">
+        <div class="chain-step serveur">Serveur<br><small style="font-weight:400;font-size:0.85rem">TTFB 3,7 s</small></div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-step db">Base de données<br><small style="font-weight:400;font-size:0.85rem">sessions, index</small></div>
+        <span class="chain-arrow">→</span>
+        <div class="chain-step front">Front-end<br><small style="font-weight:400;font-size:0.85rem">LCP 32 s</small></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Positionnement — Ameublement en ligne</h2>
+    <div class="matrix-card">
+      <p class="matrix-axis">Prix élevé ↑</p>
+      <div class="matrix">
+        <div class="matrix-cell high-price">Pure players premium</div>
+        <div class="matrix-cell high-price casapy">Casapy<br><small>Canapés, design</small></div>
+        <div class="matrix-cell low-price">Marketplaces</div>
+        <div class="matrix-cell low-price">Seconde main</div>
+      </div>
+      <p class="matrix-labels"><span>Volume</span><span>Qualité / conseil</span></p>
+    </div>
+
+    <footer class="footer">Casapy — Étude marketing LPPP · Constate : aucune trace pub Meta/Google</footer>
+  </div>
+</body>
+</html>

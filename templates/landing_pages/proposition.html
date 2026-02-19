@@ -453,6 +453,8 @@
         /* Enjeux — funnel et graphiques (Casapy) */
         .enjeux-visuals { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
         .enjeux-visual-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--lp-muted, #999); margin-bottom: 0.75rem; }
+        .infographic-image-wrap { margin: 1rem 0; text-align: center; }
+        .infographic-image-wrap .infographic-img { max-width: 100%; height: auto; border-radius: 8px; }
         .enjeux-funnel { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 320px; margin: 0 auto; }
         .enjeux-funnel-tier { width: 100%; padding: 0.75rem 1rem; text-align: center; font-size: 0.95rem; font-weight: 600; border-radius: 8px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent); }
         .enjeux-funnel-tier:nth-child(1) { width: 100%; }
@@ -1108,6 +1110,8 @@
                         <span class="flow-step">Revenue</span><span class="flow-arrow">→</span>
                         <span class="flow-step">Referral</span>
                     </div>
+                    {% elif seg.visual == 'image' and seg.src %}
+                    <div class="infographic-image-wrap"><img src="{{ seg.src }}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy">{% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}</div>
                     {% endif %}
                 </div>
                 {% endif %}

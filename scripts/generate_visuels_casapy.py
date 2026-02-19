@@ -28,13 +28,23 @@ COLORS = {
 
 
 def setup_figure(dpi=120):
-    """Figure par défaut, police lisible."""
+    """Figure par défaut, police lisible, fond transparent."""
     plt.rcParams.update({
         "font.family": "sans-serif",
         "font.size": 10,
         "axes.titlesize": 12,
         "axes.labelsize": 10,
+        "figure.facecolor": "none",
+        "axes.facecolor": "none",
     })
+
+
+def _save_transparent(fig, path: Path, dpi=150):
+    """Sauvegarde avec fond transparent pour conserver le background de la page."""
+    fig.patch.set_facecolor("none")
+    for ax in fig.axes:
+        ax.patch.set_facecolor("none")
+    fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=True)
 
 
 def slide1_impact_perf_business(out_dir: Path):
@@ -68,7 +78,7 @@ def slide1_impact_perf_business(out_dir: Path):
             bbox=dict(boxstyle="round", facecolor="#f8fafc", edgecolor="#e2e8f0"))
     ax.set_title("Impact perf → Impact business — Casapy", fontsize=14, fontweight="bold", pad=20)
     fig.tight_layout()
-    fig.savefig(out_dir / "slide1-impact-perf-business.png", dpi=150, bbox_inches="tight")
+    _save_transparent(fig, out_dir / "slide1-impact-perf-business.png")
     plt.close()
 
 
@@ -90,7 +100,7 @@ def slide2_waterfall_ttfb(out_dir: Path):
     ax.legend(loc="upper right", fontsize=8)
     ax.set_ylim(0, max(values) * 1.15)
     fig.tight_layout()
-    fig.savefig(out_dir / "slide2-waterfall-ttfb.png", dpi=150, bbox_inches="tight")
+    _save_transparent(fig, out_dir / "slide2-waterfall-ttfb.png")
     plt.close()
 
 
@@ -119,7 +129,7 @@ def slide3_hebergement_comparatif(out_dir: Path):
                 bbox=dict(boxstyle="round", facecolor=color, edgecolor="white"))
 
     fig.tight_layout()
-    fig.savefig(out_dir / "slide3-hebergement-comparatif.png", dpi=150, bbox_inches="tight")
+    _save_transparent(fig, out_dir / "slide3-hebergement-comparatif.png")
     plt.close()
 
 
@@ -165,7 +175,7 @@ def slide4_matrice_seo_timeline(out_dir: Path):
 
     fig.suptitle("SEO & Growth — état des lieux → plan", fontsize=12, fontweight="bold")
     fig.tight_layout()
-    fig.savefig(out_dir / "slide4-matrice-seo-timeline.png", dpi=150, bbox_inches="tight")
+    _save_transparent(fig, out_dir / "slide4-matrice-seo-timeline.png")
     plt.close()
 
 
@@ -219,7 +229,7 @@ def one_pager_dashboard(out_dir: Path):
     ax4.set_ylim(0, 1)
 
     fig.suptitle("Casapy — Dashboard exécutif (one-pager)", fontsize=14, fontweight="bold")
-    fig.savefig(out_dir / "one-pager-dashboard-casapy.png", dpi=150, bbox_inches="tight")
+    _save_transparent(fig, out_dir / "one-pager-dashboard-casapy.png")
     plt.close()
 
 

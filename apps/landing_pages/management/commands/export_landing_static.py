@@ -175,6 +175,19 @@ class Command(BaseCommand):
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(html, encoding="utf-8")
         self.stdout.write(self.style.SUCCESS(f"Écrit : {output_path}"))
+
+        # Casapy : copier les infographies PNG et HTML dans le dossier de déploiement
+        if slug == "casapy":
+            import shutil
+            casapy_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "casapy"
+            out_dir = output_path.parent
+            patterns = ["slide*.png", "one-pager*.png", "infographie*.html"]
+            for pat in patterns:
+                for f in casapy_assets.glob(pat):
+                    dest = out_dir / f.name
+                    shutil.copy2(f, dest)
+                    self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))
+
         self.stdout.write(
             "Déploiement Vercel : pousser le dossier contenant ce index.html (repo = uniquement la page, pas Next.js)."
         )

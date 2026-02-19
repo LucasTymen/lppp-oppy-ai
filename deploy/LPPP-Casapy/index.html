@@ -448,6 +448,8 @@
         /* Enjeux — funnel et graphiques (Casapy) */
         .enjeux-visuals { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
         .enjeux-visual-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--lp-muted, #999); margin-bottom: 0.75rem; }
+        .infographic-image-wrap { margin: 1rem 0; text-align: center; }
+        .infographic-image-wrap .infographic-img { max-width: 100%; height: auto; border-radius: 8px; }
         .enjeux-funnel { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 320px; margin: 0 auto; }
         .enjeux-funnel-tier { width: 100%; padding: 0.75rem 1rem; text-align: center; font-size: 0.95rem; font-weight: 600; border-radius: 8px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent); }
         .enjeux-funnel-tier:nth-child(1) { width: 100%; }
@@ -868,10 +870,10 @@
         <section class="section content-player" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
-            <p class="section-lead">Points identifiés dans le cadre du projet :</p>
+            <p class="section-lead">Voici comment illustrer les enjeux pour une lecture immédiate (4 visuels slide-ready, 1 visuel = 1 message, tout chiffré) :</p>
             
             <ul class="pain-list">
-                <li>TTFB ~3,7 s (Homepage et PDP) — problème serveur/backend, pas prioritairement front. LCP à 32 s en découle.</li><li>Hébergement mutualisé o2switch : ressources partagées, PHP-FPM partagé, base MySQL partagée — insuffisant pour WooCommerce + Elementor.</li><li>Perte conversion estimée : 25–50 %. Scénario conservateur 30 % → 54 k€/mois potentiellement impactés (10 k visites, 2 % conv., panier 900 €).</li><li>Indexation et technique : canoniques, hreflang, structure URLs, clusters sémantiques à renforcer.</li><li>Étude marketing : aucune trace pub Meta/Google ; funnel AARRR, SWOT et positionnement à compléter avec preuves.</li>
+                <li>Impact perf → business : Serveur → TTFB 3,7 s → LCP 32 s → UX dégradée → perte conv. -30 % → ≈ 54 k€/mois (10 k visites × 2 % × 900 € × 30 %).</li><li>Diagnostic technique : Waterfall TTFB vs Front — le goulot est le serveur, le front ne peut pas compenser. Jauges : TTFB 3,7 s / objectif &lt; 0,8 s ; LCP 32 s / objectif &lt; 2,5 s.</li><li>Hébergement : Mutualisé (risque élevé) vs stack adaptée WooCommerce (VPS, Redis, DB optimisée, perf stable).</li><li>SEO &amp; Growth : Matrice Urgence/Impact (quick wins, structurant, à clarifier) + timeline 30/60/90 j (perf serveur → clusters + CRO → scale contenus).</li>
             </ul>
             
             </div>
@@ -1045,6 +1047,51 @@
                 <div class="services-segment-box">
                     <h3 class="services-segment-title">Positionnement &amp; SWOT</h3>
                     <p>USP et promesse à extraire du site. Persona : hypothèse à valider. SWOT défendable : chaque Force avec preuve (livraison, avis, labels). Opportunités : UGC, SEO longue traîne, feed Shopping. Recommandations Growth : contenu, tracking GA4, CRO.</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Slide 1 — Impact perf → Impact business</p>
+                    
+                    <div class="infographic-image-wrap"><img src="slide1-impact-perf-business.png" alt="Slide 1 — Impact perf → Impact business" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 1 — Impact perf → Impact business</p></div>
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Slide 2 — Waterfall TTFB vs Front</p>
+                    
+                    <div class="infographic-image-wrap"><img src="slide2-waterfall-ttfb.png" alt="Slide 2 — Waterfall TTFB vs Front" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 2 — Waterfall TTFB vs Front</p></div>
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Slide 3 — Hébergement : mutualisé vs stack adaptée</p>
+                    
+                    <div class="infographic-image-wrap"><img src="slide3-hebergement-comparatif.png" alt="Slide 3 — Hébergement : mutualisé vs stack adaptée" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 3 — Hébergement : mutualisé vs stack adaptée</p></div>
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Slide 4 — SEO &amp; Growth : matrice + timeline 30/60/90 j</p>
+                    
+                    <div class="infographic-image-wrap"><img src="slide4-matrice-seo-timeline.png" alt="Slide 4 — SEO &amp; Growth : matrice + timeline 30/60/90 j" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 4 — SEO &amp; Growth : matrice + timeline 30/60/90 j</p></div>
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">One-pager — Dashboard exécutif</p>
+                    
+                    <div class="infographic-image-wrap"><img src="one-pager-dashboard-casapy.png" alt="One-pager — Dashboard exécutif" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">One-pager — Dashboard exécutif</p></div>
+                    
                 </div>
                 
                 
