@@ -1,11 +1,12 @@
 {% load landing_filters %}
+<!-- LPPP proposition.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>{{ content.page_title|default:landing_page.title }}</title>
+    <title>{{ content.page_title|default:landing_page.title }}{% if landing_page.slug == 'casapy' %} | LPPP{% endif %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -450,11 +451,46 @@
         .pain-list { margin: 0; padding-left: 1.35rem; }
         .pain-list li { margin-bottom: 0.5rem; }
 
-        /* Enjeux — funnel et graphiques (Casapy) */
+        /* Enjeux — funnel et graphiques (Casapy) — affichage universel (Firefox, Chrome, Safari, mobile) */
         .enjeux-visuals { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
         .enjeux-visual-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--lp-muted, #999); margin-bottom: 0.75rem; }
-        .infographic-image-wrap { margin: 1rem 0; text-align: center; }
-        .infographic-image-wrap .infographic-img { max-width: 100%; height: auto; border-radius: 8px; }
+        /* Conteneur infographies : pleine largeur, pas de débordement, centrage */
+        .infographic-image-wrap {
+            width: 100%;
+            max-width: 100%;
+            margin: 1.25rem 0;
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+            min-width: 0;
+            overflow: hidden;
+        }
+        /* Image responsive et universelle : block (évite gap 4px), scale propre, tous navigateurs */
+        .infographic-image-wrap .infographic-img {
+            display: block;
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 0 auto;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+        /* Segment infographique (section Ce que j'offre) : ne pas couper l'image */
+        .services-segment-infographic {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow: visible;
+        }
+        .services-segment-infographic .infographic-image-wrap { margin: 1.25rem 0; }
+        .services-segments { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+        /* Mobile / petit viewport : infographies lisibles sans débordement */
+        @media (max-width: 480px) {
+            .infographic-image-wrap { margin: 1rem 0; }
+            .infographic-image-wrap .infographic-img { border-radius: 6px; }
+        }
         .enjeux-funnel { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 320px; margin: 0 auto; }
         .enjeux-funnel-tier { width: 100%; padding: 0.75rem 1rem; text-align: center; font-size: 0.95rem; font-weight: 600; border-radius: 8px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent); }
         .enjeux-funnel-tier:nth-child(1) { width: 100%; }
@@ -778,6 +814,9 @@
     {% endif %}
 
     <main id="top">
+        {% if landing_page.slug == 'casapy' %}
+        <p class="lppp-django-marker" style="margin:0;padding:6px 12px;background:#0a7;color:#fff;font-size:12px;text-align:center;position:sticky;top:52px;z-index:999;">Page servie par Django LPPP — template à jour</p>
+        {% endif %}
         <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
         <section class="hero{% if content.hero_video_mp4_url or content.hero_video_webm_url or content.hero_video_url %} has-bg-video{% elif content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
             {% if content.hero_video_mp4_url or content.hero_video_webm_url %}
@@ -902,6 +941,17 @@
                         <span class="flow-step">Front (LCP 32 s)</span>
                     </div>
                 </div>
+                <p class="enjeux-visual-label" style="margin-top: 2rem;">Deck 7 slides + one-pager + wave</p>
+                {% if content.services_segments %}
+                {% for seg in content.services_segments %}
+                {% if seg.type == 'infographic' and seg.visual == 'image' and seg.src %}
+                <div class="infographic-image-wrap">
+                    <img src="{% if content.casapy_assets_url %}{{ content.casapy_assets_url }}{{ seg.src }}{% else %}{{ seg.src }}{% endif %}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy" decoding="async">
+                    {% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
             </div>
             {% endif %}
         </section>
@@ -1033,6 +1083,8 @@
                     {% elif seg.desc %}<p>{{ seg.desc }}</p>{% endif %}
                 </div>
                 {% elif seg.type == 'infographic' %}
+                {% comment %} Casapy : les slides image sont dans la section Enjeux, pas ici {% endcomment %}
+                {% if not landing_page.slug == 'casapy' or seg.visual != 'image' %}
                 <div class="services-segment-infographic" aria-hidden="true">
                     {% if seg.label %}<p class="services-infographic-label">{{ seg.label }}</p>{% endif %}
                     {% if seg.visual == 'positioning-matrix' %}
@@ -1111,9 +1163,10 @@
                         <span class="flow-step">Referral</span>
                     </div>
                     {% elif seg.visual == 'image' and seg.src %}
-                    <div class="infographic-image-wrap"><img src="{{ seg.src }}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy">{% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}</div>
+                    <div class="infographic-image-wrap"><img src="{% if content.casapy_assets_url %}{{ content.casapy_assets_url }}{{ seg.src }}{% else %}{{ seg.src }}{% endif %}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy" decoding="async">{% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}</div>
                     {% endif %}
                 </div>
+                {% endif %}
                 {% endif %}
                 {% endfor %}
             </div>

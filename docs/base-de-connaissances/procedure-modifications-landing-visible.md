@@ -75,4 +75,16 @@ Cela crée ou met à jour la landing P4S et la marque comme **publiée**. À ref
 
 ---
 
-*Procédure créée à la demande utilisateur. À appliquer par l’équipe technique immédiatement. Dernière mise à jour : 2025-01-30.*
+## 5. Diagnostic : les modifs ne s'affichent jamais (Casapy / template)
+
+Si après rafraîchissement et vidage du cache les changements n'apparaissent toujours pas (ex. `/p/casapy/`) :
+
+- **Vérifier que Django sert la page** : titre de l'onglet Casapy doit se terminer par **| LPPP** ; un bandeau vert « Page servie par Django LPPP — template à jour » (sticky en haut au scroll) doit apparaître ; code source (Ctrl+U) doit contenir **LPPP proposition.html**. Sinon, la page ne vient pas de ce Django.
+- **Vérification côté serveur** (si le navigateur ne montre pas les marqueurs) : `curl -s http://127.0.0.1:8010/p/casapy/` — si la sortie contient « | LPPP » et « Page servie par Django », le serveur est à jour et le blocage est **côté client** (cache ou Service Worker).
+- **Contourner le cache navigateur** : 1) `docker compose restart web`. 2) Ouvrir une **fenêtre de navigation privée** (Ctrl+Shift+P) et aller sur http://localhost:8010/p/casapy/ — si le bandeau vert et « | LPPP » apparaissent, le blocage venait du cache ou d'un Service Worker. 3) Effacer les données du site pour localhost:8010 (Firefox : Outils > Gestionnaire d'applications > Stockage ; Chrome : Application > Stockage) ; ou désactiver tout Service Worker enregistré pour ce site.
+- **Si le marqueur apparaît** : la page est bien servie par Django ; si un bloc manque, vérifier le JSON et les conditions du template.
+- **Cartographie des deux pages Casapy** : voir `cartographie-pages-casapy-paralleles.md` (Page A = Django dynamique sur localhost:8010, Page B = export statique deploy/LPPP-Casapy pour Vercel/file://).
+
+---
+
+*Procédure créée à la demande utilisateur. À appliquer par l’équipe technique immédiatement. Dernière mise à jour : 2026-01-30.*

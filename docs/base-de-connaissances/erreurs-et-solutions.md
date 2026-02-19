@@ -19,6 +19,7 @@
 - **À chaque correction d’erreur** : ajouter ou compléter une entrée dans ce registre et mettre à jour les logs pour que l’équipe ne reproduise pas l’erreur.
 - **Actualiser la base de connaissances** : selon le cas — mettre à jour ou créer les docs concernés dans `docs/base-de-connaissances/` : `decisions.md` (décision liée à l’erreur ou à la prévention), `sources.md` si une source externe est utilisée, procédures dédiées, segmentations si une équipe est mobilisée, et le **registre agents/ressources** si une nouvelle ressource ou référence est créée. L’objectif est que la correction et sa prévention soient retrouvables par tous les agents.
 - **Interaction** : le Chef de Projet valide que la doc est à jour ; l’Orchestrateur peut référencer ce doc dans le registre agents/ressources.
+- **Lors de cartographies ou diagnostics** (Pentester, DevOps, Ingénieur système & réseaux) : toute erreur identifiée pendant une cartographie (nmap, tests de flux, analyse réseau) doit être **remontée au responsable de la consignation des erreurs** pour **répertoriation** dans ce registre (nouvelle entrée ou complément). Chaque rôle contribue avec ses tests et son expertise ; le responsable consignation centralise et documente ici.
 
 ---
 
@@ -77,6 +78,18 @@ Pour chaque erreur documentée, indiquer :
 | **Solution** | **Toujours** utiliser **`python3`** pour les commandes sur l’hôte : `python3 manage.py migrate`, `python3 manage.py runserver`, `python3 -c "..."`. Ne jamais donner d’instruction avec `python` seul. |
 | **Prévention** | Règle projet : **ne jamais proposer ou documenter une commande Python sur l’hôte sans utiliser `python3`**. Voir `.cursor/rules/pilotage-agents.mdc` (§ Terminal — Python sur l’hôte), `environnement-wsl-linux.md`. Dans les conteneurs Docker, `docker compose exec web python ...` reste valide (image avec `python` en symlink). **Si en plus** `python3 manage.py migrate` échoue avec « Connection refused » (port 5432) : la base PostgreSQL n’est pas démarrée — lancer `make up` ou `docker compose up -d db redis`, attendre quelques secondes, puis réessayer ; ou exécuter la migration dans le conteneur : `docker compose exec web python manage.py migrate`. |
 | **Lien(s)** | `environnement-wsl-linux.md`, `pilotage-agents.mdc` |
+
+### Infographies Casapy ne s'affichent pas (localhost ou page vide)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-19 |
+| **Contexte** | Landing Casapy (`/p/casapy/`) : les infographies (slide*.png, one-pager, wave) sont codées mais ne s'affichent pas dans le navigateur. |
+| **Erreur** | Images cassées (icône broken) ou emplacements vides ; ou requêtes vers `/p/casapy/assets/slide1.png` qui renvoient du HTML au lieu du PNG. |
+| **Cause** | **Ordre des routes Django** : la route générique `p/<slug:slug>/` était déclarée **avant** `p/casapy/assets/<path:filename>`. Certaines résolutions d’URL faisaient matcher la page landing au lieu de la vue qui sert les PNG. Aucun module ou dépendance manquant (FileResponse et Path sont dans Django / stdlib). |
+| **Solution** | 1) **Mettre la route des assets en premier** dans `apps/landing_pages/urls.py` : `path("p/casapy/assets/<path:filename>", views.serve_casapy_asset, ...)` **avant** `path("p/<slug:slug>/", ...)`. 2) Vérifier que les PNG existent dans `docs/contacts/casapy/` (sinon lancer `python scripts/generate_visuels_casapy.py --output docs/contacts/casapy`). 3) Landing publiée : `python manage.py create_landing_casapy --publish`. 4) Tester un asset : `http://localhost:8010/p/casapy/assets/slide1-impact-perf-business.png` doit renvoyer l’image. |
+| **Prévention** | Règle : **routes les plus spécifiques avant les génériques** (ex. `p/casapy/assets/` avant `p/<slug>/`). Voir sprint `segmentations/2026-02-19-sprint-infographies-casapy-ne-saffichent-pas.md` pour la checklist équipe (Ingénieur système, Chef de projet, DevOps). |
+| **Lien(s)** | `segmentations/2026-02-19-sprint-infographies-casapy-ne-saffichent-pas.md`, `deploy/PUSH-CASAPY.md` |
 
 ### Docker — « Container … is restarting, wait until the container is running » (make migrate)
 
@@ -475,6 +488,20 @@ Pour chaque erreur documentée, indiquer :
 | **Contexte** | LPPP doit utiliser **uniquement** sa propre stack : **lppp_web** (Django) sur port **8010**, jamais le port 8000 (SquidResearch). Si la doc ou la config laisse penser le contraire, ou si l'accès se fait encore sur 8000, corriger. |
 | **Checklist** | (1) **docker-compose.yml** : service `web` doit avoir `ports: - "8010:8000"` (hôte:conteneur). (2) **README.md**, **pret-a-demarrer.md** : URLs Django = localhost:8010 (Option A Docker). (3) **Makefile** : `services-urls` affiche 8010. (4) Aucune URL dans .env ou le code LPPP ne pointe vers 8000, 5679, 3001 (SquidResearch). (5) Après modification du port : `docker compose up -d --force-recreate web` puis tester http://localhost:8010/. |
 | **Prévention** | Toute nouvelle doc ou procédure qui mentionne « Django » pour LPPP en Docker doit indiquer le port **8010** et le conteneur **lppp_web**. Réf. `log-commun-lppp-squidresearch.md` § 5.3, `avis-et-solutions-routage-lppp-reference.md`. |
+
+---
+
+### Modifications Casapy pas visibles — deux pages parallèles (Django vs export statique)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Sur `http://localhost:8010/p/casapy/`, les modifications du template (ex. « Deck 7 slides + one-pager + wave », marqueurs | LPPP) ne s'affichent jamais, même après rafraîchissement et vidage du cache. |
+| **Erreur** | Page affichée = titre « Lucas Tymen — Projet Casapy (audit SEO, e-commerce) » sans « \| LPPP », pas de bandeau vert ; code source sans `LPPP proposition.html`. |
+| **Cause** | **Deux pages parallèles** : (1) **Page A** = Django dynamique (template + JSON à la volée) sur localhost:8010/p/casapy/ ; (2) **Page B** = export statique figé `deploy/LPPP-Casapy/index.html`. Sur localhost:8010/p/casapy/ seul Django répond. **Cause confirmée** : une requête directe au serveur (`curl -s http://127.0.0.1:8010/p/casapy/`) renvoie bien le titre avec « \| LPPP » et le bandeau « Page servie par Django LPPP ». Si l'utilisateur ne les voit pas, c'est le **cache navigateur** ou un **Service Worker** qui affiche une ancienne réponse. |
+| **Solution** | **Cartographie** : lire `cartographie-pages-casapy-paralleles.md`. **Vérifier côté serveur** : `curl -s http://127.0.0.1:8010/p/casapy/` doit contenir « LPPP proposition.html », « \| LPPP » et « Page servie par Django ». Si oui, forcer le client : **fenêtre de navigation privée** (Ctrl+Shift+P) → http://localhost:8010/p/casapy/ ; ou vider les données du site (Stockage) / désactiver le Service Worker pour localhost:8010. Le bandeau vert a été rendu **sticky** (reste visible en haut au scroll) pour confirmer visuellement la Page A. |
+| **Prévention** | Ne pas confondre l'URL Django (localhost:8010/p/casapy/) avec l'export statique (file:// ou Vercel). Pour valider les modifs template : navigation privée ou rechargement sans cache après `docker compose restart web`. Procédure détaillée : `procedure-modifications-landing-visible.md` § 5. |
+| **Lien(s)** | `cartographie-pages-casapy-paralleles.md`, `procedure-modifications-landing-visible.md`, `deploy/PUSH-CASAPY.md` |
 
 ---
 
