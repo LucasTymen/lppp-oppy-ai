@@ -13,6 +13,11 @@
 - **Livrable sprint** : `rapport-seo-complet-casapy-interne.md` (rapport agrégé, complet, interne uniquement).
 - **Étude marketing (clean room)** : `etude-marketing-casapy-clean-room.md` — structure anti-hallucination (faits vs hypothèses), champs à compléter, checklist validation. **Constat factuel** : aucune trace de publicité Meta ou Google. 5 éléments factuels à fournir pour version finale béton.
 - **Rapport synthétique (présentation)** : pour responsable placement, patron / responsable alternance, référents. **Rédacteur** responsable ; **Expert SEO** référent technique ; **Infographiste** + **chargé chiffres** (Data Analyst / Growth) pour illustrations parlantes et à propos. Brief : `brief-rapport-synthetique-presentation.md` ; sprint : `segmentations/2026-01-30-rapport-synthetique-casapy-presentation.md`. Livrable : `rapport-synthetique-casapy-presentation.md` + visuels dans ce dossier.
+- **Visuels slide-ready (4 slides + one-pager)** : générés par `scripts/generate_visuels_casapy.py` (NumPy, Matplotlib). Brief : `brief-visuels-enjeux-casapy-slides.md`. Fichiers : `slide1-impact-perf-business.png`, `slide2-waterfall-ttfb.png`, `slide3-hebergement-comparatif.png`, `slide4-matrice-seo-timeline.png`, `one-pager-dashboard-casapy.png`.
+
+**Infographies (InfographicCraft)** :
+- `infographie-audit-seo-casapy.html` — TTFB, funnel impact, KPI, plan d'action (effect waouh)
+- `infographie-funnel-positionnement-casapy.html` — AARRR, chaîne blocage, positionnement concurrence
 
 **Landing page** :
 - **Segmentation** : `docs/base-de-connaissances/segmentations/2026-01-30-landing-page-casapy.md` (Orchestrateur pilote, toutes parties).

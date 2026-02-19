@@ -28,7 +28,7 @@ COLORS = {
 
 
 def setup_figure(dpi=120):
-    """Figure par défaut, police lisible, fond transparent."""
+    """Figure par défaut, police lisible, tous les fonds transparents."""
     plt.rcParams.update({
         "font.family": "sans-serif",
         "font.size": 10,
@@ -36,14 +36,20 @@ def setup_figure(dpi=120):
         "axes.labelsize": 10,
         "figure.facecolor": "none",
         "axes.facecolor": "none",
+        "legend.facecolor": "none",
+        "legend.frameon": False,
     })
 
 
 def _save_transparent(fig, path: Path, dpi=150):
-    """Sauvegarde avec fond transparent pour conserver le background de la page."""
+    """Sauvegarde avec fond transparent (figure, axes, légendes) pour le background de la page."""
     fig.patch.set_facecolor("none")
     for ax in fig.axes:
         ax.patch.set_facecolor("none")
+        leg = ax.get_legend()
+        if leg is not None:
+            leg.get_frame().set_facecolor("none")
+            leg.get_frame().set_alpha(0)
     fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=True)
 
 
@@ -75,7 +81,7 @@ def slide1_impact_perf_business(out_dir: Path):
 
     ax.text(6, 0.8, "10k visites × 2% × 900€ = 180k€ CA/mois  |  180k€ × 30% = 54k€ impact (scénario conservateur)",
             ha="center", fontsize=9, style="italic", color=COLORS["gray_700"],
-            bbox=dict(boxstyle="round", facecolor="#f8fafc", edgecolor="#e2e8f0"))
+            bbox=dict(boxstyle="round", facecolor=(0.97, 0.98, 0.99, 0.6), edgecolor="#e2e8f0"))
     ax.set_title("Impact perf → Impact business — Casapy", fontsize=14, fontweight="bold", pad=20)
     fig.tight_layout()
     _save_transparent(fig, out_dir / "slide1-impact-perf-business.png")
@@ -167,7 +173,7 @@ def slide4_matrice_seo_timeline(out_dir: Path):
     ]
     for i, t in enumerate(timeline):
         ax2.add_patch(FancyBboxPatch((0.1, 0.75 - i * 0.25), 0.8, 0.2, boxstyle="round,pad=0.02",
-                                     facecolor="#f1f5f9", edgecolor=COLORS["primary"]))
+                                     facecolor=(0.945, 0.96, 0.98, 0.6), edgecolor=COLORS["primary"]))
         ax2.text(0.5, 0.85 - i * 0.25, t, ha="center", va="center", fontsize=9)
     ax2.set_title("Timeline 30/60/90 jours")
     ax2.set_xlim(0, 1)
@@ -234,29 +240,32 @@ def one_pager_dashboard(out_dir: Path):
 
 
 def casapy_wave_progression(out_dir: Path):
-    """Graphique sinusoïde : progression + cycles avant/après fix serveur (CVR ou TTFB)."""
+    """Graphique sinusoïde : TTFB (s) avant/après fix serveur — plus haut = pire."""
     n_days = 90
-    baseline = 1.8
-    slope = 0.01
+    baseline = 3.7   # TTFB Casapy actuel (s)
+    slope = -0.02   # amélioration progressive après fix
     period = 21
     phase = 0.5
-    amp_before = 0.35
-    amp_after = 0.15
+    amp_before = 0.5   # volatilité avant (mutualisé)
+    amp_after = 0.15   # volatilité réduite après fix
     fix_day = 30
-    noise = 0.03
+    noise = 0.05
     rng = np.random.default_rng(42)
     t = np.arange(n_days)
     A = np.where(t < fix_day, amp_before, amp_after)
     y = (baseline + slope * t) + A * np.sin(2 * np.pi * (t / period) + phase)
     y = y + rng.normal(0, noise, size=n_days)
+    y = np.clip(y, 0.3, 5)  # éviter valeurs négatives ou aberrantes
 
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.plot(t, y, linewidth=2, color=COLORS["primary"])
     ax.axvline(fix_day, linestyle="--", linewidth=1.5, color=COLORS["danger"])
-    ax.text(fix_day + 2, np.min(y) + 0.1, "Fix serveur\n(VPS + cache)", fontsize=9)
-    ax.set_title("Simulation : progression + cycles (ex: CVR) avant/après fix")
+    ax.axhline(0.8, linestyle=":", color=COLORS["success"], alpha=0.8, label="Objectif < 0,8 s")
+    ax.text(fix_day + 2, np.min(y) + 0.15, "Fix serveur\n(VPS + cache)", fontsize=9)
+    ax.set_title("Simulation : TTFB (s) avant/après fix serveur — plus haut = pire")
     ax.set_xlabel("Jours")
-    ax.set_ylabel("KPI (ex: CVR %)")
+    ax.set_ylabel("TTFB (s)")
+    ax.legend(loc="upper right", fontsize=8)
     ax.grid(alpha=0.25)
     fig.tight_layout()
     _save_transparent(fig, out_dir / "casapy-wave-progression.png")
