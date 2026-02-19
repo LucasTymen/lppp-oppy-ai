@@ -870,10 +870,10 @@
         <section class="section content-player" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
-            <p class="section-lead">Voici comment illustrer les enjeux pour une lecture immédiate (4 visuels slide-ready, 1 visuel = 1 message, tout chiffré) :</p>
+            <p class="section-lead">Problème → Pourquoi → Ce que ça coûte → Ce qu&#x27;on fait → Ce que ça débloque. 7 slides + 1 one-pager consultant-grade : 1 slide = 1 idée, max 35 mots, encadré « So what » (impact business).</p>
             
             <ul class="pain-list">
-                <li>Impact perf → business : Serveur → TTFB 3,7 s → LCP 32 s → UX dégradée → perte conv. -30 % → ≈ 54 k€/mois (10 k visites × 2 % × 900 € × 30 %).</li><li>Diagnostic technique : Waterfall TTFB vs Front — le goulot est le serveur, le front ne peut pas compenser. Jauges : TTFB 3,7 s / objectif &lt; 0,8 s ; LCP 32 s / objectif &lt; 2,5 s.</li><li>Hébergement : Mutualisé (risque élevé) vs stack adaptée WooCommerce (VPS, Redis, DB optimisée, perf stable).</li><li>SEO &amp; Growth : Matrice Urgence/Impact (quick wins, structurant, à clarifier) + timeline 30/60/90 j (perf serveur → clusters + CRO → scale contenus).</li>
+                <li>Slide 1 — Impact perf → business : Le frein #1 est serveur. Chaîne : Hébergement mutualisé → TTFB 3,7 s → LCP 32 s → Friction UX → -25 à -50 % conv. So what : -30 % = ~54 k€/mois.</li><li>Slide 2 — Diagnostic TTFB vs Front : Le goulot = réponse serveur, pas le front. Waterfall : TTFB très long (rouge). TTFB bon &lt; 0,5 s / critique &gt; 2 s → Casapy en zone rouge.</li><li>Slide 3 — Mutualisé vs stack adaptée : WooCommerce + Elementor = ressources stables. Immeuble (mutualisé) vs maison (VPS/Redis/DB optimisée). Risque perf élevé → perf stable.</li><li>Slide 4 — Priorités + plan 1-2-3 : Serveur (VPS/Redis) → DB (transients, index) → Front (LCP, defer JS). So what : UX + CWV + ROAS.</li><li>Slide 5 — Manque à gagner (3 cartes) : 27 / 54 / 180 k€/mois selon scénario. À recalibrer avec GA4.</li><li>Slide 6 — Marketing clean room : FACT (aucune trace Meta/Google) vs HYPOTHESIS (persona, USP, funnel). Next : 5 preuves à fournir.</li><li>Wave — Progression avant/après fix : cycles (saisonnalité) + tendance. Avant fix = volatilité haute ; après fix = baseline meilleure.</li>
             </ul>
             
             </div>
@@ -1091,6 +1091,15 @@
                     <p class="services-infographic-label">One-pager — Dashboard exécutif</p>
                     
                     <div class="infographic-image-wrap"><img src="one-pager-dashboard-casapy.png" alt="One-pager — Dashboard exécutif" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">One-pager — Dashboard exécutif</p></div>
+                    
+                </div>
+                
+                
+                
+                <div class="services-segment-infographic" aria-hidden="true">
+                    <p class="services-infographic-label">Progression avant/après fix serveur (cycles + tendance)</p>
+                    
+                    <div class="infographic-image-wrap"><img src="casapy-wave-progression.png" alt="Progression avant/après fix serveur (cycles + tendance)" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Progression avant/après fix serveur (cycles + tendance)</p></div>
                     
                 </div>
                 

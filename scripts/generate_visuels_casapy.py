@@ -233,8 +233,38 @@ def one_pager_dashboard(out_dir: Path):
     plt.close()
 
 
+def casapy_wave_progression(out_dir: Path):
+    """Graphique sinusoïde : progression + cycles avant/après fix serveur (CVR ou TTFB)."""
+    n_days = 90
+    baseline = 1.8
+    slope = 0.01
+    period = 21
+    phase = 0.5
+    amp_before = 0.35
+    amp_after = 0.15
+    fix_day = 30
+    noise = 0.03
+    rng = np.random.default_rng(42)
+    t = np.arange(n_days)
+    A = np.where(t < fix_day, amp_before, amp_after)
+    y = (baseline + slope * t) + A * np.sin(2 * np.pi * (t / period) + phase)
+    y = y + rng.normal(0, noise, size=n_days)
+
+    fig, ax = plt.subplots(figsize=(10, 4))
+    ax.plot(t, y, linewidth=2, color=COLORS["primary"])
+    ax.axvline(fix_day, linestyle="--", linewidth=1.5, color=COLORS["danger"])
+    ax.text(fix_day + 2, np.min(y) + 0.1, "Fix serveur\n(VPS + cache)", fontsize=9)
+    ax.set_title("Simulation : progression + cycles (ex: CVR) avant/après fix")
+    ax.set_xlabel("Jours")
+    ax.set_ylabel("KPI (ex: CVR %)")
+    ax.grid(alpha=0.25)
+    fig.tight_layout()
+    _save_transparent(fig, out_dir / "casapy-wave-progression.png")
+    plt.close()
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Génère les visuels Casapy (4 slides + one-pager)")
+    parser = argparse.ArgumentParser(description="Génère les visuels Casapy (4 slides + one-pager + wave)")
     parser.add_argument("--output", default="docs/contacts/casapy", help="Dossier de sortie")
     parser.add_argument("--svg", action="store_true", help="Exporter aussi en SVG")
     args = parser.parse_args()
@@ -247,6 +277,7 @@ def main():
     slide3_hebergement_comparatif(out_dir)
     slide4_matrice_seo_timeline(out_dir)
     one_pager_dashboard(out_dir)
+    casapy_wave_progression(out_dir)
 
     fmt = "svg" if args.svg else "png"
     if args.svg:

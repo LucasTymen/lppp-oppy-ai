@@ -12,13 +12,15 @@
   },
   "intro": "Ce livrable regroupe un diagnostic SEO complet (TTFB ~3,7 s, performances, indexation), une estimation chiffrée du manque à gagner (25–50 % de conversion perdue, scénarios 18–180 k€/mois selon trafic et panier), une étude marketing en clean room (faits vs hypothèses) et un plan d'action priorisé (serveur → cache → front). Qualité de contenu alignée sur FitClem : infographies parlantes, chiffres sourcés, visuels explicites.",
   "icebreaker": "Casapy : e-commerce WooCommerce + Elementor sur hébergement mutualisé o2switch. Le TTFB à 3,7 s prouve que le goulot d'étranglement est serveur/backend. Avant toute optimisation front, une migration ou optimisation infrastructure est prioritaire — le ROI en est quasi immédiat.",
-  "enjeux_lead": "Points identifiés dans le cadre du projet :",
+  "enjeux_lead": "Problème → Pourquoi → Ce que ça coûte → Ce qu'on fait → Ce que ça débloque. 7 slides + 1 one-pager consultant-grade : 1 slide = 1 idée, max 35 mots, encadré « So what » (impact business).",
   "pain_points": [
-    "TTFB ~3,7 s (Homepage et PDP) — problème serveur/backend, pas prioritairement front. LCP à 32 s en découle.",
-    "Hébergement mutualisé o2switch : ressources partagées, PHP-FPM partagé, base MySQL partagée — insuffisant pour WooCommerce + Elementor.",
-    "Perte conversion estimée : 25–50 %. Scénario conservateur 30 % → 54 k€/mois potentiellement impactés (10 k visites, 2 % conv., panier 900 €).",
-    "Indexation et technique : canoniques, hreflang, structure URLs, clusters sémantiques à renforcer.",
-    "Étude marketing : aucune trace pub Meta/Google ; funnel AARRR, SWOT et positionnement à compléter avec preuves."
+    "Slide 1 — Impact perf → business : Le frein #1 est serveur. Chaîne : Hébergement mutualisé → TTFB 3,7 s → LCP 32 s → Friction UX → -25 à -50 % conv. So what : -30 % = ~54 k€/mois.",
+    "Slide 2 — Diagnostic TTFB vs Front : Le goulot = réponse serveur, pas le front. Waterfall : TTFB très long (rouge). TTFB bon < 0,5 s / critique > 2 s → Casapy en zone rouge.",
+    "Slide 3 — Mutualisé vs stack adaptée : WooCommerce + Elementor = ressources stables. Immeuble (mutualisé) vs maison (VPS/Redis/DB optimisée). Risque perf élevé → perf stable.",
+    "Slide 4 — Priorités + plan 1-2-3 : Serveur (VPS/Redis) → DB (transients, index) → Front (LCP, defer JS). So what : UX + CWV + ROAS.",
+    "Slide 5 — Manque à gagner (3 cartes) : 27 / 54 / 180 k€/mois selon scénario. À recalibrer avec GA4.",
+    "Slide 6 — Marketing clean room : FACT (aucune trace Meta/Google) vs HYPOTHESIS (persona, USP, funnel). Next : 5 preuves à fournir.",
+    "Wave — Progression avant/après fix : cycles (saisonnalité) + tendance. Avant fix = volatilité haute ; après fix = baseline meilleure."
   ],
   "solution_workflow": "Plan d'action en trois étapes. Ce livrable en est la synthèse actionnable.",
   "solution_piliers": [
@@ -67,6 +69,12 @@
     {"type": "infographic", "visual": "funnel-aarrr", "label": "Funnel AARRR (Retail) — Acquisition, Activation, Rétention, Revenue, Referral"},
     {"type": "box", "title": "Marché & concurrence", "format": "text", "desc": "Ameublement en ligne : acteurs omnicanaux, marketplaces, pure players, seconde main. Concurrents directs (catégories, prix, livraison) et substituts à établir avec sources. Acquisition : SEO, SEA/Shopping (aucune trace Meta/Google), Social organique."},
     {"type": "box", "title": "Positionnement & SWOT", "format": "text", "desc": "USP et promesse à extraire du site. Persona : hypothèse à valider. SWOT défendable : chaque Force avec preuve (livraison, avis, labels). Opportunités : UGC, SEO longue traîne, feed Shopping. Recommandations Growth : contenu, tracking GA4, CRO."},
+    {"type": "infographic", "visual": "image", "src": "slide1-impact-perf-business.png", "label": "Slide 1 — Impact perf → Impact business"},
+    {"type": "infographic", "visual": "image", "src": "slide2-waterfall-ttfb.png", "label": "Slide 2 — Waterfall TTFB vs Front"},
+    {"type": "infographic", "visual": "image", "src": "slide3-hebergement-comparatif.png", "label": "Slide 3 — Hébergement : mutualisé vs stack adaptée"},
+    {"type": "infographic", "visual": "image", "src": "slide4-matrice-seo-timeline.png", "label": "Slide 4 — SEO & Growth : matrice + timeline 30/60/90 j"},
+    {"type": "infographic", "visual": "image", "src": "one-pager-dashboard-casapy.png", "label": "One-pager — Dashboard exécutif"},
+    {"type": "infographic", "visual": "image", "src": "casapy-wave-progression.png", "label": "Progression avant/après fix serveur (cycles + tendance)"},
     {"type": "box", "title": "Recommandations serveur", "bullets": ["Option A : Redis object cache, page cache WooCommerce, OPcache, PHP 8.2.", "Option B (recommandé) : migration VPS ou hébergement WooCommerce optimisé.", "Puis : nettoyage DB (sessions, transients, révisions), optimisation front (LCP, défer JS)."]}
   ],
   "services": [

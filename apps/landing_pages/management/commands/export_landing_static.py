@@ -181,7 +181,7 @@ class Command(BaseCommand):
             import shutil
             casapy_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "casapy"
             out_dir = output_path.parent
-            patterns = ["slide*.png", "one-pager*.png", "infographie*.html"]
+            patterns = ["slide*.png", "one-pager*.png", "casapy-wave*.png", "infographie*.html"]
             for pat in patterns:
                 for f in casapy_assets.glob(pat):
                     dest = out_dir / f.name
