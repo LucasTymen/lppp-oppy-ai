@@ -1,0 +1,74 @@
+{
+  "page_title": "Lucas Tymen — PPP Promovacances (rapport audit SEO)",
+  "prospect_company": "Promovacances",
+  "prospect_name": "",
+  "hero_headline": "Audit SEO et performances — Promovacances",
+  "hero_sub_headline": "Diagnostic technique, opportunités et plan d'action pour votre site tourisme.",
+  "hero_subtitle": "Candidature PPP — Rapport complet et dashboard de démonstration",
+  "hero_video_mp4_url": "",
+  "hero_video_url": "https://www.youtube.com/watch?v=ArifpieowSw",
+  "theme": {},
+  "intro": "Ce livrable regroupe un diagnostic de performance réalisé sur votre site (TTFB, LCP, conversion), une estimation chiffrée du manque à gagner (scénarios selon trafic et panier voyage), un plan d'action priorisé et un dashboard interactif. Données issues du probing réel (février 2026) : TTFB médian ~100 ms, stack Fasterize + CloudFront ; les gains prioritaires sont côté front (LCP, JS, images).",
+  "icebreaker": "Promovacances : site tourisme et réservation. Le diagnostic montre un TTFB ~100 ms (serveur réactif, stack Fasterize + CloudFront). En cas de lenteur perçue, le suspect n°1 est le front-end : LCP, JS et images. Priorité : optimisation images & LCP, puis JS & third-parties.",
+  "enjeux_lead": "Problème → Pourquoi → Ce que ça coûte → Ce qu'on fait → Ce que ça débloque. Dashboard consultant-grade : score global, timeline utilisateur, compteur perte en temps réel, bullet chart, waterfall, recovery rings.",
+  "pain_points": [
+    "Impact perf → business : TTFB réel ~100 ms (serveur OK). Les gains sont côté front (LCP, JS, images) → friction UX et conversion. Scénario ordre de grandeur : ~28 k€/mois à recalibrer avec vos données.",
+    "Diagnostic réalisé : TTFB 5 mesures home (~0,10 s), stack Fasterize + CloudFront, origine non exposée. Waterfall et timeline pour visualiser la chaîne.",
+    "Priorités + plan 1-2-3 : Images & LCP (optimisation, priorité) → JS & third-parties (defer, lazy load) → Serveur & cache (marginal, déjà bon).",
+    "Manque à gagner (scénarios) : à calibrer avec vos données (trafic, CVR, panier moyen). Le dashboard permet de tester plusieurs hypothèses.",
+    "Recovery potential : répartition du potentiel de gain (front > serveur) pour prioriser les actions."
+  ],
+  "solution_workflow": "Plan d'action en trois étapes. Ce livrable en est la synthèse actionnable ; le dashboard en donne la traduction visuelle.",
+  "solution_piliers": [
+    {"title": "Dashboard audit performance", "desc": "Score global, timeline utilisateur, compteur de pertes en temps réel, bullet chart, matrice priorisation, waterfall, recovery rings. Données réelles (TTFB probing 2026) injectées depuis audit-dashboard.json."},
+    {"title": "Diagnostic TTFB / LCP", "desc": "TTFB réel ~100 ms (serveur OK), stack Fasterize + CloudFront. Impact conversion ; scénarios chiffrés ; recommandations priorité front : images & LCP, puis JS & third-parties."},
+    {"title": "Plan d'action priorisé", "desc": "1. Images & LCP (optimisation, priorité). 2. JS & third-parties (defer, lazy load). 3. Serveur & cache (marginal, déjà bon)."}
+  ],
+  "solution_steps": [
+    {"num": 1, "label": "Images & LCP — optimisation, priorité chargement"},
+    {"num": 2, "label": "JS & third-parties — defer, lazy load"},
+    {"num": 3, "label": "Serveur & cache — marginal (TTFB déjà bon)"}
+  ],
+  "cta_text": "VOIR LE DASHBOARD AUDIT",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=PPP Promovacances — Rapport audit SEO",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "rapport_url": "/p/promovacances/rapport/",
+  "key_figures_carousel": [
+    {"value": "~0,10", "unit": "s", "label": "TTFB Homepage (probing réel — serveur OK)"},
+    {"value": "5,2", "unit": "s", "label": "LCP (à confirmer par mesures terrain)"},
+    {"value": "18", "unit": "%", "label": "Perte conversion estimée (delta CVR)"},
+    {"value": "28", "unit": "k€/mois", "label": "Ordre de grandeur (à recalibrer avec vos données)"},
+    {"value": "3", "unit": "étapes", "label": "Plan : Images & LCP → JS → Cache (marginal)"}
+  ],
+  "alert_banner": "PPP PROMOVACANCES — AUDIT SEO COMPLET + DASHBOARD INTERACTIF + PLAN D'ACTION",
+  "seo_resume": {
+    "title": "DIAGNOSTIC SEO",
+    "manque_annuel": "~28–336 k€/an (ordre de grandeur — à recalibrer avec trafic, CVR, panier moyen ; voir dashboard).",
+    "intro": "Diagnostic réel (probing 2026) : TTFB médian ~100 ms, stack Fasterize + CloudFront (serveur réactif). Les gains prioritaires sont côté front : LCP, JS, images. Le dashboard interactif permet de visualiser score, timeline, scénarios et leviers de récupération.",
+    "problemes_cles": ["TTFB ~0,10 s (serveur OK)", "LCP à optimiser (contenu principal)", "Perte conversion estimée 18 %", "Potentiel front : images & LCP, JS & third-parties"],
+    "lien_analyse": "VOIR LE DASHBOARD AUDIT →"
+  },
+  "coordonnees_intro": "Pour un échange ou recevoir les livrables :",
+  "about_me_title": "Contexte",
+  "about_me": "Candidature PPP Promovacances : audit SEO et performance pour le site tourisme. Livrable aligné sur le modèle Casapy (LPPP) : rapport complet, dashboard interactif (score, timeline, compteur perte, bullet chart, waterfall, recovery rings), plan d'action priorisé. Données réelles (probing TTFB 2026, stack Fasterize + CloudFront) dans landing et audit-dashboard.json.",
+  "prestations_headline": "L'étude complète — ce que ce livrable apporte",
+  "services_segments": [
+    {"type": "box", "title": "Dashboard audit interactif", "format": "text", "desc": "La page Infographie agrège le score global, la timeline utilisateur (requête → TTFB → FCP → LCP → TTI), le compteur de pertes en temps réel, le bullet chart (TTFB, LCP, perte conversion), la matrice Impact × Effort, le waterfall et les recovery rings. Données réelles (TTFB probing 2026) pilotées par audit-dashboard.json."},
+    {"type": "infographic", "visual": "ttfb-kpi-bars-promo", "label": "Priorités techniques — TTFB OK, prioriser front"},
+    {"type": "box", "title": "Diagnostic TTFB", "format": "text", "desc": "TTFB Homepage ~0,10 s (probing réel 2026 — serveur OK). Stack Fasterize + CloudFront. Référence : bon < 600 ms. En cas de lenteur perçue, prioriser l'analyse front (LCP, JS, images)."},
+    {"type": "infographic", "visual": "flowchart-front-promo", "label": "Chaîne de priorité — Images & LCP → JS → Serveur (marginal)"},
+    {"type": "box", "title": "LCP et contenu principal", "format": "text", "desc": "LCP ~5,2 s (à confirmer par mesures terrain) — image hero ou bandeau principal. En tourisme, les visuels sont centraux ; leur optimisation (taille, format, priorité) et le délai jusqu'à première réponse (TTFB) conditionnent la perception et la conversion."},
+    {"type": "box", "title": "Manque à gagner (scénarios)", "format": "table", "table_headers": ["Scénario", "Contexte", "Impact mensuel (ordre de grandeur)"], "rows": [["30 k visites, 1,5 % CVR, panier 1 200 €", "Démo", "~28 k€/mois"], ["60 k visites, 2 % CVR, panier 1 400 €", "À recalibrer", "À calculer avec GA4"], ["100 k visites, 2,5 % CVR, panier 1 600 €", "À recalibrer", "À calculer avec GA4"]]},
+    {"type": "infographic", "visual": "plan-timeline-promo", "label": "Plan d'action priorisé — Images → JS → Cache"},
+    {"type": "box", "title": "Plan d'action priorisé", "format": "text", "desc": "1. Images & LCP : optimisation, priorité de chargement (principal levier). 2. JS & third-parties : defer, lazy load. 3. Serveur & cache : marginal (TTFB déjà bon). Le dashboard recovery rings illustre la répartition du potentiel de gain."},
+    {"type": "box", "title": "Recovery potential", "format": "text", "desc": "Dans le dashboard, trois anneaux indiquent la part du problème adressable par chaque levier (données réelles : priorité images & LCP, puis JS & third-parties, serveur marginal)."},
+    {"type": "box", "title": "Recommandations techniques", "bullets": ["Option A : CDN + cache applicatif (pages, API).", "Option B : optimisation hébergement / stack (si TTFB structurel).", "Images : format moderne (WebP/AVIF), lazy load, priorité LCP.", "JS : defer des scripts non critiques, réduction des third-parties."]}
+  ],
+  "services": [
+    {"title": "Dashboard audit performance", "description": "Score global, timeline, compteur pertes, bullet chart, matrice, waterfall, recovery rings. Données réelles (TTFB probing 2026) depuis audit-dashboard.json."},
+    {"title": "Diagnostic TTFB / LCP", "description": "TTFB réel ~100 ms (serveur OK), stack Fasterize + CloudFront. Métriques et impact business ; scénarios chiffrés ; recommandations priorité front : images & LCP, JS."},
+    {"title": "Plan d'action priorisé", "description": "Images & LCP → JS & third-parties → Serveur & cache (marginal). Synthèse actionnable alignée sur le modèle Casapy (LPPP)."}
+  ]
+}

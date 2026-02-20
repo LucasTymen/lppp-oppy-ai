@@ -1,0 +1,50 @@
+/* Promovacances — mini style guide (extrait / reconstruction à partir d’un rapport Lighthouse + palette dominante)
+   ⚠️ Ce n’est PAS le CSS original du site : c’est un “style kit” (fonts + couleurs) pour réutilisation / maquette.
+*/
+
+/* Fonts (Google Fonts) — vues dans le chargement de la home */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sniglet&display=swap");
+
+:root{
+  /* Palette (dominante) — extraite d’une capture de la home */
+  --pv-white: #ffffff;
+  --pv-ink: #001327;         /* texte très sombre / nav */
+  --pv-ink-2: #121d29;       /* variante */
+  --pv-blue: #3999e5;        /* primaire (CTA / liens probable) */
+  --pv-blue-2: #2078ae;      /* bleu plus profond (hover / éléments) */
+  --pv-blue-3: #5ca6dc;      /* bleu clair */
+  --pv-gray-100: #f7f6f5;    /* fonds très clairs */
+  --pv-gray-200: #d4e1e6;    /* séparateurs / fonds */
+  --pv-gray-300: #9ab6c3;    /* texte secondaire / icônes */
+  --pv-gray-400: #b0b9bc;    /* bordures */
+}
+
+/* Typo suggérée (à confirmer via DevTools “Computed”) */
+html { font-size: 18px; }
+body{
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  font-size: 1.125rem;
+  color: var(--pv-ink);
+  background: var(--pv-white);
+  line-height: 1.6;
+}
+
+h1,h2,h3,.pv-heading{
+  font-family: "Roboto Condensed", "Roboto", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+
+.pv-btn-primary{
+  background: var(--pv-blue);
+  color: var(--pv-white);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: 700;
+}
+
+.pv-link{ color: var(--pv-blue); }
+.pv-link:hover{ color: var(--pv-blue-2); }

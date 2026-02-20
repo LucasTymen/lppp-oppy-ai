@@ -1,0 +1,49 @@
+{
+  "theme": "promovacances",
+  "title_page": "Audit Performance — Promovacances",
+  "label_tag": "// Rapport d'audit technique",
+  "title": "PROMO",
+  "title_accent": "VACANCES",
+  "header_meta": "Site tourisme & réservation · TTFB / LCP / Conversion · 2025",
+  "status_label": "À améliorer — potentiel de gain identifié",
+  "score": 52,
+  "speedo_note": "Score : TTFB (0,1s — serveur OK) + LCP (5,2s) + perte conversion (18%). Données réelles (probing 2026, stack Fasterize + CloudFront).",
+  "speedo_note_strong": "52/100 — TTFB bon ; marge de progression sur LCP et front.",
+  "section1_sub": "Agrégation pondérée TTFB + LCP + perte conversion. TTFB réel ~100 ms (serveur OK) ; prioriser front (LCP, JS, images).",
+  "section2_sub": "Parcours utilisateur de la requête à la page utilisable — enjeu majeur pour la réservation et le taux de rebond.",
+  "section3_sub": "Manque à gagner estimé en temps réel. Scénarios basés sur trafic, taux de conversion réservation et panier moyen voyage.",
+  "loss_monthly_label": "28 000 €",
+  "loss_annual_label": "336 000 €/an",
+  "timeline_max_t": 8,
+  "timeline_markers": [
+    { "t": 0, "label": "0s", "event": "Requête envoyée", "desc": "clic utilisateur", "color": "#00e676" },
+    { "t": 0.1, "label": "0,1s", "event": "1er octet (TTFB)", "desc": "serveur répond (OK)", "color": "#00e676" },
+    { "t": 3.2, "label": "3,2s", "event": "FCP — 1ers pixels", "desc": "début rendu", "color": "#ff9900" },
+    { "t": 5.2, "label": "5,2s", "event": "LCP — Image hero", "desc": "contenu principal visible", "color": "#ff3b3b" },
+    { "t": 8, "label": "8s", "event": "Page utilisable", "desc": "TTI", "color": "#b388ff" }
+  ],
+  "scenarios": [
+    { "visits": 30000, "cvr": 0.015, "aov": 1200, "label": "30k / 1,5% / 1200€" },
+    { "visits": 60000, "cvr": 0.02, "aov": 1400, "label": "60k / 2% / 1400€" },
+    { "visits": 100000, "cvr": 0.025, "aov": 1600, "label": "100k / 2,5% / 1600€" }
+  ],
+  "bullet_metrics": [
+    { "name": "TTFB — Homepage", "unit": "s", "current": 0.1, "target": 0.6, "industry": 1, "max": 5, "bad": [2, 5], "warn": [0.6, 2], "ok": [0, 0.6], "color": "#00e676" },
+    { "name": "LCP — Mobile (destinations)", "unit": "s", "current": 5.2, "target": 2.5, "industry": 4, "max": 10, "bad": [6, 10], "warn": [2.5, 6], "ok": [0, 2.5], "color": "#ff3b3b" },
+    { "name": "Perte conversion (delta CVR)", "unit": "%", "current": 18, "target": 5, "industry": 10, "max": 25, "bad": [15, 25], "warn": [5, 15], "ok": [0, 5], "color": "#ff9900" }
+  ],
+  "waterfall_max_t": 8,
+  "waterfall_resources": [
+    { "label": "Requête HTML", "start": 0, "dur": 0.1, "color": "#00e676", "tag": "OK" },
+    { "label": "Réponse serveur (TTFB)", "start": 0, "dur": 0.1, "color": "rgba(0,230,118,0.3)", "tag": "" },
+    { "label": "CSS / Fonts", "start": 0.1, "dur": 0.8, "color": "#ff9900", "tag": "" },
+    { "label": "JS (framework / tracking)", "start": 0.5, "dur": 1.2, "color": "#ff9900", "tag": "" },
+    { "label": "Images hero / destinations", "start": 1.5, "dur": 2.2, "color": "#b388ff", "tag": "" },
+    { "label": "LCP — Bandeau principal", "start": 2.2, "dur": 1.8, "color": "#ff3b3b", "tag": "CONSÉQUENCE" }
+  ],
+  "recovery_rings": [
+    { "pct": 50, "label": "Images & LCP", "color": "#ff3b3b", "sub": "Optimisation images + priorité LCP = gain prioritaire" },
+    { "pct": 35, "label": "JS & third-parties", "color": "#b388ff", "sub": "Defer / lazy load = TTI et conversion" },
+    { "pct": 15, "label": "Serveur & cache", "color": "#ff9900", "sub": "TTFB déjà bon (~100 ms) — levier marginal" }
+  ]
+}

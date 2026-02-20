@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Rapport — Promovacances</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  --pv-white: #ffffff;
+  --pv-ink: #001327;
+  --pv-ink-2: #121d29;
+  --pv-blue: #3999e5;
+  --pv-blue-2: #2078ae;
+  --pv-blue-3: #5ca6dc;
+  --pv-gray-100: #f7f6f5;
+  --pv-gray-200: #d4e1e6;
+  --pv-gray-300: #9ab6c3;
+  --pv-gray-400: #b0b9bc;
+  --lp-font-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --lp-font-heading: 'Roboto Condensed', 'Roboto', system-ui, sans-serif;
+  --lp-bg: #FFFFFF;
+  --lp-text: #001327;
+  --lp-primary: #3999E5;
+  --lp-secondary: #2078AE;
+  --lp-border: #d4e1e6;
+  --lp-block-bg: #f7f6f5;
+  --lp-muted: #5c6b7a;
+  --lp-heading: #001327;
+  --lp-cta-text: #ffffff;
+  --lp-text-on-light: #001327;
+  --lp-text-on-dark: #f5f5f5;
+}
+
+/* Lisibilité — +0.2em base (1.2rem vs 1rem) */
+html { font-size: 18px; }
+body { font-size: 1.125rem; line-height: 1.6; }
+
+/* Nav fond clair — contraste texte sombre (comme promovacances.com) */
+body:has(.nav) .nav {
+  background: color-mix(in srgb, var(--lp-bg) 96%, rgba(255,255,255,0.95)) !important;
+  border-bottom-color: var(--pv-gray-200) !important;
+}
+body:has(.nav) .nav-links a,
+body:has(.nav) .nav span:first-child { color: var(--lp-text-on-light) !important; }
+body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
+
+/* Hero vidéo : parallaxe (fixe au scroll) + overlay, sans contrôles ni son */
+.hero.has-bg-video {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  overflow: hidden !important;
+}
+.hero.has-bg-video .hero-bg-video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+.hero.has-bg-video .hero-bg-video iframe {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  height: 56.25vw !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+</style>
+    <style>
+        :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1.2rem; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav-logo { max-height: 36px; width: auto; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-links a.active { color: var(--lp-primary, #4a9eff); font-weight: 600; }
+        .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; }
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; padding-top: calc(2rem + 52px); }
+        .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
+        .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
+        .report-body h2 { font-size: 1.35rem; }
+        .report-body h3 { font-size: 1.1rem; }
+        .report-body p { margin: 0 0 0.75rem; }
+        .report-body ul, .report-body ol { margin: 0 0 0.75rem 1.5rem; }
+        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1.05rem; }
+        .report-body th, .report-body td { border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); padding: 0.5rem 0.75rem; text-align: left; }
+        .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
+        .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
+        .report-intro { margin: 0 0 1.5rem; padding: 0.85rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-left: 4px solid var(--lp-primary, #4a9eff); font-size: 1.1rem; color: var(--lp-text, #e6e6e6); }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        
+        <a href="index.html"><img src="https://www.promovacances.com/resources/static/dist/pmvc/logo-desktop.svg?r=6eba0f566b7a69cbbf505f8bc684d44f" alt="Promovacances" class="nav-logo" loading="lazy"></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="rapport.html" class="active">Rapport</a>
+            <a href="infographie-promovacances-7-formats.html">Infographie</a>
+            <a href="positionnement-marketing.html">Positionnement marketing</a>
+            
+            <a href="index.html#coordonnees" class="nav-cta">Me contacter</a>
+        </div>
+    </nav>
+    <main class="page-wrap">
+        <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à Promovacances</strong> — diagnostic, opportunités et plan d'action.</p>
+        <div class="report-body"><h1>Promovacances — PPP (candidature)</h1>
+<p>Landing <strong>rapport complet</strong> pour la société Promovacances (tourisme / vacances).</p>
+<h2>Créer la landing en base (une seule fois)</h2>
+<ol>
+<li><strong>Racine projet</strong> : se placer dans le répertoire LPPP (celui qui contient <code>Makefile</code>, <code>manage.py</code>, <code>docker-compose.yml</code>).</li>
+<li><strong>Stack Docker</strong> : si les services ne tournent pas, lancer le stack puis créer la landing :</li>
+</ol>
+<p><code>bash
+   make landing-promovacances-full</code><br />
+   (Enchaîne <code>make start</code> puis <code>make landing-promovacances</code>.)</p>
+<p>Si le stack est déjà démarré :</p>
+<p><code>bash
+   make landing-promovacances</code></p>
+<p>Procédure coordonnée (Chef de Projet, DevOps, Architecte, Ingénieur Sys) :<br />
+<code>docs/base-de-connaissances/segmentations/2026-02-19-landing-promovacances-creation-coordonnee.md</code></p>
+<h2>Repo landing (LPPP_promovacances)</h2>
+<table>
+<thead>
+<tr>
+<th>Plateforme</th>
+<th>URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GitHub</strong></td>
+<td><code>https://github.com/LucasTymen/LPPP_promovacances</code> (principal)</td>
+</tr>
+<tr>
+<td><strong>GitLab</strong></td>
+<td><code>https://gitlab.com/LucasTymen/lppp_promovacances</code> (miroir)</td>
+</tr>
+<tr>
+<td><strong>Vercel</strong></td>
+<td>Projet <strong>lppp-promovacances</strong> (tiret) lié au repo GitHub. 1 repo = 1 projet.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Push</strong> : <code>deploy/push-promovacances.ps1</code> ou voir <code>deploy/PUSH-PROMOVACANCES.md</code>. Ne jamais pousser <code>node_modules</code> (déjà dans <code>.gitignore</code> racine).</p>
+<h2>URLs</h2>
+<table>
+<thead>
+<tr>
+<th>URL</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/p/promovacances/</code></td>
+<td>Page proposition (hero, intro, CTA vers dashboard).</td>
+</tr>
+<tr>
+<td><code>/p/promovacances/audit-dashboard/</code></td>
+<td>Dashboard audit SEO (score, timeline, compteur perte, bullet, waterfall, recovery).</td>
+</tr>
+</tbody>
+</table>
+<h2>Dashboard audit SEO</h2>
+<ul>
+<li><strong>Données</strong> : <code>audit-dashboard.json</code> (structure identique au modèle Casapy, contenu adapté tourisme).</li>
+</ul>
+<p>Les chiffres du JSON (TTFB, LCP, score, scénarios, pertes estimées, recovery rings) sont des <strong>valeurs de démonstration</strong>. Remplacer par les données réelles de l’audit une fois les mesures effectuées.</p>
+<h2>Fichiers</h2>
+<table>
+<thead>
+<tr>
+<th>Fichier</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>audit-dashboard.json</code></td>
+<td>Contenu du dashboard (titres, score, timeline, scénarios, bullet, waterfall, recovery).</td>
+</tr>
+<tr>
+<td><code>landing-proposition-promovacances.json</code></td>
+<td>Contenu de la page proposition (hero, intro, CTA, lien dashboard).</td>
+</tr>
+<tr>
+<td><code>spec-infographiques-visuel-contextuel-promovacances.md</code></td>
+<td>Spec pour graphiste : data + contexte court pour chaque bloc (jauges, chaîne priorité, scénarios, plan).</td>
+</tr>
+<tr>
+<td><code>promovacances-marketing-study-en.md</code></td>
+<td>Marketing study (EN) : SEO perf + paid media (Google Ads, Meta), version étude.</td>
+</tr>
+<tr>
+<td><code>positionnement-marketing.html</code></td>
+<td>Onglet « Positionnement marketing » : résumé situation + étude paid media (Google, Meta).</td>
+</tr>
+<tr>
+<td><code>analyse-marketing-paid-media.md</code></td>
+<td>Synthèse paid media (FR).</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td>Ce fichier.</td>
+</tr>
+</tbody>
+</table>
+<p>Voir <code>docs/base-de-connaissances/audit-dashboard-modele-seo.md</code> pour la structure complète du JSON et la marche à suivre.</p></div>
+    </main>
+</body>
+</html>
