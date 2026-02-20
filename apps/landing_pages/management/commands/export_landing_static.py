@@ -73,6 +73,9 @@ class Command(BaseCommand):
             elif slug == "promovacances":
                 lp.prospect_company = "Promovacances"
                 lp.prospect_name = ""
+            elif slug == "infopro":
+                lp.prospect_company = "Infopro Digital"
+                lp.prospect_name = ""
             use_perso_style = _use_perso_style(lp)
             self.stdout.write(f"Contenu chargé depuis {json_path} (use_perso_style={use_perso_style})")
         else:
@@ -109,19 +112,29 @@ class Command(BaseCommand):
                 if slug in LANDING_THEMES:
                     theme_dict, theme_css = LANDING_THEMES[slug]
                 hero_video_embed = ""
-                if slug == "promovacances":
-                    hero_video_embed = "https://www.youtube-nocookie.com/embed/ArifpieowSw?autoplay=1&mute=1&loop=1&playlist=ArifpieowSw&controls=0&rel=0&showinfo=0"
+                hero_video_mp4 = ""
+                if slug in ("promovacances", "infopro"):
+                    mp4_url = content.get("hero_video_mp4_url") or ""
+                    if mp4_url:
+                        hero_video_mp4 = mp4_url
+                    else:
+                        import re
+                        url = content.get("hero_video_url") or ""
+                        m = re.search(r"(?:v=|embed/)([a-zA-Z0-9_-]{11})", str(url).strip()) if url else None
+                        vid = m.group(1) if m else ("ArifpieowSw" if slug == "promovacances" else "IG9WGfuTOIQ")
+                        hero_video_embed = f"https://www.youtube-nocookie.com/embed/{vid}?autoplay=1&mute=1&loop=1&playlist={vid}&controls=0&rel=0&showinfo=0"
                 rapport_ctx = {
                     "company_name": getattr(lp, "prospect_company", content.get("prospect_company", "")),
                     "logo_url": (theme_dict or {}).get("logo_url") if theme_dict else None,
                     "theme_css": theme_css or "",
                     "index_url": "index.html",
                     "rapport_url": "rapport.html",
-                    "infographie_url": content.get("infographie_url") or ("infographie-promovacances-7-formats.html" if slug == "promovacances" else None),
-                    "positionnement_marketing_url": "positionnement-marketing.html" if slug == "promovacances" else None,
+                    "infographie_url": content.get("infographie_url") or ("infographie-promovacances-7-formats.html" if slug == "promovacances" else "infographie-infopro-7-formats.html" if slug == "infopro" else None),
+                    "positionnement_marketing_url": "positionnement-marketing.html" if slug in ("promovacances", "infopro") else None,
                     "audit_dashboard_url": content.get("audit_dashboard_url") or "",
                     "report_body": body_html,
                     "hero_video_embed_url": hero_video_embed,
+                    "hero_video_mp4_url": hero_video_mp4,
                 }
                 rapport_html = render_to_string("landing_pages/rapport_static_export.html", rapport_ctx)
                 rapport_out.write_text(rapport_html, encoding="utf-8")
@@ -143,13 +156,16 @@ class Command(BaseCommand):
             content["hero_video_webm_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.webm"
             content["hero_video_url"] = ""
 
-        # Promovacances (export statique) : URLs relatives pour assets
+        # Promovacances / Infopro (export statique) : URLs relatives pour assets
         if slug == "promovacances":
             content["promovacances_assets_url"] = ""
             content["infographie_url"] = "infographie-promovacances-7-formats.html"
             content["positionnement_marketing_url"] = "positionnement-marketing.html"
             # rapport_url : conservé si --rapport-md ; sinon le lien rapport est masqué par le template
             # audit_dashboard_url : laissé vide en statique (pas de dashboard embarqué)
+        elif slug == "infopro":
+            content["infographie_url"] = "infographie-infopro-7-formats.html"
+            content["positionnement_marketing_url"] = "positionnement-marketing.html"
 
         perso_ref_path = getattr(settings, "LANDING_PERSO_REF_PATH", "")
         html = render_to_string(
@@ -181,14 +197,24 @@ class Command(BaseCommand):
                     shutil.copy2(f, dest)
                     self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))
 
-        # Promovacances : copier infographie HTML et style tokens
+        # Promovacances / Infopro : copier infographie HTML et style tokens
         if slug == "promovacances":
             import shutil
             promo_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "promovacances"
             out_dir = output_path.parent
-            patterns = ["infographie*.html", "positionnement-marketing.html", "promovacances_style_tokens.css", "audit-dashboard.json"]
+            patterns = ["infographie*.html", "positionnement-marketing.html", "promovacances_style_tokens.css", "audit-dashboard.json", "hero-promovacances.mp4"]
             for pat in patterns:
                 for f in promo_assets.glob(pat):
+                    dest = out_dir / f.name
+                    shutil.copy2(f, dest)
+                    self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))
+        elif slug == "infopro":
+            import shutil
+            infopro_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "infopro"
+            out_dir = output_path.parent
+            patterns = ["infographie*.html", "positionnement-marketing.html", "infopro_style_tokens.css", "audit-dashboard.json", "hero-infopro.mp4"]
+            for pat in patterns:
+                for f in infopro_assets.glob(pat):
                     dest = out_dir / f.name
                     shutil.copy2(f, dest)
                     self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))

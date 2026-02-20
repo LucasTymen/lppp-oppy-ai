@@ -224,6 +224,12 @@ def landing_public(request, slug):
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/promovacances/assets/positionnement-marketing.html")
         if "audit_dashboard_url" not in content:
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/promovacances/audit-dashboard/")
+    elif lp.slug == "infopro":
+        content["promovacances_assets_url"] = ""
+        content["infographie_url"] = request.build_absolute_uri("/p/infopro/assets/infographie-infopro-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/infopro/assets/positionnement-marketing.html")
+        if "audit_dashboard_url" not in content:
+            content["audit_dashboard_url"] = request.build_absolute_uri("/p/infopro/audit-dashboard/")
     else:
         audit_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
         if audit_json_path.is_file():
@@ -310,6 +316,38 @@ def serve_promovacances_asset(request, filename):
     file_path = assets_dir / safe_name
     if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
         raise Http404("Asset Promovacances non trouvé")
+    ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
+    if ext == "svg":
+        content_type = "image/svg+xml"
+    elif ext == "png":
+        content_type = "image/png"
+    elif ext in ("html", "htm"):
+        content_type = "text/html; charset=utf-8"
+    elif ext == "css":
+        content_type = "text/css; charset=utf-8"
+    else:
+        content_type = "application/octet-stream"
+    return FileResponse(
+        open(file_path, "rb"),
+        as_attachment=False,
+        filename=safe_name,
+        content_type=content_type,
+    )
+
+
+def serve_infopro_asset(request, filename):
+    """
+    Sert les assets Infopro depuis docs/contacts/infopro/ :
+    images (PNG, SVG), infographie HTML, positionnement-marketing, CSS. Évite path traversal.
+    """
+    import os
+    assets_dir = Path(settings.BASE_DIR) / "docs" / "contacts" / "infopro"
+    safe_name = os.path.basename(filename)
+    if not safe_name:
+        raise Http404("Asset Infopro non trouvé")
+    file_path = assets_dir / safe_name
+    if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
+        raise Http404("Asset Infopro non trouvé")
     ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
     if ext == "svg":
         content_type = "image/svg+xml"

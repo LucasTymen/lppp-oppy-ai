@@ -69,7 +69,8 @@ h1,h2,h3,.pv-heading{
   min-height: 100vh;
   max-height: none;
 }
-.site-bg-video iframe {
+.site-bg-video iframe,
+.site-bg-video video {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);

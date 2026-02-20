@@ -2,6 +2,8 @@
 
 Landing **rapport complet** pour la société Promovacances (tourisme / vacances).
 
+**Modèle de référence** : ce projet sert de **base de départ** pour les futures landings similaires. Voir `docs/base-de-connaissances/template-landing-promovacances-base-depart.md`.
+
 ## Créer la landing en base (une seule fois)
 
 1. **Racine projet** : se placer dans le répertoire LPPP (celui qui contient `Makefile`, `manage.py`, `docker-compose.yml`).

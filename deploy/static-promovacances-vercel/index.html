@@ -153,6 +153,9 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
             .nav { animation: none; }
         }
         .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
+        .nav-logo.nav-logo--svg { height: 28px; width: auto; display: block; }
+        .nav-logo-link { display: flex; align-items: center; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
@@ -336,6 +339,12 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
             border-radius: 8px;
             font-weight: 600;
         }
+        .hero-video-fallback--inline {
+            position: static !important;
+            transform: none !important;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
         .hero.has-bg-video .hero-video-fallback:hover,
         .hero.has-bg-video .hero-video-cta:hover {
             color: #fff;
@@ -426,10 +435,25 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
             margin-right: auto;
             animation: fadeInUp 0.8s var(--lp-ease) both;
         }
+        /* Bloc contenu hero : évite chevauchement CTA / texte (ex. "Regarder la vidéo" ou erreur iframe) */
+        .hero .hero-content-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.5rem 1.25rem;
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+        .hero.has-bg-video .hero-content-block {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+        }
         .hero .hero-sub {
             font-size: clamp(1rem, 2vw, 1.2rem);
             color: var(--lp-muted, rgba(255,255,255,0.75));
-            margin: 0 0 2rem;
+            margin: 0;
             max-width: 28ch;
             margin-left: auto;
             margin-right: auto;
@@ -760,6 +784,7 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
         @media (min-width: 768px) {
             .nav { padding: 1rem 2rem; min-height: 60px; }
             .nav-logo { max-height: 42px; }
+            .nav-logo.nav-logo--svg { height: 36px; }
             .nav-links { gap: 0.5rem 1rem; }
             .nav-links a { font-size: 1rem; padding: 0.5rem 0.6rem; }
             .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; border-radius: 14px; }
@@ -782,6 +807,7 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
         @media (min-width: 1024px) {
             .nav { padding: 1.25rem 2.5rem; min-height: 64px; }
             .nav-logo { max-height: 48px; }
+            .nav-logo.nav-logo--svg { height: 42px; }
             .nav-links { gap: 0.75rem 1.5rem; }
             .hero { padding: 4rem 2.5rem 6rem; }
             .hero h1 { font-size: clamp(2.5rem, 4.5vw, 3.75rem); max-width: 24ch; }
@@ -845,6 +871,7 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
             body { font-size: 1.0625rem; }
             .nav { padding: 1.5rem 3rem; min-height: 68px; }
             .nav-logo { max-height: 52px; }
+            .nav-logo.nav-logo--svg { height: 46px; }
             .nav-links a { font-size: 1.05rem; }
             .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; border-radius: 16px; }
             .hero { padding: 5rem 3rem 7rem; }
@@ -899,20 +926,24 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
         <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
         <section class="hero has-bg-video">
             
-            
             <div class="hero-bg-video">
-                <iframe src="https://www.youtube-nocookie.com/embed/ArifpieowSw?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=ArifpieowSw&amp;controls=0&amp;rel=0&amp;showinfo=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond hero" aria-hidden="true"></iframe>
+                <video autoplay muted loop playsinline aria-hidden="true">
+                    
+                    <source src="hero-promovacances.mp4" type="video/mp4">
+                </video>
             </div>
             
             
-            
-            <h1>Audit SEO et performances — Promovacances</h1>
-            <p class="hero-sub">Diagnostic technique, opportunités et plan d&#x27;action pour votre site tourisme.</p>
-            
-            
-            <a href="#contact-email-modal" class="cta">VOIR LE DASHBOARD AUDIT</a>
-            
-            
+            <div class="hero-content-block">
+                <h1>Audit SEO et performances — Promovacances</h1>
+                <p class="hero-sub">Diagnostic technique, opportunités et plan d&#x27;action pour votre site tourisme.</p>
+                
+                
+                <a href="#contact-email-modal" class="cta">VOIR LE DASHBOARD AUDIT</a>
+                
+                
+                
+            </div>
         </section>
 
         <p class="icebreaker">Promovacances : site tourisme et réservation. Le diagnostic montre un TTFB ~100 ms (serveur réactif, stack Fasterize + CloudFront). En cas de lenteur perçue, le suspect n°1 est le front-end : LCP, JS et images. Priorité : optimisation images &amp; LCP, puis JS &amp; third-parties.</p>

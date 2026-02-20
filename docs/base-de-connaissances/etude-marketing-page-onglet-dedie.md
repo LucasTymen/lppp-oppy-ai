@@ -26,8 +26,13 @@
 
 ---
 
+## Modèle canonique
+
+**Page Positionnement marketing Promovacances** : `docs/contacts/promovacances/positionnement-marketing.html` — **modèle de référence** pour les futures pages étude / positionnement marketing. Structure complète : Situation, Formules, Google Ads, Meta, graphiques, sources. Voir `template-positionnement-marketing.md`.
+
 ## Références
 
+- **Modèle** : `template-positionnement-marketing.md` (Promovacances = référence).
 - **FitClem** : `docs/base-de-connaissances/segmentations/2026-02-09-sprint-general-fitclem-landing-multipage.md` (structure des pages, § 2 et § 3.3 Rédacteur).
 - **Stratégie marketing FitClem** : `docs/contacts/fitclem/strategie-marketing-fitclem.md`.
 - **Règles** : `growth.mdc` (Expert Growth), `redacteur-en-chef.mdc` (Rédacteur en chef).

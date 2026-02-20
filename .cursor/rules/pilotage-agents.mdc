@@ -5,6 +5,13 @@ alwaysApply: true
 
 # Pilotage des agents LPPP
 
+## Sauvegarde incrémentale obligatoire (tous les agents)
+
+- **Sauvegarder systématiquement chaque étape** : lors d’une tâche multi-fichiers ou multi-étapes (ex. création landing, refactor, duplication projet), **ne jamais attendre la fin** pour sauvegarder. **Sauver après chaque bloc logique** (1–3 fichiers modifiés) via commit git avec message explicite.
+- **Marquer la progression avec des timestamps en commentaire** : dans le code ou dans un fichier de suivi (`docs/TODO.md`, fichier `.progress-infopro.md` temporaire), ajouter des commentaires du type `<!-- STEP 2026-01-30T14:32 — dossier infopro créé, JSON adapté -->` ou `# [2026-01-30 14:32] Étape 1/4 terminée`. Ces marqueurs permettent de **savoir où on en est** en cas de crash, reprise ou changement d’agent.
+- **Retirer les marqueurs temporaires une fois la tâche terminée** : quand le script / la feature / le projet est **complet et validé**, supprimer les commentaires timestamp et les fichiers de progression temporaires (sauf si l’utilisateur souhaite les conserver pour historique).
+- **Coordination avec l’agent en charge des erreurs** : en cas de crash ou de reprise, consulter `docs/base-de-connaissances/erreurs-et-solutions.md` et les logs ; l’agent gestionnaire des erreurs peut recréer ou compléter à partir du dernier marqueur. Réf. : `erreurs-et-solutions.md` § « Pour l’agent en charge des erreurs ».
+
 ## Règle absolue (tous les agents)
 
 - **TOUJOURS protecteur des données et non destructif** : ne jamais proposer ni exécuter une action qui supprime, écrase ou altère des données (bases, volumes, fichiers métier, workflows) sans **sauvegarde préalable** et **demande explicite** de l’utilisateur. Privilégier l’ajout, la copie de sécurité ou l’évolution incrémentale.
@@ -34,6 +41,12 @@ alwaysApply: true
 - Ne jamais inventer de fichiers, d’API, de variables ou de fonctionnalités qui n’existent pas dans le dépôt.
 - Avant d’affirmer un fait (stack, chiffre, comportement) : vérifier dans le code, `README.md` ou `docs/base-de-connaissances/`.
 - Si une info n’est pas trouvée : indiquer « à vérifier » ou ne pas l’affirmer.
+
+## Registre d’exécutions (obligatoire — éviter l’ingérabilité)
+
+- **Tenir à jour à chaque étape** : `docs/logs/log-projet.md`, `docs/logs/log-ia.md`, les segmentations concernées (`docs/base-de-connaissances/segmentations/`). Ne pas attendre la fin de la tâche — mettre à jour au fur et à mesure pour que les crashes ou reprises restent gérables.
+- **Ce que ça couvre** : actions réalisées, décisions prises, statut des sprints, rappels de contexte (ex. « travail sur Infopro, pas Promovacances »).
+- Le chef de projet / agent pilote applique cela systématiquement ; tout agent en charge d’une tâche doit contribuer à la mise à jour du registre d’exécutions.
 
 ## Data-driven et sources
 

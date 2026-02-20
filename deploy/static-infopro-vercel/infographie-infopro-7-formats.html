@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infopro Digital — 7 formats infographiques (perf + business)</title>
+  <link rel="stylesheet" href="infopro_style_tokens.css">
+  <style>
+    :root {
+      --bg: #080810;
+      --surface: #0e0e1a;
+      --surface2: #13131f;
+      --card: #0e0e1a;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0f0fa;
+      --muted: #6b6b8a;
+      --accent: #ff3b3b;
+      --warn: #ff9900;
+      --ok: #00e676;
+      --blue: #4fc3f7;
+      --purple: #b388ff;
+      --line: rgba(255,255,255,0.15);
+      --red: #ff3b3b;
+      --orange: #ff9900;
+      --green: #00e676;
+      --mono: 'Space Mono', monospace;
+      --display: 'Bebas Neue', sans-serif;
+      --body: 'DM Sans', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; color: var(--text); font-family: var(--body), system-ui, Arial, sans-serif; font-size: 1.2rem; line-height: 1.5; background: var(--bg); }
+    h1 { font-family: var(--display), system-ui; font-size: clamp(1.8rem, 4vw, 2.2rem); margin-bottom: 8px; letter-spacing: 0.02em; }
+    .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 24px; font-family: var(--mono); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; max-width: 980px; margin-left: auto; margin-right: auto; }
+    .card h2 { font-size: 1.35rem; margin: 0 0 8px 0; }
+    .muted { color: var(--muted); font-size: 1.05rem; margin-top: 6px; }
+    .timeline-wrap { position: relative; }
+    .journey-timeline { width: 100%; max-width: 760px; height: auto; }
+    .journey-labels { position: relative; height: 36px; margin-top: 4px; display: flex; }
+    .journey-label { position: absolute; transform: translateX(-50%); font-size: 13px; color: var(--muted); white-space: nowrap; }
+    .meter-value { font-size: 2rem; font-weight: 800; color: var(--red); transition: transform 0.15s ease; }
+    .meter-value.tick { transform: scale(1.05); }
+    .ring-progress { transition: stroke-dasharray 0.8s ease-out; }
+    .speedo-wrap { display: flex; justify-content: center; margin: 1rem 0; }
+    .ring-wrap { display: flex; flex-direction: column; align-items: center; }
+    @media (prefers-reduced-motion: reduce) { .tick, .ring-progress { animation: none !important; } }
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: rgba(8,8,16,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { max-height: 36px; width: auto; }
+    .nav-logo.nav-logo--svg { height: 32px; width: auto; display: block; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+    .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-cta { padding: 0.5rem 1rem; background: var(--accent); color: #fff; font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; font-family: var(--mono); }
+    header { max-width: 980px; margin: 0 auto; padding: 0 20px 24px; }
+    body { padding-top: 0; }
+  </style>
+</head>
+<body>
+  <div class="site-bg-fixed">
+    <div class="site-bg-video">
+      <iframe src="https://www.youtube-nocookie.com/embed/IG9WGfuTOIQ?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=IG9WGfuTOIQ&amp;controls=0&amp;rel=0&amp;showinfo=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond" aria-hidden="true"></iframe>
+    </div>
+    <div class="site-bg-overlay"></div>
+  </div>
+  <div class="site-content">
+  <nav class="nav">
+    <a href="https://www.infopro-digital.com/fr/" class="nav-logo-link" aria-label="Infopro Digital">
+      <svg class="icon icon-logo-infopro-digital nav-logo nav-logo--svg" aria-hidden="true" focusable="false" role="img"><use href="https://www.infopro-digital.com/app/themes/infopro-digital/dist/img/icons/icons.svg#icon-logo-infopro-digital" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.infopro-digital.com/app/themes/infopro-digital/dist/img/icons/icons.svg#icon-logo-infopro-digital"></use></svg>
+      <span class="sr-only">Infopro Digital</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="rapport.html">Rapport</a>
+      <a href="infographie-infopro-7-formats.html" class="active">Infographie</a>
+      <a href="positionnement-marketing.html">Positionnement marketing</a>
+      <a href="index.html#coordonnees" class="nav-cta">Me contacter</a>
+    </div>
+  </nav>
+  <div class="site-content-inner">
+  <header>
+    <h1>Infopro Digital — Diagnostic SEO & performance</h1>
+    <p class="subtitle">7 formats visuels (score 68, TTFB 0,15 s, timeline, bullet chart, heatmap, waterfall, recovery). Données réelles crawl 358 URLs, PageSpeed, Screaming Frog.</p>
+  </header>
+
+  <section class="card" id="speedometer">
+    <h2>1. Score global (tachymètre)</h2>
+    <p class="muted">PageSpeed Mobile perf 68/100. TTFB ~153 ms (OK). Blocage : images (alt, dimensions, poids), layout, JS.</p>
+    <div class="speedo-wrap">
+      <svg class="speedo" viewBox="0 0 120 70" width="200" height="120" aria-label="Score performance global">
+        <defs>
+          <linearGradient id="speedoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--red)"/>
+            <stop offset="50%" stop-color="var(--orange)"/>
+            <stop offset="100%" stop-color="var(--green)"/>
+          </linearGradient>
+        </defs>
+        <path d="M 10 60 A 50 50 0 0 1 110 60" fill="none" stroke="rgba(0,0,0,0.06)" stroke-width="10" stroke-linecap="round"/>
+        <path id="speedoFill" d="M 10 60 A 50 50 0 0 1 110 60" fill="none" stroke="url(#speedoGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 157"/>
+        <line x1="60" y1="60" x2="60" y2="35" stroke="var(--text)" stroke-width="2" stroke-linecap="round" id="needle"/>
+        <text x="60" y="48" text-anchor="middle" font-size="14" fill="var(--text)" font-weight="700" id="scoreText">68</text>
+        <text x="60" y="66" text-anchor="middle" font-size="10" fill="var(--muted)">/ 100</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card" id="journey">
+    <h2>2. Ce que vit l'utilisateur (timeline 0 → 7 s)</h2>
+    <p class="muted">TTFB ~0,15 s (CloudFront OK) ; blocage front : images, JS (Swiper, jQuery).</p>
+    <div class="timeline-wrap">
+      <svg class="journey-timeline" viewBox="0 0 800 80" preserveAspectRatio="xMidYMid meet">
+        <line x1="20" y1="40" x2="780" y2="40" stroke="var(--line)" stroke-width="2"/>
+        <g id="journeyMarkers"></g>
+      </svg>
+      <div class="journey-labels" id="journeyLabels"></div>
+    </div>
+  </section>
+
+  <section class="card" id="lostRevenue">
+    <h2>3. Priorités SEO</h2>
+    <p class="muted">4xx (3 URLs), hreflang, meta descriptions (108 manquantes), images sans alt (118).</p>
+    <div class="meter-wrap">
+      <div class="meter-value" id="lostRevenueValue">337 / 358</div>
+      <div class="muted" id="lostRevenueSub">URLs indexables (21 non indexables)</div>
+    </div>
+  </section>
+
+  <section class="card" id="bulletChart">
+    <h2>4. Bullet Chart</h2>
+    <p class="muted">TTFB 0,15 s (OK) ; PageSpeed perf 68 ; URLs < 1 s : 97,2 %.</p>
+    <div class="bullet-wrap" id="bulletWrap"></div>
+  </section>
+
+  <section class="card" id="heatmap">
+    <h2>5. Impact × Effort</h2>
+    <p class="muted">Priorité Infopro : images (alt, dimensions, poids), meta descriptions, headers sécurité.</p>
+    <div class="heatmap-wrap">
+      <div class="heatmap-grid">
+        <div class="heat-cell empty"></div>
+        <div class="heat-cell axis">Effort faible</div>
+        <div class="heat-cell axis">Effort élevé</div>
+        <div class="heat-cell axis">Impact faible</div>
+        <div class="heat-cell q low-effort"><span class="action">Meta desc. • Alt images</span></div>
+        <div class="heat-cell q high-effort"><span class="action">4xx • hreflang • pagination</span></div>
+        <div class="heat-cell axis">Impact élevé</div>
+        <div class="heat-cell q low-effort"><span class="action">Headers sécurité</span></div>
+        <div class="heat-cell q high-effort"><span class="action">Images (compression, dim.)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="waterfall">
+    <h2>6. Cascade de chargement</h2>
+    <p class="muted">TTFB ~0,15 s (OK) ; bottleneck : JS (Swiper, jQuery), images (41 > 100 Ko).</p>
+    <div class="waterfall-wrap" id="waterfallWrap"></div>
+  </section>
+
+  <section class="card" id="recovery">
+    <h2>7. Potentiel de récupération</h2>
+    <p class="muted">Images (45 %) • Meta & structure (35 %) • Technique & sécurité (20 %).</p>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 100 100" width="160" height="160">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="var(--line)" stroke-width="8"/>
+        <circle id="ringRecovery" cx="50" cy="50" r="42" fill="none" stroke="var(--green)" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 264" transform="rotate(-90 50 50)"/>
+        <text x="50" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="var(--text)">85%</text>
+      </svg>
+    </div>
+  </section>
+
+  <footer class="muted" style="margin-top:24px;font-size:0.8rem;max-width:980px;margin-left:auto;margin-right:auto;">
+    Infopro Digital — 7 formats (audit SEO réel, crawl 358 URLs, PageSpeed, Screaming Frog).
+  </footer>
+  </div>
+  </div>
+
+  <script>
+(function() {
+  var score = 68;
+  var dash = (score / 100) * 157;
+  document.getElementById('speedoFill').setAttribute('stroke-dasharray', dash + ' 157');
+  document.getElementById('scoreText').textContent = score;
+  document.getElementById('needle').setAttribute('transform', 'rotate(' + (180 * (1 - score/100)) + ' 60 60)');
+
+  var journeySteps = [{t:0,label:'Requête'},{t:153,label:'TTFB'},{t:2500,label:'FCP'},{t:4500,label:'LCP'},{t:6500,label:'TTI'}];
+  var jMax = 7000, jW = 760;
+  journeySteps.forEach(function(s,i){
+    var x = 20 + (s.t/jMax)*jW;
+    var line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x); line.setAttribute('y1',40); line.setAttribute('x2',x); line.setAttribute('y2',56);
+    line.setAttribute('stroke',i===0?'var(--green)':(s.t>2000?'var(--red)':'var(--orange)')); line.setAttribute('stroke-width','2');
+    document.getElementById('journeyMarkers').appendChild(line);
+    var lb = document.createElement('div'); lb.className='journey-label'; lb.style.left=((s.t/jMax)*100)+'%'; lb.textContent=s.label;
+    document.getElementById('journeyLabels').appendChild(lb);
+  });
+
+  /* Compteur priorités SEO : URLs indexables statique */
+  document.getElementById('lostRevenueValue').textContent = '337 / 358';
+
+  var bullets=[{label:'TTFB',current:0.153,target:0.6,standard:1,max:5,unit:'s'},{label:'PageSpeed',current:68,target:90,standard:75,max:100,unit:'/100'},{label:'URLs < 1 s',current:97.2,target:99,standard:95,max:100,unit:'%'}];
+  bullets.forEach(function(b){
+    var d=document.createElement('div'); d.className='bullet-row';
+    var pct = b.max > 0 ? Math.min((b.current/b.max*100), 100) : 0;
+    var targetPct = b.max > 0 ? (b.target/b.max*100) : 0;
+    d.innerHTML='<span class="bullet-label">'+b.label+'</span><div class="bullet-track"><div class="bullet-bg" style="width:100%"></div><div class="bullet-target" style="width:'+targetPct+'%"></div><div class="bullet-current" style="width:'+pct+'%"></div></div><span class="bullet-legend">'+b.current+' '+b.unit+'</span>';
+    document.getElementById('bulletWrap').appendChild(d);
+  });
+  var st=document.createElement('style'); st.textContent='.bullet-row{display:grid;grid-template-columns:80px 1fr 100px;align-items:center;gap:10px;margin:10px 0;}.bullet-track{position:relative;height:24px;background:var(--line);border-radius:8px;overflow:hidden;}.bullet-bg{position:absolute;inset:0;background:rgba(0,230,118,0.15);}.bullet-target{position:absolute;left:0;top:0;bottom:0;background:var(--green);opacity:0.5;border-radius:8px;}.bullet-current{position:absolute;left:0;top:0;bottom:0;background:var(--red);border-radius:8px;}.bullet-label{font-weight:600;}.bullet-legend{font-size:12px;color:var(--muted);}';
+  document.head.appendChild(st);
+
+  var hst=document.createElement('style'); hst.textContent='.heatmap-grid{display:grid;grid-template-columns:100px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:8px;max-width:420px;}.heat-cell{border:1px solid var(--line);border-radius:10px;padding:12px;min-height:56px;}.heat-cell.axis{color:var(--muted);font-size:12px;}.heat-cell.q{background:rgba(57,153,229,0.08);font-size:13px;}.heat-cell.q.low-effort{grid-column:2;}.heat-cell.q.high-effort{grid-column:3;}'; document.head.appendChild(hst);
+
+  [{name:'TTFB',dur:0.15,color:'var(--green)'},{name:'JS',dur:2.5,color:'var(--orange)'},{name:'Images',dur:2.2,color:'var(--blue)'},{name:'LCP',dur:2,color:'var(--red)'}].forEach(function(s,i){var w=Math.max(44,s.dur*60);var d=document.createElement('div');d.style.cssText='height:32px;display:flex;align-items:center;padding-left:6px;border-radius:6px;background:'+s.color+';width:'+w+'px;min-width:44px;font-size:11px;margin-left:'+(i*2)+'px;';d.textContent=s.name+' '+s.dur+'s';document.getElementById('waterfallWrap').appendChild(d);});
+
+  var r=document.getElementById('ringRecovery'); var c=2*Math.PI*42; r.setAttribute('stroke-dasharray',(c*0.75)+' '+c); document.querySelector('#recovery .ring text').textContent='75%';
+})();
+  </script>
+</body>
+</html>

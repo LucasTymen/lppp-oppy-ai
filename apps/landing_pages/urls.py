@@ -22,6 +22,8 @@ urlpatterns = [
     path("p/casapy/audit-dashboard/", views.casapy_audit_dashboard, name="casapy_audit_dashboard"),
     # Promovacances assets (infographie 7 formats, images)
     path("p/promovacances/assets/<path:filename>", views.serve_promovacances_asset, name="promovacances_assets"),
+    # Infopro assets (infographie 7 formats, positionnement-marketing, images)
+    path("p/infopro/assets/<path:filename>", views.serve_infopro_asset, name="infopro_assets"),
     # Dashboard audit SEO : 1 template + 1 JSON par projet (docs/contacts/<slug>/audit-dashboard.json)
     path("p/<slug:slug>/audit-dashboard/", views.seo_audit_dashboard, name="seo_audit_dashboard"),
     path("p/<slug:slug>/", views.landing_public, name="landing_public"),

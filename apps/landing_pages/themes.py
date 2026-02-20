@@ -733,10 +733,141 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
 }
 """
 
+# Charte Infopro Digital — même base que Promovacances (B2B, médias)
+# Logo via SVG sprite officiel Infopro Digital
+THEME_INFOPRO = {
+    "fonts": {"body": "Roboto", "heading": "Roboto Condensed"},
+    "colors": {
+        "background": "#FFFFFF",
+        "text": "#001327",
+        "primary": "#3999E5",
+        "secondary": "#2078AE",
+    },
+    "logo_url": None,
+    "logo_svg_use_url": "https://www.infopro-digital.com/app/themes/infopro-digital/dist/img/icons/icons.svg#icon-logo-infopro-digital",
+    "logo_link": "https://www.infopro-digital.com/fr/",
+    "background_image_url": None,
+}
+
+# Infopro : style dashboard SEO (fond sombre, surfaces, accents vifs)
+# Référence : dashboard_seo_bloquages.html
+THEME_CSS_INFOPRO = THEME_CSS_PROMOVACANCES + """
+/* Infopro — style dashboard (fond sombre, textes blancs, accents vifs) */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap");
+:root {
+  --infopro-bg: #080810;
+  --infopro-surface: #0e0e1a;
+  --infopro-surface2: #13131f;
+  --infopro-border: rgba(255,255,255,0.07);
+  --infopro-text: #f0f0fa;
+  --infopro-muted: #6b6b8a;
+  --infopro-accent: #ff3b3b;
+  --infopro-warn: #ff9900;
+  --infopro-ok: #00e676;
+  --infopro-blue: #4fc3f7;
+  --infopro-purple: #b388ff;
+}
+body { background: var(--infopro-bg) !important; color: var(--infopro-text) !important; }
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+body:has(.section) .section,
+body:has(.section) .section:nth-of-type(odd),
+body:has(.section) .section:nth-of-type(even) {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+body:has(.section) .section p,
+body:has(.section) .section h2,
+body:has(.section) .section-num { color: var(--infopro-text) !important; }
+body:has(.section) .section-head { border-left-color: var(--infopro-accent) !important; }
+.icebreaker {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-left-color: var(--infopro-accent) !important;
+  border-radius: 16px !important;
+}
+.card {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+.card p, .card h2, .card h3, .card li, .card th, .card td { color: var(--infopro-text) !important; }
+.card .muted { color: var(--infopro-muted) !important; }
+.card strong { color: var(--infopro-accent) !important; }
+.key-figures-carousel {
+  background: var(--infopro-surface) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+.key-figures-slide .kpi-value { color: var(--infopro-accent) !important; }
+.key-figures-slide .kpi-unit,
+.key-figures-slide .kpi-label,
+.key-figures-slide.chart-slide h3,
+.key-figures-timeline-item .t-period,
+.key-figures-timeline-item .t-desc,
+.key-figures-bar-group .bar-val { color: var(--infopro-text) !important; }
+.key-figures-slide .kpi-label { color: var(--infopro-muted) !important; }
+.seo-resume-card {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+.seo-resume-card p, .seo-resume-card li { color: var(--infopro-text) !important; }
+
+/* Rapport (rapport.html) et pages rapport — dashboard style */
+body:has(.report-body) { font-family: 'DM Sans', system-ui, sans-serif !important; }
+body:has(.report-body) .report-body h1,
+body:has(.report-body) .report-body h2,
+body:has(.report-body) .report-body h3 { font-family: 'Bebas Neue', system-ui, sans-serif !important; }
+body:has(.report-body) .nav {
+  background: rgba(8,8,16,0.95) !important;
+  border-bottom: 1px solid var(--infopro-border) !important;
+}
+body:has(.report-body) .nav > a { color: var(--infopro-text) !important; }
+body:has(.report-body) .nav-links a { color: var(--infopro-muted) !important; }
+body:has(.report-body) .nav-links a:hover,
+body:has(.report-body) .nav-links a.active { color: var(--infopro-accent) !important; }
+body:has(.report-body) .nav-cta { background: var(--infopro-accent) !important; color: #fff !important; }
+body:has(.report-body) .report-intro {
+  background: var(--infopro-surface) !important;
+  border-left: 4px solid var(--infopro-accent) !important;
+  color: var(--infopro-text) !important;
+}
+body:has(.report-body) .report-intro strong { color: var(--infopro-accent) !important; }
+body:has(.report-body) .report-body h1,
+body:has(.report-body) .report-body h2,
+body:has(.report-body) .report-body h3 { color: var(--infopro-text) !important; }
+body:has(.report-body) .report-body h1 { border-bottom-color: var(--infopro-accent) !important; }
+body:has(.report-body) .report-body p,
+body:has(.report-body) .report-body li,
+body:has(.report-body) .report-body td { color: var(--infopro-text) !important; }
+body:has(.report-body) .report-body th {
+  background: rgba(255,255,255,0.04) !important;
+  color: var(--infopro-text) !important;
+  border-color: var(--infopro-border) !important;
+}
+body:has(.report-body) .report-body th,
+body:has(.report-body) .report-body td { border-color: var(--infopro-border) !important; }
+body:has(.report-body) .report-body blockquote {
+  border-left-color: var(--infopro-accent) !important;
+  color: var(--infopro-muted) !important;
+}
+"""
+
 # Slug → (theme dict, theme_css string) pour injection côté vue
 LANDING_THEMES = {
     "orsys": (THEME_ORSYS, THEME_CSS_ORSYS),
     "maisons-alfort": (THEME_MAISONS_ALFORT, THEME_CSS_MAISONS_ALFORT),
     "fitclem": (THEME_FITCLEM, THEME_CSS_FITCLEM),
     "promovacances": (THEME_PROMOVACANCES, THEME_CSS_PROMOVACANCES),
+    "infopro": (THEME_INFOPRO, THEME_CSS_INFOPRO),
 }

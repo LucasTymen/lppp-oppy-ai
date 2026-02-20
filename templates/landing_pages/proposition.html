@@ -86,6 +86,9 @@
             .nav { animation: none; }
         }
         .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
+        .nav-logo.nav-logo--svg { height: 28px; width: auto; display: block; }
+        .nav-logo-link { display: flex; align-items: center; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
@@ -269,6 +272,12 @@
             border-radius: 8px;
             font-weight: 600;
         }
+        .hero-video-fallback--inline {
+            position: static !important;
+            transform: none !important;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
         .hero.has-bg-video .hero-video-fallback:hover,
         .hero.has-bg-video .hero-video-cta:hover {
             color: #fff;
@@ -359,10 +368,25 @@
             margin-right: auto;
             animation: fadeInUp 0.8s var(--lp-ease) both;
         }
+        /* Bloc contenu hero : évite chevauchement CTA / texte (ex. "Regarder la vidéo" ou erreur iframe) */
+        .hero .hero-content-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.5rem 1.25rem;
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+        .hero.has-bg-video .hero-content-block {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+        }
         .hero .hero-sub {
             font-size: clamp(1rem, 2vw, 1.2rem);
             color: var(--lp-muted, rgba(255,255,255,0.75));
-            margin: 0 0 2rem;
+            margin: 0;
             max-width: 28ch;
             margin-left: auto;
             margin-right: auto;
@@ -451,6 +475,8 @@
         .section p:last-child { margin-bottom: 0; }
 
         .icebreaker {
+            position: relative;
+            z-index: 1;
             width: 100%;
             max-width: 720px;
             margin: 0 auto 1rem;
@@ -678,7 +704,7 @@
         }
 
         /* Contenu principal : ne jamais déborder */
-        main#top { width: 100%; max-width: 100%; overflow-x: hidden; }
+        main#top { position: relative; z-index: 1; width: 100%; max-width: 100%; overflow-x: hidden; }
 
         /* ===== Responsive : mobile-first — 480px ===== */
         @media (min-width: 480px) {
@@ -693,6 +719,7 @@
         @media (min-width: 768px) {
             .nav { padding: 1rem 2rem; min-height: 60px; }
             .nav-logo { max-height: 42px; }
+            .nav-logo.nav-logo--svg { height: 36px; }
             .nav-links { gap: 0.5rem 1rem; }
             .nav-links a { font-size: 1rem; padding: 0.5rem 0.6rem; }
             .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; border-radius: 14px; }
@@ -715,6 +742,7 @@
         @media (min-width: 1024px) {
             .nav { padding: 1.25rem 2.5rem; min-height: 64px; }
             .nav-logo { max-height: 48px; }
+            .nav-logo.nav-logo--svg { height: 42px; }
             .nav-links { gap: 0.75rem 1.5rem; }
             .hero { padding: 4rem 2.5rem 6rem; }
             .hero h1 { font-size: clamp(2.5rem, 4.5vw, 3.75rem); max-width: 24ch; }
@@ -778,6 +806,7 @@
             body { font-size: 1.0625rem; }
             .nav { padding: 1.5rem 3rem; min-height: 68px; }
             .nav-logo { max-height: 52px; }
+            .nav-logo.nav-logo--svg { height: 46px; }
             .nav-links a { font-size: 1.05rem; }
             .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; border-radius: 16px; }
             .hero { padding: 5rem 3rem 7rem; }
@@ -801,7 +830,12 @@
 <body class="{% if use_perso_style %}lp-perso-style{% endif %}">
     <!-- Nav sticky (ancres style page perso) -->
     <nav class="nav">
-        {% if content.theme and content.theme.logo_url %}
+        {% if content.theme and content.theme.logo_svg_use_url %}
+        <a href="{{ content.theme.logo_link|default:'#top' }}" class="nav-logo-link" aria-label="{{ landing_page.prospect_company|default:'Infopro Digital' }}">
+            <svg class="icon icon-logo-infopro-digital nav-logo nav-logo--svg" aria-hidden="true" focusable="false" role="img"><use href="{{ content.theme.logo_svg_use_url }}" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="{{ content.theme.logo_svg_use_url }}"></use></svg>
+            <span class="sr-only">{{ landing_page.prospect_company|default:'Infopro Digital' }}</span>
+        </a>
+        {% elif content.theme and content.theme.logo_url %}
         <a href="#top"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" class="nav-logo" loading="lazy"></a>
         {% else %}
         <span style="font-weight:700; color: var(--lp-text);">{{ landing_page.prospect_company|default:content.page_title|default:"Landing" }}</span>
@@ -857,13 +891,16 @@
             <p class="hero-logo"><img src="{{ content.theme.logo_url }}" alt="{{ landing_page.prospect_company|default:'' }}" loading="lazy"></p>
             {% endif %}
             {% endif %}
-            <h1>{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
-            <p class="hero-sub">{{ content.hero_sub_headline|default:'' }}{% if not content.hero_sub_headline and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
-            {% if content.cta_text %}
-            {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
-            <a href="#contact-email-modal" class="cta">{{ content.cta_text }}</a>
-            {% endif %}
-            {% endif %}
+            <div class="hero-content-block">
+                <h1>{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>
+                <p class="hero-sub">{{ content.hero_sub_headline|default:'' }}{% if not content.hero_sub_headline and landing_page.prospect_company %}Pour {{ landing_page.prospect_company }}{% if landing_page.prospect_name %} — {{ landing_page.prospect_name }}{% endif %}{% endif %}</p>
+                {% if content.cta_text %}
+                {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}
+                <a href="#contact-email-modal" class="cta">{{ content.cta_text }}</a>
+                {% endif %}
+                {% endif %}
+                {% if content.hero_video_url %}{% with watch_url=content.hero_video_url|youtube_watch_url %}{% if watch_url %}<a href="{{ watch_url }}" target="_blank" rel="noopener noreferrer" class="hero-video-fallback hero-video-fallback--inline">Regarder la vidéo sur YouTube</a>{% endif %}{% endwith %}{% endif %}
+            </div>
         </section>
 
         {% if content.icebreaker %}<p class="icebreaker">{{ content.icebreaker }}</p>{% endif %}

@@ -17,6 +17,7 @@
 
 ### Pour l’agent en charge des erreurs (qui assiste le Chef de Projet)
 - **À chaque correction d’erreur** : ajouter ou compléter une entrée dans ce registre et mettre à jour les logs pour que l’équipe ne reproduise pas l’erreur.
+- **Sauvegarde incrémentale et reprise** : s’assurer que les agents appliquent la règle « Sauvegarde incrémentale obligatoire » (`pilotage-agents.mdc`) : sauvegarder à chaque étape, marquer la progression avec des timestamps en commentaire, retirer les marqueurs une fois la tâche terminée. En cas de crash ou de reprise (ex. création landing interrompue 4–5 fois), **reprendre au dernier marqueur** au lieu de recommencer du début ; documenter l’état dans ce registre si besoin.
 - **Actualiser la base de connaissances** : selon le cas — mettre à jour ou créer les docs concernés dans `docs/base-de-connaissances/` : `decisions.md` (décision liée à l’erreur ou à la prévention), `sources.md` si une source externe est utilisée, procédures dédiées, segmentations si une équipe est mobilisée, et le **registre agents/ressources** si une nouvelle ressource ou référence est créée. L’objectif est que la correction et sa prévention soient retrouvables par tous les agents.
 - **Interaction** : le Chef de Projet valide que la doc est à jour ; l’Orchestrateur peut référencer ce doc dans le registre agents/ressources.
 - **Lors de cartographies ou diagnostics** (Pentester, DevOps, Ingénieur système & réseaux) : toute erreur identifiée pendant une cartographie (nmap, tests de flux, analyse réseau) doit être **remontée au responsable de la consignation des erreurs** pour **répertoriation** dans ce registre (nouvelle entrée ou complément). Chaque rôle contribue avec ses tests et son expertise ; le responsable consignation centralise et documente ici.
@@ -496,6 +497,19 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
+### Vercel — Root Directory deploy/static-infopro-vercel does not exist
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-20 |
+| **Contexte** | Projet lppp-infopro connecté au repo landingPageCreatorForProspection, Root Directory = deploy/static-infopro-vercel. Build échoue. |
+| **Erreur** | Build Failed — The specified Root Directory does not exist. |
+| **Cause** | Le dossier deploy/static-infopro-vercel n'a pas été commité et poussé. |
+| **Solution** | git add deploy/static-infopro-vercel/ puis commit + push. Config Vercel : repo = landingPageCreatorForProspection, Root Directory = deploy/static-infopro-vercel. Voir deploy/PUSH-INFOPRO.md |
+| **Lien(s)** | deploy/PUSH-INFOPRO.md |
+
+---
+
 ### Vercel 404 / DEPLOYMENT_NOT_FOUND — page ne s’affiche pas
 
 | Champ | Contenu |
@@ -766,6 +780,18 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | Règle : **liens internes** (même site / même déploiement) = navigation même fenêtre (sans target="_blank") ; **liens externes** = nouvel onglet (target="_blank" rel="noopener noreferrer"). Alternative si blocage persistant : utiliser une vidéo auto-hébergée (MP4/WebM) en fond au lieu de YouTube. |
 | **Lien(s)** | `deploy/static-promovacances-vercel/`, `templates/landing_pages/proposition.html`, `includes/nav_landing_annexes.html` |
 
+### Crash / reprise — tâche multi-étapes recommencée du début
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Cursor ou autre IDE : crash en cours de tâche multi-étapes (ex. création landing infopro, duplication Promovacances). La même tâche a été recommencée 4–5 fois du début, perte de temps. |
+| **Erreur** | Pas d’erreur technique visible — l’agent ou la session s’interrompt avant la fin ; à la reprise, aucun marqueur de progression, on repart de zéro. |
+| **Cause** | Absence de sauvegarde incrémentale et de marqueurs de progression ; tout était en cours, rien de committé ni documenté. |
+| **Solution** | 1) **Sauvegarder à chaque étape** : commit git après chaque bloc logique (1–3 fichiers), message explicite. 2) **Marquer la progression** : commentaires timestamp dans le code ou fichier `.progress-<slug>.md` temporaire (ex. `# [2026-01-30 14:32] Étape 1/4 — dossier infopro créé`). 3) **À la reprise** : reprendre au **dernier marqueur** connu (consulter les commits récents, TODO, ou fichier de progression). 4) **Une fois terminé** : retirer les marqueurs temporaires. |
+| **Prévention** | Règle **« Sauvegarde incrémentale obligatoire »** dans `pilotage-agents.mdc` : tous les agents sauvegardent systématiquement chaque étape, ajoutent des timestamps en commentaire, les retirent quand la tâche est terminée. L’agent en charge des erreurs vérifie cette règle et documente les reprises. Décision : `decisions.md`. |
+| **Lien(s)** | `pilotage-agents.mdc` § « Sauvegarde incrémentale obligatoire », `decisions.md`, `erreurs-et-solutions.md` § « Pour l’agent en charge des erreurs » |
+
 ---
 
-*Dernière mise à jour : 2026-01-30 — Menu burger mobile (drawer non visible), liens target="_blank et blocage YouTube. Précédent : Templates landing meta description (2026-02-06). Stratégie fluide : `strategie-deploiement-git-vercel.md`.*
+*Dernière mise à jour : 2026-01-30 — Sauvegarde incrémentale et reprise après crash. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*

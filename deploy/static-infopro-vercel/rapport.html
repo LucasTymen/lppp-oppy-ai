@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Rapport — Infopro Digital</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  --pv-white: #ffffff;
+  --pv-ink: #001327;
+  --pv-ink-2: #121d29;
+  --pv-blue: #3999e5;
+  --pv-blue-2: #2078ae;
+  --pv-blue-3: #5ca6dc;
+  --pv-gray-100: #f7f6f5;
+  --pv-gray-200: #d4e1e6;
+  --pv-gray-300: #9ab6c3;
+  --pv-gray-400: #b0b9bc;
+  --lp-font-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --lp-font-heading: 'Roboto Condensed', 'Roboto', system-ui, sans-serif;
+  --lp-bg: #FFFFFF;
+  --lp-text: #001327;
+  --lp-primary: #3999E5;
+  --lp-secondary: #2078AE;
+  --lp-border: #d4e1e6;
+  --lp-block-bg: #f7f6f5;
+  --lp-muted: #5c6b7a;
+  --lp-heading: #001327;
+  --lp-cta-text: #ffffff;
+  --lp-text-on-light: #001327;
+  --lp-text-on-dark: #f5f5f5;
+}
+
+/* Lisibilité — +0.2em base (1.2rem vs 1rem) */
+html { font-size: 18px; }
+body { font-size: 1.125rem; line-height: 1.6; }
+
+/* Nav fond clair — contraste texte sombre (comme promovacances.com) */
+body:has(.nav) .nav {
+  background: color-mix(in srgb, var(--lp-bg) 96%, rgba(255,255,255,0.95)) !important;
+  border-bottom-color: var(--pv-gray-200) !important;
+}
+body:has(.nav) .nav-links a,
+body:has(.nav) .nav span:first-child { color: var(--lp-text-on-light) !important; }
+body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
+
+/* Hero vidéo : parallaxe (fixe au scroll) + overlay, sans contrôles ni son */
+.hero.has-bg-video {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  overflow: hidden !important;
+}
+.hero.has-bg-video .hero-bg-video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+.hero.has-bg-video .hero-bg-video iframe {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  height: 56.25vw !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Infopro — style dashboard (fond sombre, textes blancs, accents vifs) */
+@import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap");
+:root {
+  --infopro-bg: #080810;
+  --infopro-surface: #0e0e1a;
+  --infopro-surface2: #13131f;
+  --infopro-border: rgba(255,255,255,0.07);
+  --infopro-text: #f0f0fa;
+  --infopro-muted: #6b6b8a;
+  --infopro-accent: #ff3b3b;
+  --infopro-warn: #ff9900;
+  --infopro-ok: #00e676;
+  --infopro-blue: #4fc3f7;
+  --infopro-purple: #b388ff;
+}
+body { background: var(--infopro-bg) !important; color: var(--infopro-text) !important; }
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0;
+}
+body:has(.section) .section,
+body:has(.section) .section:nth-of-type(odd),
+body:has(.section) .section:nth-of-type(even) {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+body:has(.section) .section p,
+body:has(.section) .section h2,
+body:has(.section) .section-num { color: var(--infopro-text) !important; }
+body:has(.section) .section-head { border-left-color: var(--infopro-accent) !important; }
+.icebreaker {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-left-color: var(--infopro-accent) !important;
+  border-radius: 16px !important;
+}
+.card {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+.card p, .card h2, .card h3, .card li, .card th, .card td { color: var(--infopro-text) !important; }
+.card .muted { color: var(--infopro-muted) !important; }
+.card strong { color: var(--infopro-accent) !important; }
+.key-figures-carousel {
+  background: var(--infopro-surface) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+.key-figures-slide .kpi-value { color: var(--infopro-accent) !important; }
+.key-figures-slide .kpi-unit,
+.key-figures-slide .kpi-label,
+.key-figures-slide.chart-slide h3,
+.key-figures-timeline-item .t-period,
+.key-figures-timeline-item .t-desc,
+.key-figures-bar-group .bar-val { color: var(--infopro-text) !important; }
+.key-figures-slide .kpi-label { color: var(--infopro-muted) !important; }
+.seo-resume-card {
+  background: var(--infopro-surface) !important;
+  color: var(--infopro-text) !important;
+  border: 1px solid var(--infopro-border) !important;
+  border-radius: 16px !important;
+}
+.seo-resume-card p, .seo-resume-card li { color: var(--infopro-text) !important; }
+
+/* Rapport (rapport.html) et pages rapport — dashboard style */
+body:has(.report-body) { font-family: 'DM Sans', system-ui, sans-serif !important; }
+body:has(.report-body) .report-body h1,
+body:has(.report-body) .report-body h2,
+body:has(.report-body) .report-body h3 { font-family: 'Bebas Neue', system-ui, sans-serif !important; }
+body:has(.report-body) .nav {
+  background: rgba(8,8,16,0.95) !important;
+  border-bottom: 1px solid var(--infopro-border) !important;
+}
+body:has(.report-body) .nav > a { color: var(--infopro-text) !important; }
+body:has(.report-body) .nav-links a { color: var(--infopro-muted) !important; }
+body:has(.report-body) .nav-links a:hover,
+body:has(.report-body) .nav-links a.active { color: var(--infopro-accent) !important; }
+body:has(.report-body) .nav-cta { background: var(--infopro-accent) !important; color: #fff !important; }
+body:has(.report-body) .report-intro {
+  background: var(--infopro-surface) !important;
+  border-left: 4px solid var(--infopro-accent) !important;
+  color: var(--infopro-text) !important;
+}
+body:has(.report-body) .report-intro strong { color: var(--infopro-accent) !important; }
+body:has(.report-body) .report-body h1,
+body:has(.report-body) .report-body h2,
+body:has(.report-body) .report-body h3 { color: var(--infopro-text) !important; }
+body:has(.report-body) .report-body h1 { border-bottom-color: var(--infopro-accent) !important; }
+body:has(.report-body) .report-body p,
+body:has(.report-body) .report-body li,
+body:has(.report-body) .report-body td { color: var(--infopro-text) !important; }
+body:has(.report-body) .report-body th {
+  background: rgba(255,255,255,0.04) !important;
+  color: var(--infopro-text) !important;
+  border-color: var(--infopro-border) !important;
+}
+body:has(.report-body) .report-body th,
+body:has(.report-body) .report-body td { border-color: var(--infopro-border) !important; }
+body:has(.report-body) .report-body blockquote {
+  border-left-color: var(--infopro-accent) !important;
+  color: var(--infopro-muted) !important;
+}
+</style>
+    <style>
+        :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1.2rem; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav-logo { max-height: 36px; width: auto; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-links a.active { color: var(--lp-primary, #4a9eff); font-weight: 600; }
+        .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; }
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; padding-top: calc(2rem + 52px); }
+        .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
+        .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
+        .report-body h2 { font-size: 1.35rem; }
+        .report-body h3 { font-size: 1.1rem; }
+        .report-body p { margin: 0 0 0.75rem; }
+        .report-body ul, .report-body ol { margin: 0 0 0.75rem 1.5rem; }
+        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1.05rem; }
+        .report-body th, .report-body td { border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); padding: 0.5rem 0.75rem; text-align: left; }
+        .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
+        .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
+        .report-intro { margin: 0 0 1.5rem; padding: 0.85rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-left: 4px solid var(--lp-primary, #4a9eff); font-size: 1.1rem; color: var(--lp-text, #e6e6e6); }
+        .site-bg-fixed { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; }
+        .site-bg-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; min-width: 100vw; height: 56.25vw; min-height: 100vh; max-height: none; }
+        .site-bg-video iframe, .site-bg-video video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; min-width: 100vw; height: 56.25vw; min-height: 100vh; object-fit: cover; }
+        .site-bg-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.7) 100%); }
+        .site-content { position: relative; z-index: 1; min-height: 100vh; }
+    </style>
+</head>
+<body>
+    
+    <div class="site-bg-fixed">
+        <div class="site-bg-video">
+            <video autoplay muted loop playsinline aria-hidden="true"><source src="hero-infopro.mp4" type="video/mp4"></video>
+        </div>
+        <div class="site-bg-overlay"></div>
+    </div>
+    
+    <div class="site-content">
+    <nav class="nav">
+        
+        <a href="index.html" style="font-weight:700; color: var(--lp-text); text-decoration: none;">Infopro Digital</a>
+        
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="rapport.html" class="active">Rapport</a>
+            <a href="infographie-infopro-7-formats.html">Infographie</a>
+            <a href="positionnement-marketing.html">Positionnement marketing</a>
+            
+            <a href="index.html#coordonnees" class="nav-cta">Me contacter</a>
+        </div>
+    </nav>
+    <main class="page-wrap">
+        <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à Infopro Digital</strong> — diagnostic, opportunités et plan d'action.</p>
+        <div class="report-body"><h1>Rapport complet Infopro Digital — Audit SEO &amp; positionnement marketing</h1>
+<p><strong>Date</strong> : 2026-02<br />
+<strong>Sources</strong> : RAPPORT_INFOPRO_DIGITAL_20260220.md, Wappalyzer, étude complète (infopro-digital etude complete), audit SEO (Screaming Frog, PageSpeed), crawl 358 URLs.<br />
+<strong>Usage</strong> : Landing Infopro, page rapport, livrables projet LPPP.</p>
+<hr />
+<h2>Contexte — Un géant au carrefour de l’info et du business</h2>
+<p>Infopro Digital n’est pas une agence de com : c’est un <strong>géant technologique et médiatique B2B</strong> qui transforme la donnée technique en décisions business pour les professionnels. Le groupe édite des médias (L’Usine Nouvelle, Le Moniteur, L’Argus), des logiciels, des bases de données, des plateformes de leads et organise des salons professionnels. Le modèle combine <strong>médias + lead generation</strong> : l’info attire, les marketplaces (ExpoPermanent) convertissent.</p>
+<p><strong>Promesse</strong> : « Nous vous aidons à prendre les meilleures décisions professionnelles. »<br />
+<strong>Cible</strong> : décideurs, ingénieurs, acheteurs industriels, assureurs.<br />
+<strong>Positionnement</strong> : passage obligé entre fournisseur et client industriel.</p>
+<hr />
+<h2>1. Diagnostic technique — TTFB et stack</h2>
+<h3>TTFB mesuré (2026-02-20)</h3>
+<table>
+<thead>
+<tr>
+<th>Mesure</th>
+<th>TTFB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Médiane (5 prises)</td>
+<td>~0,153 s (~153 ms)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Interprétation</strong> : le serveur répond très vite. En cas de perfs décevantes (PageSpeed 68), le bottleneck est côté <strong>front-end</strong> (JS, images, LCP), pas serveur.</p>
+<h3>Stack identifiée (Wappalyzer + Technology Detector)</h3>
+<table>
+<thead>
+<tr>
+<th>Catégorie</th>
+<th>Technologies</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CMS</strong></td>
+<td>WordPress, Yoast SEO, WP Rocket 3.19.3, Polylang</td>
+</tr>
+<tr>
+<td><strong>Infra</strong></td>
+<td>Amazon CloudFront (CDN), Nginx, Amazon Web Services</td>
+</tr>
+<tr>
+<td><strong>Front</strong></td>
+<td>Swiper, Preact, LazySizes, jQuery 3.7.1, jQuery Migrate</td>
+</tr>
+<tr>
+<td><strong>Data / MarTech</strong></td>
+<td>Piano Analytics, Salesforce Audience Studio, Google Tag Manager, Google AdSense</td>
+</tr>
+<tr>
+<td><strong>Conformité</strong></td>
+<td>Didomi (cookies), HSTS</td>
+</tr>
+<tr>
+<td><strong>Métadonnées</strong></td>
+<td>Open Graph, HTTP/3</td>
+</tr>
+</tbody>
+</table>
+<p>Synthèse : stack moderne, CDN CloudFront en première ligne, cache WP Rocket. L’origine WordPress (hébergement) n’est pas identifiable via les headers (via CloudFront).</p>
+<hr />
+<h2>2. Audit SEO (crawl 358 URLs)</h2>
+<h3>PageSpeed Mobile (infopro-digital.com)</h3>
+<table>
+<thead>
+<tr>
+<th>Métrique</th>
+<th>Valeur</th>
+<th>Statut</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Performance</td>
+<td>68</td>
+<td>Moyen (orange)</td>
+</tr>
+<tr>
+<td>Accessibilité</td>
+<td>99</td>
+<td>Vert</td>
+</tr>
+<tr>
+<td>Bonnes pratiques</td>
+<td>96</td>
+<td>Vert</td>
+</tr>
+<tr>
+<td>SEO</td>
+<td>91</td>
+<td>Vert</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Blocage principal</strong> : images (alt manquant 88 %, dimensions 62,7 %, 41 images &gt; 100 Ko), layout (CLS), JS.</p>
+<h3>Indexabilité et temps de réponse</h3>
+<ul>
+<li><strong>URLs crawlées</strong> : 358  </li>
+<li><strong>URLs indexables</strong> : 337 (21 non indexables)  </li>
+<li><strong>URLs répondant en &lt; 1 s</strong> : 97,2 % (349 URLs)  </li>
+</ul>
+<p>La majorité des pages répond vite. Les lenteurs semblent plutôt côté front (JS, rendu, images) que serveur.</p>
+<h3>Problèmes prioritaires (d’après audit_rapport_aperçu_problemes.csv)</h3>
+<table>
+<thead>
+<tr>
+<th>Priorité</th>
+<th>Problème</th>
+<th>URLs</th>
+<th>%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Élevée</td>
+<td>4xx internes</td>
+<td>3</td>
+<td>0,6 %</td>
+</tr>
+<tr>
+<td>Élevée</td>
+<td>Hreflang liens de retour manquants</td>
+<td>3</td>
+<td>1,9 %</td>
+</tr>
+<tr>
+<td>Élevée</td>
+<td>URL HTTP</td>
+<td>1</td>
+<td>0,3 %</td>
+</tr>
+<tr>
+<td>Élevée</td>
+<td>Pagination : URL pas dans balise ancrage</td>
+<td>2</td>
+<td>1,3 %</td>
+</tr>
+<tr>
+<td>Élevée</td>
+<td>Canonique non indexable</td>
+<td>1</td>
+<td>0,6 %</td>
+</tr>
+<tr>
+<td>Élevée</td>
+<td>Hreflang : ne pas utiliser version canonique</td>
+<td>1</td>
+<td>0,7 %</td>
+</tr>
+<tr>
+<td>Élevée</td>
+<td>Hreflang : liens retour non canoniques</td>
+<td>1</td>
+<td>0,7 %</td>
+</tr>
+<tr>
+<td>Moyenne</td>
+<td>Title doublon</td>
+<td>20</td>
+<td>12,9 %</td>
+</tr>
+<tr>
+<td>Moyenne</td>
+<td>Title &lt; 30 caractères</td>
+<td>8</td>
+<td>5,2 %</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>Meta descriptions manquantes</td>
+<td>108</td>
+<td>69,7 %</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>Images sans alt</td>
+<td>118</td>
+<td>88 %</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>H2 manquants</td>
+<td>92</td>
+<td>59,4 %</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>Images dimensions manquantes</td>
+<td>84</td>
+<td>62,7 %</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>Images &gt; 100 Ko</td>
+<td>41</td>
+<td>30,6 %</td>
+</tr>
+<tr>
+<td>Faible</td>
+<td>Headers sécurité (X-Frame-Options, CSP, X-Content-Type-Options)</td>
+<td>54–97 % des pages</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>3. Positionnement et stratégie marketing</h2>
+<h3>3 piliers stratégiques</h3>
+<ol>
+<li>
+<p><strong>Inbound de masse (Content Factory)</strong><br />
+   Autorité des marques (Le Moniteur, L’Usine Nouvelle) et automatisation pour couvrir des milliers de micro-niches (pompes hydrauliques, logiciels paie BTP…). Le contenu automatisé doit rester qualitatif pour maintenir l’autorité.</p>
+</li>
+<li>
+<p><strong>Long-tail</strong><br />
+   Priorité aux requêtes ultra-qualifiées plutôt qu’aux mots-clés à gros volume. Défi : piloter la performance de milliers de pages (Search Console, Semrush).</p>
+</li>
+<li>
+<p><strong>SEO vs GEO</strong><br />
+   Les bases de données sont un atout pour les moteurs IA (Perplexity, Gemini). Transformer les données en réponses citables.</p>
+</li>
+</ol>
+<h3>Funnel AAARR (Pirate Metrics) — B2B</h3>
+<table>
+<thead>
+<tr>
+<th>Étape</th>
+<th>Objectif</th>
+<th>Leviers Infopro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Acquisition</strong></td>
+<td>Attirer l’audience</td>
+<td>SEO de masse, Content Factory, newsletters, SEA &amp; Social Ads (LinkedIn)</td>
+</tr>
+<tr>
+<td><strong>Activation</strong></td>
+<td>Première expérience positive</td>
+<td>Consommation de contenu, UX/Performance, micro-conversions (newsletter, téléchargement)</td>
+</tr>
+<tr>
+<td><strong>Adoption</strong></td>
+<td>Faire revenir</td>
+<td>Alertes pro, compte utilisateur, webinars récurrents</td>
+</tr>
+<tr>
+<td><strong>Revenu</strong></td>
+<td>Monétiser</td>
+<td>Abonnements SaaS/Médias, Lead Gen (ExpoPermanent), publicité &amp; sponsoring</td>
+</tr>
+<tr>
+<td><strong>Referral</strong></td>
+<td>Recommandation</td>
+<td>Partage LinkedIn, marque employeur, viralité du contenu (baromètres, rapports)</td>
+</tr>
+</tbody>
+</table>
+<p>En B2B, le <strong>Search</strong> reste central ; le paid social complète pour notoriété et leads.</p>
+<h3>Google vs Meta</h3>
+<ul>
+<li><strong>Google</strong> : capture de demande, requêtes, intention, mots-clés.  </li>
+<li><strong>Meta</strong> : génération de demande, créas, test &amp; learn.  </li>
+<li>En B2B, le Search garde une place centrale ; le paid social complète pour notoriété et génération de leads.</li>
+</ul>
+<hr />
+<h2>4. PESTEL synthétique</h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Enjeux clés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Politique</strong></td>
+<td>Souveraineté numérique, DSA, stabilité réglementaire (BTP, Industrie, Assurance)</td>
+</tr>
+<tr>
+<td><strong>Économique</strong></td>
+<td>Passage vers abonnements SaaS et Lead Gen (résilient), arbitrage budgétaire B2B</td>
+</tr>
+<tr>
+<td><strong>Social</strong></td>
+<td>Infobésité, besoin de sources certifiées, pénurie de profils hybrides</td>
+</tr>
+<tr>
+<td><strong>Technologique</strong></td>
+<td>IA &amp; Content Factory, GEO (SGE, Perplexity), Data &amp; Analytics</td>
+</tr>
+<tr>
+<td><strong>Environnemental</strong></td>
+<td>RSE, sobriété numérique, reporting extra-financier</td>
+</tr>
+<tr>
+<td><strong>Légal</strong></td>
+<td>RGPD, propriété intellectuelle, Loi AI Act</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. SWOT synthétique</h2>
+<p><strong>Forces</strong> : Leadership sur marchés de niche, modèle diversifié (SaaS + leads + pub), bases de données propriétaires, expertise tech intégrée.<br />
+<strong>Faiblesses</strong> : Complexité de l’écosystème, inertie structurelle, dépendance au SEO.<br />
+<strong>Opportunités</strong> : GEO, industrialisation par l’IA, expansion internationale, digitalisation B2B.<br />
+<strong>Menaces</strong> : Érosion SEO par l’IA (zero-click), nouveaux entrants agiles, évolution réglementaire.</p>
+<hr />
+<h2>6. Concurrents principaux</h2>
+<table>
+<thead>
+<tr>
+<th>Concurrent</th>
+<th>Typologie</th>
+<th>Force principale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DirectIndustry</td>
+<td>Marketplace B2B</td>
+<td>Puissance mondiale sur catalogues industriels</td>
+</tr>
+<tr>
+<td>Kompass</td>
+<td>Annuaire</td>
+<td>Base de données structurée, data pure</td>
+</tr>
+<tr>
+<td>Wolters Kluwer</td>
+<td>Info pro</td>
+<td>Expertise éditoriale (juridique, santé, risque)</td>
+</tr>
+<tr>
+<td>LinkedIn</td>
+<td>Réseau pro</td>
+<td>Lead Gen, diffusion de contenus experts</td>
+</tr>
+<tr>
+<td>Groupe Les Échos</td>
+<td>Média</td>
+<td>Influence auprès des cadres, Vivatech</td>
+</tr>
+<tr>
+<td>Europages</td>
+<td>Mise en relation B2B</td>
+<td>SEO multilingue, sourcing industriel</td>
+</tr>
+<tr>
+<td>GlobalSpec</td>
+<td>Ingénierie</td>
+<td>Recherche de composants, très technique</td>
+</tr>
+<tr>
+<td>Newsweb / BFM Business</td>
+<td>News / Veille</td>
+<td>Audience chefs d’entreprise</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>7. Formules et ordres de grandeur (Growth / Maths)</h2>
+<h3>CA mensuel</h3>
+<pre><code>CA = Visites × CVR × AOV
+</code></pre>
+<h3>Perte de ventes (si perte de conversion p)</h3>
+<pre><code>LostOrders = Visites × CVR × p  →  LostRevenue = LostOrders × AOV
+</code></pre>
+<p><strong>Exemple</strong> : 30 k visites, 1,5 % CVR, panier 1 200 €, perte 18 % → LostRevenue ≈ ~28 k€/mois.</p>
+<p>Ordre de grandeur. Recalibrer avec vos données (trafic, CVR, panier).</p>
+<h3>Objectifs SMART (exemples pour poste Content Ops)</h3>
+<table>
+<thead>
+<tr>
+<th>Objectif</th>
+<th>Spécifique</th>
+<th>Mesurable</th>
+<th>Échéance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content Factory</td>
+<td>Améliorer workflow contenus IA</td>
+<td>+25 % de volume</td>
+<td>Fin S1</td>
+</tr>
+<tr>
+<td>Qualité SEO</td>
+<td>Réduire erreurs techniques</td>
+<td>95 % conformité audits</td>
+<td>Bilan 3 mois</td>
+</tr>
+<tr>
+<td>GEO</td>
+<td>Être cité par moteurs IA</td>
+<td>10 mots-clés stratégiques</td>
+<td>12 mois</td>
+</tr>
+<tr>
+<td>Conversion</td>
+<td>Augmenter CTR vers formulaires</td>
+<td>+10 % Lead Gen</td>
+<td>6 mois</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>8. Plan d’action priorisé</h2>
+<ol>
+<li><strong>Images</strong> : alt, width/height, compression (41 images &gt; 100 Ko)  </li>
+<li><strong>Meta &amp; structure</strong> : 108 meta descriptions, 92 H2 manquants  </li>
+<li><strong>Technique</strong> : 4xx (3 URLs), hreflang, pagination, canoniques  </li>
+<li><strong>Sécurité</strong> : X-Frame-Options, CSP, X-Content-Type-Options (54–97 % des pages)</li>
+</ol>
+<hr />
+<h2>9. Fichiers du livrable</h2>
+<table>
+<thead>
+<tr>
+<th>Fichier</th>
+<th>Rôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>landing-proposition-infopro.json</code></td>
+<td>Contenu page proposition</td>
+</tr>
+<tr>
+<td><code>positionnement-marketing.html</code></td>
+<td>Positionnement / étude paid media</td>
+</tr>
+<tr>
+<td><code>infographie-infopro-7-formats.html</code></td>
+<td>Infographie 7 formats</td>
+</tr>
+<tr>
+<td><code>audit-dashboard.json</code></td>
+<td>Données dashboard audit</td>
+</tr>
+<tr>
+<td><code>infopro_style_tokens.css</code></td>
+<td>Palette, tokens CSS</td>
+</tr>
+<tr>
+<td><code>wappalyzer_infopro-digital-com.csv</code></td>
+<td>Stack technologique Wappalyzer</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Sources : RAPPORT_INFOPRO_DIGITAL_20260220.md, wappalyzer_infopro-digital-com.csv, Screaming Frog, PageSpeed Insights, étude complète (infopro-digital etude complete), <a href="https://adstransparency.google.com">Google Ads Transparency</a>, Meta Ad Library.</em></p></div>
+    </main>
+    </div>
+</body>
+</html>
