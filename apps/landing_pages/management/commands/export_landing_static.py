@@ -19,41 +19,6 @@ from apps.landing_pages.models import LandingPage
 from apps.landing_pages.themes import LANDING_THEMES
 from apps.landing_pages.views import _content_with_defaults, _use_perso_style
 
-RAPPORT_HTML_HEAD = """<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rapport — société, stratégie, SEO</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --lp-bg: #0a0a0f; --lp-text: #e8e8ed; --lp-heading: #fff; --lp-muted: #9898a8; --lp-primary: #6366f1; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Inter', system-ui, sans-serif; margin: 0; min-height: 100vh; background: var(--lp-bg); color: var(--lp-text); line-height: 1.65; padding: clamp(2rem, 5vw, 4rem); max-width: 900px; margin: 0 auto; }
-        a { color: var(--lp-primary); }
-        h1, h2, h3 { color: var(--lp-heading); }
-        table { border-collapse: collapse; width: 100%; margin: 1rem 0; }
-        th, td { border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 0.75rem; text-align: left; }
-        th { background: rgba(99, 102, 241, 0.2); }
-        blockquote { border-left: 4px solid var(--lp-primary); margin: 1rem 0; padding-left: 1rem; color: var(--lp-muted); }
-        .back-link { display: inline-block; margin-bottom: 2rem; color: var(--lp-primary); text-decoration: none; }
-        .back-link:hover { text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <a href="index.html" class="back-link">← Retour à la proposition</a>
-    <div class="rapport-body">
-"""
-
-RAPPORT_HTML_FOOT = """
-    </div>
-</body>
-</html>
-"""
-
-
 class Command(BaseCommand):
     help = "Exporte une landing (proposition) en HTML statique pour déploiement Vercel (la page, pas une app). Préserve thème et style perso. Option --rapport-md : exporte une version intermédiaire du rapport (société, stratégie, SEO) en rapport.html et affiche le lien « Consulter le rapport »."
 
@@ -105,6 +70,9 @@ class Command(BaseCommand):
             elif slug == "casapy":
                 lp.prospect_company = "Casapy"
                 lp.prospect_name = ""
+            elif slug == "promovacances":
+                lp.prospect_company = "Promovacances"
+                lp.prospect_name = ""
             use_perso_style = _use_perso_style(lp)
             self.stdout.write(f"Contenu chargé depuis {json_path} (use_perso_style={use_perso_style})")
         else:
@@ -136,10 +104,27 @@ class Command(BaseCommand):
                 )
                 rapport_out = output_path.parent / "rapport.html"
                 output_path.parent.mkdir(parents=True, exist_ok=True)
-                rapport_out.write_text(
-                    RAPPORT_HTML_HEAD + body_html + RAPPORT_HTML_FOOT,
-                    encoding="utf-8",
-                )
+                # Contexte pour rapport avec nav (comme sur le reste du site)
+                theme_dict, theme_css = (None, None)
+                if slug in LANDING_THEMES:
+                    theme_dict, theme_css = LANDING_THEMES[slug]
+                hero_video_embed = ""
+                if slug == "promovacances":
+                    hero_video_embed = "https://www.youtube-nocookie.com/embed/ArifpieowSw?autoplay=1&mute=1&loop=1&playlist=ArifpieowSw&controls=0&rel=0&showinfo=0"
+                rapport_ctx = {
+                    "company_name": getattr(lp, "prospect_company", content.get("prospect_company", "")),
+                    "logo_url": (theme_dict or {}).get("logo_url") if theme_dict else None,
+                    "theme_css": theme_css or "",
+                    "index_url": "index.html",
+                    "rapport_url": "rapport.html",
+                    "infographie_url": content.get("infographie_url") or ("infographie-promovacances-7-formats.html" if slug == "promovacances" else None),
+                    "positionnement_marketing_url": "positionnement-marketing.html" if slug == "promovacances" else None,
+                    "audit_dashboard_url": content.get("audit_dashboard_url") or "",
+                    "report_body": body_html,
+                    "hero_video_embed_url": hero_video_embed,
+                }
+                rapport_html = render_to_string("landing_pages/rapport_static_export.html", rapport_ctx)
+                rapport_out.write_text(rapport_html, encoding="utf-8")
                 self.stdout.write(self.style.SUCCESS(f"Rapport intermédiaire écrit : {rapport_out}"))
                 content = dict(content)
                 content["rapport_url"] = "rapport.html"
@@ -157,6 +142,14 @@ class Command(BaseCommand):
             content["hero_video_mp4_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.mp4"
             content["hero_video_webm_url"] = "https://cdn.prod.website-files.com/68ad6297550fb653e920efc5/68ffa0854b21bf93944847b7_ORSYS_VideoHomepage-transcode.webm"
             content["hero_video_url"] = ""
+
+        # Promovacances (export statique) : URLs relatives pour assets
+        if slug == "promovacances":
+            content["promovacances_assets_url"] = ""
+            content["infographie_url"] = "infographie-promovacances-7-formats.html"
+            content["positionnement_marketing_url"] = "positionnement-marketing.html"
+            # rapport_url : conservé si --rapport-md ; sinon le lien rapport est masqué par le template
+            # audit_dashboard_url : laissé vide en statique (pas de dashboard embarqué)
 
         perso_ref_path = getattr(settings, "LANDING_PERSO_REF_PATH", "")
         html = render_to_string(
@@ -181,9 +174,21 @@ class Command(BaseCommand):
             import shutil
             casapy_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "casapy"
             out_dir = output_path.parent
-            patterns = ["slide*.png", "one-pager*.png", "casapy-wave*.png", "infographie*.html"]
+            patterns = ["slide*.svg", "one-pager*.svg", "casapy-wave*.svg", "slide*.png", "one-pager*.png", "casapy-wave*.png", "infographie*.html"]
             for pat in patterns:
                 for f in casapy_assets.glob(pat):
+                    dest = out_dir / f.name
+                    shutil.copy2(f, dest)
+                    self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))
+
+        # Promovacances : copier infographie HTML et style tokens
+        if slug == "promovacances":
+            import shutil
+            promo_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "promovacances"
+            out_dir = output_path.parent
+            patterns = ["infographie*.html", "positionnement-marketing.html", "promovacances_style_tokens.css", "audit-dashboard.json"]
+            for pat in patterns:
+                for f in promo_assets.glob(pat):
                     dest = out_dir / f.name
                     shutil.copy2(f, dest)
                     self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))

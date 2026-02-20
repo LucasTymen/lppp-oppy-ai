@@ -96,6 +96,7 @@ Objectif : les textes ne doivent pas sonner « générés par IA » (détecteurs
 
 **Règle explicite** : **toutes les pages doivent être responsives** — grille adaptative, breakpoints, typo fluide (clamp, rem), images et vidéos adaptatives. S’applique à chaque landing, chaque page, chaque template, pour tout projet.
 
+- **Barres de navigation** : **toujours en sticky** (rester visibles en haut au scroll) — meilleure UX pour la navigation. À appliquer systématiquement ; si une nav n’est pas sticky, la corriger. Réf. `docs/base-de-connaissances/erreurs-et-solutions.md` § « Barres de navigation — toujours en sticky ».
 - **Pilotes** : Designer (priorité), Orchestrateur (rappel stratégique), Chef de Projet (validation).
 - **Vérification** : mobile-first, tests sur différentes largeurs d’écran.
 

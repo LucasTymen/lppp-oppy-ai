@@ -20,6 +20,7 @@
 - **Actualiser la base de connaissances** : selon le cas — mettre à jour ou créer les docs concernés dans `docs/base-de-connaissances/` : `decisions.md` (décision liée à l’erreur ou à la prévention), `sources.md` si une source externe est utilisée, procédures dédiées, segmentations si une équipe est mobilisée, et le **registre agents/ressources** si une nouvelle ressource ou référence est créée. L’objectif est que la correction et sa prévention soient retrouvables par tous les agents.
 - **Interaction** : le Chef de Projet valide que la doc est à jour ; l’Orchestrateur peut référencer ce doc dans le registre agents/ressources.
 - **Lors de cartographies ou diagnostics** (Pentester, DevOps, Ingénieur système & réseaux) : toute erreur identifiée pendant une cartographie (nmap, tests de flux, analyse réseau) doit être **remontée au responsable de la consignation des erreurs** pour **répertoriation** dans ce registre (nouvelle entrée ou complément). Chaque rôle contribue avec ses tests et son expertise ; le responsable consignation centralise et documente ici.
+- **Règle projet — barres de navigation** : les **barres de navigation** doivent **toujours être en sticky** (rester visibles en haut au scroll). À appliquer **systématiquement** sur toute page publique qui a une nav ; quand ce n’est pas fait, **le noter et le corriger**. Voir l’entrée « Barres de navigation — toujours en sticky » ci‑dessous.
 
 ---
 
@@ -43,6 +44,66 @@ Pour chaque erreur documentée, indiquer :
 
 *(Les entrées seront ajoutées au fur et à mesure des corrections.)*
 
+### Page instable (local ou Vercel) — diagnostic DevOps / Architecte / Ingénieur Sys
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Landing Promovacances (ou autre) : page « instable » — connexion intermittente, layout shift, 404, lenteur, erreur réseau. |
+| **Erreur** | Connexion refusée / reset (local) ; layout qui bouge (CLS) ; 404 ; contenu qui ne se charge pas ou s’affiche lentement. |
+| **Cause** | Local : conteneurs orphelins, port occupé, web en crash loop, base vide. Vercel : rewrites manquants, images sans dimensions, cache, build échoué. |
+| **Solution** | Suivre la **segmentation** `segmentations/2026-01-30-sprint-page-instable-promovacances-devops-archi.md` : checklist diagnostic (local vs Vercel), actions correctives (clean-containers, landings-restore, vercel.json, CLS/LCP). |
+| **Prévention** | DevOps / Architecte / Ingénieur Sys appliquent la checklist dès signalement « page instable » ; documenter toute nouvelle cause dans ce registre. |
+| **Lien(s)** | `segmentations/2026-01-30-sprint-page-instable-promovacances-devops-archi.md`, `erreurs-et-solutions.md` (Docker, 404, Postgres), `procedure-modifications-landing-visible.md` |
+
+### Barres de navigation — toujours en sticky
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Toute page publique avec une barre de navigation (landings, rapport, prospects, proposition de valeur, dashboard audit, Yuwell, etc.). |
+| **Erreur** | Nav qui défile avec la page au lieu de rester visible en haut — mauvaise UX pour la navigation. |
+| **Cause** | Oubli de `position: sticky; top: 0` (et z-index si besoin) sur l’élément nav/header. |
+| **Solution** | Appliquer sur la nav : `position: sticky; top: 0; z-index: 100` (ou équivalent), et un fond/backdrop pour la lisibilité. |
+| **Prévention** | **L’agent en charge des erreurs** (et tout agent qui crée ou modifie un template avec barre de navigation) doit **prendre en note** : les **barres de navigation doivent toujours être en sticky** ; appliquer **systématiquement** ; quand ce n’est pas fait, **le corriger**. Règle projet pour une navigation optimale. |
+| **Lien(s)** | Templates : `proposition.html`, `rapport.html`, `prospects.html`, `proposition_value.html`, `includes/nav_landing_annexes.html`, `yuwell_base.html`, `yuwell_portfolio.html`, `seo_audit_dashboard.html`, `casapy_audit_dashboard.html`. |
+
+### Django / Docker — failed to resolve host 'db' ; service "web" is not running
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-19 |
+| **Contexte** | LPPP — commande `python3 manage.py create_landing_promovacances --publish` en WSL, ou `make landing-promovacances` sans stack démarré. |
+| **Erreur** | `psycopg.OperationalError: failed to resolve host 'db': [Errno -3] Temporary failure in name resolution` ; ou `service "web" is not running`. |
+| **Cause** | La config Django utilise le host `db` (service Docker). En dehors du réseau Docker, ce hostname n'existe pas. La commande doit être exécutée **dans le conteneur** `web`. De plus, le stack (db, redis, web) doit être démarré avant. |
+| **Solution** | 1. Se placer à la **racine LPPP** (répertoire contenant `Makefile`, `manage.py`, `docker-compose.yml`). 2. Démarrer le stack : `make start`. 3. Créer la landing : `make landing-promovacances`. **En une commande** : `make landing-promovacances-full` (enchaîne start puis création). |
+| **Prévention** | Toute commande Django qui touche à la base doit être lancée soit dans le conteneur (`docker compose exec web python manage.py ...`), soit via une cible Make qui le fait. Voir stratégie opérationnelle Make. |
+| **Lien(s)** | `segmentations/2026-02-19-landing-promovacances-creation-coordonnee.md`, `strategie-operationnelle-make.md`, `docs/contacts/promovacances/README.md` |
+
+### Docker — container name "/lppp_redis" (or lppp_db, etc.) already in use
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-19 |
+| **Contexte** | LPPP — `make start` ou `make landing-promovacances-full` ; démarrage séquentiel `docker compose up -d db redis`. |
+| **Erreur** | `Error response from daemon: Conflict. The container name "/lppp_redis" is already in use by container "c8bb53441ae6...". You have to remove (or rename) that container to be able to reuse that name.` |
+| **Cause** | Conteneur orphelin (ancienne session, arrêt brutal, ou autre projet) qui garde le nom attendu par ce projet. |
+| **Solution** | Supprimer les conteneurs LPPP concernés puis relancer : `make clean-containers` puis `make start` (ou `make landing-promovacances-full`). En une ligne : `make clean-containers && make landing-promovacances-full`. |
+| **Prévention** | En fin de session, privilégier `make down` pour arrêter proprement. En cas de conflit, `make clean-containers` est idempotent (ignore les conteneurs déjà absents). |
+| **Lien(s)** | `segmentations/2026-02-19-landing-promovacances-creation-coordonnee.md`, Makefile cible `clean-containers` |
+
+### 404 « No LandingPage matches the given query » après base vide (ex. volume recréé)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-19 |
+| **Contexte** | Après `make clean-containers` puis `make start`, ou volume Postgres recréé. Les URLs /p/casapy/, /p/fitclem/ renvoient 404. |
+| **Erreur** | `Page not found (404)` — `No LandingPage matches the given query.` (vue `landing_public`). |
+| **Cause** | La base a été recréée vide. Les entrées `LandingPage` (Casapy, FitClem, etc.) sont créées par des **commandes** ou des **migrations**. Les migrations recréent Maisons-Alfort et Yuwell ; Casapy, FitClem et Promovacances doivent être recréés par les commandes. |
+| **Solution** | À la racine LPPP, stack démarré : `make landings-restore`. Recrée Casapy, FitClem et Promovacances en base (--update --publish). Pour une seule landing : `make landing-promovacances` ou `docker compose exec web python manage.py create_landing_casapy --update --publish`, etc. |
+| **Prévention** | Avant `make clean-containers`, faire `make backup` si tu veux restaurer les données. Sinon, après un start sur base vide, exécuter `make landings-restore`. |
+| **Lien(s)** | Makefile cible `landings-restore`, `landing-promovacances`, `create_landing_casapy` |
+
 ### Next.js — Avis Red Hat / CVE (failles de sécurité, correctifs)
 
 | Champ | Contenu |
@@ -55,7 +116,31 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | Suivre les advisories Next.js : [nextjs.org/blog/security-update-2025-12-11](https://nextjs.org/blog/security-update-2025-12-11), [CVE-2025-66478](https://nextjs.org/blog/CVE-2025-66478). Vérifier périodiquement `npm audit` et les alertes Red Hat / Snyk sur les projets Next.js (LPPP et landings Vercel). |
 | **Lien(s)** | `regles-securite.md`, `stack-frontend-nextjs-react.md`, [Next.js Security Advisories](https://github.com/vercel/next.js/security/advisories) |
 
-### Vercel — Projets LPPP_* qui ne s’affichent plus dans le dashboard
+### Vercel — Duplication de projets pointant vers le même repo GitHub
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Sur Vercel, plusieurs projets (ex. LPPP_promovacances, variantes) pointent vers le **même** repo GitHub. |
+| **Erreur** | Doublons : plusieurs URLs (xxx.vercel.app) pour un même contenu ; confusion, dépenses ou build redondants. |
+| **Cause** | Import multiple du même repo, ou projet recréé sans supprimer l’ancien. |
+| **Solution** | 1) Vercel → Projects → lister les projets liés au repo concerné. 2) Conserver **un seul** (config correcte, déploiement récent). 3) Settings → General → **Delete Project** pour les doublons. 4) Documenter l’URL finale dans la fiche contact. Règle : **1 repo = 1 projet Vercel**. |
+| **Prévention** | Avant de créer un nouveau projet Vercel, vérifier qu’aucun projet n’est déjà lié au repo. Voir `strategie-deploiement-git-vercel.md`. |
+| **Lien(s)** | `segmentations/2026-01-30-sprint-urls-vercel-promovacances.md`, `strategie-deploiement-git-vercel.md` |
+
+### Vercel — Incohérence URLs (Django vs statique)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Landing statique Promovacances sur Vercel : mélange d’URLs Django (`/p/promovacances/...`) et statiques (`rapport.html`). |
+| **Erreur** | Liens cassés ou redondants ; texte qui mentionne une URL inexistante (ex. `/p/promovacances/audit-dashboard/`). |
+| **Cause** | Contenu généré pour Django puis exporté en statique ; certains liens ou mentions restent en format Django. |
+| **Solution** | Sur Vercel statique : **liens internes** = chemins relatifs (`rapport.html`, `positionnement-marketing.html`, etc.). Les rewrites `vercel.json` (`/p/promovacances/rapport/` → `/rapport.html`) servent aux liens externes. Corriger les mentions textuelles d’URL Django par l’équivalent statique (ex. `rapport.html#...`). |
+| **Prévention** | Export statique : utiliser systématiquement des URLs relatives ; pas de `/p/<slug>/` dans les href sauf si rewrites prévus. |
+| **Lien(s)** | `segmentations/2026-01-30-sprint-urls-vercel-promovacances.md`, `deploy/static-promovacances-vercel/vercel.json` |
+
+### Vercel — Projets LPPP_* qui ne s'affichent plus dans le dashboard s’affichent plus dans le dashboard
 
 | Champ | Contenu |
 |-------|---------|
@@ -657,6 +742,30 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | **Toujours générer la fiche à partir du modèle canonique COMPLET** dès la première livraison. Inclure **toutes** les sections : 0 Présentation, 1 Formalités, 2 Q/R stratégiques, **3 Tests techniques** (programmation, growth, marketing, mix), 4 Questions à poser, 5 [Entreprise] — Ce que vous devez savoir. Inclure **tous** les textes, lexique, abréviations (KPI, CPA, CPL, CTA, etc.), questions à poser et tout ce qui peut être utile. Consulter `fiches-entretien-emploi-modele-et-veille.md` et la règle `assistant-entretien-emploi.mdc` ; l'Assistant Entretien Emploi doit s'assurer que le modèle canonique est copié en entier (structure + contenu type) avant d'adapter au cas par cas. |
 | **Lien(s)** | `.cursor/rules/assistant-entretien-emploi.mdc`, `fiches-entretien-emploi-modele-et-veille.md`, `docs/ressources-utilisateur/fiches-entretien-emploi/_modele-canonique_prepa_entretien.html` |
 
+### Menu burger mobile — liens du drawer non visibles (landing Promovacances)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Landing Promovacances (index.html, proposition.html) : consultation sur **téléphone**. Le menu burger (waffle) s'affiche, mais les liens du drawer ne sont pas visibles. |
+| **Erreur** | Sur mobile, l'icône burger s'affiche correctement ; au clic, le drawer s'ouvre (animation) mais les liens de navigation n'apparaissent pas. |
+| **Cause** | Combinaison `transform: translateX(100%)` + `visibility` + `opacity` provoquant des bugs de rendu sur iOS/Safari. Z-index du drawer insuffisant. Possibles problèmes de `color-mix` pour le fond ou la couleur du texte. |
+| **Solution** | 1) Remplacer `translateX` par `translate3d(100%, 0, 0)` (+ `-webkit-transform`) pour forcer le rendu GPU. 2) Augmenter le z-index du drawer (ex. 10001). 3) Ajouter `pointer-events: none` quand fermé et `pointer-events: auto` quand ouvert. 4) Fond de repli solide : `rgba(255,255,255,0.98)`. 5) Forcer la couleur des liens : `color: var(--lp-text-on-light, #001327) !important`. 6) `display: flex; align-items: center` sur les liens du drawer. 7) `-webkit-overflow-scrolling: touch` pour le scroll iOS. |
+| **Prévention** | Lors de la création ou modification d'un menu burger / drawer mobile : utiliser `translate3d` plutôt que `translateX`, vérifier le z-index (drawer > nav), tester sur émulateur mobile et appareil réel (iOS). |
+| **Lien(s)** | `deploy/static-promovacances-vercel/index.html`, `templates/landing_pages/proposition.html` |
+
+### Liens internes target="_blank" — multiplication iframes YouTube → blocage « robot »
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 |
+| **Contexte** | Landing Promovacances (ou autre avec vidéo YouTube en fond) : navigation entre rapport, positionnement marketing, infographie, dashboard audit. |
+| **Erreur** | YouTube affiche « Connectez-vous pour confirmer que vous n'êtes pas un robot ». La vidéo de fond ne s'affiche pas (blocage). Surtout observable en local (localhost) ou avec plusieurs onglets ouverts. |
+| **Cause** | Liens internes avec `target="_blank"` ouvrent chaque page dans un **nouvel onglet**. Chaque onglet charge une iframe YouTube → multiplication des requêtes et iframes → détection anti-bot de YouTube. |
+| **Solution** | Retirer `target="_blank"` des **liens internes** (rapport, positionnement, infographie, dashboard audit) pour qu'ils s'ouvrent dans la **même fenêtre**. Garder `target="_blank"` pour les liens **externes** (LinkedIn, sources, etc.). Fichiers concernés : `deploy/static-promovacances-vercel/index.html`, `templates/landing_pages/proposition.html`, `includes/nav_landing_annexes.html`. |
+| **Prévention** | Règle : **liens internes** (même site / même déploiement) = navigation même fenêtre (sans target="_blank") ; **liens externes** = nouvel onglet (target="_blank" rel="noopener noreferrer"). Alternative si blocage persistant : utiliser une vidéo auto-hébergée (MP4/WebM) en fond au lieu de YouTube. |
+| **Lien(s)** | `deploy/static-promovacances-vercel/`, `templates/landing_pages/proposition.html`, `includes/nav_landing_annexes.html` |
+
 ---
 
-*Dernière mise à jour : 2026-02-06 — Templates landing : meta description obligatoire pour tout nouveau modèle (Lighthouse SEO). Précédent : Fiche entretien section tests techniques. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*
+*Dernière mise à jour : 2026-01-30 — Menu burger mobile (drawer non visible), liens target="_blank et blocage YouTube. Précédent : Templates landing meta description (2026-02-06). Stratégie fluide : `strategie-deploiement-git-vercel.md`.*

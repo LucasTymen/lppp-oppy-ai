@@ -12,6 +12,7 @@ Suite aux infographies déjà livrées (même approche, fond transparent), l’u
 
 - **Spec exécutable** : `docs/contacts/casapy/spec-deck-casapy-7-slides.md` (contenu exact ≤35 mots/slide, visuel recommandé, So what au même endroit, Wave en slide à part).
 - **Wave** : par défaut **TTFB/LCP** (axe Y = plus bas = mieux) ; option CVR/CA (plus haut = mieux) documentée dans la spec.
+- **Rédacteur en chef** : les textes d'accompagnement des illustrations doivent être **compréhensibles par un humain** et **non marqués IA** (appliquer `docs/bonnes-pratiques.md` — éditorial anti-détection IA, humanisation, comme défini dans le prompt projet).
 
 ---
 
@@ -20,7 +21,7 @@ Suite aux infographies déjà livrées (même approche, fond transparent), l’u
 | Rôle | Mission | Livrable / critère |
 |------|---------|---------------------|
 | **Infographiste** | Illustrer les **7 slides + one-pager** avec la **même approche que précédemment** (fond transparent, consultant-grade, style cohérent). Suivre la spec : type de visuel par slide (chaîne cause→effet, waterfall, immeuble vs maison, 3 blocs, 3 cards, split FACT/HYPOTHESIS, sinusoïde Wave). So what au même endroit (bas droite). Icônes cohérentes (serveur, DB, UX, panier, SEO). | Visuels 7 slides + one-pager (PNG/SVG fond transparent) ; Wave avec marqueur « Fix (J0) » si possible. |
-| **Rédacteur en chef** | **Texte explicatif très court et synthétique** pour recontextualiser chaque bloc/slide ; éviter la sensation « je ne comprends pas » pour quelqu’un pas du métier. Rester aligné sur le wording de la spec (≤35 mots/slide) tout en clarifiant les notions (TTFB, LCP, mutualisé, etc.) si besoin en légende ou encart. | Textes courts par slide/one-pager ; pas de jargon sans explication minimale. |
+| **Rédacteur en chef** | **Texte explicatif très court et synthétique** pour recontextualiser chaque bloc/slide ; éviter la sensation « je ne comprends pas » pour quelqu’un pas du métier. Rester aligné sur le wording de la spec (≤35 mots/slide) tout en clarifiant les notions (TTFB, LCP, mutualisé, etc.) si besoin en légende ou encart. | Textes d'accompagnement par slide/one-pager (labels, légendes, encarts) ; aucun jargon sans explication minimale ; formulation naturelle, pas de marqueurs LLM. Règle : `.cursor/rules/redacteur-en-chef.mdc`. |
 
 ---
 
@@ -30,6 +31,8 @@ Suite aux infographies déjà livrées (même approche, fond transparent), l’u
 - `docs/contacts/casapy/brief-visuels-enjeux-casapy-slides.md` — brief visuels (alignement messages).
 - `docs/contacts/casapy/notes-infographie-necessaires.md` — ressources indispensables pour l’infographie.
 - `scripts/generate_visuels_casapy.py` — régénération Matplotlib (option transparent).
+- **Rédacteur en chef** : `docs/bonnes-pratiques.md` (éditorial anti-détection IA, humanisation) ; `.cursor/rules/redacteur-en-chef.mdc` (texte accompagnant les illustrations = compréhensible humain, non marqué IA).
+- **Spec visuel + contextuel** (jauges, flowchart, cartes, formules, snippets) : `docs/contacts/casapy/spec-infographiques-visuel-contextuel.md` — chaque bloc visuel est accompagné d’un **texte court (tenants et aboutissants)** ; rendu **joli** demandé.
 
 ---
 

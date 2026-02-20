@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Performance — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080810;
+  --surface: #0e0e1a;
+  --surface2: #13131f;
+  --border: rgba(255,255,255,0.07);
+  --text: #f0f0fa;
+  --muted: #6b6b8a;
+  --accent: #ff3b3b;
+  --warn: #ff9900;
+  --ok: #00e676;
+  --blue: #4fc3f7;
+  --purple: #b388ff;
+  --mono: 'Space Mono', monospace;
+  --display: 'Bebas Neue', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  font-weight: 400;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* Grain texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrapper {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+}
+
+/* HEADER — toujours en sticky-top */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 56px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: var(--bg);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  margin-left: -24px;
+  margin-right: -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 8px;
+}
+.header-left {}
+.label-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+h1 {
+  font-family: var(--display);
+  font-size: clamp(42px, 8vw, 80px);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+h1 span { color: var(--accent); }
+.header-meta {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 14px;
+  font-family: var(--mono);
+}
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,59,59,0.12);
+  border: 1px solid rgba(255,59,59,0.3);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  white-space: nowrap;
+  align-self: flex-start;
+}
+.status-badge::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:1; transform:scale(1); }
+  50% { opacity:0.4; transform:scale(0.8); }
+}
+
+/* SECTION TITLES */
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 1px;
+  background: var(--accent);
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(22px, 4vw, 36px);
+  letter-spacing: 0.03em;
+  margin-bottom: 8px;
+}
+.section-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 24px;
+  max-width: 560px;
+}
+
+.block { margin-bottom: 64px; }
+
+/* CARD BASE */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+/* =====================
+   1. SPEEDOMETER
+   ===================== */
+.speedo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 32px;
+}
+#speedoSvg {
+  width: 100%;
+  max-width: 340px;
+}
+.speedo-label {
+  font-family: var(--display);
+  font-size: 52px;
+  fill: var(--text);
+}
+.speedo-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--muted);
+}
+.speedo-note {
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.speedo-note strong { color: var(--accent); }
+.score-legend {
+  display: flex;
+  gap: 24px;
+  margin-top: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.score-legend span {
+  font-family: var(--mono);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+/* =====================
+   2. TIMELINE
+   ===================== */
+.timeline-wrap {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.timeline-inner {
+  min-width: 620px;
+  position: relative;
+  padding: 24px 0 48px;
+}
+.tl-track {
+  position: relative;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 80px 0 0;
+}
+.tl-fill {
+  position: absolute;
+  left: 0; top: 0; height: 100%;
+  background: linear-gradient(90deg, var(--ok) 0%, var(--warn) 20%, var(--accent) 60%);
+  border-radius: 2px;
+  width: 100%;
+}
+.tl-marker {
+  position: absolute;
+  top: -76px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.tl-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  position: absolute;
+  top: 76px;
+  transform: translateX(-50%);
+}
+.tl-time {
+  font-family: var(--display);
+  font-size: 22px;
+  white-space: nowrap;
+}
+.tl-desc {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
+.tl-event {
+  font-size: 11px;
+  color: var(--text);
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+}
+.tl-axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.tl-axis span {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+.tl-void {
+  position: absolute;
+  top: 8px;
+  height: 4px;
+  background: rgba(255,59,59,0.08);
+  border-top: 1px dashed rgba(255,59,59,0.3);
+  border-bottom: 1px dashed rgba(255,59,59,0.3);
+}
+
+/* =====================
+   3. LOST REVENUE METER
+   ===================== */
+.meter-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
+}
+.meter-counter {
+  font-family: var(--display);
+  font-size: clamp(56px, 12vw, 100px);
+  color: var(--accent);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  position: relative;
+}
+.meter-counter::after {
+  content: '€';
+  font-size: 0.4em;
+  vertical-align: top;
+  margin-top: 12px;
+  display: inline-block;
+  color: rgba(255,59,59,0.6);
+}
+.meter-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.meter-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 16px;
+  text-align: center;
+}
+.meter-per-sec {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--warn);
+  margin-top: 4px;
+}
+.meter-controls {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* =====================
+   4. BULLET CHART
+   ===================== */
+.bullet-list { display: flex; flex-direction: column; gap: 20px; }
+.bullet-item {}
+.bullet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.bullet-name {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+}
+.bullet-value {
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--accent);
+}
+.bullet-track {
+  position: relative;
+  height: 28px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 4px;
+  overflow: visible;
+}
+.bullet-bg-bad {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 4px 0 0 4px;
+  background: rgba(255,59,59,0.08);
+}
+.bullet-bg-warn {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: rgba(255,153,0,0.08);
+}
+.bullet-bg-ok {
+  position: absolute;
+  top: 0; bottom: 0;
+  right: 0;
+  border-radius: 0 4px 4px 0;
+  background: rgba(0,230,118,0.06);
+}
+.bullet-bar {
+  position: absolute;
+  left: 0; top: 6px; bottom: 6px;
+  border-radius: 3px;
+  transition: width 1.2s cubic-bezier(.16,1,.3,1);
+}
+.bullet-target {
+  position: absolute;
+  top: -4px; bottom: -4px;
+  width: 3px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+}
+.bullet-industry {
+  position: absolute;
+  top: -6px; bottom: -6px;
+  width: 2px;
+  background: var(--blue);
+  border-radius: 1px;
+}
+.bullet-legend {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.bullet-legend span {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* =====================
+   5. HEATMAP / MATRIX
+   ===================== */
+.matrix-wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: 1fr 40px;
+  gap: 8px;
+  height: 380px;
+}
+.matrix-y-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.matrix-x-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+.matrix-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.quadrant {
+  background: var(--surface2);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+}
+.quadrant::before {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 8px; right: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.08);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 22px;
+  font-family: var(--display);
+}
+.q-quick { background: rgba(0,230,118,0.04); }
+.q-strategic { background: rgba(79,195,247,0.04); }
+.q-fill { background: rgba(255,153,0,0.04); }
+.q-skip { background: rgba(255,59,59,0.04); }
+.action-node {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+.action-node .icon {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* =====================
+   6. WATERFALL / CASCADE
+   ===================== */
+.waterfall-list { display: flex; flex-direction: column; gap: 0; }
+.wf-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 80px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.wf-row:last-child { border-bottom: none; }
+.wf-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.wf-track { position: relative; height: 22px; }
+.wf-bar {
+  position: absolute;
+  top: 3px; bottom: 3px;
+  border-radius: 3px;
+  transition: width 1.4s cubic-bezier(.16,1,.3,1), left 1.4s cubic-bezier(.16,1,.3,1);
+}
+.wf-bar-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--mono);
+  font-size: 9px;
+  white-space: nowrap;
+  padding: 0 6px;
+  color: rgba(255,255,255,0.85);
+}
+.wf-val {
+  font-family: var(--display);
+  font-size: 18px;
+  text-align: right;
+  white-space: nowrap;
+}
+.wf-cause-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent);
+  background: rgba(255,59,59,0.1);
+  border: 1px solid rgba(255,59,59,0.2);
+  border-radius: 4px;
+  padding: 2px 5px;
+  margin-left: 4px;
+}
+
+/* =====================
+   7. RECOVERY RINGS
+   ===================== */
+.rings-wrap {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.ring-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.ring-svg { width: 100%; max-width: 120px; }
+.ring-pct {
+  font-family: var(--display);
+  font-size: 28px;
+  fill: var(--text);
+}
+.ring-icon { font-size: 14px; fill: var(--muted); }
+.ring-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.ring-sub {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+@media (max-width: 600px) {
+  .rings-wrap { grid-template-columns: 1fr; }
+  .wf-row { grid-template-columns: 120px 1fr 60px; }
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <div class="label-tag">// Rapport d'audit technique</div>
+      <h1>PERF<span>AUDIT</span></h1>
+      <div class="header-meta">Site e-commerce WooCommerce &nbsp;·&nbsp; Analyse TTFB/LCP/Conversion &nbsp;·&nbsp; 2025</div>
+    </div>
+    <div class="status-badge">ÉTAT CRITIQUE — ACTION REQUISE</div>
+  </header>
+
+  <!-- 1. SPEEDOMETER -->
+  <div class="block">
+    <div class="section-label">01 / Score global</div>
+    <div class="section-title">Score de performance</div>
+    <div class="section-sub">Agrégation pondérée TTFB + LCP + Conversion loss. Zone rouge = intervention urgente.</div>
+
+    <div class="card">
+      <div class="speedo-wrap">
+        <svg id="speedoSvg" viewBox="0 0 340 200" aria-label="Score global">
+          <path id="arcBad" fill="none" stroke="rgba(255,59,59,0.15)" stroke-width="28" stroke-linecap="butt"/>
+          <path id="arcWarn" fill="none" stroke="rgba(255,153,0,0.15)" stroke-width="28" stroke-linecap="butt"/>
+          <path id="arcOk" fill="none" stroke="rgba(0,230,118,0.1)" stroke-width="28" stroke-linecap="butt"/>
+          <path id="arcScore" fill="none" stroke="url(#gScore)" stroke-width="28" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="gScore" gradientUnits="userSpaceOnUse" x1="50" y1="170" x2="290" y2="170">
+              <stop offset="0%" stop-color="#ff3b3b"/>
+              <stop offset="50%" stop-color="#ff9900"/>
+              <stop offset="100%" stop-color="#00e676"/>
+            </linearGradient>
+          </defs>
+          <line id="needle" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="170" cy="170" r="8" fill="#13131f" stroke="white" stroke-width="2"/>
+          <text x="170" y="148" text-anchor="middle" class="speedo-label" id="speedoNum">12</text>
+          <text x="170" y="168" text-anchor="middle" class="speedo-sub">/ 100</text>
+          <text x="52" y="185" text-anchor="middle" font-family="Space Mono" font-size="9" fill="rgba(255,59,59,0.7)">CRITIQUE</text>
+          <text x="170" y="60" text-anchor="middle" font-family="Space Mono" font-size="9" fill="rgba(255,153,0,0.7)">MOYEN</text>
+          <text x="288" y="185" text-anchor="middle" font-family="Space Mono" font-size="9" fill="rgba(0,230,118,0.7)">BON</text>
+        </svg>
+        <div class="speedo-note">Score calculé : TTFB (3,77s) + LCP (32s) + perte conversion (30%)<br><strong>12/100 — Site en zone rouge critique</strong></div>
+        <div class="score-legend">
+          <span><span class="dot" style="background:#ff3b3b"></span>0–40 Critique</span>
+          <span><span class="dot" style="background:#ff9900"></span>40–70 Moyen</span>
+          <span><span class="dot" style="background:#00e676"></span>70–100 Bon</span>
+          <span><span class="dot" style="background:#fff;opacity:0.5"></span>Objectif : 80+</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TIMELINE -->
+  <div class="block">
+    <div class="section-label">02 / Expérience utilisateur</div>
+    <div class="section-title">Ce que vit l'utilisateur</div>
+    <div class="section-sub">De la requête à la page utilisable — chaque seconde vide est une seconde de frustration.</div>
+
+    <div class="card">
+      <div class="timeline-wrap">
+        <div class="timeline-inner" id="timelineInner">
+          <div class="tl-track">
+            <div class="tl-fill"></div>
+          </div>
+          <div class="tl-axis">
+            <span>0s</span>
+            <span>8s</span>
+            <span>16s</span>
+            <span>24s</span>
+            <span>32s</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. LOST REVENUE METER -->
+  <div class="block">
+    <div class="section-label">03 / Impact business</div>
+    <div class="section-title">Compteur de pertes</div>
+    <div class="section-sub">Argent perdu en temps réel depuis l'ouverture de cette page. Basé sur un scénario 10k visites / 2% CVR / 900€ AOV / -30% conversion.</div>
+
+    <div class="card">
+      <div class="meter-wrap">
+        <div class="meter-counter" id="meterVal">0</div>
+        <div class="meter-label">pertes estimées depuis l'ouverture de la page</div>
+        <div class="meter-per-sec" id="meterRate">— €/s</div>
+        <div class="meter-subtitle">Manque à gagner mensuel estimé : <strong style="color:var(--accent)">54 000 €</strong> &nbsp;·&nbsp; soit <strong style="color:var(--warn)">648 000 €/an</strong></div>
+        <div class="meter-controls">
+          <button class="btn active" type="button" onclick="setScenario(0)">5k / 2% / 900€</button>
+          <button class="btn" type="button" onclick="setScenario(1)">10k / 2% / 900€</button>
+          <button class="btn" type="button" onclick="setScenario(2)">10k / 5% / 1200€</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. BULLET CHART -->
+  <div class="block">
+    <div class="section-label">04 / Comparatif</div>
+    <div class="section-title">Bullet Chart — Où tu en es</div>
+    <div class="section-sub">
+      <span style="display:inline-flex;align-items:center;gap:6px;margin-right:16px"><span style="display:inline-block;width:14px;height:3px;background:rgba(255,255,255,0.5);border-radius:1px"></span> Objectif cible</span>
+      <span style="display:inline-flex;align-items:center;gap:6px"><span style="display:inline-block;width:14px;height:3px;background:var(--blue);border-radius:1px"></span> Standard industrie</span>
+    </div>
+
+    <div class="card">
+      <div class="bullet-list" id="bulletList"></div>
+    </div>
+  </div>
+
+  <!-- 5. HEATMAP PRIORITÉ -->
+  <div class="block">
+    <div class="section-label">05 / Priorisation</div>
+    <div class="section-title">Matrice Impact × Effort</div>
+    <div class="section-sub">Par quoi commencer ? Les actions à impact fort / effort faible passent en premier.</div>
+
+    <div class="card">
+      <div class="matrix-wrap">
+        <div class="matrix-y-label">Impact Business →</div>
+        <div class="matrix-grid">
+          <div class="quadrant q-quick" data-label="QUICK">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--ok);margin-bottom:4px;">QUICK WINS</div>
+            <div class="action-node">
+              <div class="icon" style="background:rgba(0,230,118,0.15)">🗄️</div>
+              <div>
+                <div style="font-weight:500">Nettoyage DB</div>
+                <div style="font-size:10px;color:var(--muted)">Sessions • transients</div>
+              </div>
+            </div>
+            <div class="action-node">
+              <div class="icon" style="background:rgba(0,230,118,0.15)">⚙️</div>
+              <div>
+                <div style="font-weight:500">OPcache / Redis</div>
+                <div style="font-size:10px;color:var(--muted)">Config serveur</div>
+              </div>
+            </div>
+          </div>
+          <div class="quadrant q-strategic" data-label="STRAT">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--blue);margin-bottom:4px;">STRATÉGIQUE</div>
+            <div class="action-node">
+              <div class="icon" style="background:rgba(79,195,247,0.15)">🖥️</div>
+              <div>
+                <div style="font-weight:500">Migration VPS</div>
+                <div style="font-size:10px;color:var(--muted)">Hébergement dédié</div>
+              </div>
+            </div>
+            <div class="action-node">
+              <div class="icon" style="background:rgba(79,195,247,0.15)">🚀</div>
+              <div>
+                <div style="font-weight:500">Refonte front</div>
+                <div style="font-size:10px;color:var(--muted)">Elementor → bloc natif</div>
+              </div>
+            </div>
+          </div>
+          <div class="quadrant q-fill" data-label="FILL">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--warn);margin-bottom:4px;">SI TEMPS</div>
+            <div class="action-node">
+              <div class="icon" style="background:rgba(255,153,0,0.1)">🖼️</div>
+              <div>
+                <div style="font-weight:500">Images WebP</div>
+                <div style="font-size:10px;color:var(--muted)">Compression seule</div>
+              </div>
+            </div>
+          </div>
+          <div class="quadrant q-skip" data-label="SKIP">
+            <div style="font-family:var(--mono);font-size:10px;color:var(--accent);margin-bottom:4px;">ÉVITER</div>
+            <div class="action-node">
+              <div class="icon" style="background:rgba(255,59,59,0.1)">🎨</div>
+              <div>
+                <div style="font-weight:500">Redesign complet</div>
+                <div style="font-size:10px;color:var(--muted)">Sans fix serveur</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="matrix-x-label">
+          <span>← Effort faible</span>
+          <span>Effort élevé →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. WATERFALL -->
+  <div class="block">
+    <div class="section-label">06 / Cascade de chargement</div>
+    <div class="section-title">Waterfall — Chaîne de blocage</div>
+    <div class="section-sub">Chaque ressource bloque la suivante. Le LCP est une conséquence du TTFB, pas une cause indépendante.</div>
+
+    <div class="card">
+      <div class="waterfall-list" id="waterfallList"></div>
+    </div>
+  </div>
+
+  <!-- 7. RECOVERY RINGS -->
+  <div class="block">
+    <div class="section-label">07 / Potentiel de récupération</div>
+    <div class="section-title">Recovery Potential</div>
+    <div class="section-sub">Quel pourcentage du problème est résolvable avec chaque levier ?</div>
+
+    <div class="card">
+      <div class="rings-wrap" id="ringsWrap"></div>
+    </div>
+  </div>
+
+</div><!-- /wrapper -->
+
+<script>
+/* 1. SPEEDOMETER */
+(function() {
+  var cx = 170, cy = 170, r = 120;
+  var startAngle = Math.PI;
+  var endAngle = 2 * Math.PI;
+  var totalArc = endAngle - startAngle;
+
+  function polarToCart(angle) {
+    return { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle) };
+  }
+
+  function arcPath(from, to) {
+    var s = polarToCart(from), e = polarToCart(to);
+    var largeArc = (to - from) > Math.PI ? 1 : 0;
+    return 'M ' + s.x + ' ' + s.y + ' A ' + r + ' ' + r + ' 0 ' + largeArc + ' 1 ' + e.x + ' ' + e.y;
+  }
+
+  var score = 12;
+  var scoreFrac = score / 100;
+
+  document.getElementById('arcBad').setAttribute('d', arcPath(startAngle, startAngle + totalArc * 0.4));
+  document.getElementById('arcWarn').setAttribute('d', arcPath(startAngle + totalArc * 0.4, startAngle + totalArc * 0.7));
+  document.getElementById('arcOk').setAttribute('d', arcPath(startAngle + totalArc * 0.7, endAngle));
+  document.getElementById('arcScore').setAttribute('d', arcPath(startAngle, startAngle + totalArc * scoreFrac));
+
+  var needleAngle = startAngle + totalArc * scoreFrac;
+  var needleEnd = polarToCart(needleAngle);
+  var needleStart = { x: cx - (needleEnd.x - cx) * 0.15, y: cy - (needleEnd.y - cy) * 0.15 };
+  var needle = document.getElementById('needle');
+  needle.setAttribute('x1', needleStart.x);
+  needle.setAttribute('y1', needleStart.y);
+  needle.setAttribute('x2', cx + (needleEnd.x - cx) * 0.85);
+  needle.setAttribute('y2', cy + (needleEnd.y - cy) * 0.85);
+
+  var cur = 0;
+  var iv = setInterval(function() {
+    if (cur < score) { cur += 1; document.getElementById('speedoNum').textContent = cur; }
+  }, 60);
+  setTimeout(function() { clearInterval(iv); }, 4000);
+})();
+
+/* 2. TIMELINE */
+(function() {
+  var markers = [
+    { t: 0, label: "0s", event: "Requête envoyée", desc: "clic utilisateur", color: "#00e676" },
+    { t: 3.77, label: "3,77s", event: "1er octet (TTFB)", desc: "serveur répond", color: "#ff3b3b" },
+    { t: 12, label: "12s", event: "FCP — 1ers pixels", desc: "début rendu", color: "#ff9900" },
+    { t: 32, label: "32s", event: "LCP — Image principale", desc: "page visible", color: "#ff3b3b" },
+    { t: 35, label: "35s", event: "Page utilisable", desc: "TTI", color: "#b388ff" },
+  ];
+  var maxT = 35;
+  var inner = document.getElementById('timelineInner');
+
+  markers.forEach(function(m) {
+    var pct = (m.t / maxT) * 100;
+    var dot = document.createElement('div');
+    dot.className = 'tl-dot';
+    dot.style.left = pct + '%';
+    dot.style.background = m.color;
+    dot.style.top = '80px';
+    var markerEl = document.createElement('div');
+    markerEl.className = 'tl-marker';
+    markerEl.style.left = pct + '%';
+    markerEl.innerHTML = '<div class="tl-time" style="color:' + m.color + '">' + m.label + '</div><div class="tl-event">' + m.event + '</div><div class="tl-desc">' + m.desc + '</div>';
+    inner.querySelector('.tl-track').appendChild(dot);
+    inner.appendChild(markerEl);
+  });
+
+  var voidEl = document.createElement('div');
+  voidEl.className = 'tl-void';
+  voidEl.style.left = '0%';
+  voidEl.style.width = ((3.77 / maxT) * 100) + '%';
+  voidEl.style.top = '0px';
+  inner.querySelector('.tl-track').appendChild(voidEl);
+  var voidLabel = document.createElement('div');
+  voidLabel.style.cssText = 'position:absolute;left:' + ((1.885/maxT*100)) + '%;top:-18px;transform:translateX(-50%);font-family:var(--mono);font-size:9px;color:rgba(255,59,59,0.5);white-space:nowrap';
+  voidLabel.textContent = '← serveur silencieux →';
+  inner.querySelector('.tl-track').appendChild(voidLabel);
+})();
+
+/* 3. LOST REVENUE METER */
+var scenarios = [
+  { visits: 5000, cvr: 0.02, aov: 900 },
+  { visits: 10000, cvr: 0.02, aov: 900 },
+  { visits: 10000, cvr: 0.05, aov: 1200 },
+];
+var currentScenario = 0;
+var startTime = Date.now();
+var perSec;
+var meterStart = 0;
+
+function computeMonthly(s) {
+  return (s.visits * s.cvr * 0.30) * s.aov;
+}
+function perSecond(monthlyLoss) {
+  return monthlyLoss / (30 * 24 * 3600);
+}
+function setScenario(idx) {
+  var btns = document.querySelectorAll('.meter-controls .btn');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', i === idx);
+  currentScenario = idx;
+  var monthly = computeMonthly(scenarios[idx]);
+  perSec = perSecond(monthly);
+  meterStart = 0;
+  startTime = Date.now();
+  document.getElementById('meterRate').textContent = perSec.toFixed(4) + ' €/s';
+}
+function updateMeter() {
+  var elapsed = (Date.now() - startTime) / 1000;
+  var lost = meterStart + elapsed * perSec;
+  document.getElementById('meterVal').textContent = lost.toFixed(2).replace('.', ',');
+  requestAnimationFrame(updateMeter);
+}
+setScenario(0);
+requestAnimationFrame(updateMeter);
+
+/* 4. BULLET CHART */
+(function() {
+  var metrics = [
+    { name: "TTFB — Homepage", unit: "s", current: 3.77, target: 0.8, industry: 1.2, max: 5, bad: [2, 5], warn: [0.8, 2], ok: [0, 0.8], color: "#ff3b3b" },
+    { name: "LCP — Mobile", unit: "s", current: 32, target: 2.5, industry: 4, max: 35, bad: [10, 35], warn: [2.5, 10], ok: [0, 2.5], color: "#ff3b3b" },
+    { name: "Score conversion (CVR delta)", unit: "%", current: 30, target: 5, industry: 10, max: 35, bad: [20, 35], warn: [5, 20], ok: [0, 5], color: "#ff9900" },
+  ];
+  var list = document.getElementById('bulletList');
+  metrics.forEach(function(m) {
+    var pctCurrent = Math.min(m.current / m.max * 100, 100);
+    var pctTarget = m.target / m.max * 100;
+    var pctIndustry = m.industry / m.max * 100;
+    var pctBadStart = m.bad[0] / m.max * 100;
+    var pctBadEnd = m.bad[1] / m.max * 100;
+    var pctWarnStart = m.warn[0] / m.max * 100;
+    var pctWarnEnd = m.warn[1] / m.max * 100;
+    var pctOkEnd = m.ok[1] / m.max * 100;
+    var row = document.createElement('div');
+    row.className = 'bullet-item';
+    row.innerHTML = '<div class="bullet-header"><span class="bullet-name">' + m.name + '</span><span class="bullet-value">' + m.current + m.unit + '</span></div>' +
+      '<div class="bullet-track"><div class="bullet-bg-ok" style="right:' + (100-pctOkEnd) + '%;left:0"></div><div class="bullet-bg-warn" style="left:' + pctWarnStart + '%;width:' + (pctWarnEnd-pctWarnStart) + '%"></div><div class="bullet-bg-bad" style="left:' + pctBadStart + '%;width:' + (pctBadEnd-pctBadStart) + '%"></div>' +
+      '<div class="bullet-bar" style="width:0%;background:' + m.color + '" data-w="' + pctCurrent + '%"></div><div class="bullet-target" style="left:' + pctTarget + '%"></div><div class="bullet-industry" style="left:' + pctIndustry + '%"></div></div>' +
+      '<div class="bullet-legend"><span><span style="width:12px;height:2px;background:rgba(255,255,255,0.5);display:inline-block;border-radius:1px"></span> Objectif: ' + m.target + m.unit + '</span><span><span style="width:12px;height:2px;background:var(--blue);display:inline-block;border-radius:1px"></span> Industrie: ' + m.industry + m.unit + '</span></div>';
+    list.appendChild(row);
+  });
+  setTimeout(function() {
+    document.querySelectorAll('.bullet-bar').forEach(function(b) { b.style.width = b.getAttribute('data-w'); });
+  }, 400);
+})();
+
+/* 6. WATERFALL */
+(function() {
+  var maxT = 35;
+  var resources = [
+    { label: "Requête HTML", start: 0, dur: 3.77, color: "#ff3b3b", tag: "CAUSE" },
+    { label: "Réponse serveur (TTFB)", start: 0, dur: 3.77, color: "rgba(255,59,59,0.3)", tag: "" },
+    { label: "CSS / Fonts", start: 3.77, dur: 1.2, color: "#ff9900", tag: "" },
+    { label: "JS Elementor", start: 4.2, dur: 4.8, color: "#ff9900", tag: "" },
+    { label: "Images hero", start: 9.0, dur: 8.5, color: "#b388ff", tag: "" },
+    { label: "JS WooCommerce", start: 12.0, dur: 6.0, color: "#ff9900", tag: "" },
+    { label: "LCP — Image PDP", start: 18.0, dur: 14.0, color: "#ff3b3b", tag: "CONSÉQUENCE" },
+  ];
+  var list = document.getElementById('waterfallList');
+  resources.forEach(function(r, i) {
+    var pctLeft = (r.start / maxT) * 100;
+    var pctWidth = (r.dur / maxT) * 100;
+    var endT = r.start + r.dur;
+    var row = document.createElement('div');
+    row.className = 'wf-row';
+    row.innerHTML = '<div class="wf-label">' + r.label + (r.tag ? '<span class="wf-cause-badge">' + r.tag + '</span>' : '') + '</div><div class="wf-track"><div class="wf-bar" data-width="' + pctWidth + '%" style="left:' + pctLeft + '%;width:0%;background:' + r.color + '"><span class="wf-bar-label" style="left:4px">' + r.dur.toFixed(2) + 's</span></div></div><div class="wf-val" style="color:' + r.color + '">' + endT.toFixed(2) + 's</div>';
+    list.appendChild(row);
+  });
+  setTimeout(function() {
+    var bars = document.querySelectorAll('.wf-bar');
+    resources.forEach(function(r, i) {
+      var pctWidth = (r.dur / maxT) * 100;
+      if (bars[i]) bars[i].style.width = pctWidth + '%';
+    });
+  }, 500);
+})();
+
+/* 7. RECOVERY RINGS */
+(function() {
+  var rings = [
+    { pct: 78, label: "Serveur & Hosting", color: "#ff3b3b", sub: "Migration VPS + cache = principal levier" },
+    { pct: 15, label: "Base de données", color: "#ff9900", sub: "Nettoyage + index = gain rapide" },
+    { pct: 7, label: "Front-end", color: "#b388ff", sub: "LCP images + defer JS = gain résiduel" },
+  ];
+  var wrap = document.getElementById('ringsWrap');
+  var r = 45, cx = 60, cy = 60;
+  var circumference = 2 * Math.PI * r;
+
+  rings.forEach(function(ring) {
+    var dashOffset = circumference * (1 - ring.pct / 100);
+    var card = document.createElement('div');
+    card.className = 'ring-card';
+    card.innerHTML = '<svg class="ring-svg" viewBox="0 0 120 120"><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="10"/><circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="' + ring.color + '" stroke-width="10" stroke-dasharray="' + circumference + '" stroke-dashoffset="' + circumference + '" stroke-linecap="round" transform="rotate(-90 ' + cx + ' ' + cy + ')" class="ring-progress" data-offset="' + dashOffset + '"/><text x="' + cx + '" y="' + (cy - 6) + '" text-anchor="middle" font-family="Bebas Neue" font-size="26" fill="' + ring.color + '">' + ring.pct + '%</text><text x="' + cx + '" y="' + (cy + 12) + '" text-anchor="middle" font-family="Space Mono" font-size="8" fill="#6b6b8a">du problème</text></svg><div class="ring-title">' + ring.label + '</div><div class="ring-sub">' + ring.sub + '</div>';
+    wrap.appendChild(card);
+  });
+  setTimeout(function() {
+    document.querySelectorAll('.ring-progress').forEach(function(el) {
+      el.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(.16,1,.3,1)';
+      el.style.strokeDashoffset = el.getAttribute('data-offset');
+    });
+  }, 600);
+})();
+</script>
+</body>
+</html>

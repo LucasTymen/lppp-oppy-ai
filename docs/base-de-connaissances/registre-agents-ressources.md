@@ -43,13 +43,14 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 | `pilotage-agents.mdc` | Anti-hallucination, data-driven, référence éditoriale | Tous | Oui |
 | `coordination-agents.mdc` | Workflow de segmentation, RACI, format segmentation | Chef de Projet, tous | Non |
 | `editorial.mdc` | Éditorial anti-détection IA, humanisation (landing, contenu) | Rédacteur, Designer | Non (globs templates/content) |
+| `redacteur-en-chef.mdc` | **Rédacteur en chef** : textes d'accompagnement des illustrations (labels, légendes, encarts) — compréhensibles par un humain, non marqués IA ; applique `docs/bonnes-pratiques.md` | Rédacteur | Non (globs landing JSON, spec deck, segmentations Casapy) |
 | `devops.mdc` | Orchestration, flux, protection prod, secrets (GitHub, GitLab, Vercel, Contabo) | DevOps | Non |
 | `growth.mdc` | Ingénierie des KPI, marketing digital, funnel d'acquisition, étude poussée par contact, enrichissement OSINT | Growth Hacker / OSINT | Non |
 | `expert-google-dorks-linkedin.mdc` | Noms et coordonnées, anti-blocage, une requête = une source | Growth Hacker / OSINT | Non |
 | `pentester.mdc` | Enrichissement contacts complexes, Kali, fiche data prospect, purple team | Growth Hacker (spécialisation) | Non |
 | `orchestrateur.mdc` | Mise à jour du registre et de la stratégie, interactions entre pilotes | Orchestrateur | Non |
 | `conseiller.mdc` | Point d'entrée feature et données, stockage ressources utilisateur (docs/ressources-utilisateur/), recherche (Stack Overflow, Reddit, Gemini), accord stratégie avant code, déploiement fluide | Conseiller | Non |
-| `expert-seo-ai-geo.mdc` | Référencement robots/IA, visibilité ChatGPT/Claude/Gemini, analyse stats, rapport lead magnet (onglet landing), pistes d'amélioration (partagées vs réservées), conseil | Expert SEO / AI-GEO | Non |
+| `expert-seo-ai-geo.mdc` | Référencement robots/IA, visibilité ChatGPT/Claude/Gemini, analyse stats, rapport lead magnet (onglet landing), pistes d'amélioration (partagées vs réservées), **conseil transversal** (Rédacteur, DevOps, etc. au moment utile), **quantification pertes/gains** (risques, manque à gagner) | Expert SEO / AI-GEO | Non |
 | `automatizer.mdc` | N8N, Flowise, LLM/big data, MCP, flux API Python/Django, développement et maintenance workflows, monitoring, optimisation tokens, traces performances pour rapports data-driven | Automatizer | Non |
 | `growth-analyst.mdc` | Études concurrentielles, SWOT, funnel conversion, positionnement concurrence, analyse marché, KPIs et leviers croissance ; performances campagnes Ads, optimisation, pistes nouveaux marchés (sous-assistant du Growth) | Growth Hacker (sous-assistant) | Non |
 | `assistant-entretien-emploi.mdc` | **Assistant / Copilote recherche d’emploi** : fiches Résumé HTML (accordéons), préparation entretiens, organisation par entreprise dans `fiches-entretien-emploi/`, collaboration Rédacteur / Architecte, **rôle conseiller** (infos manquantes → demander à l'utilisateur ; si indisponibles, stratégie ensemble), versioning | **Assistant Entretien Emploi** | Non |
@@ -110,7 +111,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Bonnes pratiques** : `docs/bonnes-pratiques.md` (éditorial, humanisation du rapport lead magnet)
 - **Décisions** : `docs/base-de-connaissances/decisions.md`
 - **Règle** : `.cursor/rules/expert-seo-ai-geo.mdc`
-- **Collaboration** : Conseiller (point d’entrée, stats), Chef de Projet (validation, intégration landing), Orchestrateur (registre), Rédacteur / Designer (intégration onglet lead magnet), **DevOps** (stack SEO sémantique, dépendances, Docker), **Dev Django** (intégration code, module, commandes)
+- **Collaboration** : Conseiller (point d’entrée, stats), Chef de Projet (validation, intégration landing), Orchestrateur (registre), Rédacteur / Designer (intégration onglet lead magnet), **DevOps** (stack SEO sémantique, dépendances, Docker), **Dev Django** (intégration code, module, commandes). **Latitude de conseil** : l’Expert SEO peut conseiller tout rôle (Rédacteur en chef, DevOps, Dev Django, etc.) au moment où c’est utile, sans court-circuiter l’ordre ; il peut formuler des hypothèses sur les risques et quantifier pertes/gains pour les opérations SEO.
 
 ### Automatizer
 

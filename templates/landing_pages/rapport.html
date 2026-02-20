@@ -15,13 +15,13 @@
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1rem; }
-        .nav { position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
         .nav-logo { max-height: 36px; width: auto; }
         .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
         .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
         .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
         .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 0.9rem; border-radius: 8px; text-decoration: none; }
-        .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; padding-top: calc(2rem + 52px); }
         .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
         .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
         .report-body h2 { font-size: 1.35rem; }
@@ -41,6 +41,12 @@
     <main class="page-wrap">
         {% if report_available %}
         <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à {{ landing_page.prospect_company|default:"votre société" }}</strong> — diagnostic, opportunités et plan d'action. Pas de théorie : du concret pour prioriser.</p>
+        {% if landing_page.slug == 'casapy' and audit_dashboard_url %}
+        <p class="report-intro" style="margin-top:0.5rem;"><a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:4px;">Voir le dashboard audit performance</a> (score global, timeline utilisateur, compteur perte, bullet chart, heatmap, waterfall, recovery).</p>
+        {% endif %}
+        {% if landing_page.slug == 'promovacances' and audit_dashboard_url %}
+        <p class="report-intro" style="margin-top:0.5rem;"><a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:4px;">Voir le dashboard audit performance</a> (score, timeline, compteur perte, bullet chart, waterfall, recovery rings).</p>
+        {% endif %}
         <div class="report-body">{{ report_html|safe }}</div>
         {% else %}
         <p class="report-unavailable">Rapport non disponible pour ce contact. Le fichier <code>rapport-complet-&lt;slug&gt;.md</code> doit être présent dans <code>docs/contacts/{{ landing_page.slug }}/</code>.</p>

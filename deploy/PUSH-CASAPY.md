@@ -2,9 +2,12 @@
 
 **Prérequis** : créer les repos **LPPP-Casapy** sur GitHub et GitLab (sans README).
 
+- **Localhost** : les infographies s'affichent si Django tourne ; les PNG sont servis via `/p/casapy/assets/<fichier>.png`.
+- **Vercel** : pour voir les changements, régénérer l'export (étape 1) puis pousser le dossier `deploy/LPPP-Casapy` (étape 3).
+
 ---
 
-## 1. Régénérer l’export statique (après modif JSON/template)
+## 1. Régénérer l’export statique (après modif JSON/template ou visuels)
 
 ```bash
 # À la racine du repo LPPP

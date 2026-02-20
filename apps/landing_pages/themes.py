@@ -647,9 +647,96 @@ p { color: var(--lp-text-on-light) !important; }
 }
 """
 
+# Charte Promovacances — style kit (fonts + palette depuis Lighthouse / promovacances_style_tokens.css)
+# Source : promovacances.com — Roboto, Roboto Condensed, bleu #3999E5, fond clair
+THEME_PROMOVACANCES = {
+    "fonts": {"body": "Roboto", "heading": "Roboto Condensed"},
+    "colors": {
+        "background": "#FFFFFF",
+        "text": "#001327",
+        "primary": "#3999E5",
+        "secondary": "#2078AE",
+    },
+    "logo_url": "https://www.promovacances.com/resources/static/dist/pmvc/logo-desktop.svg?r=6eba0f566b7a69cbbf505f8bc684d44f",
+    "background_image_url": None,
+}
+
+THEME_CSS_PROMOVACANCES = """@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  --pv-white: #ffffff;
+  --pv-ink: #001327;
+  --pv-ink-2: #121d29;
+  --pv-blue: #3999e5;
+  --pv-blue-2: #2078ae;
+  --pv-blue-3: #5ca6dc;
+  --pv-gray-100: #f7f6f5;
+  --pv-gray-200: #d4e1e6;
+  --pv-gray-300: #9ab6c3;
+  --pv-gray-400: #b0b9bc;
+  --lp-font-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --lp-font-heading: 'Roboto Condensed', 'Roboto', system-ui, sans-serif;
+  --lp-bg: #FFFFFF;
+  --lp-text: #001327;
+  --lp-primary: #3999E5;
+  --lp-secondary: #2078AE;
+  --lp-border: #d4e1e6;
+  --lp-block-bg: #f7f6f5;
+  --lp-muted: #5c6b7a;
+  --lp-heading: #001327;
+  --lp-cta-text: #ffffff;
+  --lp-text-on-light: #001327;
+  --lp-text-on-dark: #f5f5f5;
+}
+
+/* Lisibilité — +0.2em base (1.2rem vs 1rem) */
+html { font-size: 18px; }
+body { font-size: 1.125rem; line-height: 1.6; }
+
+/* Nav fond clair — contraste texte sombre (comme promovacances.com) */
+body:has(.nav) .nav {
+  background: color-mix(in srgb, var(--lp-bg) 96%, rgba(255,255,255,0.95)) !important;
+  border-bottom-color: var(--pv-gray-200) !important;
+}
+body:has(.nav) .nav-links a,
+body:has(.nav) .nav span:first-child { color: var(--lp-text-on-light) !important; }
+body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
+
+/* Hero vidéo : parallaxe (fixe au scroll) + overlay, sans contrôles ni son */
+.hero.has-bg-video {
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  overflow: hidden !important;
+}
+.hero.has-bg-video .hero-bg-video {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+.hero.has-bg-video .hero-bg-video iframe {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  height: 56.25vw !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+"""
+
 # Slug → (theme dict, theme_css string) pour injection côté vue
 LANDING_THEMES = {
     "orsys": (THEME_ORSYS, THEME_CSS_ORSYS),
     "maisons-alfort": (THEME_MAISONS_ALFORT, THEME_CSS_MAISONS_ALFORT),
     "fitclem": (THEME_FITCLEM, THEME_CSS_FITCLEM),
+    "promovacances": (THEME_PROMOVACANCES, THEME_CSS_PROMOVACANCES),
 }

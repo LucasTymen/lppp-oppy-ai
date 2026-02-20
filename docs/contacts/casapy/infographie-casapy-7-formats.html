@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casapy — 7 formats infographiques (perf + business)</title>
+  <style>
+    :root {
+      --bg: #0b0b10;
+      --card: #12121a;
+      --text: #f2f2f7;
+      --muted: #a7a7b4;
+      --red: #ff4d4f;
+      --orange: #ff9f0a;
+      --green: #34c759;
+      --blue: #5ac8fa;
+      --line: #232334;
+    }
+    * { box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; margin: 0; padding: 20px; line-height: 1.5; }
+    h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 20px; max-width: 980px; }
+    .card h2 { font-size: 1.15rem; margin: 0 0 8px 0; }
+    .muted { color: var(--muted); font-size: 0.85rem; margin-top: 6px; }
+    .timeline-wrap { position: relative; }
+    .journey-timeline { width: 100%; max-width: 760px; height: auto; }
+    .journey-labels { position: relative; height: 36px; margin-top: 4px; display: flex; }
+    .journey-label { position: absolute; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; }
+    .meter-value { font-size: 2rem; font-weight: 800; color: var(--red); transition: transform 0.15s ease; }
+    .meter-value.tick { transform: scale(1.05); }
+    .ring-progress { transition: stroke-dasharray 0.8s ease-out; }
+    @media (prefers-reduced-motion: reduce) { .tick, .ring-progress { animation: none !important; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Casapy — Diagnostic perf & manque à gagner</h1>
+    <p class="subtitle">7 formats visuels (score global, timeline utilisateur, compteur perte, bullet chart, heatmap, waterfall, recovery). Données : TTFB ~3,7 s, LCP 32 s, 54 k€/mois.</p>
+  </header>
+
+  <!-- 1) Speedometer Score global 0-100 -->
+  <section class="card" id="speedometer">
+    <h2>1. Score global (tachymètre type Lighthouse)</h2>
+    <p class="muted">Une seule note 0–100 : le client voit tout de suite « dans le rouge » sans lire les secondes.</p>
+    <div class="speedo-wrap">
+      <svg class="speedo" viewBox="0 0 120 70" width="200" height="120" aria-label="Score performance global">
+        <defs>
+          <linearGradient id="speedoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="var(--red)"/>
+            <stop offset="50%" stop-color="var(--orange)"/>
+            <stop offset="100%" stop-color="var(--green)"/>
+          </linearGradient>
+        </defs>
+        <path d="M 10 60 A 50 50 0 0 1 110 60" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="10" stroke-linecap="round"/>
+        <path id="speedoFill" d="M 10 60 A 50 50 0 0 1 110 60" fill="none" stroke="url(#speedoGrad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="0 157"/>
+        <line x1="60" y1="60" x2="60" y2="35" stroke="var(--text)" stroke-width="2" stroke-linecap="round" id="needle"/>
+        <text x="60" y="48" text-anchor="middle" font-size="14" fill="var(--text)" font-weight="700" id="scoreText">8</text>
+        <text x="60" y="66" text-anchor="middle" font-size="10" fill="var(--muted)">/ 100</text>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 2) User Journey Timeline -->
+  <section class="card" id="journey">
+    <h2>2. Ce que vit l'utilisateur (timeline 0 → 35 s)</h2>
+    <p class="muted">La frise montre l'attente réelle : le vide entre les marqueurs = temps perdu. Impact émotionnel fort.</p>
+    <div class="timeline-wrap">
+      <svg class="journey-timeline" viewBox="0 0 800 80" preserveAspectRatio="xMidYMid meet">
+        <line x1="20" y1="40" x2="780" y2="40" stroke="var(--line)" stroke-width="2"/>
+        <g id="journeyMarkers"></g>
+      </svg>
+      <div class="journey-labels" id="journeyLabels"></div>
+    </div>
+  </section>
+
+  <!-- 3) Lost Revenue Meter animé -->
+  <section class="card" id="lostRevenue">
+    <h2>3. Compteur « perte en direct » (Lost Revenue Meter)</h2>
+    <p class="muted">Équivalent taxi : chaque seconde qui passe = manque à gagner. Urgence business sans lire un rapport.</p>
+    <div class="meter-wrap">
+      <div class="meter-value" id="lostRevenueValue">+0,00 €</div>
+      <div class="muted" id="lostRevenueSub">depuis l'ouverture de cette page (54 k€/mois → ~0,02 €/s)</div>
+    </div>
+  </section>
+
+  <!-- 4) Bullet Chart comparatif -->
+  <section class="card" id="bulletChart">
+    <h2>4. Comparatif avant/après (Bullet Chart)</h2>
+    <p class="muted">Barre de fond = objectif ; barre devant = valeur actuelle ; marqueur = standard industrie. Un coup d'œil.</p>
+    <div class="bullet-wrap" id="bulletWrap"></div>
+  </section>
+
+  <!-- 5) Heatmap Impact × Effort -->
+  <section class="card" id="heatmap">
+    <h2>5. Par quoi commencer ? (Impact × Effort)</h2>
+    <p class="muted">Matrice 2×2 : positionner les actions. Répond à « par quoi on commence ? » sans texte.</p>
+    <div class="heatmap-wrap">
+      <div class="heatmap-grid">
+        <div class="heat-cell empty"></div>
+        <div class="heat-cell axis">Effort faible</div>
+        <div class="heat-cell axis">Effort élevé</div>
+        <div class="heat-cell axis">Impact faible</div>
+        <div class="heat-cell q low-effort"><span class="action">—</span></div>
+        <div class="heat-cell q high-effort"><span class="action">Optimisation front (LCP, JS)</span></div>
+        <div class="heat-cell axis">Impact élevé</div>
+        <div class="heat-cell q low-effort"><span class="action">Nettoyage DB • Cache Redis</span></div>
+        <div class="heat-cell q high-effort"><span class="action">Migration VPS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6) Waterfall chart -->
+  <section class="card" id="waterfall">
+    <h2>6. Cascade de chargement (pourquoi 32 s LCP)</h2>
+    <p class="muted">Schéma type DevTools : HTML (TTFB) bloque tout le reste. LCP est une conséquence, pas une cause indépendante.</p>
+    <div class="waterfall-wrap" id="waterfallWrap"></div>
+  </section>
+
+  <!-- 7) Progress ring Recovery potential -->
+  <section class="card" id="recovery">
+    <h2>7. Potentiel de récupération (Progress ring)</h2>
+    <p class="muted">Orienter vers la solution : « X % du problème est résolvable côté serveur seul. »</p>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 100 100" width="160" height="160">
+        <circle cx="50" cy="50" r="42" fill="none" stroke="var(--line)" stroke-width="8"/>
+        <circle id="ringRecovery" cx="50" cy="50" r="42" fill="none" stroke="var(--green)" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 264" transform="rotate(-90 50 50)"/>
+        <text x="50" y="52" text-anchor="middle" font-size="20" font-weight="700" fill="var(--text)">78%</text>
+      </svg>
+      <p class="muted" style="text-align:center;margin-top:8px;">Résolvable côté serveur / DB / cache</p>
+    </div>
+  </section>
+
+  <footer class="muted" style="margin-top:24px;font-size:0.8rem;">
+    Casapy — 7 formats (score, timeline, compteur perte, bullet, heatmap, waterfall, recovery). Rédacteur en chef : ajouter un court texte « tenants et aboutissants » sous chaque bloc (docs/bonnes-pratiques.md).
+  </footer>
+
+  <script>
+(function() {
+  // —— 1) Speedometer : score 0–100 (TTFB 3.7s + LCP 32s → score ~8)
+  var score = Math.max(0, Math.min(100, Math.round(100 - (3.7 * 20) - (32 / 40) * 15)));
+  score = Math.max(5, score);
+  var dash = (score / 100) * 157;
+  document.getElementById('speedoFill').setAttribute('stroke-dasharray', dash + ' 157');
+  document.getElementById('scoreText').textContent = score;
+  var angle = 180 * (1 - score / 100);
+  var needle = document.getElementById('needle');
+  needle.setAttribute('transform', 'rotate(' + angle + ' 60 60)');
+
+  // —— 2) User Journey Timeline (0, 3.77s, 32s, 35s) — échelle 0–35s sur 760px
+  var journeySteps = [
+    { t: 0,   label: 'Requête envoyée',     unit: 'ms' },
+    { t: 3770, label: '1er octet (TTFB)',   unit: 's' },
+    { t: 32000, label: 'Image principale (LCP)', unit: 's' },
+    { t: 35000, label: 'Page utilisable',    unit: 's' }
+  ];
+  var jMax = 35000;
+  var jW = 760;
+  var svg = document.querySelector('.journey-timeline');
+  var g = document.getElementById('journeyMarkers');
+  var labelsDiv = document.getElementById('journeyLabels');
+  journeySteps.forEach(function(s, i) {
+    var x = 20 + (s.t / jMax) * jW;
+    var line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttribute('x1', x); line.setAttribute('y1', 40); line.setAttribute('x2', x); line.setAttribute('y2', 56);
+    line.setAttribute('stroke', i === 0 ? 'var(--green)' : (s.t > 2000 ? 'var(--red)' : 'var(--orange)'));
+    line.setAttribute('stroke-width', '2');
+    g.appendChild(line);
+    var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    text.setAttribute('x', x); text.setAttribute('y', 72); text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('font-size', '10'); text.setAttribute('fill', 'var(--muted)');
+    text.textContent = (s.t >= 1000 ? (s.t / 1000).toFixed(1) + ' s' : '0 ms');
+    g.appendChild(text);
+    var lb = document.createElement('div');
+    lb.className = 'journey-label';
+    lb.style.left = ((s.t / jMax) * 100).toFixed(1) + '%';
+    lb.textContent = s.label;
+    labelsDiv.appendChild(lb);
+  });
+  document.querySelector('.journey-labels').style.display = 'flex';
+
+  // —— 3) Lost Revenue Meter : 54k€/mois → ~0.021 €/s
+  var lostPerMonth = 54000;
+  var lostPerSec = lostPerMonth / 30 / 24 / 3600;
+  var elapsed = 0;
+  var el = document.getElementById('lostRevenueValue');
+  var sub = document.getElementById('lostRevenueSub');
+  setInterval(function() {
+    elapsed += 1;
+    var euros = elapsed * lostPerSec;
+    el.textContent = '+' + euros.toFixed(2).replace('.', ',') + ' €';
+    el.classList.add('tick');
+    setTimeout(function() { el.classList.remove('tick'); }, 200);
+  }, 1000);
+
+  // —— 4) Bullet Chart : TTFB (actuel 3.7, objectif 0.5, standard 2), LCP (32, 2.5, 4)
+  var bullets = [
+    { label: 'TTFB', current: 3.7, target: 0.5, standard: 2, max: 5, unit: 's' },
+    { label: 'LCP',  current: 32,  target: 2.5, standard: 4, max: 35, unit: 's' }
+  ];
+  var bw = document.getElementById('bulletWrap');
+  bullets.forEach(function(b) {
+    var div = document.createElement('div');
+    div.className = 'bullet-row';
+    var pctCur = (b.current / b.max) * 100;
+    var pctTar = (b.target / b.max) * 100;
+    var pctStd = (b.standard / b.max) * 100;
+    div.innerHTML =
+      '<span class="bullet-label">' + b.label + '</span>' +
+      '<div class="bullet-track">' +
+        '<div class="bullet-bg" style="width:100%"></div>' +
+        '<div class="bullet-target" style="width:' + pctTar + '%"></div>' +
+        '<div class="bullet-marker" style="left:' + pctStd + '%"></div>' +
+        '<div class="bullet-current" style="width:' + Math.min(pctCur, 100) + '%"></div>' +
+      '</div>' +
+      '<span class="bullet-legend">' + b.current + ' ' + b.unit + ' (objectif ' + b.target + ' ' + b.unit + ')</span>';
+    bw.appendChild(div);
+  });
+  var styleBullet = document.createElement('style');
+  styleBullet.textContent = '.bullet-row{display:grid;grid-template-columns:80px 1fr 140px;align-items:center;gap:10px;margin:10px 0;}.bullet-track{position:relative;height:24px;background:var(--line);border-radius:8px;overflow:visible;}.bullet-bg{position:absolute;inset:0;background:rgba(52,199,89,0.2);border-radius:8px;}.bullet-target{position:absolute;left:0;top:0;bottom:0;background:var(--green);border-radius:8px;opacity:0.5;}.bullet-marker{position:absolute;top:-2px;bottom:-2px;width:3px;background:var(--orange);border-radius:2px;}.bullet-current{position:absolute;left:0;top:0;bottom:0;background:var(--red);border-radius:8px;}.bullet-label{font-weight:600;}.bullet-legend{font-size:12px;color:var(--muted);}';
+  document.head.appendChild(styleBullet);
+
+  // —— 5) Heatmap déjà en HTML ; style
+  var styleHeat = document.createElement('style');
+  styleHeat.textContent = '.heatmap-grid{display:grid;grid-template-columns:100px 1fr 1fr;grid-template-rows:auto 1fr 1fr;gap:8px;max-width:420px;}.heat-cell{border:1px solid var(--line);border-radius:10px;padding:12px;min-height:56px;}.heat-cell.axis{color:var(--muted);font-size:12px;}.heat-cell.q{background:rgba(90,200,250,0.08);font-size:13px;}.heat-cell.q.low-effort{grid-column:2;}.heat-cell.q.high-effort{grid-column:3;}';
+  document.head.appendChild(styleHeat);
+
+  // —— 6) Waterfall : HTML 3.77s, CSS, Images, JS, LCP 32s (schématique)
+  var waterfallSteps = [
+    { name: 'HTML (TTFB)', dur: 3.77, color: 'var(--red)' },
+    { name: 'CSS', dur: 2, color: 'var(--line)' },
+    { name: 'Images', dur: 8, color: 'var(--line)' },
+    { name: 'JS', dur: 6, color: 'var(--line)' },
+    { name: 'LCP (affichage)', dur: 12, color: 'var(--orange)' }
+  ];
+  var wf = document.getElementById('waterfallWrap');
+  var wfScale = 12;
+  var wfStart = 0;
+  waterfallSteps.forEach(function(s) {
+    var w = Math.max(36, s.dur * wfScale);
+    var div = document.createElement('div');
+    div.className = 'waterfall-bar';
+    div.style.cssText = 'height:32px;display:flex;align-items:center;padding-left:6px;border-radius:6px;background:' + s.color + ';width:' + w + 'px;min-width:44px;font-size:11px;flex-shrink:0;margin-left:' + wfStart + 'px;';
+    div.textContent = s.name + ' ' + s.dur + 's';
+    wf.appendChild(div);
+    wfStart += w + 2;
+  });
+  var styleWf = document.createElement('style');
+  styleWf.textContent = '.waterfall-wrap{margin-top:12px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:2px 0;}';
+  document.head.appendChild(styleWf);
+
+  // —— 7) Recovery ring 78% — animation au chargement
+  var ring = document.getElementById('ringRecovery');
+  var circumference = 2 * Math.PI * 42;
+  var pct = 0.78;
+  ring.setAttribute('stroke-dasharray', (circumference * pct) + ' ' + circumference);
+  ring.classList.add('ring-progress');
+})();
+  </script>
+</body>
+</html>

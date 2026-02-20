@@ -1,0 +1,49 @@
+{
+  "title_page": "Audit Performance — Dashboard",
+  "label_tag": "// Rapport d'audit technique",
+  "title": "PERF",
+  "title_accent": "AUDIT",
+  "header_meta": "Site e-commerce WooCommerce · Analyse TTFB/LCP/Conversion · 2025",
+  "status_label": "ÉTAT CRITIQUE — ACTION REQUISE",
+  "score": 12,
+  "speedo_note": "Score calculé : TTFB (3,77s) + LCP (32s) + perte conversion (30%)",
+  "speedo_note_strong": "12/100 — Site en zone rouge critique",
+  "section1_sub": "Agrégation pondérée TTFB + LCP + Conversion loss. Zone rouge = intervention urgente.",
+  "section2_sub": "De la requête à la page utilisable — chaque seconde vide est une seconde de frustration.",
+  "section3_sub": "Argent perdu en temps réel depuis l'ouverture de cette page. Basé sur un scénario 10k visites / 2% CVR / 900€ AOV / -30% conversion.",
+  "loss_monthly_label": "54 000 €",
+  "loss_annual_label": "648 000 €/an",
+  "timeline_max_t": 35,
+  "timeline_markers": [
+    { "t": 0, "label": "0s", "event": "Requête envoyée", "desc": "clic utilisateur", "color": "#00e676" },
+    { "t": 3.77, "label": "3,77s", "event": "1er octet (TTFB)", "desc": "serveur répond", "color": "#ff3b3b" },
+    { "t": 12, "label": "12s", "event": "FCP — 1ers pixels", "desc": "début rendu", "color": "#ff9900" },
+    { "t": 32, "label": "32s", "event": "LCP — Image principale", "desc": "page visible", "color": "#ff3b3b" },
+    { "t": 35, "label": "35s", "event": "Page utilisable", "desc": "TTI", "color": "#b388ff" }
+  ],
+  "scenarios": [
+    { "visits": 5000, "cvr": 0.02, "aov": 900, "label": "5k / 2% / 900€" },
+    { "visits": 10000, "cvr": 0.02, "aov": 900, "label": "10k / 2% / 900€" },
+    { "visits": 10000, "cvr": 0.05, "aov": 1200, "label": "10k / 5% / 1200€" }
+  ],
+  "bullet_metrics": [
+    { "name": "TTFB — Homepage", "unit": "s", "current": 3.77, "target": 0.8, "industry": 1.2, "max": 5, "bad": [2, 5], "warn": [0.8, 2], "ok": [0, 0.8], "color": "#ff3b3b" },
+    { "name": "LCP — Mobile", "unit": "s", "current": 32, "target": 2.5, "industry": 4, "max": 35, "bad": [10, 35], "warn": [2.5, 10], "ok": [0, 2.5], "color": "#ff3b3b" },
+    { "name": "Score conversion (CVR delta)", "unit": "%", "current": 30, "target": 5, "industry": 10, "max": 35, "bad": [20, 35], "warn": [5, 20], "ok": [0, 5], "color": "#ff9900" }
+  ],
+  "waterfall_max_t": 35,
+  "waterfall_resources": [
+    { "label": "Requête HTML", "start": 0, "dur": 3.77, "color": "#ff3b3b", "tag": "CAUSE" },
+    { "label": "Réponse serveur (TTFB)", "start": 0, "dur": 3.77, "color": "rgba(255,59,59,0.3)", "tag": "" },
+    { "label": "CSS / Fonts", "start": 3.77, "dur": 1.2, "color": "#ff9900", "tag": "" },
+    { "label": "JS Elementor", "start": 4.2, "dur": 4.8, "color": "#ff9900", "tag": "" },
+    { "label": "Images hero", "start": 9.0, "dur": 8.5, "color": "#b388ff", "tag": "" },
+    { "label": "JS WooCommerce", "start": 12.0, "dur": 6.0, "color": "#ff9900", "tag": "" },
+    { "label": "LCP — Image PDP", "start": 18.0, "dur": 14.0, "color": "#ff3b3b", "tag": "CONSÉQUENCE" }
+  ],
+  "recovery_rings": [
+    { "pct": 78, "label": "Serveur & Hosting", "color": "#ff3b3b", "sub": "Migration VPS + cache = principal levier" },
+    { "pct": 15, "label": "Base de données", "color": "#ff9900", "sub": "Nettoyage + index = gain rapide" },
+    { "pct": 7, "label": "Front-end", "color": "#b388ff", "sub": "LCP images + defer JS = gain résiduel" }
+  ]
+}

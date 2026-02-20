@@ -102,9 +102,23 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
         .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
         .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
         .report-intro { margin: 0 0 1.5rem; padding: 0.85rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-left: 4px solid var(--lp-primary, #4a9eff); font-size: 1.1rem; color: var(--lp-text, #e6e6e6); }
+        .site-bg-fixed { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; }
+        .site-bg-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; min-width: 100vw; height: 56.25vw; min-height: 100vh; max-height: none; }
+        .site-bg-video iframe { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; min-width: 100vw; height: 56.25vw; min-height: 100vh; object-fit: cover; }
+        .site-bg-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.7) 100%); }
+        .site-content { position: relative; z-index: 1; min-height: 100vh; }
     </style>
 </head>
 <body>
+    
+    <div class="site-bg-fixed">
+        <div class="site-bg-video">
+            <iframe src="https://www.youtube-nocookie.com/embed/ArifpieowSw?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=ArifpieowSw&amp;controls=0&amp;rel=0&amp;showinfo=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond" aria-hidden="true"></iframe>
+        </div>
+        <div class="site-bg-overlay"></div>
+    </div>
+    
+    <div class="site-content">
     <nav class="nav">
         
         <a href="index.html"><img src="https://www.promovacances.com/resources/static/dist/pmvc/logo-desktop.svg?r=6eba0f566b7a69cbbf505f8bc684d44f" alt="Promovacances" class="nav-logo" loading="lazy"></a>
@@ -224,5 +238,6 @@ body:has(.nav) .nav-links a:hover { color: var(--lp-primary) !important; }
 </table>
 <p>Voir <code>docs/base-de-connaissances/audit-dashboard-modele-seo.md</code> pour la structure complète du JSON et la marche à suivre.</p></div>
     </main>
+    </div>
 </body>
 </html>

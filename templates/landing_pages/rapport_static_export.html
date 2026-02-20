@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Rapport — {{ company_name|default:"société, stratégie, SEO" }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+    {% if theme_css %}<style>{{ theme_css|safe }}</style>{% endif %}
+    <style>
+        :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1.2rem; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.5rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        .nav-logo { max-height: 36px; width: auto; }
+        .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+        .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-links a.active { color: var(--lp-primary, #4a9eff); font-weight: 600; }
+        .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; }
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; padding-top: calc(2rem + 52px); }
+        .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
+        .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
+        .report-body h2 { font-size: 1.35rem; }
+        .report-body h3 { font-size: 1.1rem; }
+        .report-body p { margin: 0 0 0.75rem; }
+        .report-body ul, .report-body ol { margin: 0 0 0.75rem 1.5rem; }
+        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1.05rem; }
+        .report-body th, .report-body td { border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); padding: 0.5rem 0.75rem; text-align: left; }
+        .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
+        .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
+        .report-intro { margin: 0 0 1.5rem; padding: 0.85rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-left: 4px solid var(--lp-primary, #4a9eff); font-size: 1.1rem; color: var(--lp-text, #e6e6e6); }
+        .site-bg-fixed { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; }
+        .site-bg-video { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; min-width: 100vw; height: 56.25vw; min-height: 100vh; max-height: none; }
+        .site-bg-video iframe { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100vw; min-width: 100vw; height: 56.25vw; min-height: 100vh; object-fit: cover; }
+        .site-bg-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.7) 100%); }
+        .site-content { position: relative; z-index: 1; min-height: 100vh; }
+    </style>
+</head>
+<body>
+    {% if hero_video_embed_url %}
+    <div class="site-bg-fixed">
+        <div class="site-bg-video">
+            <iframe src="{{ hero_video_embed_url }}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond" aria-hidden="true"></iframe>
+        </div>
+        <div class="site-bg-overlay"></div>
+    </div>
+    {% endif %}
+    <div class="site-content">
+    <nav class="nav">
+        {% if logo_url %}
+        <a href="{{ index_url }}"><img src="{{ logo_url }}" alt="{{ company_name|default:'' }}" class="nav-logo" loading="lazy"></a>
+        {% else %}
+        <a href="{{ index_url }}" style="font-weight:700; color: var(--lp-text); text-decoration: none;">{{ company_name|default:"Accueil" }}</a>
+        {% endif %}
+        <div class="nav-links">
+            <a href="{{ index_url }}">Accueil</a>
+            <a href="{{ rapport_url }}" class="active">Rapport</a>
+            {% if infographie_url %}<a href="{{ infographie_url }}">Infographie</a>{% endif %}
+            {% if positionnement_marketing_url %}<a href="{{ positionnement_marketing_url }}">Positionnement marketing</a>{% endif %}
+            {% if audit_dashboard_url %}<a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer">Dashboard audit</a>{% endif %}
+            <a href="{{ index_url }}#coordonnees" class="nav-cta">Me contacter</a>
+        </div>
+    </nav>
+    <main class="page-wrap">
+        <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à {{ company_name|default:"votre société" }}</strong> — diagnostic, opportunités et plan d'action.</p>
+        <div class="report-body">{{ report_body|safe }}</div>
+    </main>
+    </div>
+</body>
+</html>

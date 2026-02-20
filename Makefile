@@ -30,7 +30,7 @@ NC     = \033[0m
 .PHONY: test-cov test-cov-docker test-cov-docker-build
 .PHONY: up down stop restart full build build-no-cache pull update clean-containers
 .PHONY: migrate migrate-wait makemigrations showmigrations dbshell
-.PHONY: shell createsuperuser landing-p4s static check
+.PHONY: shell createsuperuser landing-p4s landing-promovacances landing-promovacances-full landings-restore static check
 .PHONY: test test-docker lint lint-fix validate prod-check release-checklist
 .PHONY: start-win services-urls-win ps logs logs-web logs-celery logs-n8n logs-flowise health health-check
 .PHONY: celery-restart celery-beat-restart
@@ -250,6 +250,9 @@ help:
 	@echo "  make shell        — Shell Django"
 	@echo "  make createsuperuser — Créer un superutilisateur"
 	@echo "  make landing-p4s     — Créer/mettre à jour la landing P4S en base (évite 404 /p/p4s-archi/)"
+	@echo "  make landing-promovacances — Créer la landing Promovacances en base (prérequis : make start)"
+	@echo "  make landing-promovacances-full — Start le stack puis créer la landing Promovacances (tout en un)"
+	@echo "  make landings-restore — Recréer Casapy, FitClem, Promovacances en base (après base vide)"
 	@echo "  make sync-landing-p4s — Copier landing-proposition-joel.json vers standalone + frontend"
 	@echo "  make push-both    — Push sur origin main + gitlab main (WSL/Git Bash)"
 	@echo "  make commit-push MSG=\"...\" — add ., commit, push sur les deux remotes"
@@ -376,6 +379,25 @@ createsuperuser:
 landing-p4s:
 	$(DOCKER) exec web python manage.py create_landing_p4s --update --publish
 	@echo "$(GREEN)✅ Landing P4S à jour. URL : http://localhost:8010/p/p4s-archi/$(NC)"
+
+# Créer la landing Promovacances en base (PPP — rapport audit SEO). Prérequis : make start ou Docker up.
+landing-promovacances:
+	$(DOCKER) exec web python manage.py create_landing_promovacances --publish
+	@echo "$(GREEN)✅ Landing Promovacances créée. URL : http://localhost:8010/p/promovacances/$(NC)"
+
+# Enchaîner start puis création Promovacances (à la racine LPPP). Usage : tout lancer quand le stack n'est pas démarré.
+# Voir docs/base-de-connaissances/segmentations/2026-02-19-landing-promovacances-creation-coordonnee.md
+landing-promovacances-full: start
+	@$(MAKE) landing-promovacances
+
+# Recréer en base toutes les landings « générateur » (même système). À lancer après base vide (ex. volume recréé, prod).
+# Maisons-Alfort et Yuwell viennent des migrations (migrate). Les autres sont créées ici.
+landings-restore:
+	$(DOCKER) exec web python manage.py create_landing_casapy --update --publish
+	$(DOCKER) exec web python manage.py create_landing_fitclem --update --publish
+	$(DOCKER) exec web python manage.py create_landing_promovacances --publish
+	$(DOCKER) exec web python manage.py create_landing_p4s --update --publish
+	@echo "$(GREEN)✅ Landings générateur recréées : Casapy, FitClem, Promovacances, P4S. + Maisons-Alfort / Yuwell via migrations.$(NC)"
 
 # Synchroniser le contenu P4S (source unique JSON) vers standalone et frontend Next.js
 # Après édition de docs/contacts/p4s-archi/landing-proposition-joel.json

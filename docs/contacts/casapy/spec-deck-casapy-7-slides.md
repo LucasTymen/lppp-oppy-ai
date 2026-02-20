@@ -126,7 +126,7 @@
 
 | Rôle | Mission |
 |------|---------|
-| **Infographiste** | Illustrer les 7 slides + one-pager avec la même approche que précédemment (fond transparent, consultant-grade, visuels recommandés ci-dessus). |
+| **Infographiste** | Illustrer les 7 slides + one-pager en **SVG** (vectoriel, fond transparent), même approche consultant-grade, visuels recommandés ci-dessus. |
 | **Rédacteur en chef** | Texte explicatif très court et synthétique pour recontextualiser ; éviter la sensation "je ne comprends pas" pour quelqu'un pas du métier. |
 
 ---

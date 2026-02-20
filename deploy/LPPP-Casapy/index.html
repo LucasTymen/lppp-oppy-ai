@@ -445,11 +445,46 @@
         .pain-list { margin: 0; padding-left: 1.35rem; }
         .pain-list li { margin-bottom: 0.5rem; }
 
-        /* Enjeux — funnel et graphiques (Casapy) */
+        /* Enjeux — funnel et graphiques (Casapy) — affichage universel (Firefox, Chrome, Safari, mobile) */
         .enjeux-visuals { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
         .enjeux-visual-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--lp-muted, #999); margin-bottom: 0.75rem; }
-        .infographic-image-wrap { margin: 1rem 0; text-align: center; }
-        .infographic-image-wrap .infographic-img { max-width: 100%; height: auto; border-radius: 8px; }
+        /* Conteneur infographies : pleine largeur, pas de débordement, centrage */
+        .infographic-image-wrap {
+            width: 100%;
+            max-width: 100%;
+            margin: 1.25rem 0;
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+            min-width: 0;
+            overflow: hidden;
+        }
+        /* Image responsive et universelle : block (évite gap 4px), scale propre, tous navigateurs */
+        .infographic-image-wrap .infographic-img {
+            display: block;
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 0 auto;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+        /* Segment infographique (section Ce que j'offre) : ne pas couper l'image */
+        .services-segment-infographic {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow: visible;
+        }
+        .services-segment-infographic .infographic-image-wrap { margin: 1.25rem 0; }
+        .services-segments { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+        /* Mobile / petit viewport : infographies lisibles sans débordement */
+        @media (max-width: 480px) {
+            .infographic-image-wrap { margin: 1rem 0; }
+            .infographic-image-wrap .infographic-img { border-radius: 6px; }
+        }
         .enjeux-funnel { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 320px; margin: 0 auto; }
         .enjeux-funnel-tier { width: 100%; padding: 0.75rem 1rem; text-align: center; font-size: 0.95rem; font-weight: 600; border-radius: 8px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent); }
         .enjeux-funnel-tier:nth-child(1) { width: 100%; }
@@ -762,7 +797,7 @@
             
             
             
-            <a href="/p/casapy/rapport/" target="_blank" rel="noopener noreferrer">Consulter le rapport</a>
+            <a href="rapport.html" target="_blank" rel="noopener noreferrer">Consulter le rapport</a>
             <a href="#coordonnees">Me contacter</a>
         </div>
     </nav>
@@ -903,6 +938,95 @@
                         <span class="flow-step">Front (LCP 32 s)</span>
                     </div>
                 </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide1-impact-perf-business.svg" alt="Slide 1 — Le frein #1 est serveur, pas le front" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 1 — Le frein #1 est serveur, pas le front</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide2-waterfall-ttfb.svg" alt="Slide 2 — Le goulot = temps de réponse serveur" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 2 — Le goulot = temps de réponse serveur</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide3-hebergement-comparatif.svg" alt="Slide 3 — Mutualisé = performance instable sur WooCommerce" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 3 — Mutualisé = performance instable sur WooCommerce</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide4-plan-priorise.svg" alt="Slide 4 — Plan d&#x27;action priorisé (serveur → DB → front)" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 4 — Plan d&#x27;action priorisé (serveur → DB → front)</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide5-scenarios-cout.svg" alt="Slide 5 — Manque à gagner (ordre de grandeur)" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 5 — Manque à gagner (ordre de grandeur)</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide6-fact-hypothesis.svg" alt="Slide 6 — Audit marketing : prouvé vs à valider" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 6 — Audit marketing : prouvé vs à valider</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="slide4-matrice-seo-timeline.svg" alt="SEO &amp; Growth — matrice + timeline 30/60/90 j" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">SEO &amp; Growth — matrice + timeline 30/60/90 j</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="one-pager-dashboard-casapy.svg" alt="One-pager — Dashboard exécutif" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">One-pager — Dashboard exécutif</p>
+                </div>
+                
+                
+                
+                <div class="infographic-image-wrap">
+                    <img src="casapy-wave-progression.svg" alt="Slide 7 — Après fix : baseline meilleure + volatilité plus faible" class="infographic-img" loading="lazy" decoding="async">
+                    <p class="enjeux-visual-label">Slide 7 — Après fix : baseline meilleure + volatilité plus faible</p>
+                </div>
+                
+                
+                
+                
+                
             </div>
             
         </section>
@@ -941,7 +1065,7 @@
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             
             <div class="rapport-cta-block">
-                <a href="/p/casapy/rapport/" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
+                <a href="rapport.html" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
             </div>
             
             
@@ -953,6 +1077,8 @@
                     <h3 class="services-segment-title">Diagnostic TTFB</h3>
                     <p>TTFB Homepage ~3,77 s, PDP ~3,63 s. Référence : bon &lt; 500 ms, critique &gt; 2 s. Casapy en zone rouge. Problème serveur/backend, pas prioritairement JS/CSS. LCP 32 s en découle (Elementor + WooCommerce + scripts + images + SQL).</p>
                 </div>
+                
+                
                 
                 
                 
@@ -970,10 +1096,13 @@
                 
                 
                 
+                
                 <div class="services-segment-box">
                     <h3 class="services-segment-title">Hébergement identifié</h3>
                     <p>o2switch PowerBoost v3 (mutualisé), reverse DNS odns.fr. Ressources partagées, CPU limité, PHP-FPM partagé, DB partagée. Pour WooCommerce + Elementor → insuffisant.</p>
                 </div>
+                
+                
                 
                 
                 
@@ -990,6 +1119,7 @@
                 
                 
                 
+                
                 <div class="services-segment-box">
                     <h3 class="services-segment-title">Manque à gagner (scénarios)</h3>
                     
@@ -999,6 +1129,8 @@
                     </table>
                     
                 </div>
+                
+                
                 
                 
                 
@@ -1015,10 +1147,13 @@
                 
                 
                 
+                
                 <div class="services-segment-box">
                     <h3 class="services-segment-title">Étude marketing (clean room)</h3>
                     <p>Faits vs hypothèses. Constat factuel : aucune trace de pub Meta ou Google (Meta Ads Library, Google Ads Transparency). Marché ameublement concurrentiel ; funnel AARRR, SWOT et positionnement à compléter avec preuves (5 éléments factuels à fournir).</p>
                 </div>
+                
+                
                 
                 
                 
@@ -1037,6 +1172,7 @@
                 
                 
                 
+                
                 <div class="services-segment-box">
                     <h3 class="services-segment-title">Marché &amp; concurrence</h3>
                     <p>Ameublement en ligne : acteurs omnicanaux, marketplaces, pure players, seconde main. Concurrents directs (catégories, prix, livraison) et substituts à établir avec sources. Acquisition : SEO, SEA/Shopping (aucune trace Meta/Google), Social organique.</p>
@@ -1051,57 +1187,48 @@
                 
                 
                 
-                <div class="services-segment-infographic" aria-hidden="true">
-                    <p class="services-infographic-label">Slide 1 — Impact perf → Impact business</p>
-                    
-                    <div class="infographic-image-wrap"><img src="slide1-impact-perf-business.png" alt="Slide 1 — Impact perf → Impact business" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 1 — Impact perf → Impact business</p></div>
-                    
-                </div>
                 
                 
                 
-                <div class="services-segment-infographic" aria-hidden="true">
-                    <p class="services-infographic-label">Slide 2 — Waterfall TTFB vs Front</p>
-                    
-                    <div class="infographic-image-wrap"><img src="slide2-waterfall-ttfb.png" alt="Slide 2 — Waterfall TTFB vs Front" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 2 — Waterfall TTFB vs Front</p></div>
-                    
-                </div>
                 
                 
                 
-                <div class="services-segment-infographic" aria-hidden="true">
-                    <p class="services-infographic-label">Slide 3 — Hébergement : mutualisé vs stack adaptée</p>
-                    
-                    <div class="infographic-image-wrap"><img src="slide3-hebergement-comparatif.png" alt="Slide 3 — Hébergement : mutualisé vs stack adaptée" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 3 — Hébergement : mutualisé vs stack adaptée</p></div>
-                    
-                </div>
                 
                 
                 
-                <div class="services-segment-infographic" aria-hidden="true">
-                    <p class="services-infographic-label">Slide 4 — SEO &amp; Growth : matrice + timeline 30/60/90 j</p>
-                    
-                    <div class="infographic-image-wrap"><img src="slide4-matrice-seo-timeline.png" alt="Slide 4 — SEO &amp; Growth : matrice + timeline 30/60/90 j" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Slide 4 — SEO &amp; Growth : matrice + timeline 30/60/90 j</p></div>
-                    
-                </div>
                 
                 
                 
-                <div class="services-segment-infographic" aria-hidden="true">
-                    <p class="services-infographic-label">One-pager — Dashboard exécutif</p>
-                    
-                    <div class="infographic-image-wrap"><img src="one-pager-dashboard-casapy.png" alt="One-pager — Dashboard exécutif" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">One-pager — Dashboard exécutif</p></div>
-                    
-                </div>
                 
                 
                 
-                <div class="services-segment-infographic" aria-hidden="true">
-                    <p class="services-infographic-label">Progression avant/après fix serveur (cycles + tendance)</p>
-                    
-                    <div class="infographic-image-wrap"><img src="casapy-wave-progression.png" alt="Progression avant/après fix serveur (cycles + tendance)" class="infographic-img" loading="lazy"><p class="enjeux-visual-label">Progression avant/après fix serveur (cycles + tendance)</p></div>
-                    
-                </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 
                 
                 
@@ -1136,7 +1263,7 @@
                 </ul>
                 
                 
-                <a href="/p/casapy/rapport/#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">DÉCOUVRIR LE RAPPORT COMPLET →</a>
+                <a href="rapport.html#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">DÉCOUVRIR LE RAPPORT COMPLET →</a>
                 
             </div>
             

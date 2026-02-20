@@ -6,6 +6,7 @@ Idées en attente (non encore planifiées). À trier et prioriser avec le chef d
 
 | Idée | Contexte / note |
 |------|------------------|
+| **Étude marketing sur page et onglet dédiés** | Mettre l’étude marketing sur une page et un onglet à part (déjà prévu pour FitClem). À voir avec **Expert Growth** (périmètre, structure, KPIs) et **Rédacteur en chef** (rédaction, labels, cohérence). Réf. `docs/base-de-connaissances/etude-marketing-page-onglet-dedie.md`. |
 | Preview mode pour les landing pages (visualiser avant publication) | Éviter les erreurs en production, valider l'UX avant de publier. Priorité moyenne. |
 | A/B testing de templates (comparer les performances) | Optimiser le taux de conversion en testant plusieurs variantes. Nécessite analytics. |
 | Générateur de visuels par IA (logos, mockups personnalisés) | Différenciation forte, mais risque élevé (qualité, temps de génération). Phase 3. |

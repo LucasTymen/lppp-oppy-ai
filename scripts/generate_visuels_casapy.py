@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Génère les visuels slide-ready pour Casapy (audit SEO, e-commerce).
+Génère les visuels slide-ready pour Casapy (audit SEO, e-commerce) en SVG (vectoriel).
 Usage : python scripts/generate_visuels_casapy.py [--output docs/contacts/casapy]
-Sortie : PNG (et SVG si --svg) dans le dossier indiqué.
-Référence : brief visuels enjeux Casapy (4 slides + one-pager).
+Sortie : SVG dans le dossier indiqué (fond transparent, net à toute résolution).
+Référence : brief visuels enjeux Casapy, spec-deck-casapy-7-slides.md.
 """
 import argparse
 from pathlib import Path
@@ -32,7 +32,7 @@ COLORS = {
 
 
 def setup_figure(dpi=120):
-    """Figure par défaut, police lisible, tous les fonds transparents (affichage sur fond sombre → texte blanc)."""
+    """Figure par défaut, police lisible, fonds transparents. Fond sombre → TOUT le texte en blanc (lisibilité)."""
     plt.rcParams.update({
         "font.family": "sans-serif",
         "font.size": 10,
@@ -44,6 +44,7 @@ def setup_figure(dpi=120):
         "legend.frameon": False,
         "text.color": COLORS["text_on_dark"],
         "axes.labelcolor": COLORS["text_on_dark"],
+        "axes.titlecolor": COLORS["text_on_dark"],
         "xtick.color": COLORS["text_on_dark"],
         "ytick.color": COLORS["text_on_dark"],
     })
@@ -56,8 +57,8 @@ def _so_what(ax, text: str, x=0.92, y=0.08, fontsize=9):
             transform=ax.transAxes)
 
 
-def _save_transparent(fig, path: Path, dpi=150):
-    """Sauvegarde avec fond transparent (figure, axes, légendes) pour le background de la page."""
+def _save_svg(fig, path: Path):
+    """Sauvegarde en SVG (vectoriel, fond transparent) pour affichage net à toute résolution."""
     fig.patch.set_facecolor("none")
     for ax in fig.axes:
         ax.patch.set_facecolor("none")
@@ -65,7 +66,7 @@ def _save_transparent(fig, path: Path, dpi=150):
         if leg is not None:
             leg.get_frame().set_facecolor("none")
             leg.get_frame().set_alpha(0)
-    fig.savefig(path, dpi=dpi, bbox_inches="tight", transparent=True)
+    fig.savefig(path, format="svg", bbox_inches="tight", transparent=True)
 
 
 def slide1_impact_perf_business(out_dir: Path):
@@ -99,7 +100,7 @@ def slide1_impact_perf_business(out_dir: Path):
     ax.set_title("Le frein #1 est serveur, pas le front", fontsize=14, fontweight="bold", pad=20, color=COLORS["text_on_dark"])
     _so_what(ax, "−30% conv ≈ 54k€/mois\n(hyp. à valider GA4)")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide1-impact-perf-business.png")
+    _save_svg(fig, out_dir / "slide1-impact-perf-business.svg")
     plt.close()
 
 
@@ -123,7 +124,7 @@ def slide2_waterfall_ttfb(out_dir: Path):
     ax.tick_params(colors=COLORS["text_on_dark"])
     _so_what(ax, "Priorité =\nbackend / DB / hosting")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide2-waterfall-ttfb.png")
+    _save_svg(fig, out_dir / "slide2-waterfall-ttfb.svg")
     plt.close()
 
 
@@ -152,7 +153,7 @@ def slide3_hebergement_comparatif(out_dir: Path):
                 bbox=dict(boxstyle="round", facecolor=COLORS["accent_turquoise"], edgecolor="white"))
     _so_what(ax2, "Stabiliser =\nUX + conversion")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide3-hebergement-comparatif.png")
+    _save_svg(fig, out_dir / "slide3-hebergement-comparatif.svg")
     plt.close()
 
 
@@ -176,7 +177,7 @@ def slide4_plan_priorise(out_dir: Path):
         ax.text(x + 1.2, 1.8, label, ha="center", va="center", fontsize=9, color=COLORS["text_on_dark"])
     _so_what(ax, "Gains rapides +\nbase saine CRO/SEO")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide4-plan-priorise.png")
+    _save_svg(fig, out_dir / "slide4-plan-priorise.svg")
     plt.close()
 
 
@@ -201,7 +202,7 @@ def slide5_scenarios_cout(out_dir: Path):
     ax.text(5, 0.5, "À recalibrer avec trafic réel + CVR + AOV (GA4)", ha="center", fontsize=9, style="italic", color=COLORS["text_on_dark"])
     _so_what(ax, "La perf est un sujet\nbusiness, pas technique")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide5-scenarios-cout.png")
+    _save_svg(fig, out_dir / "slide5-scenarios-cout.svg")
     plt.close()
 
 
@@ -227,7 +228,7 @@ def slide6_fact_hypothesis(out_dir: Path):
     ax2.text(0.5, 0.5, "À valider avec données", ha="center", va="center", fontsize=9, color=COLORS["text_on_dark"])
     _so_what(ax2, "Décisions basées sur\ndonnées, pas intuitions")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide6-fact-hypothesis.png")
+    _save_svg(fig, out_dir / "slide6-fact-hypothesis.svg")
     plt.close()
 
 
@@ -271,7 +272,7 @@ def slide4_matrice_seo_timeline(out_dir: Path):
     ax2.set_ylim(0, 1)
     fig.suptitle("SEO & Growth — état des lieux → plan", fontsize=12, fontweight="bold", color=COLORS["text_on_dark"])
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "slide4-matrice-seo-timeline.png")
+    _save_svg(fig, out_dir / "slide4-matrice-seo-timeline.svg")
     plt.close()
 
 
@@ -325,7 +326,7 @@ def one_pager_dashboard(out_dir: Path):
     ax4.set_ylim(0, 1)
 
     fig.suptitle("Casapy — Dashboard exécutif (one-pager)", fontsize=14, fontweight="bold", color=COLORS["text_on_dark"])
-    _save_transparent(fig, out_dir / "one-pager-dashboard-casapy.png")
+    _save_svg(fig, out_dir / "one-pager-dashboard-casapy.svg")
     plt.close()
 
 
@@ -363,14 +364,14 @@ def casapy_wave_progression(out_dir: Path):
         spine.set_color(COLORS["text_on_dark"])
     _so_what(ax, "CVR, SEO (CWV),\nROAS durable")
     fig.tight_layout()
-    _save_transparent(fig, out_dir / "casapy-wave-progression.png")
+    _save_svg(fig, out_dir / "casapy-wave-progression.svg")
     plt.close()
 
 
 def main():
     parser = argparse.ArgumentParser(description="Génère les visuels Casapy (7 slides + one-pager + wave, fond sombre)")
     parser.add_argument("--output", default="docs/contacts/casapy", help="Dossier de sortie")
-    parser.add_argument("--svg", action="store_true", help="Exporter aussi en SVG")
+    parser.add_argument("--svg", action="store_true", help="Ignoré (export SVG par défaut)")
     args = parser.parse_args()
     out_dir = Path(args.output)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -386,13 +387,8 @@ def main():
     one_pager_dashboard(out_dir)
     casapy_wave_progression(out_dir)
 
-    fmt = "svg" if args.svg else "png"
-    if args.svg:
-        # Ré-exporter en SVG (matplotlib peut le faire via savefig)
-        pass  # déjà fait en PNG ; pour SVG, changer extension dans chaque savefig
-
-    print(f"Visuels générés dans {out_dir.absolute()}")
-    for f in out_dir.glob("*.png"):
+    print(f"Visuels générés (SVG) dans {out_dir.absolute()}")
+    for f in sorted(out_dir.glob("*.svg")):
         print(f"  - {f.name}")
 
 

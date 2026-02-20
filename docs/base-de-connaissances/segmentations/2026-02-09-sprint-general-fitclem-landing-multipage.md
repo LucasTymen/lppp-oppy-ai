@@ -41,7 +41,7 @@ Créer une **landing page commerciale multipage** pour la **candidature FitClem*
 
 ### 3.1 Orchestrateur
 
-- [ ] **Diffuser** cette segmentation à tous les agents concernés (Chef de Projet, Rédacteur, Designer, Dev Django, Expert SEO).
+- [ ] **Diffuser** cette segmentation à tous les agents concernés (Chef de Projet, Rédacteur, Rédacteur en chef, Designer, Dev Django, Expert SEO, **Expert Growth**).
 - [ ] **Mettre à jour le registre** `registre-agents-ressources.md` : ajouter la ressource FitClem (dossier contact, sprint, stratégie marketing).
 - [ ] **Rappeler** à chaque rôle sa part (voir ci‑dessous) et vérifier que les livrables sont déposés ou branchés (templates, textes, routes).
 - [ ] **Ne pas faire** le travail à la place des autres : coordonner et s’assurer que Rédacteur rédige, Designer conçoit, Dev Django code, Expert SEO structure les meta/titres.
@@ -53,9 +53,10 @@ Créer une **landing page commerciale multipage** pour la **candidature FitClem*
 - [ ] Valider les livrables (textes, maquette, templates, SEO) avant clôture.
 - [ ] Mettre à jour `docs/logs/log-projet.md` et `docs/TODO.md` en fin de sprint.
 
-### 3.3 Rédacteur
+### 3.3 Rédacteur / Rédacteur en chef
 
 - [ ] **Lire** `docs/contacts/fitclem/strategie-marketing-fitclem.md` (source unique).
+- [ ] **Coordination** : l’**étude marketing** est sur une **page dédiée** (`/fitclem/etude-marketing/`) ; à aligner avec l’**Expert Growth** (périmètre, structure, KPIs) et le **Rédacteur en chef** (rédaction, labels, cohérence éditoriale). Réf. `docs/base-de-connaissances/etude-marketing-page-onglet-dedie.md`.
 - [ ] **Rédiger** les textes pour chaque page :
   - **Accueil** : hero, intro candidature, liens vers les 4 études + CTA.
   - **Étude marketing** : synthèses PESTEL, SWOT, Porter, concurrentiel, growth & positionnement (en s’appuyant sur la stratégie marketing) ; CTA vers les autres sections.
@@ -86,6 +87,10 @@ Créer une **landing page commerciale multipage** pour la **candidature FitClem*
 - [ ] **Structure des pages** : titres (H1, H2), meta (title, description) pour chaque URL FitClem.
 - [ ] **Page étude SEO (placeholder)** : proposer la structure (titres, emplacements pour données à venir) pour que l’utilisateur puisse fournir l’étude SEO plus tard sans refonte.
 - [ ] **Recommandations** : accessibilité, lisibilité, bonnes pratiques SEO sur les CTA (ancres, libellés).
+
+### 3.7 Expert Growth / marketing
+
+- [ ] **Page étude marketing** (`/fitclem/etude-marketing/`) : valider le **périmètre** et la **structure** du contenu (PESTEL, SWOT, Porter, concurrentiel, growth & positionnement) avec le Rédacteur ; s’assurer que les KPIs et le funnel sont cohérents avec la stratégie. Réf. `docs/base-de-connaissances/etude-marketing-page-onglet-dedie.md`.
 
 ---
 

@@ -49,8 +49,10 @@
 
         /* ===== Nav sticky top — mobile-first, responsive harmonieux, effet waouh ===== */
         .nav {
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             left: 0;
             right: 0;
             z-index: 1000;
@@ -149,29 +151,40 @@
             .nav-waffle { display: flex; }
             .nav-links {
                 position: fixed;
-                top: 52px;
+                top: 56px;
                 left: 0;
                 right: 0;
                 bottom: 0;
-                z-index: 999;
+                width: 100%;
+                z-index: 10001;
                 flex-direction: column;
                 align-items: stretch;
                 justify-content: flex-start;
                 gap: 0;
                 padding: 1rem;
-                background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 98%, transparent);
+                background: rgba(255, 255, 255, 0.98);
+                background: color-mix(in srgb, var(--lp-bg, #ffffff) 98%, transparent);
                 backdrop-filter: blur(14px);
                 -webkit-backdrop-filter: blur(14px);
                 border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
                 box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-                transform: translateX(100%);
+                transform: translate3d(100%, 0, 0);
+                -webkit-transform: translate3d(100%, 0, 0);
                 opacity: 0;
                 visibility: hidden;
+                pointer-events: none;
                 transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s;
                 overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
             }
-            .nav.nav--open .nav-links { transform: translateX(0); opacity: 1; visibility: visible; }
-            .nav-links a { min-height: 48px; justify-content: flex-start; padding: 0.75rem 1rem; border-radius: 10px; }
+            .nav.nav--open .nav-links {
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+            .nav-links a { min-height: 48px; justify-content: flex-start; padding: 0.75rem 1rem; border-radius: 10px; display: flex; align-items: center; color: var(--lp-text-on-light, #001327) !important; }
         }
         @media (min-width: 768px) {
             .nav-waffle { display: none !important; }
@@ -503,6 +516,7 @@
         .enjeux-ttfb-bar { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
         .enjeux-ttfb-bar .bar { width: 48px; border-radius: 8px 8px 0 0; min-height: 8px; background: linear-gradient(180deg, var(--lp-primary, #4a9eff), var(--lp-secondary, #5ebeff)); }
         .enjeux-ttfb-bar.enjeux-ttfb-bad .bar { background: linear-gradient(180deg, #e74c3c, #c0392b); }
+        .enjeux-ttfb-bar.enjeux-ttfb-ok .bar { background: linear-gradient(180deg, #00e676, #00c853); }
         .enjeux-ttfb-bar .bar-label { font-size: 0.8rem; font-weight: 600; color: var(--lp-text, #e6e6e6); }
         .enjeux-ttfb-bar .bar-val { font-size: 0.75rem; color: var(--lp-muted, #999); }
 
@@ -805,7 +819,9 @@
             {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
             {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
             {% if content.diagram_url or content.funnel_image_url %}<a href="#diagramme-funnel">En un coup d'œil</a>{% endif %}
-            {% if content.rapport_url %}<a href="{{ content.rapport_url }}" target="_blank" rel="noopener noreferrer">Consulter le rapport</a>{% endif %}
+            {% if content.rapport_url %}<a href="{{ content.rapport_url }}">Consulter le rapport</a>{% endif %}
+            {% if content.positionnement_marketing_url %}<a href="{{ content.positionnement_marketing_url }}">Positionnement marketing</a>{% endif %}
+            {% if content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard audit</a>{% endif %}
             {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="#coordonnees">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
         </div>
     </nav>
@@ -813,9 +829,12 @@
     <div class="alert-banner">{{ content.alert_banner }}</div>
     {% endif %}
 
-    <main id="top">
+    <main id="top" style="padding-top: 52px;">
         {% if landing_page.slug == 'casapy' %}
         <p class="lppp-django-marker" style="margin:0;padding:6px 12px;background:#0a7;color:#fff;font-size:12px;text-align:center;position:sticky;top:52px;z-index:999;">Page servie par Django LPPP — template à jour</p>
+        {% if content.audit_dashboard_url %}
+        <p style="margin:0 0 1rem;padding:0.5rem 12px;text-align:center;font-size:13px;"><a href="{{ content.audit_dashboard_url }}" style="display:inline-block;padding:0.4rem 0.9rem;background:#ff3b3b;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Voir le dashboard audit performance</a> — score, timeline, compteur perte, bullet chart, heatmap, waterfall, recovery.</p>
+        {% endif %}
         {% endif %}
         <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
         <section class="hero{% if content.hero_video_mp4_url or content.hero_video_webm_url or content.hero_video_url %} has-bg-video{% elif content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
@@ -899,7 +918,7 @@
         {% endif %}
 
         {% if content.pain_points or content.activite_pain_points %}
-        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' %} content-player{% endif %}" id="enjeux">
+        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' %} content-player{% endif %}" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
             {% if content.enjeux_lead %}<p class="section-lead">{{ content.enjeux_lead }}</p>{% endif %}
@@ -946,14 +965,60 @@
                 {% for seg in content.services_segments %}
                 {% if seg.type == 'infographic' and seg.visual == 'image' and seg.src %}
                 <div class="infographic-image-wrap">
-                    <img src="{% if content.casapy_assets_url %}{{ content.casapy_assets_url }}{{ seg.src }}{% else %}{{ seg.src }}{% endif %}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy" decoding="async">
+                    <img src="{% if content.casapy_assets_url %}{{ content.casapy_assets_url }}{{ seg.src }}{% elif content.promovacances_assets_url %}{{ content.promovacances_assets_url }}{{ seg.src }}{% else %}{{ seg.src }}{% endif %}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy" decoding="async">
                     {% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}
                 </div>
                 {% endif %}
                 {% endfor %}
                 {% endif %}
             </div>
+            {% elif landing_page.slug == 'promovacances' %}
+            <div class="enjeux-visuals" aria-hidden="true">
+                <div>
+                    <p class="enjeux-visual-label">TTFB — Promovacances vs référence (bon &lt; 500 ms)</p>
+                    <div class="enjeux-ttfb-comparison">
+                        <div class="enjeux-ttfb-bar enjeux-ttfb-ok"><div class="bar" style="height: 20px;"></div><span class="bar-label">Promovacances</span><span class="bar-val">~0,1 s</span></div>
+                        <div class="enjeux-ttfb-bar"><div class="bar" style="height: 50px;"></div><span class="bar-label">Réf. bon</span><span class="bar-val">0,5 s</span></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Funnel impact — 30 k visites, 1,5 % CVR, panier 1 200 €</p>
+                    <div class="enjeux-funnel">
+                        <div class="enjeux-funnel-tier"><span class="tier-val">30 000</span> visiteurs / mois</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">450</span> ventes potentielles (1,5 %)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">~81</span> ventes perdues (18 %)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">~28 k€</span> / mois impactés</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Chaîne de priorité (TTFB OK → suspect n°1 = front)</p>
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">Images & LCP</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">JS & third-parties</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Serveur (marginal)</span>
+                    </div>
+                </div>
+                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : score, timeline, bullet chart, waterfall, recovery rings</p>
+            </div>
             {% endif %}
+        </section>
+        {% endif %}
+
+        {% if landing_page.slug == 'promovacances' and content.audit_dashboard_url %}
+        <section class="section content-player" id="infographies-audit" aria-labelledby="infographies-audit-heading">
+            <div class="section-head"><span class="section-num">01b</span><h2 id="infographies-audit-heading">Infographies audit performance</h2></div>
+            <div class="content-player-text">
+                <p class="section-lead">Score global, timeline utilisateur, compteur pertes, bullet chart, matrice Impact×Effort, waterfall et recovery rings — mêmes formats que Casapy (Claude), données Promovacances.</p>
+            </div>
+            <div class="workflow-figure" style="position:relative;padding-bottom:75%;height:0;overflow:hidden;border-radius:12px;background:var(--lp-block-bg,#f5f5f5);">
+                <iframe src="{{ content.audit_dashboard_url }}" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="Dashboard audit performance Promovacances"></iframe>
+            </div>
+            <p style="margin-top:0.75rem;font-size:0.9rem;">
+                <a href="{{ content.audit_dashboard_url }}">Ouvrir le dashboard en plein écran</a>
+                {% if content.infographie_url %}
+                &nbsp;·&nbsp; <a href="{{ content.infographie_url }}">7 formats (palette Promovacances)</a>
+                {% endif %}
+            </p>
         </section>
         {% endif %}
 
@@ -1049,11 +1114,11 @@
         {% endif %}
 
         {% if content.services %}
-        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' %} content-player services-segmented{% endif %}" id="services">
+        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' %} content-player services-segmented{% endif %}" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             {% if content.rapport_url %}
             <div class="rapport-cta-block">
-                <a href="{{ content.rapport_url }}" class="rapport-cta-link" target="_blank" rel="noopener noreferrer">Consulter le rapport complet (société, stratégie, SEO) →</a>
+                <a href="{{ content.rapport_url }}" class="rapport-cta-link">Consulter le rapport complet (société, stratégie, SEO) →</a>
             </div>
             {% endif %}
             {% if content.services_segments %}
@@ -1162,8 +1227,27 @@
                         <span class="flow-step">Revenue</span><span class="flow-arrow">→</span>
                         <span class="flow-step">Referral</span>
                     </div>
+                    {% elif seg.visual == 'ttfb-kpi-bars-promo' %}
+                    <div class="content-player-dashboard">
+                        <div class="kpi-row"><span class="kpi-label">TTFB (~0,1 s)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 5%;"></div></div><span class="kpi-ok">OK</span></div>
+                        <div class="kpi-row"><span class="kpi-label">LCP mobile (5,2 s)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 85%;"></div></div><span class="kpi-bad">À optimiser</span></div>
+                        <div class="kpi-row"><span class="kpi-label">Stack Fasterize + CloudFront</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 10%;"></div></div><span class="kpi-ok">OK</span></div>
+                        <div class="kpi-row"><span class="kpi-label">Perte conversion (18 %)</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 70%;"></div></div><span class="kpi-bad">Business</span></div>
+                    </div>
+                    {% elif seg.visual == 'flowchart-front-promo' %}
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">Images & LCP</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">JS & third-parties</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Serveur (marginal)</span>
+                    </div>
+                    {% elif seg.visual == 'plan-timeline-promo' %}
+                    <div class="key-figures-timeline">
+                        <div class="key-figures-timeline-item"><span class="t-period">Étape 1</span><p class="t-desc">Images & LCP — optimisation, priorité chargement</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">Étape 2</span><p class="t-desc">JS & third-parties — defer, lazy load</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">Étape 3</span><p class="t-desc">Serveur & cache — marginal (TTFB déjà bon)</p></div>
+                    </div>
                     {% elif seg.visual == 'image' and seg.src %}
-                    <div class="infographic-image-wrap"><img src="{% if content.casapy_assets_url %}{{ content.casapy_assets_url }}{{ seg.src }}{% else %}{{ seg.src }}{% endif %}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy" decoding="async">{% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}</div>
+                    <div class="infographic-image-wrap"><img src="{% if content.casapy_assets_url %}{{ content.casapy_assets_url }}{{ seg.src }}{% elif content.promovacances_assets_url %}{{ content.promovacances_assets_url }}{{ seg.src }}{% else %}{{ seg.src }}{% endif %}" alt="{{ seg.label|default:'' }}" class="infographic-img" loading="lazy" decoding="async">{% if seg.label %}<p class="enjeux-visual-label">{{ seg.label }}</p>{% endif %}</div>
                     {% endif %}
                 </div>
                 {% endif %}
@@ -1201,8 +1285,12 @@
                     {% for item in content.seo_resume.problemes_cles %}<li>{{ item }}</li>{% endfor %}
                 </ul>
                 {% endif %}
-                {% if content.seo_resume.lien_analyse and content.rapport_url %}
-                <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta" target="_blank" rel="noopener noreferrer">{{ content.seo_resume.lien_analyse }}</a>
+                {% if content.seo_resume.lien_analyse %}
+                {% if content.audit_dashboard_url %}
+                <a href="{{ content.audit_dashboard_url }}" class="seo-cta">{{ content.seo_resume.lien_analyse }}</a>
+                {% elif content.rapport_url %}
+                <a href="{{ content.rapport_url }}#analyse-seo-complete" class="seo-cta">{{ content.seo_resume.lien_analyse }}</a>
+                {% endif %}
                 {% endif %}
             </div>
             {% if landing_page.slug == 'fitclem' %}

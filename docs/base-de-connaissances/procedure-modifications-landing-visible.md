@@ -53,9 +53,28 @@ make landing-p4s
 
 Cela crée ou met à jour la landing P4S et la marque comme **publiée**. À refaire après chaque déploiement si la base a été réinitialisée.
 
-### D. Headers anti-cache (déjà en place)
+### D. 404 sur toutes les landings (base vide) — réparation
 
-- La vue `landing_public` envoie désormais les en-têtes **Cache-Control**, **Pragma** et **Expires** pour limiter la mise en cache du navigateur. Après déploiement, les rechargements devraient afficher la dernière version sans avoir à vider le cache manuellement à chaque fois.
+Si **toutes** les pages `/p/<slug>/` (Casapy, FitClem, etc.) renvoient **404 « No LandingPage matches the given query »** : la base ne contient plus les entrées `LandingPage` (volume recréé, prod réinitialisée, etc.). **Aucun bug de code** : une seule logique sert toutes les landings ; la 404 vient de l’absence de ligne en base.
+
+**Réparation (même système pour toutes) :**
+
+1. **Migrations** (recréent Maisons-Alfort, Yuwell) :  
+   `docker compose exec web python manage.py migrate --noinput`
+2. **Recréer les landings « générateur »** (Casapy, FitClem, Promovacances, P4S) :  
+   `make landings-restore`  
+   (ou en prod : exécuter les commandes `create_landing_casapy --update --publish`, etc., ou restaurer un backup SQL.)
+
+Après quoi toutes les URLs `/p/casapy/`, `/p/fitclem/`, `/p/promovacances/`, `/p/p4s-archi/`, etc. refonctionnent. Voir `erreurs-et-solutions.md` § « 404 No LandingPage » et § « container name already in use ».
+
+### E. Headers anti-cache (déjà en place)
+
+- La vue `landing_public` envoie les en-têtes **Cache-Control**, **Pragma** et **Expires** pour limiter la mise en cache du navigateur. Après déploiement, les rechargements devraient afficher la dernière version sans avoir à vider le cache manuellement à chaque fois.
+
+### F. Système unifié (moteur de landings)
+
+- **Une seule logique** dans `landing_public` : pour tout slug, le contenu est chargé depuis **`docs/contacts/<slug>/landing-proposition-<slug>.json`** si le fichier existe, sinon depuis **`content_json`** en base. Aucune branche `if slug == "x"` pour le chargement du contenu.
+- **Options par slug** (assets, dashboard audit) restent injectées après coup (ex. Casapy : `casapy_assets_url` ; tout slug avec `audit-dashboard.json` : `audit_dashboard_url`). Aucune branche ne peut « casser » les autres landings.
 
 ---
 
@@ -69,9 +88,10 @@ Cela crée ou met à jour la landing P4S et la marque comme **publiée**. À ref
 
 ## 4. Fichiers concernés
 
-- **Vue** : `apps/landing_pages/views.py` (headers Cache-Control sur `landing_public`)
-- **Commande P4S** : `apps/landing_pages/management/commands/create_landing_p4s.py` (option `--update`)
-- **JSON P4S** : `docs/contacts/p4s-archi/landing-proposition-joel.json`
+- **Vue** : `apps/landing_pages/views.py` — logique unifiée (fichier `landing-proposition-<slug>.json` ou `content_json`), headers anti-cache, options par slug (assets, audit_dashboard_url).
+- **Commandes** : `create_landing_casapy`, `create_landing_fitclem`, `create_landing_promovacances`, `create_landing_p4s` (option `--update --publish`).
+- **Restauration globale** : `make landings-restore` (après base vide).
+- **JSON par contact** : `docs/contacts/<slug>/landing-proposition-<slug>.json` (ex. casapy, fitclem, promovacances) ; P4S : `landing-proposition-joel.json` dans p4s-archi (convention différente, contenu en base après `create_landing_p4s`).
 
 ---
 

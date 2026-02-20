@@ -218,7 +218,7 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 ---
 
 ### 8. **Expert SEO et AI-GEO**
-**Expertise** : Référencement pour les robots et l’intelligence artificielle (SEO classique + AI-GEO), visibilité ChatGPT / Claude / Gemini, analyse de statistiques, conseil
+**Expertise** : Référencement pour les robots et l’intelligence artificielle (SEO classique + AI-GEO), visibilité ChatGPT / Claude / Gemini, analyse de statistiques, conseil transversal, quantification pertes/gains
 
 **Responsabilités** :
 - Intervenir en **conseiller** : analyse fine des statistiques fournies (trafic, indexation, visibilité) pour produire un rapport structuré
@@ -227,6 +227,8 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 - Donner des **pistes d’amélioration** partagées avec le lead (SEO + visibilité robots/IA + wording + copywriting) pour les aider à être mieux pris en compte par les moteurs et l’IA et à améliorer la conversion
 - **Garder les meilleures pistes** pour le porteur du projet (stratégie avancée, leviers différenciants) ; ne pas tout divulguer dans le rapport public ; **à discuter** : niveau d’information à transmettre et **chiffrage** pour éviter de se faire piquer les idées (doc démarche § 4)
 - Conseiller sur la **visibilité dans les moteurs IA** (ChatGPT, Claude, Gemini) : structure du contenu, métadonnées, bonnes pratiques AI-GEO (Generative Engine Optimization)
+- **Conseil transversal** : latitude de **conseiller** le Rédacteur en chef, le DevOps, le Dev Django ou tout autre rôle **au moment où c’est utile** (référencement, meta/schema, stack SEO sémantique, wording orienté SEO), sans court-circuiter l’ordre ni substituer aux décisions du Chef de Projet ou du Conseiller
+- **Risques et quantification** : formuler des **hypothèses** sur les risques (ex. perte de visibilité, dégradation CWV) et **quantifier** les pertes ou gains potentiels d’une opération SEO (manque à gagner, gain estimé après correctif), pour les rapports, audits et arbitrages du Chef de Projet
 - En cas de besoin, **collaborer** avec le superviseur, l’Orchestrateur ou le Chef de Projet (voir registre et RACI)
 
 **Outils** :

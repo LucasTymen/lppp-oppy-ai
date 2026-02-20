@@ -89,10 +89,15 @@ Si **DATA** est vide ou partiel : utiliser des emplacements neutres (« À compl
 - **Pas de blabla sur toi** dans la sortie : pas de markdown inutile. Juste **plan** puis **fichier HTML**.
 - **Anti-hallucination** : s’appuyer sur les docs du projet (`docs/contacts/`, `docs/base-de-connaissances/`, rapports déposés) quand un brief fait référence à un contact ou un rapport.
 
+## Casapy — spec visuelle + contextuelle
+
+Pour le projet Casapy (deck 7 slides, jauges TTFB, flowchart, cartes scénarios) : utiliser la spec **visuelle + contextuelle** avec formules et snippets HTML/CSS/JS drop-in. Chaque bloc visuel doit être **joli** (charte fond sombre, lisible) et **accompagné d’un texte court** (tenants et aboutissants) rédigé par le **Rédacteur en chef** (`docs/bonnes-pratiques.md`). Voir : `docs/contacts/casapy/spec-infographiques-visuel-contextuel.md`.
+
 ## Références projet
 
 - **Registre** : `docs/base-de-connaissances/registre-agents-ressources.md`
 - **Rôles et RACI** : `docs/base-de-connaissances/agents-roles-responsabilites.md`
 - **Exemples de données** : `docs/contacts/fitclem/` (rapport SEO, manque à gagner, structure diapo)
+- **Casapy — visuel + contextuel** : `docs/contacts/casapy/spec-infographiques-visuel-contextuel.md`
 
 *Document maintenu en cohérence avec le registre. À chaque création d’agent/règle, l’Orchestrateur met à jour le registre.*

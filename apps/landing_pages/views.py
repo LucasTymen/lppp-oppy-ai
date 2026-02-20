@@ -5,7 +5,7 @@ from pathlib import Path
 import markdown
 from django.conf import settings
 from django.shortcuts import render, get_object_or_404
-from django.http import Http404
+from django.http import Http404, FileResponse
 from .models import LandingPage
 from .themes import LANDING_THEMES, THEME_YUWELL, THEME_CSS_YUWELL
 from apps.scraping.flowise_client import get_flowise_chat_embed_url, get_flowise_chat_embed_config
@@ -202,30 +202,32 @@ def landing_public(request, slug):
     lp = get_object_or_404(LandingPage, slug=slug)
     if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
         raise Http404("Landing non publiée")
-    # FitClem : source de vérité = fichier JSON (modifications visibles sans --update)
-    if lp.slug == "fitclem":
-        fitclem_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / "fitclem" / "landing-proposition-fitclem.json"
-        if fitclem_json_path.exists():
-            try:
-                with open(fitclem_json_path, encoding="utf-8") as f:
-                    content = _content_with_defaults(json.load(f), lp.template_key)
-            except (json.JSONDecodeError, OSError):
-                content = _content_with_defaults(lp.content_json or {}, lp.template_key)
-        else:
-            content = _content_with_defaults(lp.content_json or {}, lp.template_key)
-    # Casapy : source de vérité = fichier JSON (docs/contacts/casapy/landing-proposition-casapy.json)
-    elif lp.slug == "casapy":
-        casapy_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / "casapy" / "landing-proposition-casapy.json"
-        if casapy_json_path.exists():
-            try:
-                with open(casapy_json_path, encoding="utf-8") as f:
-                    content = _content_with_defaults(json.load(f), lp.template_key)
-            except (json.JSONDecodeError, OSError):
-                content = _content_with_defaults(lp.content_json or {}, lp.template_key)
-        else:
+
+    # Une seule logique pour toutes les landings : fichier JSON si présent, sinon content_json en base.
+    # Convention : docs/contacts/<slug>/landing-proposition-<slug>.json (ex. casapy, fitclem, promovacances).
+    content_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / f"landing-proposition-{slug}.json"
+    if content_path.is_file():
+        try:
+            content = _content_with_defaults(json.loads(content_path.read_text(encoding="utf-8")), lp.template_key)
+        except (json.JSONDecodeError, OSError):
             content = _content_with_defaults(lp.content_json or {}, lp.template_key)
     else:
         content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+
+    # Options selon le slug (assets, dashboard audit) — sans casser les autres.
+    if lp.slug == "casapy":
+        content["casapy_assets_url"] = request.build_absolute_uri("/p/casapy/assets/")
+        content["audit_dashboard_url"] = request.build_absolute_uri("/p/casapy/audit-dashboard/")
+    elif lp.slug == "promovacances":
+        content["promovacances_assets_url"] = request.build_absolute_uri("/p/promovacances/assets/")
+        content["infographie_url"] = request.build_absolute_uri("/p/promovacances/assets/infographie-promovacances-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/promovacances/assets/positionnement-marketing.html")
+        if "audit_dashboard_url" not in content:
+            content["audit_dashboard_url"] = request.build_absolute_uri("/p/promovacances/audit-dashboard/")
+    else:
+        audit_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
+        if audit_json_path.is_file():
+            content["audit_dashboard_url"] = request.build_absolute_uri(f"/p/{slug}/audit-dashboard/")
     # Pour les slugs enregistrés (ex. orsys), le thème vient de themes.py → les modifs sont visibles sans --update
     if lp.slug in LANDING_THEMES:
         theme_dict, theme_css = LANDING_THEMES[lp.slug]
@@ -266,6 +268,108 @@ def landing_public(request, slug):
     # YouTube embed Erreur 153 : la page doit être servie avec Referrer-Policy pour que l'iframe envoie le Referer à YouTube
     response["Referrer-Policy"] = "strict-origin-when-cross-origin"
     return response
+
+
+def serve_casapy_asset(request, filename):
+    """
+    Sert les assets Casapy (PNG, etc.) depuis docs/contacts/casapy/ pour que les
+    infographies s'affichent sur localhost (/p/casapy/). Évite path traversal.
+    """
+    import os
+    assets_dir = Path(settings.BASE_DIR) / "docs" / "contacts" / "casapy"
+    safe_name = os.path.basename(filename)
+    if not safe_name:
+        raise Http404("Asset Casapy non trouvé")
+    file_path = assets_dir / safe_name
+    if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
+        raise Http404("Asset Casapy non trouvé")
+    if safe_name.lower().endswith(".svg"):
+        content_type = "image/svg+xml"
+    elif safe_name.lower().endswith(".png"):
+        content_type = "image/png"
+    else:
+        content_type = "application/octet-stream"
+    return FileResponse(
+        open(file_path, "rb"),
+        as_attachment=False,
+        filename=safe_name,
+        content_type=content_type,
+    )
+
+
+def serve_promovacances_asset(request, filename):
+    """
+    Sert les assets Promovacances depuis docs/contacts/promovacances/ :
+    images (PNG, SVG), infographie HTML. Évite path traversal.
+    """
+    import os
+    assets_dir = Path(settings.BASE_DIR) / "docs" / "contacts" / "promovacances"
+    safe_name = os.path.basename(filename)
+    if not safe_name:
+        raise Http404("Asset Promovacances non trouvé")
+    file_path = assets_dir / safe_name
+    if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
+        raise Http404("Asset Promovacances non trouvé")
+    ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
+    if ext == "svg":
+        content_type = "image/svg+xml"
+    elif ext == "png":
+        content_type = "image/png"
+    elif ext in ("html", "htm"):
+        content_type = "text/html; charset=utf-8"
+    elif ext == "css":
+        content_type = "text/css; charset=utf-8"
+    else:
+        content_type = "application/octet-stream"
+    return FileResponse(
+        open(file_path, "rb"),
+        as_attachment=False,
+        filename=safe_name,
+        content_type=content_type,
+    )
+
+
+def casapy_audit_dashboard(request):
+    """
+    Dashboard audit performance Casapy (7 blocs). Redirige vers la vue générique par slug.
+    Conservé pour compatibilité des liens / name="casapy_audit_dashboard".
+    """
+    return seo_audit_dashboard(request, "casapy")
+
+
+def seo_audit_dashboard(request, slug):
+    """
+    Dashboard audit SEO générique : charge docs/contacts/<slug>/audit-dashboard.json
+    et rend le template seo_audit_dashboard.html. Un JSON par projet = même structure,
+    contenu remplaçable. Voir docs/base-de-connaissances/audit-dashboard-modele-seo.md.
+    Passe landing_page et content pour afficher nav + hero (Promovacances, Casapy, etc.).
+    """
+    path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
+    if not path.is_file():
+        raise Http404("audit-dashboard.json introuvable pour ce projet")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    ctx = {"config": data}
+
+    # Contexte nav + hero : charger landing et content pour afficher navbar fixe et hero
+    lp = LandingPage.objects.filter(slug=slug).first()
+    if lp is None:
+        lp, content_from_json = _fallback_landing_from_contact(slug)
+        content = dict(content_from_json or {}) if content_from_json else {}
+    else:
+        content = dict(lp.content_json or {})
+    if lp is not None:
+        if slug in LANDING_THEMES:
+            theme_dict, theme_css = LANDING_THEMES[slug]
+            content = {**content, "theme": theme_dict, "theme_css": theme_css}
+        content["audit_dashboard_url"] = request.build_absolute_uri(f"/p/{slug}/audit-dashboard/")
+        ctx["landing_page"] = lp
+        ctx["content"] = content
+
+    return render(
+        request,
+        "landing_pages/seo_audit_dashboard.html",
+        ctx,
+    )
 
 
 def console_landings(request):
@@ -382,8 +486,11 @@ def _rapport_html(slug):
 
 def _common_landing_context(lp):
     """Contexte commun pour les pages annexes (rapport, prospects, proposition)."""
-    content = lp.content_json or {}
+    content = dict(lp.content_json or {})
     use_perso_style = _use_perso_style(lp)
+    if lp.slug in LANDING_THEMES:
+        theme_dict, theme_css = LANDING_THEMES[lp.slug]
+        content = {**content, "theme": theme_dict, "theme_css": theme_css}
     return {
         "landing_page": lp,
         "content": content,
@@ -430,7 +537,10 @@ def landing_rapport(request, slug):
         lp, content_from_json = _fallback_landing_from_contact(slug)
         if lp is None:
             raise Http404("Landing ou contact introuvable")
-        content = content_from_json
+        content = dict(content_from_json or {})
+        if slug in LANDING_THEMES:
+            theme_dict, theme_css = LANDING_THEMES[slug]
+            content = {**content, "theme": theme_dict, "theme_css": theme_css}
         use_perso_style = _use_perso_style(lp)
         ctx = {
             "landing_page": lp,
@@ -445,6 +555,12 @@ def landing_rapport(request, slug):
     report_html = _rapport_html(slug)
     ctx["report_html"] = report_html
     ctx["report_available"] = bool(report_html)
+    if slug == "casapy":
+        url = request.build_absolute_uri("/p/casapy/audit-dashboard/")
+        ctx["audit_dashboard_url"] = ctx["content"]["audit_dashboard_url"] = url
+    elif slug == "promovacances":
+        url = request.build_absolute_uri("/p/promovacances/audit-dashboard/")
+        ctx["audit_dashboard_url"] = ctx["content"]["audit_dashboard_url"] = url
     response = render(request, "landing_pages/rapport.html", ctx)
     response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response["Pragma"] = "no-cache"
