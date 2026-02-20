@@ -69,6 +69,18 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | **L’agent en charge des erreurs** (et tout agent qui crée ou modifie un template avec barre de navigation) doit **prendre en note** : les **barres de navigation doivent toujours être en sticky** ; appliquer **systématiquement** ; quand ce n’est pas fait, **le corriger**. Règle projet pour une navigation optimale. |
 | **Lien(s)** | Templates : `proposition.html`, `rapport.html`, `prospects.html`, `proposition_value.html`, `includes/nav_landing_annexes.html`, `yuwell_base.html`, `yuwell_portfolio.html`, `seo_audit_dashboard.html`, `casapy_audit_dashboard.html`. |
 
+### Barre de navigation décalée — body padding-top à 0
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-20 |
+| **Contexte** | Pages positionnement-marketing, infographie-\*-7-formats et toute page avec nav sticky/fixed. |
+| **Erreur** | Nav visuellement décalée (bande blanche ou vide au-dessus) — la nav n'est pas collée tout en haut du viewport. |
+| **Cause** | `body { padding-top: 60px }` (ou autre valeur) qui pousse tout le contenu vers le bas. La nav est bien sticky/fixed mais le body a un décalage inutile. |
+| **Solution** | **Remplacer** `body { padding-top: 60px }` par `body { padding-top: 0 }`. Pour la nav fixed, le contenu sous la nav doit avoir son propre `padding-top` (ex. `.site-content-inner { padding-top: 80px }` ou `main { padding-top: 52px }`), pas sur le body. |
+| **Prévention** | **Graphiste / Designer** : vérifier chaque nouvelle page — nav collée en haut = `body { padding-top: 0 }`. **Chef de Projet / Architecte** : auditer toutes les pages du site (Infopro, Promovacances, Casapy, etc.) et corriger systématiquement. |
+| **Lien(s)** | `docs/contacts/infopro/positionnement-marketing.html`, `docs/contacts/promovacances/positionnement-marketing.html`, `decisions.md` (Barres de navigation toujours en sticky). |
+
 ### Django / Docker — failed to resolve host 'db' ; service "web" is not running
 
 | Champ | Contenu |

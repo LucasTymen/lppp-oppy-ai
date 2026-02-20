@@ -37,6 +37,7 @@ Cette page complète et enrichie devient le **nouveau modèle** pour les pages d
 2. **Remplacer** le contenu par les données du contact (prospect).
 3. **Adapter** les tokens CSS (couleurs, polices) selon la charte du contact.
 4. **Garder** : nav sticky, site-bg (vidéo/overlay), layout cards, formules, tableaux, bar charts.
+5. **Checklist intégrité nav** (Chef de Projet / Architecte supervisent, Graphiste exécute) : `body { padding-top: 0 }` (jamais 60px), nav collée en haut ; `.site-content-inner` ou `main` avec `padding-top` pour le contenu sous la nav. Voir `erreurs-et-solutions.md` § « Barre de navigation décalée ».
 5. Pour FitClem, futures landings Growth : s’inspirer de ce modèle pour la page « Étude marketing ».
 
 ---
