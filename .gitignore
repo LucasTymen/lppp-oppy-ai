@@ -68,6 +68,15 @@ media/
 local_settings.py
 db.sqlite3
 
+# ---- Rapports et exports (peuvent contenir clés API, tokens tiers) ----
+# PageSpeed Insights / Lighthouse : scripts embarqués (analytics.js) contiennent des clés Google
+*.téléchargement
+*PageSpeed Insights*_files/
+*PageSpeed*_files/
+# Exports Wappalyzer / audits site (URLs, clés Stripe, API tierces)
+docs/contacts/*/www.*.com-*.json
+docs/contacts/*/*wappalyzer*audit*.json
+
 # ---- Logs et dumps (peuvent contenir des données sensibles) ----
 *.log
 logs/*.log

@@ -237,9 +237,9 @@ body:has(.report-body) .report-body blockquote {
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            min-height: 52px;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            min-height: 40px;
             background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 92%, transparent);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -273,15 +273,15 @@ body:has(.report-body) .report-body blockquote {
             align-items: center;
             justify-content: flex-end;
         }
-        /* Mobile-first : zone de touch min 44px pour accessibilité */
+        /* Mobile-first : zone de touch min 36px (compromis compacité/accessibilité) */
         .nav-links a {
             font-size: clamp(0.8rem, 2.2vw, 0.9rem);
             font-weight: 500;
             color: var(--lp-muted, #999);
             text-decoration: none;
-            padding: 0.5rem 0.4rem;
-            min-height: 44px;
-            min-width: 44px;
+            padding: 0.35rem 0.35rem;
+            min-height: 36px;
+            min-width: 36px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -293,8 +293,8 @@ body:has(.report-body) .report-body blockquote {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 44px;
-            padding: 0.5rem 1rem;
+            min-height: 36px;
+            padding: 0.4rem 0.9rem;
             background: var(--lp-primary, #4a9eff);
             color: var(--lp-cta-text, #fff);
             font-weight: 600;
@@ -331,7 +331,7 @@ body:has(.report-body) .report-body blockquote {
             .nav-waffle { display: flex; }
             .nav-links {
                 position: fixed;
-                top: 56px;
+                top: 44px;
                 left: 0;
                 right: 0;
                 bottom: 0;
@@ -885,7 +885,7 @@ body:has(.report-body) .report-body blockquote {
 
         /* ===== Responsive : mobile-first — 480px ===== */
         @media (min-width: 480px) {
-            .nav { padding: 0.85rem 1.25rem; min-height: 56px; }
+            .nav { padding: 0.45rem 1rem; min-height: 44px; }
             .hero { padding: 2rem 1.25rem 3.5rem; }
             .section { padding: var(--lp-section-padding) 1.25rem; }
             .icebreaker { padding: 1rem 1.25rem; }
@@ -894,7 +894,7 @@ body:has(.report-body) .report-body blockquote {
 
         /* ===== Responsive : tablette 768px — waouh espacement ===== */
         @media (min-width: 768px) {
-            .nav { padding: 1rem 2rem; min-height: 60px; }
+            .nav { padding: 0.5rem 1.25rem; min-height: 46px; }
             .nav-logo { max-height: 42px; }
             .nav-logo.nav-logo--svg { height: 36px; }
             .nav-links { gap: 0.5rem 1rem; }
@@ -917,7 +917,7 @@ body:has(.report-body) .report-body blockquote {
 
         /* ===== Responsive : desktop 1024px — waouh confort lecture ===== */
         @media (min-width: 1024px) {
-            .nav { padding: 1.25rem 2.5rem; min-height: 64px; }
+            .nav { padding: 0.55rem 1.5rem; min-height: 48px; }
             .nav-logo { max-height: 48px; }
             .nav-logo.nav-logo--svg { height: 42px; }
             .nav-links { gap: 0.75rem 1.5rem; }
@@ -981,7 +981,7 @@ body:has(.report-body) .report-body blockquote {
         /* ===== Responsive : HD 1440px — waouh large écran ===== */
         @media (min-width: 1440px) {
             body { font-size: 1.0625rem; }
-            .nav { padding: 1.5rem 3rem; min-height: 68px; }
+            .nav { padding: 0.6rem 2rem; min-height: 50px; }
             .nav-logo { max-height: 52px; }
             .nav-logo.nav-logo--svg { height: 46px; }
             .nav-links a { font-size: 1.05rem; }
@@ -1036,7 +1036,7 @@ body:has(.report-body) .report-body blockquote {
     <div class="alert-banner">LPPP INFOPRO DIGITAL — AUDIT SEO + DASHBOARD + PLAN D&#x27;ACTION</div>
     
 
-    <main id="top" style="padding-top: 52px;">
+    <main id="top" style="padding-top: 44px;">
         
         <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
         <section class="hero has-bg-video">

@@ -11,7 +11,7 @@ Règles de sécurité évidentes à respecter dans le projet. Aligné avec les r
 ## 1. Secrets et credentials
 
 - **Ne jamais** committer de secrets, mots de passe, clés privées, tokens ou clés API dans le dépôt (code, issues, messages de commit).
-- **.gitignore** : `.env`, `.env.*` (sauf `.env.example`), `*.pem`, `*.key`, `secrets/`, `credentials/`, etc. Voir `.gitignore` à la racine et `infra-devops.md` (§ Conventions).
+- **.gitignore** : `.env`, `.env.*` (sauf `.env.example`), `*.pem`, `*.key`, `secrets/`, `credentials/`, etc. **Rapports et exports** : `*.téléchargement`, `*PageSpeed*_files/`, `docs/contacts/*/www.*.com-*.json` (évite de versionner des clés Google/Stripe embarquées). Voir `.gitignore` et `infra-devops.md` (§ Conventions).
 - **Variables d’environnement** : utiliser `.env` (non versionné) en local ; en prod et CI : variables d’environnement ou Secrets du dépôt (GitHub Secrets, Vercel, etc.).
 - **SECRET_KEY Django** : en production, utiliser une clé longue et aléatoire (ex. `python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"`), jamais la valeur par défaut du code.
 

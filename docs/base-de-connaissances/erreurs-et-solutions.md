@@ -57,6 +57,18 @@ Pour chaque erreur documentée, indiquer :
 | **Prévention** | DevOps / Architecte / Ingénieur Sys appliquent la checklist dès signalement « page instable » ; documenter toute nouvelle cause dans ce registre. |
 | **Lien(s)** | `segmentations/2026-01-30-sprint-page-instable-promovacances-devops-archi.md`, `erreurs-et-solutions.md` (Docker, 404, Postgres), `procedure-modifications-landing-visible.md` |
 
+### Secrets détectés par GitHub — fuite de clés API dans le dépôt
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-02-21 |
+| **Contexte** | GitHub Secret Scanning signale des « Possible valid secrets detected » : Google API Key (annonce_sardaigne.htm, analytics.js.téléchargement), Stripe (exports Wappalyzer). |
+| **Erreur** | Fichiers versionnés contenant des clés : `analytics.js.téléchargement` (rapports PageSpeed Insights), `www.*.com-*.json` (exports audit site), HTML avec scripts Google. |
+| **Cause** | Rapports et exports d’outils externes (PageSpeed, Lighthouse, Wappalyzer) embarquent des scripts ou URLs contenant des clés tierces. Ces fichiers n’étaient pas dans le `.gitignore`. |
+| **Solution** | 1. `git rm --cached` sur les fichiers concernés ; 2. Renforcer `.gitignore` (voir ci-dessous) ; 3. Rotation des clés si elles sont valides ; 4. Pour LPPP_Missions_mairie_m-Alfort : appliquer les mêmes correctifs dans ce dépôt. |
+| **Prévention** | Ne jamais committer : rapports PageSpeed/Lighthouse complets avec `_files/`, exports JSON d’audit de sites tiers, fichiers `*.téléchargement`. Patterns ajoutés : `*.téléchargement`, `*PageSpeed*_files/`, `docs/contacts/*/www.*.com-*.json`. Avant commit : `git diff --cached \| grep -E 'AIza|pk_live_|sk_live_'` pour vérifier. |
+| **Lien(s)** | `segmentations/2026-02-21-sprint-urgence-secrets-gitignore-devops-pentester.md`, `regles-securite.md`, `.gitignore` |
+
 ### Barres de navigation — toujours en sticky
 
 | Champ | Contenu |
