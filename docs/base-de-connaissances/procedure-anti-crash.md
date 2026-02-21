@@ -1,10 +1,12 @@
 # Procédure anti-crash — sauvegarde incrémentale et reprise
 
+> **⚠️ SYSTÉMATIQUE POUR TOUS — 2026-02-21** : En raison d’une instabilité du système, ces mesures sont **obligatoires pour l’ensemble de l’équipe** (tous les agents). Aucune exception. Voir `decisions.md` (2026-02-21).
+
 **Objectif** : éviter de recommencer une tâche multi-étapes du début après un crash (Cursor, IDE, session). Permettre une reprise rapide au dernier point connu.
 
-**Applicable** : toute tâche multi-fichiers ou multi-étapes (création landing, duplication projet, refactor, sprint).
+**Applicable** : toute tâche multi-fichiers ou multi-étapes (création landing, duplication projet, refactor, sprint). **Désormais obligatoire pour tous**, y compris les tâches jugées courtes.
 
-**Références** : `pilotage-agents.mdc` § « Sauvegarde incrémentale obligatoire », `erreurs-et-solutions.md` § « Crash / reprise », `decisions.md` (2026-01-30).
+**Références** : `pilotage-agents.mdc` § « Sauvegarde incrémentale obligatoire », `erreurs-et-solutions.md` § « Crash / reprise », `decisions.md` (2026-01-30, 2026-02-21).
 
 ---
 
@@ -62,16 +64,22 @@
 
 ---
 
-## 5. Checklist rapide (à suivre par tout agent)
+## 5. Checklist rapide (OBLIGATOIRE pour tout agent)
 
-| Action | Fréquence |
-|--------|-----------|
-| Commit git (message explicite) | Après chaque bloc logique (1–3 fichiers) |
-| Mise à jour log-projet / log-ia | À chaque étape |
-| Fichier `.progress-<slug>.md` | Créer en début, supprimer à la fin |
-| Commentaires timestamp (optionnel) | Étape clé / reprise difficile |
-| Reprise au dernier marqueur | En cas de crash — jamais recommencer du début |
+| Action | Fréquence | Obligatoire |
+|--------|-----------|-------------|
+| Commit git (message explicite) | Après chaque bloc logique (1–3 fichiers) | Oui |
+| Mise à jour log-projet / log-ia | À chaque étape | Oui |
+| Fichier `.progress-<slug>.md` | Créer en début de tâche multi-étapes, supprimer à la fin | Oui |
+| Commentaires timestamp | Étape clé ou reprise difficile | Recommandé |
+| Reprise au dernier marqueur | En cas de crash — jamais recommencer du début | Oui |
 
 ---
 
-*Dernière mise à jour : 2026-01-30 — Procédure formalisée après crashes répétés ; décision decisions.md 2026-01-30.*
+## 6. Rappel — système instable
+
+En cas d’instabilité globale : **appliquer ces mesures sans dérogation**. Le Chef de Projet, l’Orchestrateur et l’agent en charge des erreurs vérifient que tous les agents les suivent. En début de session, consulter `log-projet.md` et reprendre au dernier marqueur.
+
+---
+
+*Dernière mise à jour : 2026-02-21 — Mesures anticrash rendues systématiques pour toute l’équipe (instabilité). Décision decisions.md 2026-02-21.*

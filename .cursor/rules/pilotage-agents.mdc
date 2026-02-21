@@ -5,7 +5,9 @@ alwaysApply: true
 
 # Pilotage des agents LPPP
 
-## Sauvegarde incrémentale obligatoire (tous les agents)
+## Sauvegarde incrémentale obligatoire — SYSTÉMATIQUE (tous les agents)
+
+> **Système instable — mesure anticrash obligatoire pour tout le monde.** Aucune exception.
 
 - **Sauvegarder systématiquement chaque étape** : lors d’une tâche multi-fichiers ou multi-étapes (ex. création landing, refactor, duplication projet), **ne jamais attendre la fin** pour sauvegarder. **Sauver après chaque bloc logique** (1–3 fichiers modifiés) via commit git avec message explicite.
 - **Marquer la progression avec des timestamps en commentaire** : dans le code ou dans un fichier de suivi (`docs/TODO.md`, fichier `.progress-infopro.md` temporaire), ajouter des commentaires du type `<!-- STEP 2026-01-30T14:32 — dossier infopro créé, JSON adapté -->` ou `# [2026-01-30 14:32] Étape 1/4 terminée`. Ces marqueurs permettent de **savoir où on en est** en cas de crash, reprise ou changement d’agent.

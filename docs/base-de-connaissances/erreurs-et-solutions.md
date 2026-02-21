@@ -813,9 +813,9 @@ Pour chaque erreur documentée, indiquer :
 | **Erreur** | Pas d’erreur technique visible — l’agent ou la session s’interrompt avant la fin ; à la reprise, aucun marqueur de progression, on repart de zéro. |
 | **Cause** | Absence de sauvegarde incrémentale et de marqueurs de progression ; tout était en cours, rien de committé ni documenté. |
 | **Solution** | 1) **Sauvegarder à chaque étape** : commit git après chaque bloc logique (1–3 fichiers), message explicite. 2) **Marquer la progression** : commentaires timestamp dans le code ou fichier `.progress-<slug>.md` temporaire (ex. `# [2026-01-30 14:32] Étape 1/4 — dossier infopro créé`). 3) **À la reprise** : reprendre au **dernier marqueur** connu (consulter les commits récents, TODO, ou fichier de progression). 4) **Une fois terminé** : retirer les marqueurs temporaires. |
-| **Prévention** | Règle **« Sauvegarde incrémentale obligatoire »** dans `pilotage-agents.mdc` : tous les agents sauvegardent systématiquement chaque étape, ajoutent des timestamps en commentaire, les retirent quand la tâche est terminée. L’agent en charge des erreurs vérifie cette règle et documente les reprises. Décision : `decisions.md`. |
-| **Lien(s)** | `pilotage-agents.mdc` § « Sauvegarde incrémentale obligatoire », `decisions.md`, `erreurs-et-solutions.md` § « Pour l’agent en charge des erreurs » |
+| **Prévention** | Règle **« Sauvegarde incrémentale obligatoire »** dans `pilotage-agents.mdc` : tous les agents sauvegardent systématiquement chaque étape, ajoutent des timestamps en commentaire, les retirent quand la tâche est terminée. L’agent en charge des erreurs vérifie cette règle et documente les reprises. Décision : `decisions.md`. **Depuis 2026-02-21** : système instable — mesures anticrash **obligatoires pour tous**, sans exception. Voir `procedure-anti-crash.md`, `decisions.md` (2026-02-21). |
+| **Lien(s)** | `pilotage-agents.mdc` § « Sauvegarde incrémentale obligatoire », `procedure-anti-crash.md`, `decisions.md`, `erreurs-et-solutions.md` § « Pour l’agent en charge des erreurs » |
 
 ---
 
-*Dernière mise à jour : 2026-01-30 — Sauvegarde incrémentale et reprise après crash. Stratégie fluide : `strategie-deploiement-git-vercel.md`.*
+*Dernière mise à jour : 2026-02-21 — Mesures anticrash systématiques pour toute l’équipe (instabilité). Procédure `procedure-anti-crash.md` mise à jour.*
