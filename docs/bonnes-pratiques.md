@@ -117,6 +117,8 @@ Chaque agent nettoie derrière lui et ne crée rien d'inutile. Organisation prop
 - **Code métier** : `apps/<app>/` (modèles, vues, tâches Celery, nodes).
 - **Configuration projet** : `lppp/`, `docker/`, racine pour les fichiers listés ci-dessus uniquement.
 - **Documentation** : `docs/` (base-de-connaissances, logs, guides). Pas de nouveaux `.md` à la racine.
+- **Données par projet** : **un projet = un dossier à part** — contact/prospection → `docs/contacts/<slug>/`, fiche entretien → `docs/ressources-utilisateur/fiches-entretien-emploi/<slug>/`. Templates et modèles communs restent dans les emplacements partagés. Règle détaillée : `docs/base-de-connaissances/organisation-projets-et-nouveaux-dossiers.md`.
+- **Fiches entretien emploi (template HTML)** : sections 0 à 6 **à la racine** (pas d’imbrication) ; **tous les accordéons fermés par défaut**. Référence : `docs/base-de-connaissances/fiches-entretien-emploi-template-html.md`.
 - **Scripts réutilisables** : uniquement s'ils sont nécessaires, dans un dossier dédié (ex. `scripts/`) documenté dans la base de connaissances ou le README ; sinon privilégier le Makefile ou les commandes Django.
 
 ### Règles de maintenance
@@ -128,4 +130,4 @@ Chaque agent nettoie derrière lui et ne crée rien d'inutile. Organisation prop
 
 ---
 
-*Dernière mise à jour : 2025-01-30. Source : contexte projet LPPP + référence SquidResearch (README).*
+*Dernière mise à jour : 2026-01-30. Source : contexte projet LPPP + référence SquidResearch (README) ; organisation projets : organisation-projets-et-nouveaux-dossiers.md ; template fiches entretien : fiches-entretien-emploi-template-html.md.*

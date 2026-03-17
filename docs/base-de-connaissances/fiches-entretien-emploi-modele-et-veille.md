@@ -5,13 +5,37 @@
 
 ---
 
-## 1. Modèle canonique (structure à conserver)
+## 1. Modèle canonique (structure de référence)
 
 - **Fichier de référence** (dans le projet) : `docs/ressources-utilisateur/fiches-entretien-emploi/_modele-canonique_prepa_entretien.html`
-- **Origine** : modèle fourni par l’utilisateur (ex. `2511_pitch_Clever-Age_prepa_entretien(1).html`). Ce fichier est la **référence unique** à réutiliser pour chaque nouvelle préparation d’entretien.
+- **Origine** : modèle fourni par l’utilisateur (ex. fiche Clever Age). Ce fichier est la **structure de référence** à réutiliser pour chaque nouvelle préparation d’entretien.
+
+### Règle centrale : même organisation, même structure, même nombre d’onglets — contenu dynamique
+
+Le **modèle que l’utilisateur a donné** définit la **structure de référence**. Pour toute fiche (nouvelle société, nouveau poste) :
+
+- **Structure = fixe** : on conserve **la même organisation**, **la même structure**, **le même nombre d’onglets** (sections principales et sous-accordéons) que dans le modèle de référence. Aucune section ni onglet ne doit être supprimé ou ajouté de façon incohérente — la grille des onglets reste identique.
+- **Contenu = dynamique** : le **contenu** à l’intérieur de chaque onglet **change et s’adapte** (nom d’entreprise, pitch, formalités, questions à poser, bloc entreprise, données spécifiques à la boîte et au poste). Seul le texte (et les données) est remplacé ou adapté ; pas la structure ni le nombre d’onglets.
+
+En résumé : **même organisation, même structure, même nombre d’onglets** que le modèle donné ; **contenu adapté** dynamiquement selon la boîte et le poste.
+
+### Contenu à reprendre dans toute fiche (les cinq familles)
+
+Toute fiche doit **reprendre** les éléments suivants. Ils correspondent aux onglets / sections du modèle de référence ; seul le détail du texte s’adapte (boîte, poste).
+
+| Famille de contenu | Description | Où dans la fiche (exemples) |
+|--------------------|-------------|-----------------------------|
+| **1. Questions qu’on est censé me poser** | Les questions que le recruteur / l’entreprise peut me poser (techniques, métier, comportementales). | Section Programmation / Tests techniques (Q/R par techno), Q/R stratégiques, éventuellement bloc « questions courantes en entretien ». |
+| **2. Les questions que je peux être amenée à poser** | Les questions que moi, candidat, je pose à l’entreprise (poste, projets, équipe, évolution). | Section « Questions à poser » (à l’entreprise). |
+| **3. Pistes de réflexion via mon pitch personnel** | Mon pitch, mon positionnement, les angles de réflexion personnels — peut rester stable d’une fiche à l’autre ou s’adapter légèrement. | Section 0 (Présentation), pitch d’ouverture, triple profil, « pourquoi moi », stratégie d’entretien. |
+| **4. Conditions d’embauche** | Disponibilité, prétentions, géographie, type de contrat, télétravail. | Info-box + Section 1 (Formalités administratives). |
+| **5. Questions à poser relatives aux RH** | Questions spécifiquement RH à poser (package, formation, congés, télétravail, évolution, culture). | Section « Questions à poser » (sous-partie RH) ou Formalités selon le modèle. |
+
+**Règle** : ces cinq familles sont **toujours présentes** dans la structure. On ne supprime aucun de ces blocs ; on **reprend** la même organisation (questions qu’on me pose, questions que je pose, pitch / pistes de réflexion, conditions d’embauche, questions RH) et on adapte le **contenu** (texte, noms, chiffres) selon la boîte et le poste. Le pitch personnel et les pistes de réflexion **ne changent pas forcément** d’une fiche à l’autre ; les conditions d’embauche et les questions à poser (dont RH) s’adaptent au contexte.
 
 ### Structure obligatoire
 
+- **Sections à la racine** : les sections 0 à 6 (Présentation, Formalités, Programmation, Questions à poser, [Entreprise], Checklist, Lexique) sont des **blocs au même niveau** ; le panel de la section 2 doit être fermé avant la section 3. **Tous les accordéons fermés par défaut** (pas de `active` ni `display: block` sur les panels). Détail : `fiches-entretien-emploi-template-html.md`.
 - **HTML5** : `lang="fr"`, titre `Préparation Entretien - [NomEntreprise] - Lucas Tymen`
 - **Head** : jQuery (CDN 3.6.0), styles inline ou dans `<style>` :
   - `body` : dégradé violet/bleu (`#667eea` → `#764ba2`), `min-height: 100vh`
@@ -27,11 +51,36 @@
 - **0. VOTRE PRÉSENTATION** : pitch, triple profil, coordonnées
 - **1. FORMALITÉS ADMINISTRATIVES** : disponibilité, prétentions, géographie, type de contrat
 - **2. Q/R STRATÉGIQUES** (questions techniques spécifiques entreprise / poste)
-- **3. TESTS TECHNIQUES — Programmation & Growth** : **obligatoire** — par techno (Python, Django, Java, Spring, Angular, concepts généraux), Growth, Marketing, KPI, frameworks, mix dev/growth (l'entretien peut être orienté pure dev, pure marketing ou mix ; ne jamais omettre). Voir `erreurs-et-solutions.md` § « Fiche entretien — section Tests techniques oubliée ».
+- **3. TESTS TECHNIQUES — Programmation & Growth** : **obligatoire**. Voir règle ci-dessous (§ Tests techniques : reprise et enrichissement).
 - **4. QUESTIONS À POSER** : poste, montée en compétences, télétravail, évolution, synergies
 - **5. [NOM ENTREPRISE] – Ce que vous devez savoir** : valeurs, clients, chiffres, implantations, KPI, stratégie commerciale, stacks, évolution carrière, formation, déontologie
 
-**Règle** : générer **d'emblée** la fiche complète avec **toutes** les sections ci-dessus, **tous** les textes, lexique, abréviations et questions utiles. Le contenu de chaque section est **remplacé** pour la société ciblée ; la structure (titres, accordéons, classes CSS) reste celle du modèle.
+**Règle** : générer **d'emblée** la fiche complète avec **toutes** les sections ci-dessus, **tous** les textes, lexique, abréviations et questions utiles. Le contenu **à adapter** (présentation, formalités, questions à poser, bloc entreprise, etc.) est **adapté** pour la société et le poste ciblés — **jamais supprimé sans l’adapter**. La section Tests techniques est **reprise telle quelle** (contenu existant du modèle) et **enrichie** avec les modules listés en § 6 ; la structure (titres, accordéons, classes CSS) reste celle du modèle.
+
+#### Tests techniques : reprise et enrichissement
+
+- **Contenu existant** : les blocs déjà présents dans le modèle canonique (Python, Django, Java, Spring, Angular, concepts généraux, Growth, Marketing, KPI, etc.) sont **repris tels quels** — on ne les supprime pas.
+- **Enrichissement** : on **ajoute** les modules suivants, au **même format** que le modèle existant. Comme sur le modèle existant, ce sont des **fichiers de cours et de révisions** comprenant les **notions principales** de chacun de ces modules : chaque module = un sous-accordéon avec des Q/R ou notions (Définition, Exemple, Cas d’usage, etc.), comme pour Python ou Django.
+- **Modules à ajouter** : **IoT** (§ 6.4), **CSS** (§ 6.7), **Cybersécurité** (§ 6.3), **Maintenance informatique N2** (§ 6.1), **DevOps** (§ 6.6 : Git, GitLab CI/CD, GitHub Actions, Docker, WordPress), **SQL** (§ 6.8), **PostgreSQL** (§ 6.9). Ruby/Rails (§ 6.5) optionnel selon besoin.
+- **Excellence et variété** : ces modules sont inclus pour couvrir les questions possibles, même si le poste n’est pas directement lié. Voir `erreurs-et-solutions.md` § « Fiche entretien — section Tests techniques oubliée ».
+
+### Fixe vs à adapter (par boîte et poste)
+
+| Élément | Statut | Action |
+|--------|--------|--------|
+| **Structure (organisation, nombre d’onglets, sections)** | **Fixe** | **Identique au modèle donné** : même organisation, même structure, même nombre d’onglets (sections + sous-accordéons). Ne pas supprimer ni réorganiser les onglets. |
+| **Structure HTML/CSS/JS** (accordéons, panels, classes, style) | **Fixe** | Toujours identique au modèle de référence ; ne pas modifier. |
+| **Section Tests techniques (Programmation & Growth)** | **Fixe + enrichi** | **Repris tels quels** : Python, Django, Java, Spring, Angular, concepts, Growth, etc. (format cours/révisions, notions principales). **Enrichi** par ajout des modules § 6 (IoT, CSS, cybersécurité, Maintenance N2, DevOps, SQL, PostgreSQL) au **même format** (sous-accordéon, Q/R avec Définition, Exemple, Cas d’usage). Ne pas supprimer le contenu existant. |
+| **Section 2 — Culture générale / concepts transverses** | **Fixe** | Conserver, actualiser si besoin. |
+| **Info-box** (dispo, prétentions, lieu, télétravail, contrat) | **À adapter** | Ajuster selon stratégie candidature (Chef de Projet). |
+| **Section 0 — Présentation** (pitch, triple profil, coordonnées) | **À adapter** | Pitch et « pourquoi cette entreprise » selon la **boîte** et le **poste**. |
+| **Section 1 — Formalités** | **À adapter** | Détails selon offre et contexte (type de contrat, géo, etc.). |
+| **Section 3 — Questions à poser** | **À adapter** | Formuler pour la **boîte** ciblée (nom, projets, équipe, etc.). |
+| **Section 4 — [NOM ENTREPRISE]** | **À adapter** | Uniquement données de la **boîte** (valeurs, clients, chiffres, stacks, etc.). |
+| **Section 5 — Checklist finale** | **À adapter** | Points spécifiques au poste / à l’entretien si besoin. |
+| **Section 6 — Lexique** | **À adapter** | Compléter selon technos du **poste** / de la boîte. |
+
+**En résumé** : tout le reste (présentation, formalités, questions à poser, fiche entreprise, checklist, lexique) est **à adapter selon la boîte et le poste**. Le template HTML est unique : `_modele-canonique_prepa_entretien.html`.
 
 ---
 
@@ -113,20 +162,29 @@ Une **structure complémentaire**, orientée « accroche entreprise » et très 
 
 ---
 
-## 6. Types de fiches par famille de poste
+## 6. Types de fiches par famille de poste — Enrichissement de la section Tests techniques
 
-En plus de la structure canonique (0 → 5), **adapter les sections et le contenu** selon le type de poste. Deux familles supplémentaires à intégrer quand c’est le cas.
+**Règle importante** : le contenu existant des fiches (toutes les sections, dont la section Programmation / Tests techniques avec Python, Django, Java, Spring, Angular, etc.) n’est **jamais supprimé** : il est **adapté** (présentation, formalités, entreprise, questions à poser selon la boîte et le poste). La section **Tests techniques** est **reprise telle quelle** (même structure, mêmes Q/R par techno) et **enrichie** en **ajoutant** les modules ci-dessous.
+
+Comme sur le **modèle existant** (`_modele-canonique_prepa_entretien.html`), les blocs techniques sont des **fichiers de cours et de révisions** comprenant les **notions principales** de chaque module : chaque module = sous-accordéon avec questions/réponses au format **Définition**, **Exemple**, **Cas d’usage** (ou équivalent), comme pour Python ou Django dans le modèle.
+
+En plus de la structure canonique (0 → 5), **adapter les sections et le contenu** selon le type de poste. Les paragraphes ci-dessous décrivent le **contenu à ajouter** (enrichissement) pour chaque module.
 
 ### 6.1 Infogérant informatique (niveau 1 & niveau 2)
 
-Pour un poste **infogérant / support informatique N1 et N2** :
+Pour un poste **infogérant / support informatique N1 et N2** (à inclure aussi dès que des questions de **maintenance informatique N2** sont susceptibles d’être posées, même si le poste n’est pas directement infogérance) :
 
 - **Conserver** : info-box, sections 0 (présentation), 1 (formalités), 4 (questions à poser), 5 (entreprise).
 - **Section 2** : remplacer / compléter par **Q/R et savoir-faire Infogérant** :
   - **Niveau 1** : prise en charge des demandes (ticketing, première ligne), résolution courante (mot de passe, accès, imprimante, poste), escalade au N2, outils (GLPI, Zendesk, RDS, etc.), procédures et délais SLA.
   - **Niveau 2** : diagnostic avancé, administration (Active Directory, GPO, DNS, DHCP), supervision, déploiement (patches, images), participation à la roadmap infra.
-- **Section 3** : **Tests techniques / questions techniques** adaptées : différences N1 vs N2, exemples de tickets, gestion des priorités, relation avec les utilisateurs et les équipes internes, bonnes pratiques (documentation, traçabilité, communication).
-- **Lexique** : SLA, ticket, escalade, N1/N2/N3, RDS, AD, GPO, hotline, infogérance, supervision, PRA/PCA.
+- **Section 3 — Questions techniques maintenance N2** (toujours les avoir, variété d’excellence) :
+  - **Ticketing et escalade** : cycle de vie d’un ticket, critères d’escalade N1 → N2 → N3, prioritisation (P1/P2/P3), délais SLA, outils (GLPI, ServiceNow, Jira Service Desk).
+  - **Active Directory / annuaire** : GPO (stratégies de groupe), OU (unités d’organisation), gestion des comptes et des droits, réplication, sauvegarde AD.
+  - **Réseau (niveau N2)** : DNS (enregistrements A, CNAME, MX), DHCP (réservation, scope), dépannage connectivité, VLAN, pare-feu basique.
+  - **Supervision et déploiement** : outils de supervision (Nagios, Zabbix, PRTG), déploiement de patches (WSUS, SCCM), images système, PRA/PCA.
+  - **Bonnes pratiques** : documentation, traçabilité des interventions, communication avec les utilisateurs et les équipes internes, gestion des priorités.
+- **Lexique** : SLA, ticket, escalade, N1/N2/N3, RDS, AD, GPO, OU, DNS, DHCP, hotline, infogérance, supervision, PRA/PCA, WSUS, SCCM.
 
 ### 6.2 Consultant SEO
 
@@ -166,13 +224,70 @@ Pour un poste ou un **onglet touchant à l’IoT**, inclure :
 
 **Lexique** : MQTT, CoAP, edge, firmware, OTA (Over-The-Air), IIoT, OT.
 
+### 6.5 Ruby et Ruby on Rails
+
+Pour des **questions techniques Ruby / Ruby on Rails** (à inclure dans la variété des technos, même si le poste n’est pas centré Rails) :
+
+- **Ruby (langage)** : typage dynamique, objets et classes, blocs et yield, modules et mixins, symboles vs strings, itérateurs (each, map, select), gestion des erreurs (begin/rescue), gems et Bundler.
+- **Ruby on Rails** : MVC (modèles, vues, contrôleurs), convention over configuration, migrations, ActiveRecord (associations, validations, requêtes), routes et ressources REST, vues (ERB, partials), asset pipeline, Webpacker, sécurité (CSRF, injection), déploiement (Capistrano, Puma, Nginx).
+- **Questions courantes** : différence Ruby vs Rails, Rack, middleware, tests (RSpec, Minitest), différence avec Django/Flask ou autres frameworks.
+
+**Lexique** : MVC, ORM, migration, REST, ERB, gem, Bundler, RSpec, Capistrano.
+
+### 6.6 DevOps (initiation — Git, GitLab CI/CD, GitHub Actions, Docker, WordPress)
+
+Pour des **questions sur des pratiques DevOps** (initiation ; à inclure en format **cours et révisions**, notions principales) :
+
+- **Git (GitHub, GitLab)** : branches, merge vs rebase, conflits, workflow (feature branch, main/develop), pull request / merge request, tags, .gitignore, bonnes pratiques de commit.
+- **GitLab CI/CD** : fichier `.gitlab-ci.yml`, stages (build, test, deploy), jobs, variables, pipelines, runners, cache.
+- **GitHub Actions** : workflows (`.github/workflows/`), triggers (push, pull_request), jobs et steps, secrets, actions réutilisables, matrix strategy.
+- **Docker** : images et conteneurs, Dockerfile (FROM, RUN, COPY, CMD, EXPOSE), docker-compose (multi-conteneurs, services, volumes, networks), bonnes pratiques (image légère, non-root, .dockerignore).
+- **WordPress** : architecture (PHP, MySQL, thèmes, plugins), sécurité (mises à jour, rôles, sauvegardes), performance (cache, CDN), déploiement et hébergement.
+
+**Lexique** : CI/CD, pipeline, Dockerfile, image, conteneur, volume, merge request, staging, runner, workflow.
+
+### 6.7 CSS (questions techniques)
+
+Pour des **questions techniques CSS** (à inclure dans la variété des technos front) :
+
+- **Sélecteurs et spécificité** : classes, id, combinateurs, pseudo-classes (:hover, :nth-child), spécificité et !important, cascade et héritage.
+- **Layout** : Flexbox (flex-direction, justify-content, align-items), Grid (grid-template, areas), position (relative, absolute, fixed, sticky), display (block, inline, flex, grid).
+- **Responsive** : media queries, unités (rem, em, vw/vh), mobile-first vs desktop-first, breakpoints.
+- **Moderne** : variables CSS (custom properties), transitions et animations, préprocesseurs (Sass) si pertinent.
+
+**Lexique** : Flexbox, Grid, media query, spécificité, rem/em.
+
+### 6.8 SQL (notions principales — cours et révisions)
+
+Pour des **questions techniques SQL** (format **cours et révisions**, notions principales, comme les autres modules) :
+
+- **Bases** : DDL (CREATE, ALTER, DROP), DML (SELECT, INSERT, UPDATE, DELETE), DCL (GRANT, REVOKE), schéma, tables, clés primaires et étrangères.
+- **Requêtes** : SELECT avec WHERE, ORDER BY, LIMIT, DISTINCT ; agrégations (COUNT, SUM, AVG, MIN, MAX) et GROUP BY, HAVING ; jointures (INNER, LEFT, RIGHT, FULL, CROSS).
+- **Notions avancées** : sous-requêtes, EXISTS, IN ; vues (VIEW) ; index (création, impact sur les perfs) ; transactions (BEGIN, COMMIT, ROLLBACK) et ACID.
+- **Optimisation** : lecture de plans d’exécution (EXPLAIN), index appropriés, évitement des full table scans.
+
+**Lexique** : DDL, DML, jointure, index, transaction, ACID, vue.
+
+### 6.9 PostgreSQL (notions principales — cours et révisions)
+
+Pour des **questions techniques PostgreSQL** (format **cours et révisions**, notions principales) :
+
+- **Spécificités** : type JSON/JSONB, types array, extensions (pg_trgm, PostGIS si pertinent), séquences, SERIAL.
+- **Administration** : connexion (psql), utilisateurs et rôles (CREATE ROLE, GRANT), sauvegarde (pg_dump, pg_restore), maintenance (VACUUM, ANALYZE).
+- **Performance** : EXPLAIN (ANALYZE, BUFFERS), index (B-tree, GIN, GiST), connexions (pooling : PgBouncer), paramètres (shared_buffers, work_mem).
+- **Intégration** : utilisation avec Django (ORM, migrations), avec Python (psycopg2), avec des outils (DBeaver, pgAdmin).
+
+**Lexique** : JSONB, VACUUM, EXPLAIN, psql, pg_dump, pool de connexions.
+
 ---
 
 ## 7. Références
 
+- **Organisation projets** : `organisation-projets-et-nouveaux-dossiers.md` — un projet = un dossier à part ; nouvelle fiche entretien → `docs/ressources-utilisateur/fiches-entretien-emploi/<slug_entreprise>/` ; templates/modèles dans les emplacements partagés.
 - **Espace fiches** : `docs/ressources-utilisateur/fiches-entretien-emploi/` (README, un dossier par entreprise).
 - **Modèle canonique** : `docs/ressources-utilisateur/fiches-entretien-emploi/_modele-canonique_prepa_entretien.html`
-- **Types de poste** : § 6 — **Infogérant N1/N2**, **Consultant SEO** (rappel SEO technique, sémantique, avenir du SEO), **Pentesting / Cybersécurité** (notions base à avancées, préceptes, modes d’action, guides en cas d’attaque), **IoT** (notions, sécurité, cas d’usage). À inclure selon le poste ciblé.
+- **Template HTML (structure à appliquer)** : `fiches-entretien-emploi-template-html.md` (sections à la racine, accordéons fermés par défaut).
+- **Types de poste / modules d’enrichissement** : § 6 — **Infogérant N1/N2** (§ 6.1), **Consultant SEO** (§ 6.2), **Pentesting / Cybersécurité** (§ 6.3), **IoT** (§ 6.4), **Ruby / Ruby on Rails** (§ 6.5), **DevOps** (§ 6.6 : Git, GitLab CI/CD, GitHub Actions, Docker, WordPress), **CSS** (§ 6.7), **SQL** (§ 6.8), **PostgreSQL** (§ 6.9). Tous au format **cours et révisions** (notions principales, comme le modèle existant). Ne pas supprimer le contenu existant ; **reprendre tels quels** et **enrichir**.
 - **Règle Assistant** : `.cursor/rules/assistant-entretien-emploi.mdc`
 - **Registre** : `docs/base-de-connaissances/registre-agents-ressources.md`
 - **Rôles (Rédacteur = agent RH)** : `docs/base-de-connaissances/agents-roles-responsabilites.md` § Rédacteur, § Assistant Entretien Emploi.
