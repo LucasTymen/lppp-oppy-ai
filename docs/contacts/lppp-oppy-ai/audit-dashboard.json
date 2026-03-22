@@ -1,0 +1,81 @@
+{
+  "theme": "lppp-oppy-ai",
+  "title_page": "Dashboard stratégique — OPPORTUNITY (Oppy.ai)",
+  "label_tag": "// Étude Growth & Acquisition — LPPP",
+  "title": "OPPY",
+  "title_accent": ".AI",
+  "header_meta": "CIM · Pivot SaaS · Funnel & maturité stack · 2026",
+  "status_label": "Synthèse étude — hypothèses à valider en entretien",
+  "score": 45,
+  "speedo_note": "Indice « agilité du stack marketing » (45/100) — levier central du poste GAM ; produit, conformité et multicanal sont forts, l'automatisation d'acquisition est le gap à combler.",
+  "speedo_note_strong": "45/100 — aligné matrice Scale×Agilité (étude) ; objectif : monter l'agilité sans fragiliser la conformité grands comptes.",
+  "section1_sub": "Vision : excellence produit / RSE vs besoin d'industrialiser l'acquisition (artisanal → scalable).",
+  "section2_sub": "Parcours type : signaux & sourcing → orchestration n8n / Python → enrichissement OSINT → CRM → alertes Sales.",
+  "section3_sub": "Priorités : traçabilité 100 % des leads, SLA qualité avant Sales, reporting CAC / SQL automatisés.",
+  "loss_monthly_label": "Leviers étude",
+  "loss_annual_label": "Roadmap 90 j · Reverse waterfall",
+  "timeline_max_t": 7,
+  "timeline_markers": [
+    { "t": 0, "label": "0", "event": "2 000", "desc": "leads ciblés / an (hypothèse)", "color": "#00e676" },
+    { "t": 1.4, "label": "10 %", "event": "200 SQL", "desc": "qualification stricte grands comptes", "color": "#4fc3f7" },
+    { "t": 3.5, "label": "50 %", "event": "100 opps", "desc": "taux indicatif SQL → négociation", "color": "#ff9900" },
+    { "t": 5.2, "label": "20 %", "event": "20 signatures", "desc": "closing indicatif", "color": "#b388ff" },
+    { "t": 6.5, "label": "1 M€", "event": "Nouveau CA", "desc": "objectif simulation (ACV 50 k€)", "color": "#00c853" }
+  ],
+  "scenarios": [
+    { "visits": 2000, "cvr": 0.1, "aov": 50000, "label": "Base — 2k leads → 10 % → ACV 50 k€" },
+    { "visits": 2500, "cvr": 0.12, "aov": 45000, "label": "Hausse qualif — volume + conversion" },
+    { "visits": 1800, "cvr": 0.08, "aov": 55000, "label": "Filtre plus strict — moins mais plus gros" }
+  ],
+  "bullet_metrics": [
+    {
+      "name": "Agilité du stack marketing",
+      "unit": "/100",
+      "current": 45,
+      "target": 90,
+      "industry": 70,
+      "max": 100,
+      "bad": [0, 40],
+      "warn": [40, 75],
+      "ok": [75, 100],
+      "color": "#ff9900"
+    },
+    {
+      "name": "Automatisation du sourcing",
+      "unit": "/100",
+      "current": 30,
+      "target": 70,
+      "industry": 50,
+      "max": 100,
+      "bad": [0, 35],
+      "warn": [35, 60],
+      "ok": [60, 100],
+      "color": "#4fc3f7"
+    },
+    {
+      "name": "Qualité du pipeline (SLA)",
+      "unit": "/100",
+      "current": 60,
+      "target": 90,
+      "industry": 65,
+      "max": 100,
+      "bad": [0, 50],
+      "warn": [50, 80],
+      "ok": [80, 100],
+      "color": "#00c853"
+    }
+  ],
+  "waterfall_max_t": 7,
+  "waterfall_resources": [
+    { "label": "Acquisition multicanal", "start": 0, "dur": 1.2, "color": "#00e676", "tag": "INBOUND + OUTBOUND" },
+    { "label": "Qualification & scoring", "start": 1, "dur": 1.8, "color": "#4fc3f7", "tag": "AUTOMATION" },
+    { "label": "SQL / Démos", "start": 2.5, "dur": 1.5, "color": "#ff9900", "tag": "SALES" },
+    { "label": "Négociation grands comptes", "start": 3.8, "dur": 2, "color": "#b388ff", "tag": "CYCLE LONG" },
+    { "label": "Signatures (closed won)", "start": 5.5, "dur": 1.2, "color": "#00c853", "tag": "OBJECTIF" }
+  ],
+  "recovery_rings": [
+    { "pct": 34, "label": "J+30 — Fondations", "color": "#ff3b3b", "sub": "Audit flux Marketing→CRM, 0 fuite, socle n8n" },
+    { "pct": 33, "label": "J+60 — Valeur Sales", "color": "#b388ff", "sub": "Enrichissement auto, ~+20 % temps prospection" },
+    { "pct": 33, "label": "J+90 — Scale", "color": "#00c853", "sub": "15–20 opportunités « high interest » / mois" }
+  ]
+}

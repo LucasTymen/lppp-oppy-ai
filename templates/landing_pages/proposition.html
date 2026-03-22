@@ -1,4 +1,4 @@
-{% load landing_filters %}
+{% load landing_filters %}{% load static %}
 <!-- LPPP proposition.html -->
 <!DOCTYPE html>
 <html lang="fr">
@@ -238,6 +238,14 @@
             background-position: center;
             background-repeat: no-repeat;
             will-change: transform;
+        }
+        .hero-bg-particles canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: none;
         }
         .hero.has-bg-video .hero-bg-video iframe,
         .hero.has-bg-video .hero-bg-video video {
@@ -489,6 +497,16 @@
 
         .pain-list { margin: 0; padding-left: 1.35rem; }
         .pain-list li { margin-bottom: 0.5rem; }
+
+        /* SEO technique & sémantique (bloc optionnel seo_technique_semantique) */
+        .seo-ts-subhead {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 1.25rem 0 0.5rem;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.01em;
+        }
+        .seo-ts-subhead:first-of-type { margin-top: 0.5rem; }
 
         /* Enjeux — funnel et graphiques (Casapy) — affichage universel (Firefox, Chrome, Safari, mobile) */
         .enjeux-visuals { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
@@ -828,6 +846,11 @@
     </style>
 </head>
 <body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    {% if content.hero_waves_pins %}
+    <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide" id="hero-waves-pins-container" aria-hidden="true" style="inset:0;display:block;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'landing_pages/js/waves-pins-hero.js' %}"></script>
+    {% endif %}
     <!-- Nav sticky (ancres style page perso) -->
     <nav class="nav">
         {% if content.theme and content.theme.logo_svg_use_url %}
@@ -849,13 +872,14 @@
             {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
             {% if content.loom_embed_url %}<a href="#demo">Démo</a>{% endif %}
             {% if flowise_embed_url %}<a href="#demo-concierge">Démo Conciergerie</a>{% endif %}
+            {% if content.seo_technique_semantique %}<a href="#seo-technique-semantique">SEO technique &amp; sémantique</a>{% endif %}
             {% if content.services %}<a href="#services">Services</a>{% endif %}
             {% if content.expertise_stack %}<a href="#stack">Stack</a>{% endif %}
             {% if content.mission_flash or content.produit_commercial %}<a href="#offre">Offre</a>{% endif %}
             {% if content.diagram_url or content.funnel_image_url %}<a href="#diagramme-funnel">En un coup d'œil</a>{% endif %}
             {% if content.rapport_url %}<a href="{{ content.rapport_url }}">Consulter le rapport</a>{% endif %}
             {% if content.positionnement_marketing_url %}<a href="{{ content.positionnement_marketing_url }}">Positionnement marketing</a>{% endif %}
-            {% if content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard audit</a>{% endif %}
+            {% if content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">{{ content.audit_dashboard_nav_label|default:"Dashboard audit" }}</a>{% endif %}
             {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="#coordonnees">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
         </div>
     </nav>
@@ -870,8 +894,8 @@
         <p style="margin:0 0 1rem;padding:0.5rem 12px;text-align:center;font-size:13px;"><a href="{{ content.audit_dashboard_url }}" style="display:inline-block;padding:0.4rem 0.9rem;background:#ff3b3b;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;">Voir le dashboard audit performance</a> — score, timeline, compteur perte, bullet chart, heatmap, waterfall, recovery.</p>
         {% endif %}
         {% endif %}
-        <!-- Hero : image, ou vidéo (HTML5 MP4/WebM ou YouTube), ou dégradé -->
-        <section class="hero{% if content.hero_video_mp4_url or content.hero_video_webm_url or content.hero_video_url %} has-bg-video{% elif content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
+        <!-- Hero : image, vidéo (MP4/WebM/YouTube), ou Waves Pins (position fixed en haut de body) -->
+        <section class="hero{% if content.hero_video_mp4_url or content.hero_video_webm_url or content.hero_video_url or content.hero_waves_pins %} has-bg-video{% elif content.hero_background_url or content.theme and content.theme.background_image_url %} has-bg-image{% endif %}"{% if content.hero_background_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url and not content.hero_waves_pins %} style="background-image: url('{{ content.hero_background_url }}');"{% elif content.theme and content.theme.background_image_url and not content.hero_video_mp4_url and not content.hero_video_webm_url and not content.hero_video_url and not content.hero_waves_pins %} style="background-image: url('{{ content.theme.background_image_url }}');"{% endif %}>
             {% if content.hero_video_mp4_url or content.hero_video_webm_url %}
             <div class="hero-bg-video">
                 <video autoplay muted loop playsinline aria-hidden="true">
@@ -918,6 +942,7 @@
                         <p class="kpi-label">{{ item.label }}</p>
                     </div>
                     {% endfor %}
+                    {% if landing_page.slug == 'infopro' or landing_page.slug == 'promovacances' or landing_page.slug == 'casapy' %}
                     <div class="key-figures-slide chart-slide" data-index="{{ content.key_figures_carousel|length }}">
                         <h3>Manque à gagner SEO (fourchette)</h3>
                         <div class="key-figures-bar-chart">
@@ -944,6 +969,7 @@
                             </div>
                         </div>
                     </div>
+                    {% endif %}
                 </div>
                 <div class="key-figures-nav">
                     <button type="button" class="key-figures-prev" aria-label="Slide précédent">‹</button>
@@ -955,7 +981,7 @@
         {% endif %}
 
         {% if content.pain_points or content.activite_pain_points %}
-        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' %} content-player{% endif %}" id="enjeux">
+        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' or landing_page.slug == 'infopro' or landing_page.slug == 'lppp-oppy-ai' %} content-player{% endif %}" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
             {% if content.enjeux_lead %}<p class="section-lead">{{ content.enjeux_lead }}</p>{% endif %}
@@ -1037,23 +1063,80 @@
                 </div>
                 <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : score, timeline, bullet chart, waterfall, recovery rings</p>
             </div>
+            {% elif landing_page.slug == 'infopro' %}
+            <div class="enjeux-visuals" aria-hidden="true">
+                <div>
+                    <p class="enjeux-visual-label">TTFB — Infopro vs référence (bon &lt; 500 ms)</p>
+                    <div class="enjeux-ttfb-comparison">
+                        <div class="enjeux-ttfb-bar enjeux-ttfb-ok"><div class="bar" style="height: 6px;"></div><span class="bar-label">Infopro</span><span class="bar-val">~0,15 s</span></div>
+                        <div class="enjeux-ttfb-bar"><div class="bar" style="height: 50px;"></div><span class="bar-label">Réf. bon</span><span class="bar-val">0,5 s</span></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Manque à gagner SEO (fourchette audit)</p>
+                    <div class="enjeux-funnel">
+                        <div class="enjeux-funnel-tier"><span class="tier-val">358</span> URLs crawlées</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">118</span> images sans alt (88%)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">108</span> meta descriptions manquantes</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">132–324 k€</span> / an estimés</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Chaîne de priorité (TTFB OK → blocage = front)</p>
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">Images & LCP (alt, poids, dim.)</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Meta & structure (108, 92 H2)</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">4xx, hreflang, headers sécu.</span>
+                    </div>
+                </div>
+                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : score 68, timeline, bullet chart, waterfall, recovery rings</p>
+            </div>
+            {% elif landing_page.slug == 'lppp-oppy-ai' %}
+            <div class="enjeux-visuals" aria-hidden="true">
+                <div>
+                    <p class="enjeux-visual-label">Reverse waterfall (simulation 1 M€ nouveau CA)</p>
+                    <div class="enjeux-funnel">
+                        <div class="enjeux-funnel-tier"><span class="tier-val">2 000</span> leads ciblés / an</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">200</span> SQL (hyp. 10 % qualif.)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">20</span> signatures (ACV ~50 k€)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">J+90</span> scale 15–20 « high interest » / mois</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Radar stratégique — levier GAM</p>
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">Conformité &amp; RSE ↑</span><span class="flow-arrow">+</span>
+                        <span class="flow-step">Multicanal IA ↑</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Agilité stack ↑ (à renforcer)</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Roadmap 90 jours (étude)</p>
+                    <div class="key-figures-timeline">
+                        <div class="key-figures-timeline-item"><span class="t-period">J+30</span><p class="t-desc">Audit flux Marketing→CRM, socle n8n, zéro fuite de leads</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">J+60</span><p class="t-desc">Enrichissement auto (Python/OSINT), gain temps prospection</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">J+90</span><p class="t-desc">Multicanal scalable, pilotage ROI</p></div>
+                    </div>
+                </div>
+                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : funnel, bullet metrics, waterfall, recovery rings (données étude OPPORTUNITY)</p>
+            </div>
             {% endif %}
         </section>
         {% endif %}
 
-        {% if landing_page.slug == 'promovacances' and content.audit_dashboard_url %}
+        {% if content.audit_dashboard_url and landing_page.slug == 'promovacances' or content.audit_dashboard_url and landing_page.slug == 'infopro' or content.audit_dashboard_url and landing_page.slug == 'lppp-oppy-ai' %}
         <section class="section content-player" id="infographies-audit" aria-labelledby="infographies-audit-heading">
-            <div class="section-head"><span class="section-num">01b</span><h2 id="infographies-audit-heading">Infographies audit performance</h2></div>
+            <div class="section-head"><span class="section-num">01b</span><h2 id="infographies-audit-heading">{% if landing_page.slug == 'lppp-oppy-ai' %}Dashboard stratégique{% else %}Infographies audit performance{% endif %}</h2></div>
             <div class="content-player-text">
-                <p class="section-lead">Score global, timeline utilisateur, compteur pertes, bullet chart, matrice Impact×Effort, waterfall et recovery rings — mêmes formats que Casapy (Claude), données Promovacances.</p>
+                <p class="section-lead">{% if landing_page.slug == 'lppp-oppy-ai' %}Funnel inversé, scores de maturité acquisition (agilité stack, sourcing, SLA pipeline), timeline et recovery rings — contenu aligné sur l’étude OPPORTUNITY (Oppy.ai), pas un audit PageSpeed.{% elif landing_page.slug == 'infopro' %}Score global, timeline utilisateur, compteur pertes, bullet chart, matrice Impact×Effort, waterfall et recovery rings. Données Infopro Digital (TTFB, PageSpeed, crawl).{% else %}Score global, timeline utilisateur, compteur pertes, bullet chart, matrice Impact×Effort, waterfall et recovery rings. Données Promovacances (TTFB, PageSpeed, crawl).{% endif %}</p>
             </div>
             <div class="workflow-figure" style="position:relative;padding-bottom:75%;height:0;overflow:hidden;border-radius:12px;background:var(--lp-block-bg,#f5f5f5);">
-                <iframe src="{{ content.audit_dashboard_url }}" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="Dashboard audit performance Promovacances"></iframe>
+                <iframe src="{{ content.audit_dashboard_url }}" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="{% if landing_page.slug == 'lppp-oppy-ai' %}Dashboard stratégique OPPORTUNITY{% elif landing_page.slug == 'infopro' %}Dashboard audit performance Infopro{% else %}Dashboard audit performance Promovacances{% endif %}"></iframe>
             </div>
             <p style="margin-top:0.75rem;font-size:0.9rem;">
                 <a href="{{ content.audit_dashboard_url }}">Ouvrir le dashboard en plein écran</a>
                 {% if content.infographie_url %}
-                &nbsp;·&nbsp; <a href="{{ content.infographie_url }}">7 formats (palette Promovacances)</a>
+                &nbsp;·&nbsp; <a href="{{ content.infographie_url }}">{% if landing_page.slug == 'lppp-oppy-ai' %}Infographie de synthèse{% else %}7 formats (palette {% if landing_page.slug == 'infopro' %}Infopro{% else %}Promovacances{% endif %}){% endif %}</a>
                 {% endif %}
             </p>
         </section>
@@ -1151,7 +1234,7 @@
         {% endif %}
 
         {% if content.services %}
-        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' %} content-player services-segmented{% endif %}" id="services">
+        <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' or landing_page.slug == 'lppp-oppy-ai' %} content-player services-segmented{% endif %}" id="services">
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             {% if content.rapport_url %}
             <div class="rapport-cta-block">
@@ -1311,7 +1394,9 @@
         <section class="section content-player{% if landing_page.slug == 'fitclem' %} fitclem-seo-grid{% endif %}" id="resume-seo">
             <div class="section-head"><span class="section-num">03b</span><h2>{{ content.seo_resume.title|default:"Résumé SEO" }}</h2></div>
             <div class="card seo-resume-card">
-                {% if content.seo_resume.manque_annuel %}
+                {% if content.seo_resume.strategic_kpi_lead %}
+                <p class="seo-manque">{{ content.seo_resume.strategic_kpi_lead }}</p>
+                {% elif content.seo_resume.manque_annuel %}
                 <p class="seo-manque">Manque à gagner SEO estimé : {{ content.seo_resume.manque_annuel }}</p>
                 {% endif %}
                 {% if content.seo_resume.intro %}
@@ -1338,6 +1423,30 @@
                 <div class="kpi-row"><span class="kpi-label">Alt images</span><div class="kpi-bar"><div class="kpi-bar-fill" style="width: 55%;"></div></div></div>
             </div>
             {% endif %}
+        </section>
+        {% endif %}
+
+        {% if content.seo_technique_semantique %}
+        <section class="section content-player" id="seo-technique-semantique">
+            <div class="section-head"><span class="section-num">03c</span><h2>{{ content.seo_technique_semantique.title|default:"SEO technique & sémantique" }}</h2></div>
+            <div class="card seo-resume-card">
+                {% if content.seo_technique_semantique.intro %}<p class="section-lead" style="margin-top:0;">{{ content.seo_technique_semantique.intro }}</p>{% endif %}
+                {% if content.seo_technique_semantique.doc_path %}
+                <p style="font-size:0.9rem;color:var(--lp-muted,#999);margin-bottom:1rem;">Référence détaillée : <code style="font-size:0.85em;">{{ content.seo_technique_semantique.doc_path }}</code></p>
+                {% endif %}
+                {% for sec in content.seo_technique_semantique.technique_sections %}
+                <h3 class="seo-ts-subhead">{{ sec.heading }}</h3>
+                {% if sec.items %}<ul class="pain-list">{% for item in sec.items %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+                {% endfor %}
+                {% for sec in content.seo_technique_semantique.semantique_sections %}
+                <h3 class="seo-ts-subhead">{{ sec.heading }}</h3>
+                {% if sec.items %}<ul class="pain-list">{% for item in sec.items %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+                {% endfor %}
+                {% if content.seo_technique_semantique.prochaines_etapes %}
+                <h3 class="seo-ts-subhead">Prochaines étapes (mesures)</h3>
+                <ul class="pain-list">{% for item in content.seo_technique_semantique.prochaines_etapes %}<li>{{ item }}</li>{% endfor %}</ul>
+                {% endif %}
+            </div>
         </section>
         {% endif %}
 

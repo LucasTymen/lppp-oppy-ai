@@ -1,4 +1,4 @@
-{% load landing_filters %}
+{% load landing_filters %}{% load static %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -28,9 +28,29 @@
         .pv-sub { color: var(--lp-muted, #999); margin-bottom: 2rem; }
         .pv-card { padding: 1.25rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)); border-radius: 12px; margin-top: 0.5rem; }
         .pv-quote { padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); font-style: italic; margin: 0; }
+        /* Hero Waves Pins — position fixe sur tout le site */
+        .hero-bg-waves-pins {
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            min-width: 100vw !important;
+            min-height: 100vh !important;
+            z-index: 0 !important;
+            pointer-events: none !important;
+            overflow: hidden !important;
+        }
+        .hero-bg-waves-pins canvas { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; display: block !important; }
+        .page-wrap { position: relative; z-index: 1; }
     </style>
 </head>
 <body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    {% if content.hero_waves_pins %}
+    <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide" id="hero-waves-pins-container" aria-hidden="true" style="inset:0;display:block;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+    <script src="{% static 'landing_pages/js/waves-pins-hero.js' %}"></script>
+    {% endif %}
     {% include "landing_pages/includes/nav_landing_annexes.html" with current_page="proposition" %}
     <main class="page-wrap">
         <h1 class="pv-headline">{{ content.hero_headline|default:content.page_title|default:landing_page.title }}</h1>

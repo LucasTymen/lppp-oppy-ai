@@ -863,6 +863,112 @@ body:has(.report-body) .report-body blockquote {
 }
 """
 
+# Charte Oppy.ai / Opportunity — Tech CIM (fond sombre, cyan/turquoise)
+# Source : oppy.ai, charte docs/contacts/lppp-oppy-ai/charte-graphique-oppy-ai.md
+THEME_OPPY_AI = {
+    "fonts": {"body": "Inter", "heading": "Montserrat"},
+    "colors": {
+        "background": "#0d0d0d",
+        "text": "#e6e6e6",
+        "primary": "#00C9D4",
+        "secondary": "#4DD0E1",
+    },
+    "logo_url": "https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png",
+    "background_image_url": None,
+}
+
+THEME_CSS_OPPY_AI = """@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap');
+
+:root {
+  /* Charte Oppy.ai — Tech CIM (fond sombre, cyan) */
+  --oppy-cyan: #00C9D4;
+  --oppy-cyan-light: #4DD0E1;
+  --oppy-bg: #0d0d0d;
+  --oppy-surface: #151515;
+  --lp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --lp-font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --lp-bg: #0d0d0d;
+  --lp-text: #e6e6e6;
+  --lp-primary: #00C9D4;
+  --lp-secondary: #4DD0E1;
+  --lp-border: rgba(0, 201, 212, 0.25);
+  --lp-block-bg: #151515;
+  --lp-muted: #999;
+  --lp-heading: #e6e6e6;
+  --lp-cta-text: #0d0d0d;
+  --lp-text-on-light: #1a1a1a;
+  --lp-text-on-dark: #f5f5f5;
+}
+
+/* Nav fond sombre — texte clair */
+.nav { background: color-mix(in srgb, var(--lp-bg) 92%, rgba(0,201,212,0.05)) !important; }
+.nav-links a, .nav span:first-child { color: var(--lp-text-on-dark) !important; }
+.nav-links a:hover { color: var(--lp-primary) !important; }
+.nav-waffle { color: var(--lp-text-on-dark) !important; }
+
+/* CTA — cyan Oppy, texte foncé */
+.cta, .nav-cta, .hero .cta, .cta-wrap .cta {
+  background-color: var(--lp-primary) !important;
+  color: var(--lp-cta-text) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-family: var(--lp-font-heading) !important;
+}
+.cta:hover, .nav-cta:hover, .hero .cta:hover, .cta-wrap .cta:hover {
+  background-color: var(--lp-secondary) !important;
+  color: var(--lp-cta-text) !important;
+}
+
+/* Titres — Montserrat */
+h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
+
+/* Hero Waves Pins — position fixe sur tout le site (parallaxe au scroll) */
+.hero-bg-waves-pins,
+.hero-bg-waves-pins--site-wide {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+.hero-bg-waves-pins canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+/* Contenu au-dessus du fond fixe */
+body:has(.hero-bg-waves-pins) main,
+body:has(.hero-bg-waves-pins) .alert-banner {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Sections — fond sombre avec bordure cyan */
+.section {
+  background: var(--lp-block-bg) !important;
+  border-left: 4px solid var(--lp-primary) !important;
+  color: var(--lp-text-on-dark) !important;
+}
+.section h2, .section .section-num { color: var(--lp-text-on-dark) !important; }
+.section p, .section .card { color: var(--lp-text-on-dark) !important; }
+
+/* Icebreaker, CTA wrap */
+.icebreaker {
+  background: rgba(0,201,212,0.12) !important;
+  border-left-color: var(--lp-primary) !important;
+  color: var(--lp-text-on-dark) !important;
+}
+.cta-wrap { background: var(--lp-block-bg) !important; color: var(--lp-text-on-dark) !important; }
+"""
+
 # Slug → (theme dict, theme_css string) pour injection côté vue
 LANDING_THEMES = {
     "orsys": (THEME_ORSYS, THEME_CSS_ORSYS),
@@ -870,4 +976,5 @@ LANDING_THEMES = {
     "fitclem": (THEME_FITCLEM, THEME_CSS_FITCLEM),
     "promovacances": (THEME_PROMOVACANCES, THEME_CSS_PROMOVACANCES),
     "infopro": (THEME_INFOPRO, THEME_CSS_INFOPRO),
+    "lppp-oppy-ai": (THEME_OPPY_AI, THEME_CSS_OPPY_AI),
 }
