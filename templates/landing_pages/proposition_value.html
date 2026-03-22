@@ -42,11 +42,16 @@
             overflow: hidden !important;
         }
         .hero-bg-waves-pins canvas { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; display: block !important; }
+        .hero-bg-codepen .hero-codepen-iframe { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; min-width: 100vw !important; min-height: 100vh !important; border: 0 !important; pointer-events: none !important; }
         .page-wrap { position: relative; z-index: 1; }
     </style>
 </head>
 <body class="{% if use_perso_style %}lp-perso-style{% endif %}">
-    {% if content.hero_waves_pins %}
+    {% if content.hero_codepen_url %}
+    <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide hero-bg-codepen" aria-hidden="true" style="inset:0;display:block;">
+        <iframe src="{{ content.hero_codepen_url }}" class="hero-codepen-iframe" title="Animation Waves Pins" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+    </div>
+    {% elif content.hero_waves_pins %}
     <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide" id="hero-waves-pins-container" aria-hidden="true" style="inset:0;display:block;"></div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
     <script src="{% static 'landing_pages/js/waves-pins-hero.js' %}"></script>

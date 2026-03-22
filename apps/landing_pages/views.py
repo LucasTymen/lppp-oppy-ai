@@ -232,6 +232,9 @@ def landing_public(request, slug):
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/positionnement-marketing.html")
         if "audit_dashboard_url" not in content:
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
+        # Forcer Waves Pins / CodePen pour Oppy-AI — garantit l'affichage
+        content["hero_waves_pins"] = content.get("hero_waves_pins", True)
+        content["hero_codepen_url"] = content.get("hero_codepen_url") or "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark"
     elif lp.slug == "rougier-et-ple":
         content["promovacances_assets_url"] = ""
         content["infographie_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/infographie-rougier-et-ple-7-formats.html")
@@ -714,6 +717,8 @@ def landing_proposition_value(request, slug):
         if slug == "lppp-oppy-ai":
             ctx["content"]["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
             ctx["content"]["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
+            ctx["content"]["hero_waves_pins"] = ctx["content"].get("hero_waves_pins", True)
+            ctx["content"]["hero_codepen_url"] = ctx["content"].get("hero_codepen_url") or "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark"
     else:
         if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
             raise Http404("Landing non publiée")
@@ -737,6 +742,8 @@ def landing_proposition_value(request, slug):
         if slug == "lppp-oppy-ai":
             ctx["content"]["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
             ctx["content"]["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
+            ctx["content"]["hero_waves_pins"] = ctx["content"].get("hero_waves_pins", True)
+            ctx["content"]["hero_codepen_url"] = ctx["content"].get("hero_codepen_url") or "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark"
     response = render(request, "landing_pages/proposition_value.html", ctx)
     response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response["Pragma"] = "no-cache"

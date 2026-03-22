@@ -143,6 +143,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Registre erreurs et solutions** : `docs/base-de-connaissances/erreurs-et-solutions.md` — consulter en cas de blocage ; mettre à jour après chaque correction (agent qui assiste le Chef de Projet).
 - **Sprint refonctionnement (2026-02-07)** : `segmentations/2026-02-07-sprint-refonctionnement-landing-optimisation-hierarchisation.md` — Orchestrateur, Chef de Projet, DevOps, Pentester, Automatizer ; refonctionnement landing Maisons-Alfort, optimisation, hiérarchisation (éviter cannibalisation), tests.
 - **Sprint réparation page (2026-03-22)** : `segmentations/2026-03-22-sprint-yanis-reparation-page-tous-agents.md` — **Yanis (Orchestrateur)** pilote ; tous les agents mobilisés pour réparer et mettre en fonction la page (LPPP-OppyAI, infra HTTP/SSL, contenu, visuel).
+- **Sprint Oppy-AI (2026-01-30)** : `segmentations/2026-01-30-sprint-oppy-ai-orchestrateur-devops-architecte-designer-redacteur.md` — Orchestrateur, DevOps, Architecte, Designer, Rédacteur ; livraison landing Oppy-AI, repo dédié, déploiement vérifié.
 - **Décisions et sources** : `docs/base-de-connaissances/decisions.md`, `sources.md`
 - **Guides** : `docs/GUIDE-CHEF-PROJET.md`, `docs/GUIDE-AGENTS.md`
 - **Règles** : `.cursor/rules/pilotage-agents.mdc`, `coordination-agents.mdc`, `orchestrateur.mdc`

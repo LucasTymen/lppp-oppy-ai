@@ -6,9 +6,9 @@
 
 ## Implémentation LPPP-OppyAI
 
-- **Script** : `apps/landing_pages/static/landing_pages/js/waves-pins-hero.js`
-- **Three.js** : CDN jsDelivr (fallback si unpkg bloqué)
-- **Déclencheur** : `hero_waves_pins: true` dans le JSON landing
+- **Option 1 — CodePen embed (prioritaire)** : `hero_codepen_url: "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark"` — iframe plein écran, fixe au scroll.
+- **Option 2 — Script local** : `apps/landing_pages/static/landing_pages/js/waves-pins-hero.js` — déclenché par `hero_waves_pins: true` si pas de hero_codepen_url.
+- **Three.js** : CDN jsDelivr (pour le script local)
 - **Templates** : `proposition.html`, `proposition_value.html`
 
 ## Paramètres (settings)

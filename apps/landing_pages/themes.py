@@ -944,6 +944,18 @@ h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
   height: 100% !important;
   display: block !important;
 }
+/* CodePen iframe — plein écran, fond fixe */
+.hero-bg-codepen .hero-codepen-iframe {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
 /* Contenu au-dessus du fond fixe */
 body:has(.hero-bg-waves-pins) main,
 body:has(.hero-bg-waves-pins) .alert-banner {
