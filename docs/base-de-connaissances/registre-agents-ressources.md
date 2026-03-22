@@ -64,7 +64,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 
 ### Assistant Entretien Emploi
 
-- **Espace de travail** : `docs/ressources-utilisateur/fiches-entretien-emploi/` — un dossier par entreprise ; fiches HTML (accordéons), ressources, résumés, versions datées.
+- **Espace de travail** : `docs/ressources-utilisateur/fiches-entretien-emploi/` — **un dossier par entreprise** (un projet = un dossier à part) ; fiches HTML (accordéons), ressources, résumés, versions datées. Règle globale : `organisation-projets-et-nouveaux-dossiers.md`.
 - **Modèle canonique** : `docs/ressources-utilisateur/fiches-entretien-emploi/_modele-canonique_prepa_entretien.html` (structure à appliquer à chaque nouvelle préparation).
 - **Doc modèle + veille + checklist** : `docs/base-de-connaissances/fiches-entretien-emploi-modele-et-veille.md` (modèle, veille par onglet, coordination Chef de Projet / Architecte / DevOps / Pentester / Rédacteur, checklist « nouvelle société »).
 - **Registre (ce fichier)** : `docs/base-de-connaissances/registre-agents-ressources.md` (pour solliciter Rédacteur, Architecte, Conseiller, Chef de Projet, Pentester, DevOps).
@@ -142,6 +142,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Logs** : `docs/logs/log-projet.md`, `docs/logs/log-ia.md`
 - **Registre erreurs et solutions** : `docs/base-de-connaissances/erreurs-et-solutions.md` — consulter en cas de blocage ; mettre à jour après chaque correction (agent qui assiste le Chef de Projet).
 - **Sprint refonctionnement (2026-02-07)** : `segmentations/2026-02-07-sprint-refonctionnement-landing-optimisation-hierarchisation.md` — Orchestrateur, Chef de Projet, DevOps, Pentester, Automatizer ; refonctionnement landing Maisons-Alfort, optimisation, hiérarchisation (éviter cannibalisation), tests.
+- **Sprint réparation page (2026-03-22)** : `segmentations/2026-03-22-sprint-yanis-reparation-page-tous-agents.md` — **Yanis (Orchestrateur)** pilote ; tous les agents mobilisés pour réparer et mettre en fonction la page (LPPP-OppyAI, infra HTTP/SSL, contenu, visuel).
 - **Décisions et sources** : `docs/base-de-connaissances/decisions.md`, `sources.md`
 - **Guides** : `docs/GUIDE-CHEF-PROJET.md`, `docs/GUIDE-AGENTS.md`
 - **Règles** : `.cursor/rules/pilotage-agents.mdc`, `coordination-agents.mdc`, `orchestrateur.mdc`
@@ -152,6 +153,7 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Stratégie fluide Git + Vercel** : `docs/base-de-connaissances/strategie-deploiement-git-vercel.md` — checklist par projet (GitHub + GitLab + Vercel), réutilisable pour 10+ landings ; pièges : `erreurs-et-solutions.md`.
 - **Environnement** : `docs/base-de-connaissances/environnement-wsl-linux.md` — **Linux Ubuntu, dernier LTS en cours** (ex. 24.04 LTS), natif ou WSL ; bash par défaut, PowerShell en secours.
 - **Infra et secrets** : `docs/base-de-connaissances/infra-devops.md`
+- **Next.js App Router — sécurité (RSC)** : `docs/base-de-connaissances/plan-mise-a-jour-nextjs-securite.md` — advisories déc. 2025 (CVE-2025-55183, 55184, 67779) ; **inventaire repos** + upgrade `next` patché par ligne ; `npx fix-react2shell-next` ; checklist pré-prod § Next.js.
 - **Stratégie opérationnelle Make** : `docs/base-de-connaissances/strategie-operationnelle-make.md` — catalogue des commandes `make`, workflows (lancement, migrations, mise à jour, contrôle), répartition des responsabilités (DevOps, Dev Django, Chef de Projet). `make help` pour l'aide.
 - **Tâche prioritaire (mobilisation système et connexions)** : `docs/base-de-connaissances/segmentations/2025-01-30-lancement-docker-projet.md` — réparer et lancer conteneur, backend, front, admin (avec Dev Django, Pentester) ; Option B runserver si ERR_EMPTY_RESPONSE sous Windows.
 - **Sprint déploiement Contabo (2026-02-07)** : `segmentations/2026-02-07-sprint-deploiement-contabo-lppp.md` — déploiement LPPP sur serveur Contabo, sous supervision Orchestrateur, Architecte, DevOps ; ref. `deploiement-contabo-lppp-securite.md`, info Contabo dans SquidResearch (aucun secret dans LPPP).
@@ -176,8 +178,9 @@ Ce registre recense **tous les agents** (rôles + règles Cursor) et **toutes le
 - **Prêt à démarrer** : `docs/base-de-connaissances/pret-a-demarrer.md` — venv, Docker, dev local PostgreSQL, tester l’admin, première landing
 - **Réponses validées** : `docs/base-de-connaissances/reponses-validees-strategie.md`
 - **Rapport SEO prospect** : `docs/base-de-connaissances/rapport-seo-prospect.md`
-- **Dossiers contacts** : `docs/contacts/` — un dossier par contact (prospect) pour ses données ; règle `organisation-donnees-contacts.md`, registre `docs/contacts/REGISTRE-CONTACTS.md`
+- **Organisation projets et nouveaux dossiers** : `organisation-projets-et-nouveaux-dossiers.md` — **un projet = un dossier à part** : contact/prospection → `docs/contacts/<slug>/`, fiche entretien → `docs/ressources-utilisateur/fiches-entretien-emploi/<slug>/` ; templates et modèles dans les emplacements partagés. **Dossiers contacts** : règle détaillée `organisation-donnees-contacts.md`, registre `docs/contacts/REGISTRE-CONTACTS.md`.
 - **Ressources utilisateur** : `docs/ressources-utilisateur/` (REGISTRE-RESSOURCES.md pour retrouver textes, images, ébauches, études transmis par l’utilisateur)
+- **Base savoir-faire / prospection** : `docs/ressources-utilisateur/cv_base_datas_pour_candidatures.json` — **source pour justifier et parler du savoir-faire** (expériences, compétences, preuves business, arguments, narratifs, mots-clés ATS). Utilisable pour analyser et prospecter une entreprise en proposant le profil ; **pas utilisé par défaut** dans la génération des landings. Tout agent qui rédige CV, LM, email de candidature ou argumentaire peut et doit piocher dedans. Doc : `docs/base-de-connaissances/cv-base-datas-savoir-faire-prospection.md`
 - **Bonnes pratiques** : `docs/bonnes-pratiques.md`
 - **Règles** : `.cursor/rules/` (voir tableau § 2)
 - **Workflows N8N et automatisation** : pour collaborer avec le spécialiste workflows N8N/automatisation, voir **`docs/base-de-connaissances/info-automatizer-pour-equipe.md`** (qui est l’Automatizer, quand le solliciter, quelles ressources). Rôle détaillé : § Automatizer dans `agents-roles-responsabilites.md`, règle `automatizer.mdc`.

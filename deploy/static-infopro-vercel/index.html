@@ -1026,7 +1026,7 @@ body:has(.report-body) .report-body blockquote {
             
             
             
-            <a href="rapport.html">Consulter le rapport</a>
+            <a href="/p/infopro/rapport/">Consulter le rapport</a>
             <a href="positionnement-marketing.html">Positionnement marketing</a>
             
             <a href="#coordonnees">Me contacter</a>
@@ -1062,7 +1062,7 @@ body:has(.report-body) .report-body blockquote {
         </section>
 
         <p class="icebreaker">Infopro Digital : leader B2B en information, data et technologies. Stack WordPress + CloudFront + WP Rocket + Yoast SEO. TTFB ~150 ms (serveur OK). PageSpeed Mobile perf 68 — blocage principal ; Accessibilité 99, Bonnes pratiques 96, SEO 91. Priorité : images (alt, dimensions, poids), meta descriptions, headers sécurité.</p>
-        <p class="icebreaker">Ce livrable regroupe un diagnostic SEO réel sur infopro-digital.com (crawl 358 URLs, PageSpeed, temps de réponse). TTFB ~153 ms (serveur OK). PageSpeed Mobile : perf 68, accessibilité 99, SEO 91. Problèmes identifiés : images (alt, dimensions, poids), meta descriptions, hreflang, 4xx, headers sécurité. Plan d&#x27;action priorisé et dashboard interactif.</p>
+        <p class="icebreaker">Ce livrable regroupe un diagnostic SEO réel sur infopro-digital.com (crawl 358 URLs, PageSpeed, Screaming Frog). Le serveur est réactif (TTFB ~153 ms). PageSpeed Mobile : perf 68 (blocage principal), accessibilité 99, SEO 91. Problèmes identifiés : images (alt manquant 88 %, dimensions, poids), meta descriptions (108 manquantes), hreflang, 4xx, headers sécurité. Un plan d&#x27;action priorisé et un dashboard interactif complètent ce livrable.</p>
 
         
         <section class="section key-figures-section" id="chiffres-cles">
@@ -1097,10 +1097,16 @@ body:has(.report-body) .report-body blockquote {
                     <div class="key-figures-slide" data-index="4">
                         <p class="kpi-value">3</p>
                         <p class="kpi-unit">étapes</p>
-                        <p class="kpi-label">Plan : Images &amp; LCP → JS → Sécurité headers</p>
+                        <p class="kpi-label">Plan : Images &amp; LCP → Meta → Sécurité headers</p>
                     </div>
                     
-                    <div class="key-figures-slide chart-slide" data-index="5">
+                    <div class="key-figures-slide" data-index="5">
+                        <p class="kpi-value">132–324</p>
+                        <p class="kpi-unit">k€/an</p>
+                        <p class="kpi-label">Manque à gagner SEO estimé (fourchette)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide chart-slide" data-index="6">
                         <h3>Manque à gagner SEO (fourchette)</h3>
                         <div class="key-figures-bar-chart">
                             <div class="key-figures-bar-group">
@@ -1113,7 +1119,7 @@ body:has(.report-body) .report-body blockquote {
                             </div>
                         </div>
                     </div>
-                    <div class="key-figures-slide chart-slide" data-index="6">
+                    <div class="key-figures-slide chart-slide" data-index="7">
                         <h3>Plan d'action 30/60 jours</h3>
                         <div class="key-figures-timeline">
                             <div class="key-figures-timeline-item">
@@ -1137,15 +1143,43 @@ body:has(.report-body) .report-body blockquote {
         
 
         
-        <section class="section" id="enjeux">
+        <section class="section content-player" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
             <p class="section-lead">Problème → Pourquoi → Ce que ça coûte → Ce qu&#x27;on fait → Ce que ça débloque. Dashboard consultant-grade : score global, timeline utilisateur, compteur perte en temps réel, bullet chart, waterfall, recovery rings.</p>
             
             <ul class="pain-list">
-                <li>PageSpeed Mobile perf 68 — seul blocage. Accessibilité 99, Bonnes pratiques 96, SEO 91. Cause probable : images (alt manquant 88%, dimensions 62,7%, 41 images &gt; 100 Ko), layout (CLS).</li><li>TTFB ~153 ms (serveur OK). 97,2 % des URLs répondent en &lt; 1 s. Le bottleneck est côté front : LazySizes, Swiper, jQuery.</li><li>Priorités audit : 4xx (3), hreflang liens retour (3), pagination, canonique non indexable. Volume : meta descriptions (108 manquantes), H2 (92 manquants), headers sécurité (X-Frame-Options, CSP, X-Content-Type 54–97 %).</li>
+                <li>PageSpeed Mobile perf 68 — seul blocage technique. Accessibilité 99, Bonnes pratiques 96, SEO 91. Le score perf dégrade l’expérience mobile et le classement. Cause principale : images (118 sans alt, dimensions manquantes, 41 &gt; 100 Ko), layout (CLS). Corriger ces points permet de viser 85+ en perf.</li><li>TTFB ~153 ms (serveur OK, CloudFront). 97,2 % des URLs répondent en &lt; 1 s. Le bottleneck est côté front : LazySizes, Swiper, jQuery. Le serveur n’est pas en cause — les gains sont à faire sur le rendu et les assets.</li><li>Priorités audit : 4xx (3 URLs), hreflang liens retour (3), pagination, canonique non indexable. Volume : 108 meta descriptions manquantes (69,7 %), 92 H2 manquants (59,4 %), headers sécurité (X-Frame-Options, CSP, X-Content-Type 54–97 %). Impact direct sur le référencement et la sécurité.</li>
             </ul>
             
+            </div>
+            
+            <div class="enjeux-visuals" aria-hidden="true">
+                <div>
+                    <p class="enjeux-visual-label">TTFB — Infopro vs référence (bon &lt; 500 ms)</p>
+                    <div class="enjeux-ttfb-comparison">
+                        <div class="enjeux-ttfb-bar enjeux-ttfb-ok"><div class="bar" style="height: 6px;"></div><span class="bar-label">Infopro</span><span class="bar-val">~0,15 s</span></div>
+                        <div class="enjeux-ttfb-bar"><div class="bar" style="height: 50px;"></div><span class="bar-label">Réf. bon</span><span class="bar-val">0,5 s</span></div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Manque à gagner SEO (fourchette audit)</p>
+                    <div class="enjeux-funnel">
+                        <div class="enjeux-funnel-tier"><span class="tier-val">358</span> URLs crawlées</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">118</span> images sans alt (88%)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">108</span> meta descriptions manquantes</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">132–324 k€</span> / an estimés</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Chaîne de priorité (TTFB OK → blocage = front)</p>
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">Images & LCP (alt, poids, dim.)</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Meta & structure (108, 92 H2)</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">4xx, hreflang, headers sécu.</span>
+                    </div>
+                </div>
+                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : score 68, timeline, bullet chart, waterfall, recovery rings</p>
             </div>
             
         </section>
@@ -1159,7 +1193,7 @@ body:has(.report-body) .report-body blockquote {
             
             
             <div class="card">
-                <p>Plan d&#x27;action en trois étapes. Synthèse actionnable ; dashboard pour la traduction visuelle.</p>
+                <p>Plan d&#x27;action en trois étapes, actionnable immédiatement. Étape 1 : images (alt, width/height, compression) — 45 % de l&#x27;impact. Étape 2 : meta &amp; structure (108 descriptions, 92 H2). Étape 3 : technique (4xx, hreflang, headers sécurité). Le dashboard permet de suivre les scores et la traduction visuelle des gains.</p>
                 
             </div>
             
@@ -1186,7 +1220,7 @@ body:has(.report-body) .report-body blockquote {
             <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
             
             <div class="rapport-cta-block">
-                <a href="rapport.html" class="rapport-cta-link">Consulter le rapport complet (société, stratégie, SEO) →</a>
+                <a href="/p/infopro/rapport/" class="rapport-cta-link">Consulter le rapport complet (société, stratégie, SEO) →</a>
             </div>
             
             
@@ -1224,7 +1258,7 @@ body:has(.report-body) .report-body blockquote {
             <div class="section-head"><span class="section-num">03b</span><h2>DIAGNOSTIC SEO INFOPRO DIGITAL</h2></div>
             <div class="card seo-resume-card">
                 
-                <p class="seo-manque">Manque à gagner SEO estimé : Priorités : 4xx (3 URLs), hreflang (liens retour), pagination, canoniques. Volume : 118 images sans alt (88%), 108 meta descriptions manquantes (69,7%), 92 H2 manquant (59,4%).</p>
+                <p class="seo-manque">Manque à gagner SEO estimé : Manque à gagner SEO estimé : 132–324 k€/an. Priorités : 4xx (3 URLs), hreflang (liens retour), pagination, canoniques. Volume : 118 images sans alt (88 %), 108 meta descriptions manquantes (69,7 %), 92 H2 manquant (59,4 %).</p>
                 
                 
                 <p>Données réelles (Screaming Frog, PageSpeed, crawl 358 URLs). TTFB ~153 ms (serveur réactif, CloudFront). Perf PageSpeed Mobile 68 — bottleneck côté front : images (alt, width/height, poids), JS (Swiper, jQuery, LazySizes). 404 : job-board/9744..., en/contact/. Stack : WordPress, Yoast SEO, WP Rocket, Polylang.</p>
@@ -1236,7 +1270,7 @@ body:has(.report-body) .report-body blockquote {
                 
                 
                 
-                <a href="rapport.html#analyse-seo-complete" class="seo-cta">VOIR LE DASHBOARD AUDIT →</a>
+                <a href="/p/infopro/rapport/#analyse-seo-complete" class="seo-cta">VOIR LE DASHBOARD AUDIT →</a>
                 
                 
             </div>

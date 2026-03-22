@@ -29,6 +29,7 @@ Quand une landing page est **terminée** (contenu et design validés, prête à 
 | 5 | **Configurer le déploiement** (ex. Vercel lié au repo, Root Directory si monorepo) | **DevOps / Architecte réseau** | Projet Vercel créé / mis à jour |
 | 6 | **Vérifier que le déploiement se fait** (build réussi, déploiement actif) | **DevOps / Architecte réseau** | Dashboard Vercel : dernier déploiement « Ready » |
 | 7 | **Vérifier que la page fonctionne** (ouvrir l’URL, contenu correct, pas de 404 ni d’erreur) | **DevOps / Architecte réseau** + **Chef de Projet** | Page affichée correctement |
+| 7b | **Si stack Next.js (App Router)** : `next` en version **patchée** (advisories RSC / sécurité) — voir `plan-mise-a-jour-nextjs-securite.md` | **DevOps** | `package.json` / lockfile à jour ; build OK |
 | 8 | **Valider la livraison** (checklist complète, URL enregistrée, doc mise à jour si besoin) | **Chef de Projet** | Livrable validé |
 
 ---

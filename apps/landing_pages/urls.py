@@ -24,6 +24,10 @@ urlpatterns = [
     path("p/promovacances/assets/<path:filename>", views.serve_promovacances_asset, name="promovacances_assets"),
     # Infopro assets (infographie 7 formats, positionnement-marketing, images)
     path("p/infopro/assets/<path:filename>", views.serve_infopro_asset, name="infopro_assets"),
+    # LPPP-OppyAI — assets statiques (infographie, positionnement, etc.)
+    path("p/lppp-oppy-ai/assets/<path:filename>", views.serve_lppp_oppy_ai_asset, name="lppp_oppy_ai_assets"),
+    # Rougier & Ple assets (infographie 7 formats, positionnement-marketing, CSS)
+    path("p/rougier-et-ple/assets/<path:filename>", views.serve_rougier_et_ple_asset, name="rougier_et_ple_assets"),
     # Dashboard audit SEO : 1 template + 1 JSON par projet (docs/contacts/<slug>/audit-dashboard.json)
     path("p/<slug:slug>/audit-dashboard/", views.seo_audit_dashboard, name="seo_audit_dashboard"),
     path("p/<slug:slug>/", views.landing_public, name="landing_public"),

@@ -8,7 +8,6 @@ from django.shortcuts import render, get_object_or_404
 from django.http import Http404, FileResponse
 from .models import LandingPage
 from .themes import LANDING_THEMES, THEME_YUWELL, THEME_CSS_YUWELL
-from apps.scraping.flowise_client import get_flowise_chat_embed_url, get_flowise_chat_embed_config
 
 
 def _use_perso_style(lp):
@@ -36,18 +35,8 @@ def _use_perso_style(lp):
 
 
 def concierge_maisons_alfort_public(request):
-    """Landing publique Concierge IA Maisons-Alfort pour les équipes municipales (chatbot intégré)."""
-    flowise_embed_url = get_flowise_chat_embed_url() or ""
-    base_url, chatflow_id = get_flowise_chat_embed_config()
-    return render(
-        request,
-        "landing_pages/concierge_maisons_alfort.html",
-        {
-            "flowise_embed_url": flowise_embed_url,
-            "flowise_api_host": base_url,
-            "flowise_chatflow_id": chatflow_id,
-        },
-    )
+    """Landing publique Concierge IA Maisons-Alfort pour les équipes municipales."""
+    return render(request, "landing_pages/concierge_maisons_alfort.html", {})
 
 
 # Données palettes Yuwell (étude graphique portfolio) — source: docs/ressources-utilisateur/etudes/yuwell-portfolio-etude-graphique.md
@@ -194,25 +183,32 @@ def _content_with_defaults(content, template_key):
 
 
 def landing_public(request, slug):
-    """Affiche une landing page publique (pour la cible). Staff peut prévisualiser les brouillons."""
+    """Affiche une landing page publique (pour la cible). Staff peut prévisualiser les brouillons.
+    Si la landing n'existe pas en base, fallback depuis docs/contacts/<slug>/landing-proposition-*.json (ex. yateo)."""
     # Portfolio Yuwell : suivi en base pour admin/console, mais pages réelles sous /yuwell/
     if slug == "yuwell-portfolio":
         from django.shortcuts import redirect
         return redirect("yuwell_presentation", permanent=False)
-    lp = get_object_or_404(LandingPage, slug=slug)
-    if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
-        raise Http404("Landing non publiée")
 
-    # Une seule logique pour toutes les landings : fichier JSON si présent, sinon content_json en base.
-    # Convention : docs/contacts/<slug>/landing-proposition-<slug>.json (ex. casapy, fitclem, promovacances).
-    content_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / f"landing-proposition-{slug}.json"
-    if content_path.is_file():
-        try:
-            content = _content_with_defaults(json.loads(content_path.read_text(encoding="utf-8")), lp.template_key)
-        except (json.JSONDecodeError, OSError):
-            content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+    lp = LandingPage.objects.filter(slug=slug).first()
+    content = None
+    if lp is None:
+        lp, content = _fallback_landing_from_contact(slug)
+        if lp is None:
+            raise Http404("No LandingPage matches the given query.")
+        content = _content_with_defaults(content, lp.template_key)
     else:
-        content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+        if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
+            raise Http404("Landing non publiée")
+        # Une seule logique : fichier JSON si présent, sinon content_json en base.
+        content_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / f"landing-proposition-{slug}.json"
+        if content_path.is_file():
+            try:
+                content = _content_with_defaults(json.loads(content_path.read_text(encoding="utf-8")), lp.template_key)
+            except (json.JSONDecodeError, OSError):
+                content = _content_with_defaults(lp.content_json or {}, lp.template_key)
+        else:
+            content = _content_with_defaults(lp.content_json or {}, lp.template_key)
 
     # Options selon le slug (assets, dashboard audit) — sans casser les autres.
     if lp.slug == "casapy":
@@ -230,6 +226,20 @@ def landing_public(request, slug):
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/infopro/assets/positionnement-marketing.html")
         if "audit_dashboard_url" not in content:
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/infopro/audit-dashboard/")
+    elif lp.slug == "lppp-oppy-ai":
+        content["promovacances_assets_url"] = ""
+        content["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/positionnement-marketing.html")
+        if "audit_dashboard_url" not in content:
+            content["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
+    elif lp.slug == "rougier-et-ple":
+        content["promovacances_assets_url"] = ""
+        content["infographie_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/infographie-rougier-et-ple-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/positionnement-marketing.html")
+        if "audit_dashboard_url" not in content:
+            audit_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
+            if audit_json_path.is_file():
+                content["audit_dashboard_url"] = request.build_absolute_uri("/p/rougier-et-ple/audit-dashboard/")
     else:
         audit_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
         if audit_json_path.is_file():
@@ -348,6 +358,72 @@ def serve_infopro_asset(request, filename):
     file_path = assets_dir / safe_name
     if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
         raise Http404("Asset Infopro non trouvé")
+    ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
+    if ext == "svg":
+        content_type = "image/svg+xml"
+    elif ext == "png":
+        content_type = "image/png"
+    elif ext in ("html", "htm"):
+        content_type = "text/html; charset=utf-8"
+    elif ext == "css":
+        content_type = "text/css; charset=utf-8"
+    else:
+        content_type = "application/octet-stream"
+    return FileResponse(
+        open(file_path, "rb"),
+        as_attachment=False,
+        filename=safe_name,
+        content_type=content_type,
+    )
+
+
+def serve_lppp_oppy_ai_asset(request, filename):
+    """
+    Sert les assets LPPP-OppyAI depuis docs/contacts/lppp-oppy-ai/ :
+    infographie HTML, positionnement-marketing, images, CSS (path traversal exclu).
+    """
+    import os
+    assets_dir = Path(settings.BASE_DIR) / "docs" / "contacts" / "lppp-oppy-ai"
+    safe_name = os.path.basename(filename)
+    if not safe_name:
+        raise Http404("Asset LPPP-OppyAI non trouvé")
+    file_path = assets_dir / safe_name
+    if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
+        raise Http404("Asset LPPP-OppyAI non trouvé")
+    ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
+    if ext == "svg":
+        content_type = "image/svg+xml"
+    elif ext == "png":
+        content_type = "image/png"
+    elif ext in ("html", "htm"):
+        content_type = "text/html; charset=utf-8"
+    elif ext == "css":
+        content_type = "text/css; charset=utf-8"
+    elif ext == "js":
+        content_type = "application/javascript; charset=utf-8"
+    else:
+        content_type = "application/octet-stream"
+    return FileResponse(
+        open(file_path, "rb"),
+        as_attachment=False,
+        filename=safe_name,
+        content_type=content_type,
+    )
+
+
+def serve_rougier_et_ple_asset(request, filename):
+    """
+    Sert les assets Rougier & Ple depuis docs/contacts/rougier-et-ple/ :
+    infographie HTML, positionnement-marketing, CSS. Évite path traversal.
+    """
+    import os
+    assets_dir = Path(settings.BASE_DIR) / "docs" / "contacts" / "rougier-et-ple"
+    safe_name = os.path.basename(filename)
+    if not safe_name:
+        raise Http404("Asset Rougier & Ple non trouvé")
+    file_path = assets_dir / safe_name
+    if not file_path.is_file() or not str(file_path.resolve()).startswith(str(assets_dir.resolve())):
+        raise Http404("Asset Rougier & Ple non trouvé")
     ext = safe_name.lower().split(".")[-1] if "." in safe_name else ""
     if ext == "svg":
         content_type = "image/svg+xml"
@@ -556,12 +632,15 @@ def _fallback_landing_from_contact(slug):
     except Exception:
         return None, None
     # Objet minimal compatible avec _common_landing_context et template rapport
+    _slug = slug
+    _content = content
+
     class MockLanding:
-        slug = slug
-        title = content.get("page_title", "Landing")
-        prospect_company = content.get("prospect_company", slug)
-        prospect_name = content.get("prospect_name", "")
-        content_json = content
+        slug = _slug
+        title = _content.get("page_title", "Landing")
+        prospect_company = _content.get("prospect_company", _slug)
+        prospect_name = _content.get("prospect_name", "")
+        content_json = _content
         template_key = "proposition"
         is_published = True
 
@@ -623,11 +702,41 @@ def landing_prospects(request, slug):
 
 
 def landing_proposition_value(request, slug):
-    """Page « Proposition de valeur » : vue structurée (enjeux, solution, services, offre)."""
-    lp = get_object_or_404(LandingPage, slug=slug)
-    if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
-        raise Http404("Landing non publiée")
-    ctx = _common_landing_context(lp)
+    """Page « Proposition de valeur » : vue structurée (enjeux, solution, services, offre). Fonctionne avec ou sans landing en base."""
+    lp = LandingPage.objects.filter(slug=slug).first()
+    if lp is None:
+        lp, content_from_json = _fallback_landing_from_contact(slug)
+        if lp is None:
+            raise Http404("Landing ou contact introuvable")
+        ctx = _common_landing_context(lp)
+        ctx["content"] = _content_with_defaults(ctx["content"], "proposition_value")
+        # URLs assets pour slugs connus (audit-dashboard, infographie, etc.)
+        if slug == "lppp-oppy-ai":
+            ctx["content"]["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
+            ctx["content"]["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
+    else:
+        if not lp.is_published and not (request.user.is_authenticated and request.user.is_staff):
+            raise Http404("Landing non publiée")
+        # Charger depuis le JSON si présent (comme landing_public) — contenu à jour (hero_codepen_url, etc.)
+        content_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / f"landing-proposition-{slug}.json"
+        if content_path.is_file():
+            try:
+                content = _content_with_defaults(json.loads(content_path.read_text(encoding="utf-8")), "proposition_value")
+            except (json.JSONDecodeError, OSError):
+                content = _content_with_defaults(dict(lp.content_json or {}), "proposition_value")
+        else:
+            content = _content_with_defaults(dict(lp.content_json or {}), "proposition_value")
+        if lp.slug in LANDING_THEMES:
+            theme_dict, theme_css = LANDING_THEMES[lp.slug]
+            content = {**content, "theme": theme_dict, "theme_css": theme_css}
+        ctx = {
+            "landing_page": lp,
+            "content": content,
+            "use_perso_style": _use_perso_style(lp) if lp.slug not in LANDING_THEMES else False,
+        }
+        if slug == "lppp-oppy-ai":
+            ctx["content"]["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
+            ctx["content"]["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
     response = render(request, "landing_pages/proposition_value.html", ctx)
     response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response["Pragma"] = "no-cache"

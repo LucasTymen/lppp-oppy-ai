@@ -37,10 +37,16 @@ Référence SquidResearch : `docs/base-de-connaissances/sources.md` (chemin dép
 
 ---
 
-## 4. Charte prospect documentée : FITCLEM
+## 4. Chartes prospect documentées
+
+### FITCLEM
 
 - Pour les **landings et supports FITCLEM**, le Designer **doit s’appuyer sur la charte graphique canonique** : `docs/contacts/fitclem/charte-graphique-fitclem.md`.
 - Cette charte définit palette (orange corail, pêche, blanc, noir), typographie (Montserrat/Poppins, Inter/Open Sans), variables CSS « Fitclem Style », boutons, sections douces, border-radius élevés et ombres légères. **Coller à cette charte** pour toute production design FITCLEM.
+
+### Oppy.ai (LPPP-OppyAI)
+
+- Pour les **landings et supports LPPP-OppyAI**, le Designer **doit s'appuyer sur la charte** : `docs/contacts/lppp-oppy-ai/charte-graphique-oppy-ai.md` — style « Tech CIM » (fond sombre, accent cyan/turquoise, polices Montserrat/Inter).
 
 ---
 

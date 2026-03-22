@@ -69,4 +69,14 @@ La **configuration Vercel** pointe vers le répertoire Next.js (ex. `frontend/` 
 
 ---
 
-*Document créé à la demande utilisateur. Dernière mise à jour : 2025-01-30. L’équipe technique (Designer, Dev, DevOps) applique systématiquement Next.js + React pour le frontend et Vercel pour le déploiement.*
+## 7. Sécurité — mises à jour critiques (RSC / App Router)
+
+**Obligatoire** : suivre le **`plan-mise-a-jour-nextjs-securite.md`** à chaque **advisory Next.js / React** (ex. décembre 2025 : DoS CVE-2025-55184 / CVE-2025-67779, exposition de code CVE-2025-55183).
+
+- **DevOps** : inventaire de **tous** les repos `next` (landings Vercel, monorepos) ; upgrade vers la **version patchée** de la ligne de release ; `npx fix-react2shell-next` si utile ; redeploy.
+- **Checklist pré-prod** : vérifier la version `next` avant push prod (voir `checklist-pre-prod-integrite.md`).
+- **Pas de contournement** documenté par Vercel/Next : **upgrade** requis.
+
+---
+
+*Document créé à la demande utilisateur. Dernière mise à jour : 2026-01-30. L’équipe technique (Designer, Dev, DevOps) applique systématiquement Next.js + React pour le frontend et Vercel pour le déploiement.*

@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Assistant IA pour les équipes municipales de Maisons-Alfort : démarches, horaires, déchets, état civil. Réponses basées sur les informations officielles du site de la mairie (RAG).">
+    <meta name="description" content="Landing Ville de Maisons-Alfort pour les équipes municipales : démarches, horaires, déchets, état civil. Consultez le site officiel de la mairie.">
     <title>Assistant Ville de Maisons-Alfort — Équipes municipales</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
-        /* Critique : fond et texte toujours visibles (éviter écran blanc) */
         html, body {
             margin: 0;
             min-height: 100vh;
@@ -31,7 +30,6 @@
             overflow: hidden;
             border-bottom: 2px solid rgba(74, 158, 255, 0.3);
         }
-        /* Fond vidéo YouTube : parallaxe (fixed) = reste en place au scroll, sans son, boucle, sans contrôles */
         .hero .hero-bg-video {
             position: fixed;
             top: 0;
@@ -54,7 +52,6 @@
             pointer-events: none;
             border: 0;
         }
-        /* Overlay assombrissement (parallaxe = fixed aussi) */
         .hero::before {
             content: '';
             position: fixed;
@@ -66,7 +63,6 @@
             background: rgba(0, 0, 0, 0.35);
             pointer-events: none;
         }
-        /* Scan lines — parallaxe (fixed) */
         .hero::after {
             content: '';
             position: fixed;
@@ -113,44 +109,6 @@
             margin-bottom: 2rem;
             font-size: 0.95rem;
         }
-        .chat-embed {
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            overflow: hidden;
-            min-height: 420px;
-            background: #111;
-        }
-        .chat-embed iframe,
-        .chat-embed flowise-fullchatbot {
-            width: 100%;
-            height: 600px;
-            display: block;
-        }
-        .chat-embed iframe {
-            border: 0;
-        }
-        .chat-placeholder {
-            padding: 3rem 1.5rem;
-            text-align: center;
-            color: #64748b;
-            font-size: 0.95rem;
-        }
-        .chat-placeholder code {
-            background: rgba(0,0,0,0.3);
-            padding: 0.2em 0.5em;
-            border-radius: 4px;
-            font-size: 0.9em;
-        }
-        .chat-troubleshoot {
-            margin: 0;
-            padding: 0.75rem 1rem;
-            font-size: 0.85rem;
-            color: #94a3b8;
-            background: rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(255,255,255,0.08);
-        }
-        .chat-troubleshoot a { color: #4a9eff; }
-        .chat-troubleshoot code { font-size: 0.85em; }
     </style>
 </head>
 <body style="background-color:#0d0d0d;color:#e6e6e6;">
@@ -165,36 +123,11 @@
             ></iframe>
         </div>
         <h1>Assistant Ville de Maisons-Alfort</h1>
-        <p class="subtitle">Pour les équipes municipales : posez vos questions sur les démarches, horaires, déchets, état civil et services de la ville. Réponses basées sur les informations officielles du site de la mairie.</p>
+        <p class="subtitle">Pour les équipes municipales : démarches, horaires, déchets, état civil et services de la ville. Réponses basées sur les informations officielles du site de la mairie.</p>
     </header>
     <main class="section">
         <div class="intro">
-            Utilisez le chat ci‑dessous pour obtenir des réponses immédiates. L’assistant s’appuie sur les contenus du site <strong>maisons-alfort.fr</strong> (RAG).
-        </div>
-        <div class="chat-embed" id="chat-embed">
-            {% if flowise_embed_url %}
-                {% if flowise_api_host and flowise_chatflow_id %}
-                <flowise-fullchatbot></flowise-fullchatbot>
-                <script type="module">
-                    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js";
-                    Chatbot.initFull({
-                        chatflowid: "{{ flowise_chatflow_id|escapejs }}",
-                        apiHost: "{{ flowise_api_host|escapejs }}",
-                    });
-                </script>
-                {% else %}
-                <iframe src="{{ flowise_embed_url }}" title="Assistant Maisons-Alfort" allow="clipboard-write"></iframe>
-                {% endif %}
-                <p class="chat-troubleshoot">
-                    Le cadre ci‑dessus est vide ? <a href="{{ flowise_embed_url }}" target="_blank" rel="noopener">Ouvrir le chat dans un nouvel onglet</a> pour tester. Si le chat s’affiche là mais pas ici, le problème vient du chargement en iframe. Sinon, vérifiez que Flowise tourne sur le port <strong>3010</strong> (LPPP) et que <code>FLOWISE_CHATFLOW_ID</code> dans votre configuration correspond bien au chatflow Conciergerie dans Flowise.
-                </p>
-            {% else %}
-                <div class="chat-placeholder">
-                    <p><strong>Chat en cours de configuration</strong></p>
-                    <p>L’assistant sera bientôt disponible. Vérifiez que Flowise tourne (port <strong>3010</strong> pour LPPP) et que <code>FLOWISE_CHATFLOW_ID</code> est renseigné dans le <code>.env</code>. Puis <code>docker compose restart web</code>.</p>
-                    <p>En attendant, consultez <a href="https://maisons-alfort.fr/" style="color:#4a9eff;">maisons-alfort.fr</a>.</p>
-                </div>
-            {% endif %}
+            Consultez le site officiel de la mairie : <a href="https://maisons-alfort.fr/" style="color:#4a9eff; font-weight:600;">maisons-alfort.fr</a>
         </div>
     </main>
     {% include "landing_pages/includes/scroll_top_on_load.html" %}

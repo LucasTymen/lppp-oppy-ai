@@ -1,0 +1,56 @@
+{
+  "page_title": "Lucas Tymen — Proposition Growth B2B | YATEO",
+  "prospect_company": "YATEO",
+  "prospect_name": "",
+  "hero_headline": "Growth B2B — Acquisition, données et automatisation",
+  "hero_sub_headline": "Proposition d’accompagnement : pipeline leads, SEO, reporting et optimisation de la conversion.",
+  "hero_subtitle": "LPPP — Proposition adaptée à YATEO",
+  "hero_video_mp4_url": "",
+  "hero_video_url": "",
+  "theme": {},
+  "intro": "YATEO est une société consacrée au growth B2B. Cette proposition met en avant un accompagnement en acquisition (leads qualifiés, délivrabilité, automatisation), SEO technique et data (audit, KPIs, reporting), aligné avec les enjeux growth B2B.",
+  "icebreaker": "Profil hybride : développement (Django, n8n, automatisation), growth ops (908 leads qualifiés, délivrabilité 10/10, gains temps/process mesurables) et SEO technique (audits, Core Web Vitals, plan d’action). Adapté aux équipes growth B2B.",
+  "enjeux_lead": "À compléter selon le positionnement YATEO : enjeux acquisition, qualification leads, reporting, SEO ou conversion.",
+  "pain_points": [],
+  "solution_workflow": "À compléter : plan en 2–3 étapes (ex. audit → recommandations → mise en œuvre ou accompagnement).",
+  "solution_piliers": [],
+  "solution_steps": [],
+  "cta_text": "ÉCHANGER",
+  "cta_url": "",
+  "contact_email": "lucas.tymen@gmail.com",
+  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=Proposition Growth B2B — YATEO",
+  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+  "rapport_url": "/p/yateo/rapport/",
+  "key_figures_carousel": [],
+  "alert_banner": "LPPP — PROPOSITION GROWTH B2B | YATEO",
+  "seo_resume": null,
+  "coordonnees_intro": "Pour un échange ou une démo :",
+  "about_me_title": "Contexte",
+  "about_me": "Proposition adaptée à YATEO (growth B2B). Expérience concrète : automatisation matching (Parazar), 908 leads qualifiés (Avtis/Parazar), délivrabilité email 10/10, audits SEO et déploiement landings (Infopro, Promovacances, LPPP). Piocher les preuves dans cv_base_datas_pour_candidatures.json.",
+  "prestations_headline": "Ce que j’apporte",
+  "services_segments": [
+    {
+      "type": "box",
+      "title": "Acquisition & pipeline leads",
+      "format": "text",
+      "desc": "Automatisation (n8n, scraping), qualification leads, délivrabilité email, reporting. Preuves : 908 leads qualifiés, taux d’ouverture ~50 %, Mail-Tester 4.6 → 10/10."
+    },
+    {
+      "type": "box",
+      "title": "SEO technique & audit",
+      "format": "text",
+      "desc": "Audits (Screaming Frog, PageSpeed), plan d’action priorisé, dashboard démo. Ex. livrables : Infopro Digital, Promovacances."
+    },
+    {
+      "type": "box",
+      "title": "Data & reporting",
+      "format": "text",
+      "desc": "Workflows n8n + Claude AI, gains temps (ex. +70 % reporting), indicateurs actionnables."
+    }
+  ],
+  "services": [
+    { "title": "Acquisition & pipeline leads", "description": "Leads qualifiés, délivrabilité, automatisation." },
+    { "title": "SEO technique & audit", "description": "Audit, plan d’action, démo dashboard." },
+    { "title": "Data & reporting", "description": "Reporting automatisé, KPIs, gains temps." }
+  ]
+}

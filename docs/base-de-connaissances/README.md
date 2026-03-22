@@ -15,6 +15,7 @@ Dépôt des **faits vérifiés**, **sources** et **décisions** du projet. Toute
   - `roadmap-technique-et-workflows.md` : **roadmap exécutable** — phases 0–6, workflows n8n (existant vs à prévoir), spécifications « oubliées » (state machine, temporalité, confidence, etc.).
   - `agents-roles-responsabilites.md` : 7 rôles, matrice RACI, workflow.
   - `intelligence-metier-algorithmes.md` : stratégie matching, scoring, qualité données, implantation des algorithmes (app `apps.intelligence`).
+  - **Organisation projets** : `organisation-projets-et-nouveaux-dossiers.md` — **un projet = un dossier à part** (contacts → `docs/contacts/<slug>/`, fiches entretien → `fiches-entretien-emploi/<slug>/`) ; éléments pour les nouveaux projets (templates, modèles) dans les emplacements partagés. Complément : `organisation-donnees-contacts.md` (contenu type d’un dossier contact, registre).
 
 ## Référence projet
 

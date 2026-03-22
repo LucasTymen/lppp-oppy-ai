@@ -49,6 +49,7 @@ Le **Chef de Projet** ne réalise pas lui-même chaque case : il **s'assure** qu
 - [ ] **Config prod** : `DEBUG=False`, `SECRET_KEY` forte, `ALLOWED_HOSTS` explicite, HTTPS activé (voir `regles-securite.md` § 9). **Chef de Projet, DevOps et Architecte réseau (ingénieur réseau)** doivent s'assurer que les pages sont en debug mode off avant push en prod.
 - [ ] **Migrations** : migrations Django appliquées en environnement cible si changement de modèles.
 - [ ] **Sécurité** : checklist `regles-securite.md` § 9 parcourue ; Pentester consulté (C) pour les flux sensibles (API, webhooks, n8n/Flowise).
+- [ ] **Next.js (App Router)** : si le projet utilise **Next.js** avec **App Router**, vérifier que la dépendance **`next`** est sur une **version patchée** conforme au dernier advisory sécurité (RSC / React) — voir **`plan-mise-a-jour-nextjs-securite.md`** ; en cas d’advisory critique, upgrade **avant** prod (DevOps **R**).
 
 ### 3.3 Fonctionnel (DevOps)
 

@@ -45,6 +45,40 @@ Pour chaque erreur documentée, indiquer :
 
 *(Les entrées seront ajoutées au fur et à mesure des corrections.)*
 
+### Next.js App Router — vulnérabilités RSC (DoS, exposition de code) — upgrade obligatoire
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-01-30 (documentation) ; advisory Next.js **11 déc. 2025** |
+| **Contexte** | Projet Next.js avec **App Router** (React Server Components) ; advisory sécurité amont React / Next.js. |
+| **Erreur / risque** | **CVE-2025-55182** (React) / **CVE-2025-66478** (Next.js) — React2Shell **RCE** (exécution de code à distance) ; **CVE-2025-55184** (DoS, boucle infinie) — correctif complet **CVE-2025-67779** ; **CVE-2025-55183** (exposition code compilé de Server Functions, secrets inline). Pas de workaround : upgrade requis. |
+| **Cause** | Version `next` antérieure aux builds patchés de la ligne de release. |
+| **Solution** | Monter `next` vers la version patchée (ex. 14.2.35, 15.5.9, 16.0.10 selon ligne) ; `npx fix-react2shell-next` ; `npm run build` ; redeploy Vercel. |
+| **Prévention** | **`plan-mise-a-jour-nextjs-securite.md`** (inventaire repos, cadence mensuelle, case checklist pré-prod). § 7 de `stack-frontend-nextjs-react.md`. |
+| **Lien(s)** | [Vercel React2Shell Bulletin](https://vercel.com/knowledge-base/react2shell-security-bulletin) ; [Blog Next.js — Security](https://nextjs.org/blog) ; `plan-mise-a-jour-nextjs-securite.md` |
+
+### Local — SSL_ERROR_RX_RECORD_TOO_LONG (Django redirige HTTP→HTTPS sans SSL)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-03-22 |
+| **Contexte** | Accès à http://localhost:8010/ ; serveur Django en local (Docker, port 8010). |
+| **Erreur** | `SSL_ERROR_RX_RECORD_TOO_LONG` — le navigateur tente HTTPS alors que le serveur parle HTTP, ou Django redirige vers HTTPS. |
+| **Cause** | Quand `DEBUG=False`, Django applique `SECURE_SSL_REDIRECT=True` par défaut → redirection HTTP→HTTPS. En local sans certificat SSL, le serveur ne répond qu’en HTTP. |
+| **Solution** | Dans `.env` : `SECURE_SSL_REDIRECT=False`. Redémarrer le conteneur web (`docker compose restart web`). Utiliser `http://` (pas `https://`). |
+| **Prévention** | En prod : garder `SECURE_SSL_REDIRECT=True`. Documenter dans `.env.example` que `SECURE_SSL_REDIRECT=False` est pour le dev local uniquement. |
+| **Lien(s)** | `pret-a-demarrer.md` ; `segmentations/2026-03-22-sprint-yanis-reparation-page-tous-agents.md` |
+
+### 404 sur /p/&lt;slug&gt;/proposition/ — landing hors base (fallback manquant)
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-03-22 |
+| **Contexte** | Page `/p/lppp-oppy-ai/proposition/` (ou autre slug avec JSON mais sans enregistrement `LandingPage` en base). |
+| **Erreur** | 404 — `get_object_or_404(LandingPage, slug=slug)` lève 404 quand la landing n'existe qu'en dossier (`docs/contacts/<slug>/`) sans entrée en base. |
+| **Solution** | `landing_proposition_value` : fallback via `_fallback_landing_from_contact(slug)` quand `LandingPage.objects.filter(slug=slug).first()` est `None`. Appliquer `_content_with_defaults(ctx["content"], "proposition_value")` pour éviter `VariableDoesNotExist` (positionnement, etc.). |
+| **Lien(s)** | `segmentations/2026-03-22-sprint-yanis-reparation-page-tous-agents.md` |
+
 ### Page instable (local ou Vercel) — diagnostic DevOps / Architecte / Ingénieur Sys
 
 | Champ | Contenu |

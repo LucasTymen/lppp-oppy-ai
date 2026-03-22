@@ -1,0 +1,1148 @@
+{
+  "meta": {
+    "nom": "Lucas Tymen",
+    "version": "2.1 - Source de vérité consolidée 2025-02-26 (stages/projets collectifs, OSINT/cybersécurité SquidResearch, preuve Next.js/Vercel, règle BASE_JSON)",
+    "positionnement_global": "Profil hybride intermédiaire fort combinant 22 ans d'IT, développement fullstack, automation, acquisition digitale et design produit.",
+    "niveau_assume": "Intermédiaire fort (autonome, production réelle, déploiement live)",
+    "objectif": "Optimisation CV / ATS / Recruteur intérim / ESN / PME / SaaS",
+    "positionnement": "Profil hybride autonome (dev fullstack + produit + automation + cadre agents). Crédible en ESN/intérim comme intermédiaire fort ; en produit digital comme intermédiaire montant.",
+    "paiement_stripe": "Mode live activé - produit volontairement non diffusé",
+    "strategie_secteur": {
+      "it_support": {
+        "periode_apsi_a_afficher": "2000–2022",
+        "narratif": "22 ans d'expérience en support technique, gestion de parc multisite et administration système. L'âge et la continuité sont des atouts dans ce secteur.",
+        "detection_mots_cles": [
+          "support",
+          "N2",
+          "N1",
+          "GLPI",
+          "Active Directory",
+          "helpdesk",
+          "parc informatique",
+          "technicien",
+          "infrastructure",
+          "ERP",
+          "ITSM",
+          "ticketing",
+          "multisite"
+        ]
+      },
+      "growth_seo_data_dev": {
+        "periode_apsi_a_afficher": "2015–2022",
+        "narratif": "Expertise récente en automatisation, développement et growth, avec preuves tangibles (benchmarks, leads qualifiés, délivrabilité). L'APSI est mentionné de façon réduite pour éviter le biais d'âge.",
+        "detection_mots_cles": [
+          "growth",
+          "SEO",
+          "data",
+          "développeur",
+          "automatisation",
+          "scraping",
+          "backend",
+          "fullstack",
+          "acquisition",
+          "python",
+          "django",
+          "n8n",
+          "automation",
+          "analytics",
+          "performance"
+        ]
+      }
+    }
+  },
+  "experiences": [
+    {
+      "ordre": 1,
+      "periode": "2024 - en cours",
+      "entite": "SquidResearch",
+      "type": "SaaS propriétaire - Infrastructure live (non diffusé)",
+      "role": "Développeur Fullstack & Concepteur Produit",
+      "secteur": [
+        "dev",
+        "saas",
+        "automation",
+        "growth",
+        "data"
+      ],
+      "priorite_secteur": {
+        "it_support": "secondaire",
+        "growth_seo_data_dev": "principale"
+      },
+      "realisation": {
+        "pipeline_one_click": {
+          "description": "Automatisation URL annonce → Candidature (Scraping, Enrichissement, Matching, Génération lettre)",
+          "timeout_global": "90 secondes",
+          "message_intermediaire": "Retour utilisateur explicite après 25 secondes",
+          "gestion_erreurs": "Timeout global + gestion cas limites"
+        },
+        "backend": {
+          "framework": "Django 5",
+          "architecture": "Modulaire (apps séparées + services métier dédiés)",
+          "base_de_donnees": "PostgreSQL",
+          "cache": "Redis",
+          "queue": "Celery"
+        },
+        "frontend": {
+          "framework": "Next.js",
+          "deploiement": "Vercel (multi-projets)",
+          "maintenance_securite": "Mises à jour React / Next.js suite alertes CVE",
+          "preuve_vercel_nextjs": {
+            "source": "Dashboard Vercel (compte Lucas Tymen)",
+            "contexte": "Plusieurs projets Next.js hébergés et maintenus sur Vercel ; correctifs CVE appliqués (React Server Components, Next.js 15.3.6, React 19.2.1).",
+            "usage_dashboard": "Edge Requests, ISR Reads/Writes, Image Optimization, Fast Data Transfer, Fast Origin Transfer",
+            "projets_vercel_exemples": [
+              "lppp-infopro.vercel.app (Landing Infopro)",
+              "squid-landing-page-beta.vercel.app (SquidResearch)",
+              "engage-paris-landing.vercel.app",
+              "lppp-casapy, lppp-yuwell-portfolio, lppp-promovacances, lppp-ackuracy, lppp-0flow, lppp-orsys",
+              "landing-page-creator-for-prospection",
+              "vercel-gmail-responses (API routes, CORS)"
+            ]
+          }
+        },
+        "securite": {
+          "auth": "Sessions sécurisées",
+          "rate_limiting": "Throttle login Redis",
+          "oauth": "OAuth 2.0 multi-providers (LinkedIn, Google, Microsoft)",
+          "tokens": "Stockage chiffré",
+          "csrf": "Protection Django native",
+          "allowed_hosts": "Configuration par environnement",
+          "ip_blocklist": "Blocage d'IP (durée, motif, lien événements sécurité)",
+          "risk_assessment_middleware": "Évaluation des risques et réaction aux comportements suspects"
+        },
+        "cybersecurite_osint_contournement": {
+          "contexte": "SaaS recherche d'emploi + enrichissement B2B ; seul développeur. Protection IP/anonymat scraping, isolation outils OSINT, anti-bot / anti-détection.",
+          "stack_osint": "theHarvester, recon-ng, holehe, Sherlock, SpiderFoot, Amass, whois/dnsutils, nmap ; briques maison idFinder, EmailEnrichedFinder. Container Kali dédié (ENRICHED), exposition par API HTTP (FastAPI) uniquement.",
+          "tor_contournement": "Proxy SOCKS5 (port 9050), Stem (Python) pour rotation d'identité (NEWNYM), whitelist/blacklist par domaine (ex. Tor pour France Travail/APEC/WTTJ, direct pour Indeed/LinkedIn), fallback automatique sans Tor en cas d'échec, ProxyManager avec seuil configurable.",
+          "anti_detection_devops": "Rotation User-Agent, headers type navigateur, jitter/délais aléatoires, stratégies par domaine (tor_strict, tor_relaxed, direct), rate limiting adaptatif, recherche contournement WAF/anti-bot (Cloudflare, Imperva) en cadre contrôlé.",
+          "architecture_isolation": "Réseau dédié ENRICHED (172.22.0.0/16), aucun partage avec app Django ; service Tor dans le Compose ; communication Django ↔ container uniquement par API HTTP localhost.",
+          "formulations_cv": [
+            "Conception et mise en œuvre d'une chaîne OSINT (theHarvester, recon-ng, holehe, Sherlock, SpiderFoot, Amass) dans un container Kali isolé (réseau dédié, API HTTP) pour l'enrichissement B2B et la recherche d'emails/contacts.",
+            "Stratégie Tor pour le scraping (proxy SOCKS5, rotation d'identité via Stem, whitelist/blacklist par domaine, fallback automatique) ; politiques par domaine et rotation d'IP pour limiter les bans.",
+            "Techniques anti-détection (rotation User-Agent, headers navigateur, jitter, rate limiting adaptatif) et contournements WAF/anti-bot en cadre contrôlé ; blocage d'IP (IPBlocklist) et middleware d'évaluation des risques.",
+            "Architecture DevOps : container ENRICHED isolé (Kali, réseau dédié, API FastAPI), service Tor dans le Compose, stratégies proxy centralisées (ProxyManager) et fallback multi-niveaux pour la résilience du scraping."
+          ]
+        },
+        "paiement": {
+          "stripe": "Checkout Sessions + Webhooks",
+          "statut": "Infrastructure live non diffusée publiquement",
+          "quotas": "Mise à jour quotas utilisateur selon abonnement actif"
+        },
+        "benchmarks_data_driven": {
+          "api_integration": {
+            "endpoints": 5,
+            "requetes_total": 555,
+            "taux_erreur_pct": 0,
+            "throughput_req_s": "17–100 selon endpoint",
+            "latence_p95_ms": "< 70",
+            "success_rate_pct": 100
+          },
+          "orchestration_prospection": {
+            "benchmarks_total": 35,
+            "throughput_entreprises_s": 1388,
+            "batch_1000_entreprises_ms": 455,
+            "scalabilite": "Linéaire",
+            "memoire_moyenne_mb": 2.3,
+            "memoire_max_mb": 8.06
+          },
+          "cache_enrichissement": {
+            "speedup_whois": "×5700",
+            "speedup_dns": "×19500"
+          },
+          "tests_module": {
+            "data_samples": 37,
+            "tests_unitaires": 29,
+            "tests_complets": 20,
+            "coverage_module_pct": 100
+          }
+        },
+        "qualite_logicielle": {
+          "tests_python": "Pytest",
+          "tests_java": "JUnit",
+          "analyse_code": "SonarQube",
+          "linting": "ESLint",
+          "tests_error_cases": true,
+          "logs_structures": true,
+          "registre_erreurs_solutions": true,
+          "checklist_preprod": true
+        },
+        "infra": {
+          "docker": "Docker Compose",
+          "ci_cd": "GitHub Actions",
+          "deploiement": "VPS via SSH"
+        },
+        "organisation": {
+          "agents": "Structuration via rôles spécialisés (RACI)",
+          "methodologie": "Matrice RACI",
+          "outils": [
+            "Claude Code",
+            "Cursor"
+          ],
+          "documentation": "Registre décisions + erreurs/solutions"
+        }
+      }
+    },
+    {
+      "ordre": 2,
+      "periode": "2025 (Mission)",
+      "entite": "Parazar - Rocket School",
+      "role": "Growth Ops & Automation Lead",
+      "secteur": [
+        "growth",
+        "data",
+        "automation"
+      ],
+      "priorite_secteur": {
+        "it_support": "secondaire",
+        "growth_seo_data_dev": "principale"
+      },
+      "realisation": {
+        "automation_matching": {
+          "gain_temps": "2 heures par session",
+          "economies_estimees": "≈87€ par session"
+        },
+        "reporting": {
+          "workflow": "n8n + Claude AI",
+          "gain_temps": "+70%"
+        },
+        "email_deliverability": {
+          "mail_tester": "4.6 → 10/10 en 3 jours"
+        },
+        "leads": {
+          "nombre": 908,
+          "qualification": "qualifiés",
+          "taux_ouverture": "≈50%"
+        },
+        "seo": "Audit technique + optimisation sémantique",
+        "outils": [
+          "n8n",
+          "Claude AI",
+          "Google Ads",
+          "Meta Ads",
+          "Screaming Frog"
+        ]
+      }
+    },
+    {
+      "ordre": 3,
+      "periode": "2025 (Mission)",
+      "entite": "Avtis - Rocket School",
+      "role": "Growth Outbound & Scraping",
+      "secteur": [
+        "growth",
+        "data",
+        "automation"
+      ],
+      "priorite_secteur": {
+        "it_support": "non pertinent",
+        "growth_seo_data_dev": "principale"
+      },
+      "realisation": {
+        "scraping": {
+          "leads_qualifies": 908
+        },
+        "performance": {
+          "taux_ouverture": "≈50%"
+        }
+      }
+    },
+    {
+      "ordre": 4,
+      "periode": "2025 (Mission)",
+      "entite": "Engage Paris - Rocket School",
+      "role": "Acquisition & Web Performance",
+      "secteur": [
+        "growth",
+        "seo",
+        "marketing"
+      ],
+      "priorite_secteur": {
+        "it_support": "non pertinent",
+        "growth_seo_data_dev": "principale"
+      },
+      "realisation": {
+        "google_ads": {
+          "ctr": ">5%"
+        },
+        "tracking": "Plan marquage GA4 + GTM",
+        "automation": "Flux inscription automatisé"
+      }
+    },
+    {
+      "ordre": 5,
+      "periode": "2024",
+      "entite": "LPPP Generator",
+      "role": "Développeur Fullstack",
+      "type": "Outil interne démonstratif de prospection",
+      "secteur": [
+        "dev",
+        "growth"
+      ],
+      "priorite_secteur": {
+        "it_support": "non pertinent",
+        "growth_seo_data_dev": "principale"
+      },
+      "realisation": {
+        "architecture": "Django 5 modulaire",
+        "ia": "Flowise (orchestration LLM)",
+        "robustesse": "Fallback JSON/Markdown sécurisé",
+        "deploiement": "Vercel (multi-landings)",
+        "usage_business": {
+          "prises_de_contact": 2,
+          "contexte": "Prospection B2B via landing personnalisée + mini audit SEO démonstratif"
+        }
+      }
+    },
+    {
+      "ordre": 6,
+      "type": "Projet collectif (formation ASTON)",
+      "periode": "2023 - Bootcamp ASTON",
+      "entite": "Projet collectif Pet Sitter",
+      "role": "Développeur Frontend",
+      "secteur": [
+        "dev"
+      ],
+      "priorite_secteur": {
+        "it_support": "non pertinent",
+        "growth_seo_data_dev": "secondaire"
+      },
+      "realisation": {
+        "framework": "Angular 17",
+        "type": "SPA",
+        "collaboration": true,
+        "description": "Plateforme de mise en relation et de gardiennage pour animaux domestiques",
+        "equipe": "5 développeurs",
+        "stack": ["Java", "Spring", "Angular"]
+      }
+    },
+    {
+      "ordre": 7,
+      "periode": "2017 - aujourd'hui",
+      "entite": "Freelance",
+      "role": "Brand & Creative Content Specialist",
+      "secteur": [
+        "design",
+        "marketing",
+        "ui_ux"
+      ],
+      "priorite_secteur": {
+        "it_support": "non pertinent",
+        "growth_seo_data_dev": "secondaire"
+      },
+      "realisation": {
+        "design": "Identités visuelles + supports print HD",
+        "stage_farniente": {
+          "periode": "2017",
+          "duree": "3 mois",
+          "entite": "Restaurants El Farniente",
+          "role": "Infographiste Multimédia / WebDesign",
+          "realisations": ["Refonte charte graphique et brand design", "Création de logos", "Site web statique"]
+        },
+        "ui_ux": {
+          "depuis": 2017,
+          "formation": "Le Wagon (UI/UX)",
+          "projets_collectifs": [
+            "L'Accroche",
+            "Chewie n'B"
+          ],
+          "projets_collectifs_detail": [
+            {
+              "nom": "L'Accroche",
+              "formation": "Le Wagon",
+              "annee": 2022,
+              "equipe": "4 développeurs",
+              "stack": "Ruby on Rails, JavaScript",
+              "description": "Plateforme de mise en relation et d'échange d'artistes"
+            },
+            {
+              "nom": "Chewie n'B",
+              "formation": "Le Wagon",
+              "annee": 2022,
+              "equipe": "4 développeurs",
+              "stack": "Ruby on Rails, JavaScript",
+              "description": "Plateforme de location de matériel"
+            }
+          ],
+          "approche": "Mobile-first + user flows + design system"
+        },
+        "web": "Maintenance WordPress",
+        "ia_creative": [
+          "Midjourney",
+          "Adobe Firefly"
+        ]
+      }
+    },
+    {
+      "ordre": 8,
+      "periode_it": "2000–2022",
+      "periode_growth": "2015–2022",
+      "entite": "A.P.S.I.",
+      "role": "Responsable IT & Systèmes",
+      "secteur": [
+        "it_support"
+      ],
+      "priorite_secteur": {
+        "it_support": "principale",
+        "growth_seo_data_dev": "secondaire (période réduite à 2015–2022)"
+      },
+      "realisation": {
+        "plan_pssi": "Mise en place des bases d'un plan PSSI",
+        "interventions": "Interventions pour pannes et virus, brassage des connexions",
+        "inventaire_reseaux": "Inventaire et mapping réseaux",
+        "infrastructure": {
+          "parc": "≈300 postes",
+          "multisite": true,
+          "outils": [
+            "GLPI",
+            "Active Directory",
+            "Office 365",
+            "SharePoint"
+          ],
+          "serveur_glpi": "Serveur Apache en environnement Linux pour GLPI (gestion des tickets et monitoring), déploiement des agents sur l'ensemble du parc"
+        },
+        "support": {
+          "niveau": "N1/N2",
+          "ticketing": "GLPI",
+          "gain": "Réduction de 30% des tickets récurrents via automatisation et formation utilisateurs"
+        },
+        "reseaux": [
+          "LAN",
+          "Wi-Fi",
+          "DNS",
+          "DHCP"
+        ],
+        "active_directory": true,
+        "microsoft_365_avance": {
+          "preuves": [
+            "Création de listes dynamiques personnalisées",
+            "Automatisations Outlook/Excel pour l'équipe",
+            "Création d'applications mobiles internes",
+            "Mise en place d'un site interne SharePoint"
+          ],
+          "note": "Usage avancé en entreprise avant même de savoir coder"
+        }
+      }
+    }
+  ],
+  "stages_et_projets_collectifs": [
+    {
+      "type": "stage",
+      "periode": "2017",
+      "duree": "3 mois",
+      "entite": "Restaurants El Farniente (Etablissements Farniente)",
+      "role": "Infographiste Multimédia / WebDesign",
+      "secteur": ["design", "web", "brand"],
+      "realisations": [
+        "Refonte de la charte graphique et brand design (mockups menus, tablier)",
+        "Création de logos",
+        "Création de site web statique"
+      ],
+      "contexte": "Stage formation M2i Licence pro Infographiste Multimédia"
+    },
+    {
+      "type": "projet_collectif",
+      "periode": "2023",
+      "formation": "ASTON (by SQLI)",
+      "entite": "Pet Sitter",
+      "role": "Développeur Frontend",
+      "equipe": "5 développeurs",
+      "stack": ["Java", "Spring", "Angular"],
+      "description": "Plateforme de mise en relation et de gardiennage pour animaux domestiques",
+      "secteur": ["dev"]
+    },
+    {
+      "type": "projet_collectif",
+      "periode": "2022",
+      "formation": "Le Wagon (Batch 1000)",
+      "entite": "L'Accroche",
+      "role": "Développeur Full-stack",
+      "equipe": "4 développeurs",
+      "stack": ["Ruby on Rails", "JavaScript"],
+      "description": "Plateforme de mise en relation et d'échange d'artistes (clone type Airbnb)",
+      "secteur": ["dev"]
+    },
+    {
+      "type": "projet_collectif",
+      "periode": "2022",
+      "formation": "Le Wagon (Batch 1000)",
+      "entite": "Chewie n'B",
+      "role": "Développeur Full-stack",
+      "equipe": "4 développeurs",
+      "stack": ["Ruby on Rails", "JavaScript"],
+      "description": "Plateforme de location de matériel (clone type Airbnb)",
+      "secteur": ["dev"]
+    }
+  ],
+  "preuves_business_contextualisees": [
+    {
+      "projet": "APSI",
+      "secteur": [
+        "it_support"
+      ],
+      "indicateur": "Gestion de parc multisite",
+      "donnee_brute": "≈300 postes, 22 ans",
+      "impact": "Continuité de service garantie, référent IT autonome"
+    },
+    {
+      "projet": "APSI",
+      "secteur": [
+        "it_support"
+      ],
+      "indicateur": "Réduction tickets récurrents",
+      "donnee_brute": "−30% via automatisation",
+      "impact": "Moins de charge support, meilleure satisfaction utilisateur"
+    },
+    {
+      "projet": "Parazar",
+      "secteur": [
+        "growth",
+        "automation"
+      ],
+      "indicateur": "Matching automatisé",
+      "donnee_brute": "2 heures gagnées par session",
+      "equivalent_financier": "≈87€ par session",
+      "impact": "Réduction dépendance humaine"
+    },
+    {
+      "projet": "Parazar",
+      "secteur": [
+        "growth",
+        "automation"
+      ],
+      "indicateur": "Délivrabilité email",
+      "donnee_brute": "4.6 → 10/10 en 3 jours",
+      "impact": "Campagnes relançables sans pénalité spam"
+    },
+    {
+      "projet": "Avtis / Parazar",
+      "secteur": [
+        "growth",
+        "data"
+      ],
+      "indicateur": "Leads qualifiés scraping",
+      "donnee_brute": "908 leads",
+      "impact": "Pipeline commercial alimenté automatiquement"
+    },
+    {
+      "projet": "SquidResearch",
+      "secteur": [
+        "dev",
+        "data"
+      ],
+      "indicateur": "Throughput orchestration",
+      "donnee_brute": "1388 entreprises/seconde",
+      "impact": "Architecture scalable et performante"
+    },
+    {
+      "projet": "SquidResearch",
+      "secteur": [
+        "dev"
+      ],
+      "indicateur": "Cache enrichissement",
+      "donnee_brute": "×5700 speedup WHOIS / ×19500 DNS",
+      "impact": "Optimisation performance massive"
+    },
+    {
+      "projet": "SquidResearch",
+      "secteur": [
+        "dev"
+      ],
+      "indicateur": "Qualité logicielle",
+      "donnee_brute": "100% coverage module, 0% taux d'erreur API",
+      "impact": "Code production-ready, maintenable"
+    },
+    {
+      "projet": "SquidResearch / LPPP",
+      "secteur": ["dev", "frontend"],
+      "indicateur": "Next.js & Vercel en production",
+      "donnee_brute": "Multi-projets sur Vercel (landings, SquidResearch, Engage Paris, API routes) ; correctifs CVE Next.js/React appliqués (Next.js 15.3.6, React 19.2.1)",
+      "impact": "Preuve déploiement frontend moderne, maintenance sécurité, usage Edge/ISR/Image Optimization"
+    },
+    {
+      "projet": "SquidResearch",
+      "secteur": ["dev", "automation"],
+      "indicateur": "OSINT & cybersécurité (container isolé)",
+      "donnee_brute": "Chaîne OSINT (theHarvester, recon-ng, holehe, Sherlock, SpiderFoot, Amass) dans container Kali ; API FastAPI ; réseau dédié, pas d'accès direct au cœur applicatif",
+      "impact": "Enrichissement B2B sécurisé, isolation des outils, preuve pratique cybersécurité et DevOps"
+    },
+    {
+      "projet": "SquidResearch",
+      "secteur": ["dev", "automation"],
+      "indicateur": "Tor & anti-détection scraping",
+      "donnee_brute": "Stratégie Tor (SOCKS5, Stem, rotation identité, whitelist/blacklist par domaine, fallback) ; rotation User-Agent, jitter, rate limiting adaptatif ; IPBlocklist et middleware risques",
+      "impact": "Limitation des bans IP, anonymat scraping, résilience et sécurité applicative"
+    }
+  ],
+  "competences_detaillees": {
+    "it_support_systemes": {
+      "niveau": "Expert",
+      "outils": [
+        "GLPI",
+        "Active Directory",
+        "Office 365",
+        "Google Workspace",
+        "Windows 10/11",
+        "macOS",
+        "Linux (Debian/Ubuntu)",
+        "LAN",
+        "Wi-Fi",
+        "DNS",
+        "DHCP",
+        "Gestion parc (~300 postes)",
+        "Multisite",
+        "Support ERP (Sage ou équivalent)"
+      ],
+      "soft_skills": [
+        "Autonomie complète",
+        "Gestion situations sensibles",
+        "Pédagogie",
+        "Communication avec Direction",
+        "Priorisation incidents"
+      ],
+      "note": "Bon niveau macOS, plus fort sur Windows + Linux",
+      "cas_usage_securite": [
+        "Mise en place des bases d'un plan PSSI",
+        "Interventions pannes et virus",
+        "Brassage des connexions",
+        "Inventaire et mapping réseaux",
+        "Serveur GLPI (Apache Linux) : gestion des tickets et monitoring, déploiement des agents sur l'ensemble du parc"
+      ]
+    },
+    "backend_fullstack": {
+      "niveau": "Intermédiaire fort",
+      "outils": [
+        "Python",
+        "Django 5",
+        "FastAPI",
+        "Next.js",
+        "Angular 17",
+        "PostgreSQL",
+        "Redis",
+        "Celery",
+        "Docker",
+        "Docker Compose",
+        "GitHub Actions",
+        "VPS (SSH)",
+        "Stripe Webhooks",
+        "OAuth2",
+        "CSRF",
+        "Flowise"
+      ],
+      "note_fastapi": "FastAPI utilisée dans le container ENRICHED (SquidResearch) pour exposer l'API OSINT au reste de la stack (Django appelle en localhost).",
+      "securite_pratique_quotidienne": [
+        "Hardening basique serveurs",
+        "Protection CSRF (Django natif)",
+        "OAuth2 multi-providers",
+        "Rate limiting (Redis)",
+        "Stockage tokens chiffré",
+        "Gestion variables d'environnement",
+        "Mises à jour suite CVE (Next.js / React)"
+      ]
+    },
+    "automation_data": {
+      "niveau": "Confirmé",
+      "outils": [
+        "Scraping Python custom",
+        "OSINT (WHOIS / DNS)",
+        "theHarvester",
+        "recon-ng",
+        "holehe",
+        "Sherlock",
+        "SpiderFoot",
+        "Amass",
+        "Tor / Stem (Python)",
+        "n8n",
+        "Claude AI",
+        "Mistral AI",
+        "Cursor",
+        "Batch processing",
+        "Caching optimisé",
+        "Benchmarks throughput",
+        "Pytest",
+        "SonarQube",
+        "JUnit"
+      ],
+      "contexte_osint_squidresearch": "Stack OSINT déployée dans container Kali isolé (SquidResearch) ; API FastAPI dans le container ; stratégies Tor, anti-détection et fallback pour enrichissement B2B."
+    },
+    "seo_growth": {
+      "niveau": "Opérationnel avec preuves",
+      "outils": [
+        "Screaming Frog",
+        "Google Search Console",
+        "GA4",
+        "GTM",
+        "Mail-Tester",
+        "Core Web Vitals",
+        "Google Ads",
+        "Meta Ads",
+        "Analyse concurrentielle",
+        "Audit technique SEO"
+      ]
+    },
+    "design_ui": {
+      "niveau": "Professionnel (freelance actif)",
+      "outils": [
+        "Figma",
+        "Adobe Suite",
+        "Midjourney",
+        "Adobe Firefly",
+        "WordPress"
+      ]
+    },
+    "microsoft_365": {
+      "niveau": "Avancé",
+      "preuves": [
+        "Listes dynamiques personnalisées",
+        "Automatisations Outlook/Excel",
+        "Applications mobiles internes",
+        "SharePoint interne"
+      ],
+      "contexte": "Usage avancé avant apprentissage du code"
+    },
+    "google_workspace": {
+      "niveau": "Intermédiaire",
+      "preuves": [
+        "Réimport dossiers emails (Origin Traiteur)",
+        "Google Cloud Console"
+      ],
+      "contexte": "Expérience récente, orientée exploitation/organisation"
+    },
+    "systemes": {
+      "windows": {
+        "niveau": "Expert usage",
+        "commentaire": "Environnement principal depuis toujours"
+      },
+      "linux": {
+        "niveau": "Très à l'aise",
+        "distros": [
+          "Debian",
+          "Ubuntu"
+        ],
+        "commentaire": "Administration VPS et Docker quotidien"
+      },
+      "macos": {
+        "niveau": "Bon (à renforcer)",
+        "commentaire": "Expérience longue mais moins quotidienne"
+      }
+    }
+  },
+  "positionnement_cybersecurite": {
+    "statut": "Initiation + pratique personnelle (pas de certification)",
+    "formation_initiale": "Sensibilisation Cforpro",
+    "interet_long_terme": "Cybersécurité offensive/défensive",
+    "competences_appliquees": [
+      "Hardening basique serveurs",
+      "Protection CSRF Django",
+      "OAuth2 multi-providers",
+      "Rate limiting Redis",
+      "Stockage tokens chiffré",
+      "Gestion variables environnement",
+      "Mises à jour suite CVE (Next.js / React)"
+    ],
+    "pratique_squidresearch": [
+      "Chaîne OSINT en container Kali isolé (theHarvester, recon-ng, holehe, Sherlock, SpiderFoot, Amass)",
+      "Stratégie Tor (SOCKS5, Stem, whitelist/blacklist domaine, fallback)",
+      "Anti-détection (rotation User-Agent, headers, jitter, politiques proxy par domaine)",
+      "Architecture isolée (réseau dédié ENRICHED, API FastAPI seule interface, Tor dans Compose)",
+      "IPBlocklist et RiskAssessmentMiddleware pour sécurité applicative"
+    ]
+  },
+  "assets_strategiques": {
+    "landing_infopro": {
+      "url": "https://lppp-infopro.vercel.app/",
+      "description": "Landing démonstrative intégrant audit SEO complet, étude concurrentielle, scraping Python orchestré, OSINT embarqué, analyse marché et déploiement Vercel.",
+      "valeur": "Preuve systémique combinant Dev + Data + SEO + Automation + Design",
+      "usage": "Inclure systématiquement dans email d'approche et LM"
+    }
+  },
+  "arguments_reutilisables": {
+    "it_pme": [
+      {
+        "argument": "Gestion d'un parc multisite d'environ 300 postes et support N1/N2 via GLPI pendant 22 ans",
+        "contexte": "A.P.S.I. (2000–2022)",
+        "valeur": "Référent IT autonome, capable de prioriser et maintenir la continuité de service"
+      },
+      {
+        "argument": "Réduction de 30% des tickets récurrents via automatisation et formation utilisateurs",
+        "contexte": "A.P.S.I.",
+        "valeur": "Orientation proactive, pas uniquement réactive"
+      },
+      {
+        "argument": "Interface utilisateurs et Direction, communication pédagogique et gestion de situations sensibles",
+        "contexte": "A.P.S.I.",
+        "valeur": "Capacité à expliquer, rassurer et résoudre sans escalade systématique"
+      },
+      {
+        "argument": "Office 365 avancé (SharePoint, automatisations Outlook/Excel) mis en place avant apprentissage du code",
+        "contexte": "A.P.S.I.",
+        "valeur": "Culture outil, industrialisation des usages bureautiques"
+      },
+      {
+        "argument": "Architectures isolées (réseaux dédiés, containers) et mécanismes de sécurité (blocage IP, middleware d'évaluation des risques) sur un SaaS en production",
+        "contexte": "SquidResearch",
+        "valeur": "Sens de la sécurité opérationnelle et de l'isolation des risques, au-delà du support classique"
+      }
+    ],
+    "backend_engineer": [
+      {
+        "argument": "Backend Django 5 modulaire avec PostgreSQL, Redis et Celery, déployé en environnement live",
+        "contexte": "SquidResearch",
+        "valeur": "Capacité à structurer un socle applicatif robuste et maintenable"
+      },
+      {
+        "argument": "Benchmarks d'orchestration : 1388 entreprises/seconde, latence <70ms (p95), caching ×5700",
+        "contexte": "SquidResearch",
+        "valeur": "Orientation performance réelle, mesure et fiabilisation"
+      },
+      {
+        "argument": "OAuth2 multi-providers, rate limiting Redis, CSRF, tokens chiffrés : sécurité applicative complète",
+        "contexte": "SquidResearch",
+        "valeur": "Sens du contrôle et de la sécurité en production"
+      },
+      {
+        "argument": "Chaîne OSINT (theHarvester, recon-ng, holehe, Sherlock, SpiderFoot, Amass) dans un container Kali isolé (réseau dédié, API HTTP) pour enrichissement B2B et recherche emails/contacts",
+        "contexte": "SquidResearch",
+        "valeur": "Pratique cybersécurité et OSINT en production, isolation des risques"
+      },
+      {
+        "argument": "Stratégie Tor (proxy SOCKS5, rotation d'identité Stem, whitelist/blacklist par domaine, fallback automatique) et anti-détection (User-Agent, jitter, rate limiting adaptatif) pour limiter les bans et préserver l'anonymat du scraping",
+        "contexte": "SquidResearch",
+        "valeur": "Résilience du scraping, DevOps et sécurité opérationnelle"
+      },
+      {
+        "argument": "Architecture DevOps : container ENRICHED isolé (Kali, API FastAPI), service Tor dans le Compose, ProxyManager et fallback multi-niveaux ; IPBlocklist et middleware d'évaluation des risques",
+        "contexte": "SquidResearch",
+        "valeur": "Sécurité par l'isolation et la défense en profondeur"
+      }
+    ],
+    "growth_systems": [
+      {
+        "argument": "Automatisation du matching : 2h gagnées par session (≈87€ estimés)",
+        "contexte": "Parazar - Rocket School",
+        "valeur": "Automatisation de process, réduction dépendance aux actions manuelles"
+      },
+      {
+        "argument": "Délivrabilité email : 4.6 → 10/10 en 3 jours",
+        "contexte": "Parazar",
+        "valeur": "Maîtrise technique email : hygiène, réputation, relance fiable"
+      },
+      {
+        "argument": "908 leads qualifiés générés via scraping Python + taux d'ouverture ≈50%",
+        "contexte": "Avtis / Parazar",
+        "valeur": "Pipeline commercial automatisé, résultats mesurables"
+      }
+    ]
+  },
+  "narratifs_candidature": {
+    "it_support_pme": "Je suis un référent IT orienté efficacité : je diagnostique vite, je sécurise les process, et j'accompagne les utilisateurs avec pédagogie. 22 ans en environnement PME exigeant, dont une réduction de 30% des tickets récurrents par l'automatisation.",
+    "it_ops_hybride": "À l'aise côté support N2, je peux aussi industrialiser : scripts, automatisation, Docker/VPS, intégrations API. Le profil rare qui comprend l'infra ET peut la moderniser.",
+    "accroche_backend": "Développeur backend orienté robustesse et performance, ayant conçu et déployé une architecture SaaS Django modulaire (1388 req/s, 0% d'erreur, coverage 100%).",
+    "accroche_growth": "Profil technique orienté automatisation et optimisation de performance : 908 leads qualifiés, délivrabilité 10/10, gains temps/process mesurables.",
+    "cta_landing_infopro": "Preuve de travail (audit + étude concurrentielle + scraping orchestré) : https://lppp-infopro.vercel.app/"
+  },
+  "mots_cles_ats": {
+    "it_support": [
+      "Technicien support confirmé",
+      "Support N2",
+      "Référent IT",
+      "Office 365",
+      "Google Workspace",
+      "Windows",
+      "Linux",
+      "macOS",
+      "Active Directory",
+      "ERP",
+      "Sage 100",
+      "GLPI",
+      "Gestion parc",
+      "Infrastructure PME",
+      "Support applicatif",
+      "Administration système",
+      "Diagnostic réseau"
+    ],
+    "growth_dev": [
+      "automatisation",
+      "scraping",
+      "Django",
+      "Python",
+      "n8n",
+      "benchmarks",
+      "délivrabilité email",
+      "SEO technique",
+      "GA4",
+      "data-driven",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "CI/CD",
+      "API",
+      "SaaS"
+    ]
+  },
+  "regles_agent_orchestrateur": {
+    "utilisation_obligatoire_base_json": {
+      "description": "Tout agent qui génère ou adapte un CV, une LM ou un message de candidature DOIT utiliser cv_base_datas_pour_candidatures.json comme source de vérité unique.",
+      "regles": [
+        "Charger et utiliser uniquement les données de ce fichier (experiences, competences_detaillees, preuves_business_contextualisees, narratifs_candidature, mots_cles_ats, assets_strategiques, stages_et_projets_collectifs si présent).",
+        "Ne jamais inventer : outils (ex. FastAPI, Ansible, GitLab-CI), durées (ex. '2 ans Java'), chiffres (ex. '25+ applications') non présents ou non dérivables de ce fichier.",
+        "Si l'offre demande un mot-clé absent du BASE_JSON : proposer un patch avec preuve OU formuler de façon générique sans affirmer une maîtrise non documentée."
+      ],
+      "champs_prioritaires": ["experiences", "competences_detaillees", "narratifs_candidature", "mots_cles_ats", "arguments_reutilisables", "preuves_business_contextualisees"]
+    },
+    "detection_secteur": {
+      "description": "L'agent Matching DOIT détecter le secteur avant toute génération de document.",
+      "logique": "Si l'offre contient ≥2 mots-clés IT → secteur = it_support. Sinon → secteur = growth_seo_data_dev.",
+      "mots_cles_it": [
+        "support",
+        "N2",
+        "N1",
+        "GLPI",
+        "Active Directory",
+        "helpdesk",
+        "parc informatique",
+        "technicien",
+        "infrastructure",
+        "ERP",
+        "ITSM",
+        "ticketing",
+        "multisite"
+      ],
+      "mots_cles_growth": [
+        "growth",
+        "SEO",
+        "data",
+        "développeur",
+        "automatisation",
+        "scraping",
+        "backend",
+        "fullstack",
+        "acquisition",
+        "python",
+        "django",
+        "n8n",
+        "analytics",
+        "automation",
+        "performance"
+      ]
+    },
+    "regles_periode_apsi": {
+      "secteur_it": "Afficher '2000–2022' — L'expérience longue est un atout explicite dans ce secteur.",
+      "secteur_growth_dev": "Afficher '2015–2022' — Réduire pour neutraliser le biais d'âge, mettre SquidResearch/Parazar en avant."
+    },
+    "regles_priorite_experiences": {
+      "secteur_it": [
+        "A.P.S.I.",
+        "SquidResearch (mention)",
+        "Parazar (mention)",
+        "Freelance (non pertinent)"
+      ],
+      "secteur_growth_dev": [
+        "SquidResearch",
+        "Parazar",
+        "Avtis",
+        "LPPP Generator",
+        "A.P.S.I. (mention réduite)"
+      ]
+    },
+    "format_output_json_obligatoire": {
+      "description": "L'agent DOIT toujours retourner un JSON valide, sans markdown autour.",
+      "schema": {
+        "offre": {
+          "titre": "",
+          "entreprise": "",
+          "probleme_detecte": ""
+        },
+        "matching": {
+          "score": 0,
+          "secteur_detecte": "",
+          "arguments_actives": [],
+          "mots_cles_ats": []
+        },
+        "documents": {
+          "cv_texte": "",
+          "lm_texte": "",
+          "email_j0": "",
+          "email_j4": "",
+          "email_j10": ""
+        },
+        "next_action": "POSTULER | PASSER | À surveiller",
+        "date_relance_j4": "",
+        "date_relance_j10": ""
+      }
+    }
+  },
+  "personas_specialises": {
+    "it_support_pme": {
+      "mots_cles_detection": [
+        "support",
+        "N2",
+        "N1",
+        "GLPI",
+        "parc informatique",
+        "technicien",
+        "PME",
+        "multisite",
+        "helpdesk",
+        "ticketing"
+      ],
+      "narratif_ref": "it_support_pme",
+      "arguments_prioritaires": [
+        "it_pme"
+      ],
+      "mots_cles_ats_ref": "it_support",
+      "periode_apsi": "2000–2022",
+      "titre_cv": "Technicien Support Confirmé – Référent IT PME & Multisite"
+    },
+    "it_support_vip": {
+      "mots_cles_detection": [
+        "VIP",
+        "direction",
+        "comex",
+        "présidence",
+        "conseil",
+        "confidentialité",
+        "environnement sensible"
+      ],
+      "narratif_ref": "it_support_pme",
+      "arguments_prioritaires": [
+        "it_pme"
+      ],
+      "mots_cles_ats_ref": "it_support",
+      "periode_apsi": "2000–2022",
+      "titre_cv": "Technicien Support Confirmé – Environnements Direction & Multisite"
+    },
+    "it_ops_hybride": {
+      "mots_cles_detection": [
+        "support N2",
+        "Docker",
+        "VPS",
+        "API",
+        "automatisation",
+        "scripts",
+        "industrialisation",
+        "infrastructure"
+      ],
+      "narratif_ref": "it_ops_hybride",
+      "arguments_prioritaires": [
+        "it_pme",
+        "backend_engineer"
+      ],
+      "mots_cles_ats_ref": "it_support",
+      "periode_apsi": "2015–2022",
+      "titre_cv": "IT Ops & Support N2 – Automatisation et modernisation"
+    },
+    "backend_django": {
+      "mots_cles_detection": [
+        "django",
+        "backend",
+        "API",
+        "REST",
+        "PostgreSQL",
+        "Redis",
+        "Celery",
+        "SaaS",
+        "performance"
+      ],
+      "narratif_ref": "accroche_backend",
+      "arguments_prioritaires": [
+        "backend_engineer"
+      ],
+      "mots_cles_ats_ref": "growth_dev",
+      "periode_apsi": "2015–2022",
+      "titre_cv": "Développeur Backend Django – Architecture SaaS scalable"
+    },
+    "automation_engineer": {
+      "mots_cles_detection": [
+        "automation",
+        "n8n",
+        "workflow",
+        "scraping",
+        "pipeline",
+        "data",
+        "batch",
+        "OSINT"
+      ],
+      "narratif_ref": "accroche_growth",
+      "arguments_prioritaires": [
+        "growth_systems",
+        "backend_engineer"
+      ],
+      "mots_cles_ats_ref": "growth_dev",
+      "periode_apsi": "2015–2022",
+      "titre_cv": "Automation & Data Engineer – Pipelines et performance"
+    },
+    "growth_ops": {
+      "mots_cles_detection": [
+        "growth",
+        "acquisition",
+        "leads",
+        "délivrabilité",
+        "email",
+        "reporting",
+        "automatisation"
+      ],
+      "narratif_ref": "accroche_growth",
+      "arguments_prioritaires": [
+        "growth_systems"
+      ],
+      "mots_cles_ats_ref": "growth_dev",
+      "periode_apsi": "2015–2022",
+      "titre_cv": "Growth Ops & Automation Lead"
+    },
+    "seo_technique": {
+      "mots_cles_detection": [
+        "SEO",
+        "technique",
+        "GA4",
+        "GTM",
+        "Core Web Vitals",
+        "audit",
+        "Screaming Frog"
+      ],
+      "narratif_ref": "accroche_growth",
+      "arguments_prioritaires": [
+        "growth_systems"
+      ],
+      "mots_cles_ats_ref": "growth_dev",
+      "periode_apsi": "2015–2022",
+      "titre_cv": "SEO Technique & Data – Performance et tracking"
+    },
+    "design_brand": {
+      "mots_cles_detection": [
+        "design",
+        "UI",
+        "UX",
+        "identité",
+        "brand",
+        "Figma",
+        "design system",
+        "créatif"
+      ],
+      "narratif_ref": "accroche_growth",
+      "arguments_prioritaires": [],
+      "mots_cles_ats_ref": "growth_dev",
+      "periode_apsi": "2015–2022",
+      "titre_cv": "Brand & UI/UX Designer – Identité et expérience produit"
+    }
+  },
+  "persona_engine": {
+    "poids_par_type": {
+      "competence_technique": 3,
+      "outil_specifique": 2,
+      "responsabilite": 3,
+      "soft_skill": 1
+    },
+    "clusters": [
+      "it_support_pme",
+      "it_support_vip",
+      "it_ops_hybride",
+      "backend_django",
+      "automation_engineer",
+      "growth_ops",
+      "seo_technique",
+      "design_brand"
+    ],
+    "seuil_hybride_pct": 15,
+    "fallback": "it_support_pme"
+  }
+}

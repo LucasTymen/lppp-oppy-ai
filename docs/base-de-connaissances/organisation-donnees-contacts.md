@@ -65,6 +65,7 @@ Un fichier **`docs/contacts/REGISTRE-CONTACTS.md`** liste les contacts ayant un 
 
 ## Références
 
+- **Organisation projets et nouveaux dossiers** (un projet = un dossier à part ; où stocker les éléments pour les nouveaux projets) : `organisation-projets-et-nouveaux-dossiers.md`
 - **Template rapport complet** (fiche + stratégie + SEO, uniforme par entreprise) : `docs/base-de-connaissances/template-rapport-complet-prospect.md`
 - **Rapport SEO prospect** : `docs/base-de-connaissances/rapport-seo-prospect.md`
 - **Structure content_json** : `docs/base-de-connaissances/structure-content-json-relance-evenement.md`

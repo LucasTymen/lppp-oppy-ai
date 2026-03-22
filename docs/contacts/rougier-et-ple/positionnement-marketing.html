@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Positionnement marketing — Rougier & Ple</title>
+  <link rel="stylesheet" href="rougier-et-ple_style_tokens.css">
+  <style>
+    :root {
+      --bg: #080810;
+      --surface: #0e0e1a;
+      --surface2: #13131f;
+      --card: #0e0e1a;
+      --border: rgba(255,255,255,0.07);
+      --text: #f0f0fa;
+      --muted: #6b6b8a;
+      --accent: #ff3b3b;
+      --warn: #ff9900;
+      --ok: #00e676;
+      --blue: #4fc3f7;
+      --purple: #b388ff;
+      --line: rgba(255,255,255,0.15);
+      --green: #00e676;
+      --orange: #ff9900;
+      --red: #ff3b3b;
+      --mono: 'Space Mono', monospace;
+      --display: 'Bebas Neue', sans-serif;
+      --body: 'DM Sans', sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; color: var(--text); font-family: var(--body), system-ui, Arial, sans-serif; font-size: 1.2rem; line-height: 1.5; background: var(--bg); }
+    h1 { font-family: var(--display), system-ui; font-size: clamp(1.8rem, 4vw, 2.2rem); margin-bottom: 8px; letter-spacing: 0.02em; }
+    h2 { font-size: 1.35rem; margin: 1.5em 0 0.5em 0; color: var(--text); font-family: var(--display), system-ui; }
+    .subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 24px; font-family: var(--mono); }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 20px; max-width: 900px; margin-left: auto; margin-right: auto; }
+    .muted { color: var(--muted); font-size: 1.05rem; }
+    .muted a { color: var(--blue); text-decoration: none; }
+    .muted a:hover { color: var(--accent); }
+    .card strong { color: var(--accent); }
+    .nav { position: sticky; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.45rem 1rem; background: rgba(8,8,16,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { max-height: 36px; width: auto; }
+    .nav-logo.nav-logo--svg { height: 32px; width: auto; display: block; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
+    .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--muted); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-cta { padding: 0.5rem 1rem; background: var(--accent); color: #fff; font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; font-family: var(--mono); }
+    header { max-width: 900px; margin: 0 auto; padding: 0 20px 24px; }
+    body { padding-top: 0; }
+    .card ul { margin: 0.5em 0 0 1.25em; }
+    .card li { margin-bottom: 0.4em; }
+    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1.05rem; }
+    th, td { border: 1px solid var(--border); padding: 0.5rem 0.75rem; text-align: left; color: var(--text); }
+    th { background: rgba(255,255,255,0.04); font-weight: 600; color: var(--text); font-family: var(--mono); }
+    .formula-block { background: rgba(255,255,255,0.04); border-left: 4px solid var(--accent); padding: 1rem 1.25rem; margin: 1rem 0; font-family: var(--mono), "Consolas", monospace; font-size: 0.95rem; color: var(--text); }
+    .formula-block .label { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.3em; font-family: var(--body), system-ui; }
+    .flow-diagram { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.75rem; margin: 1rem 0; }
+    .flow-node { padding: 0.6rem 1rem; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 10px; font-weight: 600; font-size: 0.95rem; color: var(--text); }
+    .flow-node.google { border-left: 4px solid var(--blue); }
+    .flow-node.meta { border-left: 4px solid var(--orange); }
+    .flow-arrow { font-size: 1.2rem; color: var(--muted); }
+    .dashboard { max-width: 980px; margin: 0 auto; }
+    .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin: 1.5rem 0; }
+    @media (min-width: 720px) { .dashboard-grid { grid-template-columns: 1fr 1fr; } }
+    .dashboard-section { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+    .dashboard-section h3 { font-size: 1.1rem; margin: 0 0 12px 0; color: var(--text); font-family: var(--display); }
+    .funnel-svg { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto 1rem; }
+    .chart-svg { width: 100%; max-width: 100%; height: auto; display: block; margin: 0.5rem 0; }
+    .competitive-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+    .competitive-chip { padding: 6px 12px; background: rgba(79,195,247,0.12); border: 1px solid rgba(79,195,247,0.3); border-radius: 8px; font-size: 0.9rem; color: var(--text); }
+    .competitive-chip span { font-size: 0.75rem; color: var(--muted); display: block; margin-top: 2px; }
+    .chart-legend { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 10px 0 0 0; padding: 0; list-style: none; font-size: 0.9rem; }
+    .chart-legend li { display: flex; align-items: center; gap: 6px; }
+    .chart-legend .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+    .kpis-inline { display: flex; gap: 16px; margin-top: 10px; font-size: 0.85rem; }
+    .kpis-inline span { padding: 4px 10px; border-radius: 6px; }
+    .kpi-traffic { background: rgba(79,195,247,0.2); color: #4fc3f7; }
+    .kpi-leads { background: rgba(255,153,0,0.2); color: #ff9900; }
+    .kpi-ventes { background: rgba(0,230,118,0.2); color: #00e676; }
+    @media (prefers-reduced-motion: reduce) { .bar-fill, .ring-progress { transition: none; } }
+  </style>
+</head>
+<body>
+  <div class="site-bg-fixed">
+    <div class="site-bg-video">
+      <iframe src="https://www.youtube-nocookie.com/embed/IG9WGfuTOIQ?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=IG9WGfuTOIQ&amp;controls=0&amp;rel=0&amp;showinfo=0" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Fond" aria-hidden="true"></iframe>
+    </div>
+    <div class="site-bg-overlay"></div>
+  </div>
+  <div class="site-content">
+  <nav class="nav">
+    <a href="/p/rougier-et-ple/" class="nav-brand" aria-label="Rougier & Ple" style="font-family:var(--display),system-ui;font-size:1.1rem;font-weight:600;color:var(--text);text-decoration:none;">Rougier & Ple</a>
+    <div class="nav-links">
+      <a href="/p/rougier-et-ple/">Accueil</a>
+      <a href="/p/rougier-et-ple/rapport/">Rapport</a>
+      <a href="infographie-rougier-et-ple-7-formats.html">Infographie</a>
+      <a href="positionnement-marketing.html" class="active">Positionnement marketing</a>
+      <a href="/p/rougier-et-ple/#coordonnees" class="nav-cta">Me contacter</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Positionnement marketing — Rougier & Ple</h1>
+    <p class="subtitle">Étude complète : situation B2B, funnel AAARR, piliers stratégiques, PESTEL, SWOT, concurrents, formules et ordres de grandeur. Sources : centre de transparence Google, Meta Ad Library, étude contexte.</p>
+  </header>
+
+  <div class="site-content-inner">
+  <section class="card">
+    <h2>Situation — Un géant au carrefour de l’info et du business</h2>
+    <p>Infopro Digital n’est pas une agence de com : c’est un <strong>géant technologique et médiatique B2B</strong> qui transforme la donnée technique en décisions business pour les professionnels. Groupe média (L’Usine Nouvelle, Le Moniteur, L’Argus), logiciels, bases de données, plateformes de leads (ExpoPermanent), salons professionnels. Le modèle combine médias et lead generation : l’info attire, les marketplaces convertissent.</p>
+    <p><strong>Cible</strong> : décideurs, ingénieurs, acheteurs industriels, assureurs. <strong>Promesse</strong> : « Nous vous aidons à prendre les meilleures décisions professionnelles. » Contrairement au B2C volume, le SEO Infopro vise des milliers de requêtes long-tail à forte intention plutôt que quelques mots-clés à gros volume.</p>
+  </section>
+
+  <section class="card">
+    <h2>Funnel AAARR (Pirate Metrics) — B2B</h2>
+    <p>Pour analyser le funnel d’Infopro Digital, il faut changer de logiciel par rapport au e-commerce classique. Ici, le contenu sert d’appât pour générer des leads qualifiés.</p>
+    <p class="muted" style="margin-bottom:12px;"><a href="funnel-aaarrr-rougier-et-ple.html" target="_blank" rel="noopener">Ouvrir le tunnel AAARRR en pleine page</a></p>
+    <div class="funnel-embed" style="background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:20px;">
+      <iframe src="funnel-aaarrr-rougier-et-ple.html" title="Tunnel AAARRR — Rougier & Plé" style="width:100%; height:680px; border:none; display:block;"></iframe>
+    </div>
+    <table>
+      <tr><th>Étape</th><th>Objectif</th><th>Leviers Rougier & Ple</th></tr>
+      <tr><td>Acquisition</td><td>Attirer l'audience</td><td>À adapter (SEO, contenu, SEA, réseaux)</td></tr>
+      <tr><td>Activation</td><td>Première expérience positive</td><td>Contenu, UX, micro-conversions (newsletter, téléchargement)</td></tr>
+      <tr><td>Adoption</td><td>Faire revenir</td><td>Alertes pro, compte utilisateur, webinars</td></tr>
+      <tr><td>Revenu</td><td>Monétiser</td><td>Abonnements, Lead Gen (ExpoPermanent), pub & sponsoring</td></tr>
+      <tr><td>Referral</td><td>Recommander</td><td>Partage LinkedIn, salons, viralité (baromètres, rapports)</td></tr>
+    </table>
+    <ul>
+      <li><strong>Acquisition</strong> : Content Factory SEO, autorité des marques, newsletters, SEA & Social Ads (LinkedIn ciblé).</li>
+      <li><strong>Activation</strong> : Consommation de contenu, UX/Performance, micro-conversions (newsletter, téléchargement).</li>
+      <li><strong>Adoption</strong> : Alertes pro, compte utilisateur, webinars récurrents.</li>
+      <li><strong>Revenu</strong> : Abonnements SaaS/Médias, Lead Gen (ExpoPermanent), publicité & sponsoring.</li>
+      <li><strong>Referral</strong> : Partage LinkedIn, salons, viralité du contenu (baromètres, rapports).</li>
+    </ul>
+    <p class="muted">À adapter : où se situe la valeur (Acquisition / Activation / Revenu) pour Rougier & Ple : alimenter le haut du funnel et garantir que le contenu généré maintient la qualité pour l’étape suivante (conversion / lead).</p>
+  </section>
+
+  <section class="card">
+    <h2>Growth Dashboard — visuels</h2>
+    <div class="dashboard dashboard-grid">
+    <!-- 1. Frise sinusoïdale 4 courbes -->
+    <div class="dashboard-section chart sinusoidal-timeline" style="margin-bottom:24px;">
+      <h3>Évolution concurrentielle et impact GEO/SEO</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">4 courbes distinctes : pression concurrentielle, SEO classique, montée GEO, projection d’impact. Annotations sur les points clés.</p>
+      <svg class="chart-svg" viewBox="0 0 420 160" aria-label="Frise sinusoïdale — 4 courbes">
+        <line x1="30" y1="80" x2="400" y2="80" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <path d="M 30 80 Q 120 40, 200 80 T 370 80 T 400 60" fill="none" stroke="#b388ff" stroke-width="2" stroke-dasharray="3 3"/>
+        <path d="M 30 80 Q 120 120, 200 80 T 370 80 T 400 105" fill="none" stroke="#ff9900" stroke-width="2" stroke-dasharray="4 4"/>
+        <path d="M 30 80 Q 130 35, 220 80 T 380 80 T 400 45" fill="none" stroke="#4fc3f7" stroke-width="2"/>
+        <path d="M 30 80 Q 140 125, 240 80 T 390 80 T 400 30" fill="none" stroke="#00e676" stroke-width="2.5"/>
+        <line x1="120" y1="40" x2="130" y2="25" stroke="#6b6b8a" stroke-width="0.5"/>
+        <text x="140" y="18" fill="#6b6b8a" font-size="7">Pression ↑</text>
+        <line x1="260" y1="45" x2="270" y2="30" stroke="#6b6b8a" stroke-width="0.5"/>
+        <text x="280" y="22" fill="#6b6b8a" font-size="7">GEO émergent</text>
+        <line x1="380" y1="60" x2="390" y2="50" stroke="#6b6b8a" stroke-width="0.5"/>
+        <text x="395" y="45" fill="#6b6b8a" font-size="7">Convergence</text>
+        <text x="350" y="145" fill="#6b6b8a" font-size="8">→ temps</text>
+      </svg>
+      <ul class="chart-legend legend">
+        <li><span class="legend-dot color" style="background:#b388ff;"></span> Pression concurrentielle</li>
+        <li><span class="legend-dot color" style="background:#ff9900;"></span> SEO classique</li>
+        <li><span class="legend-dot color" style="background:#4fc3f7;"></span> GEO (moteurs IA)</li>
+        <li><span class="legend-dot color" style="background:#00e676;"></span> Projection d’impact</li>
+      </ul>
+    </div>
+
+    <!-- 2. Frise chronologique segmentée (T1–T4) -->
+    <div class="dashboard-section chart chronological-timeline" style="margin-bottom:24px;">
+      <h3>Faits marquants — trimestres</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">Période segmentée par trimestre. Lancements produits, piliers stratégiques, enjeux GEO.</p>
+      <svg class="chart-svg" viewBox="0 0 420 130" aria-label="Frise chronologique faits marquants">
+        <line x1="20" y1="65" x2="400" y2="65" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+        <line x1="120" y1="65" x2="120" y2="105" stroke="rgba(255,255,255,0.12)"/>
+        <line x1="220" y1="65" x2="220" y2="105" stroke="rgba(255,255,255,0.12)"/>
+        <line x1="320" y1="65" x2="320" y2="105" stroke="rgba(255,255,255,0.12)"/>
+        <text x="70" y="118" text-anchor="middle" fill="#6b6b8a" font-size="9" font-weight="600">T1</text>
+        <text x="170" y="118" text-anchor="middle" fill="#6b6b8a" font-size="9" font-weight="600">T2</text>
+        <text x="270" y="118" text-anchor="middle" fill="#6b6b8a" font-size="9" font-weight="600">T3</text>
+        <text x="360" y="118" text-anchor="middle" fill="#6b6b8a" font-size="9" font-weight="600">T4</text>
+        <circle cx="50" cy="65" r="12" fill="#ff3b3b" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="50" y="42" text-anchor="middle" fill="#f0f0fa" font-size="8" font-weight="600">Content Factory</text>
+        <circle cx="150" cy="65" r="12" fill="#ff9900" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="150" y="42" text-anchor="middle" fill="#f0f0fa" font-size="8" font-weight="600">Long-tail</text>
+        <circle cx="250" cy="65" r="12" fill="#4fc3f7" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="250" y="42" text-anchor="middle" fill="#f0f0fa" font-size="8" font-weight="600">GEO / IA</text>
+        <circle cx="350" cy="65" r="12" fill="#00e676" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <text x="350" y="42" text-anchor="middle" fill="#f0f0fa" font-size="8" font-weight="600">ExpoPermanent</text>
+      </svg>
+    </div>
+
+    <!-- 3. Diagramme concurrentiel — carte perceptuelle 2D -->
+    <div class="dashboard-section chart competitive-analysis" style="margin-bottom:24px;">
+      <h3>Positionnement concurrentiel — carte perceptuelle</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">Axe X : intensité événements/salons. Axe Y : profondeur data/logiciels & services d’info. Chaque acteur = position estimée. 4 quadrants.</p>
+      <svg class="chart-svg" viewBox="0 0 420 280" aria-label="Carte perceptuelle — positionnement des acteurs B2B">
+        <line x1="60" y1="220" x2="380" y2="220" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <line x1="60" y1="220" x2="60" y2="40" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+        <!-- Quadrants -->
+        <rect x="220" y="40" width="160" height="180" fill="rgba(255,59,59,0.04)" stroke="none"/>
+        <rect x="60" y="40" width="160" height="180" fill="rgba(79,195,247,0.04)" stroke="none"/>
+        <line x1="220" y1="40" x2="220" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <line x1="60" y1="130" x2="380" y2="130" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+        <!-- Labels axes -->
+        <text x="220" y="255" text-anchor="middle" fill="#6b6b8a" font-size="9">Faible</text>
+        <text x="340" y="255" text-anchor="middle" fill="#6b6b8a" font-size="9">Événements / salons →</text>
+        <text x="38" y="130" text-anchor="middle" fill="#6b6b8a" font-size="9" transform="rotate(-90,38,130)">← Data / logiciels</text>
+        <text x="38" y="55" text-anchor="middle" fill="#6b6b8a" font-size="8" transform="rotate(-90,38,55)">Fort</text>
+        <!-- Points acteurs (x,y = position estimée démo) -->
+        <circle cx="318" cy="78" r="12" fill="rgba(255,59,59,0.3)" stroke="#ff3b3b" stroke-width="2"/>
+        <text x="318" y="58" text-anchor="middle" fill="#ff3b3b" font-size="9" font-weight="600">Rougier & Ple</text>
+        <circle cx="286" cy="118" r="8" fill="rgba(255,255,255,0.6)" stroke="#4fc3f7" stroke-width="1"/>
+        <text x="286" y="100" text-anchor="middle" fill="#6b6b8a" font-size="8">DirectIndustry</text>
+        <circle cx="142" cy="98" r="7" fill="rgba(255,255,255,0.5)" stroke="#b388ff" stroke-width="1"/>
+        <text x="142" y="82" text-anchor="middle" fill="#6b6b8a" font-size="8">Kompass</text>
+        <circle cx="168" cy="86" r="7" fill="rgba(255,255,255,0.5)" stroke="#b388ff" stroke-width="1"/>
+        <text x="168" y="70" text-anchor="middle" fill="#6b6b8a" font-size="8">Wolters K.</text>
+        <circle cx="216" cy="108" r="7" fill="rgba(255,255,255,0.5)" stroke="#4fc3f7" stroke-width="1"/>
+        <text x="216" y="92" text-anchor="middle" fill="#6b6b8a" font-size="8">LinkedIn</text>
+        <circle cx="302" cy="128" r="7" fill="rgba(255,255,255,0.5)" stroke="#ff9900" stroke-width="1"/>
+        <text x="302" y="112" text-anchor="middle" fill="#6b6b8a" font-size="8">Les Échos</text>
+        <circle cx="158" cy="138" r="6" fill="rgba(255,255,255,0.4)" stroke="#6b6b8a" stroke-width="1"/>
+        <text x="158" y="124" text-anchor="middle" fill="#6b6b8a" font-size="8">Europages</text>
+        <circle cx="126" cy="108" r="6" fill="rgba(255,255,255,0.4)" stroke="#6b6b8a" stroke-width="1"/>
+        <text x="126" y="94" text-anchor="middle" fill="#6b6b8a" font-size="8">GlobalSpec</text>
+        <circle cx="206" cy="168" r="6" fill="rgba(255,255,255,0.4)" stroke="#6b6b8a" stroke-width="1"/>
+        <text x="206" y="154" text-anchor="middle" fill="#6b6b8a" font-size="8">BFM Business</text>
+      </svg>
+      <p class="muted" style="font-size:0.85rem;margin-top:8px;">Rougier & Ple : position à recalibrer selon votre marché et concurrents.</p>
+    </div>
+
+    <!-- 4. Cartographie canaux d'acquisition -->
+    <div class="dashboard-section chart acquisition-channels" style="margin-bottom:24px;">
+      <h3>Canaux d'acquisition</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">Trafic, leads qualifiés et ventes par canal. Code couleur : bleu = trafic, orange = leads, vert = ventes. Priorité : Organique, Paiement, Email, Réseaux.</p>
+      <svg class="chart-svg" viewBox="0 0 420 160" aria-label="Canaux d'acquisition">
+        <rect x="30" y="80" width="70" height="50" rx="6" fill="rgba(79,195,247,0.25)" stroke="#4fc3f7"/>
+        <rect x="30" y="120" width="50" height="30" rx="4" fill="rgba(255,153,0,0.2)" stroke="#ff9900"/>
+        <rect x="30" y="140" width="35" height="15" rx="3" fill="rgba(0,230,118,0.25)" stroke="#00e676"/>
+        <text x="65" y="70" text-anchor="middle" fill="#f0f0fa" font-size="10">Organique</text>
+        <rect x="120" y="80" width="70" height="45" rx="6" fill="rgba(79,195,247,0.25)" stroke="#4fc3f7"/>
+        <rect x="120" y="118" width="55" height="28" rx="4" fill="rgba(255,153,0,0.2)" stroke="#ff9900"/>
+        <rect x="120" y="138" width="30" height="14" rx="3" fill="rgba(0,230,118,0.25)" stroke="#00e676"/>
+        <text x="155" y="70" text-anchor="middle" fill="#f0f0fa" font-size="10">Paiement</text>
+        <rect x="210" y="80" width="65" height="48" rx="6" fill="rgba(79,195,247,0.25)" stroke="#4fc3f7"/>
+        <rect x="210" y="120" width="52" height="30" rx="4" fill="rgba(255,153,0,0.2)" stroke="#ff9900"/>
+        <rect x="210" y="142" width="38" height="16" rx="3" fill="rgba(0,230,118,0.25)" stroke="#00e676"/>
+        <text x="242" y="70" text-anchor="middle" fill="#f0f0fa" font-size="10">Email</text>
+        <rect x="300" y="80" width="70" height="42" rx="6" fill="rgba(79,195,247,0.25)" stroke="#4fc3f7"/>
+        <rect x="300" y="115" width="58" height="26" rx="4" fill="rgba(255,153,0,0.2)" stroke="#ff9900"/>
+        <rect x="300" y="133" width="32" height="14" rx="3" fill="rgba(0,230,118,0.25)" stroke="#00e676"/>
+        <text x="335" y="70" text-anchor="middle" fill="#f0f0fa" font-size="10">Réseaux</text>
+        <rect x="390" y="80" width="22" height="35" rx="6" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7"/>
+        <rect x="390" y="108" width="18" height="18" rx="4" fill="rgba(255,153,0,0.15)" stroke="#ff9900"/>
+        <text x="401" y="70" text-anchor="middle" fill="#f0f0fa" font-size="9">Partenaires</text>
+      </svg>
+      <div class="kpis-inline kpis">
+        <span class="kpi-traffic">Trafic</span>
+        <span class="kpi-leads">Leads</span>
+        <span class="kpi-ventes">Ventes</span>
+      </div>
+    </div>
+
+    <!-- 5. Matrice priorisation projets (Impact × Facilité) -->
+    <div class="dashboard-section chart project-prioritization-matrix" style="margin-bottom:24px;">
+      <h3>Priorisation des initiatives (Impact × Facilité)</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">4 quadrants : quick wins, projets stratégiques, optimisations incrémentales, points de vigilance.</p>
+      <svg class="chart-svg" viewBox="0 0 380 220" aria-label="Matrice impact vs facilité">
+        <rect x="20" y="20" width="165" height="90" rx="8" fill="rgba(0,230,118,0.12)" stroke="rgba(0,230,118,0.5)"/>
+        <rect x="195" y="20" width="165" height="90" rx="8" fill="rgba(255,59,59,0.12)" stroke="rgba(255,59,59,0.5)"/>
+        <rect x="20" y="120" width="165" height="90" rx="8" fill="rgba(107,107,138,0.15)" stroke="rgba(107,107,138,0.4)"/>
+        <rect x="195" y="120" width="165" height="90" rx="8" fill="rgba(255,153,0,0.12)" stroke="rgba(255,153,0,0.5)"/>
+        <text x="102" y="55" text-anchor="middle" fill="#00e676" font-size="11" font-weight="600">Quick wins</text>
+        <text x="102" y="72" text-anchor="middle" fill="#6b6b8a" font-size="9">Alt images, meta desc.</text>
+        <text x="277" y="55" text-anchor="middle" fill="#ff3b3b" font-size="11" font-weight="600">Projets stratégiques</text>
+        <text x="277" y="72" text-anchor="middle" fill="#6b6b8a" font-size="9">GEO, Content Factory</text>
+        <text x="102" y="165" text-anchor="middle" fill="#6b6b8a" font-size="11" font-weight="600">Incrémental</text>
+        <text x="102" y="182" text-anchor="middle" fill="#6b6b8a" font-size="9">Headers, pagination</text>
+        <text x="277" y="165" text-anchor="middle" fill="#ff9900" font-size="11" font-weight="600">Vigilance</text>
+        <text x="277" y="182" text-anchor="middle" fill="#6b6b8a" font-size="9">4xx, hreflang</text>
+        <text x="190" y="12" text-anchor="middle" fill="#6b6b8a" font-size="9">Impact élevé</text>
+        <text x="190" y="235" text-anchor="middle" fill="#6b6b8a" font-size="9">Impact faible</text>
+        <text x="8" y="115" text-anchor="middle" fill="#6b6b8a" font-size="9" transform="rotate(-90,30,115)">Facilité haute</text>
+        <text x="8" y="205" text-anchor="middle" fill="#6b6b8a" font-size="9" transform="rotate(-90,30,205)">Facilité basse</text>
+      </svg>
+      <ul class="chart-legend legend">
+        <li><span class="legend-dot color quickwin" style="background:#00e676;"></span> Quick wins</li>
+        <li><span class="legend-dot color strategic" style="background:#ff3b3b;"></span> Projets stratégiques</li>
+        <li><span class="legend-dot color incremental" style="background:#6b6b8a;"></span> Optimisations incrémentales</li>
+        <li><span class="legend-dot color watchout" style="background:#ff9900;"></span> Points de vigilance</li>
+      </ul>
+    </div>
+
+    <!-- 6. Parcours utilisateur / funnel conversion -->
+    <div class="dashboard-section chart user-journey" style="margin-bottom:24px;">
+      <h3>Parcours utilisateurs et funnel de conversion</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">Discovery → Activation → Lead → Abonnement. Taux de conversion entre étapes. Friction principale : Activation → Lead.</p>
+      <svg class="chart-svg" viewBox="0 0 420 110" aria-label="Parcours utilisateur et conversion">
+        <rect x="15" y="30" width="70" height="45" rx="8" fill="rgba(79,195,247,0.2)" stroke="#4fc3f7"/>
+        <text x="50" y="58" text-anchor="middle" fill="#f0f0fa" font-size="10">Discovery</text>
+        <text x="50" y="88" text-anchor="middle" fill="#00e676" font-size="9">100%</text>
+        <path d="M 85 52 L 105 52" stroke="#6b6b8a" stroke-width="1"/>
+        <rect x="110" y="30" width="70" height="45" rx="8" fill="rgba(255,153,0,0.2)" stroke="#ff9900"/>
+        <text x="145" y="58" text-anchor="middle" fill="#f0f0fa" font-size="10">Activation</text>
+        <text x="145" y="88" text-anchor="middle" fill="#ff9900" font-size="9">60%</text>
+        <path d="M 180 52 L 200 52" stroke="#6b6b8a"/>
+        <rect x="205" y="30" width="70" height="45" rx="8" fill="rgba(179,136,255,0.2)" stroke="#b388ff"/>
+        <text x="240" y="58" text-anchor="middle" fill="#f0f0fa" font-size="10">Lead</text>
+        <text x="240" y="88" text-anchor="middle" fill="#b388ff" font-size="9">25%</text>
+        <path d="M 275 52 L 295 52" stroke="#6b6b8a"/>
+        <rect x="300" y="30" width="70" height="45" rx="8" fill="rgba(0,230,118,0.2)" stroke="#00e676"/>
+        <text x="335" y="58" text-anchor="middle" fill="#f0f0fa" font-size="10">Abonnement</text>
+        <text x="335" y="88" text-anchor="middle" fill="#00e676" font-size="9">20%</text>
+        <path d="M 370 52 L 390 52" stroke="#6b6b8a"/>
+        <rect x="395" y="30" width="20" height="45" rx="6" fill="rgba(255,59,59,0.15)" stroke="#ff3b3b"/>
+        <text x="405" y="58" text-anchor="middle" fill="#f0f0fa" font-size="8">€</text>
+        <line x1="205" y1="52" x2="205" y2="95" stroke="#ff9900" stroke-width="0.5" stroke-dasharray="2 2"/>
+        <text x="205" y="105" text-anchor="middle" fill="#ff9900" font-size="7">Friction</text>
+      </svg>
+    </div>
+
+    <!-- 7. Chips concurrents (8 acteurs) -->
+    <div class="dashboard-section chart competitive-chips">
+      <h3>Analyse concurrentielle</h3>
+      <p class="muted" style="font-size:0.95rem;margin-bottom:8px;">Rougier & Ple vs écosystème — à adapter (concurrents, positionnement).</p>
+      <div class="competitive-grid">
+        <div class="competitive-chip">DirectIndustry <span>Marketplace B2B</span></div>
+        <div class="competitive-chip">Kompass <span>Annuaire, data</span></div>
+        <div class="competitive-chip">Wolters Kluwer <span>Info pro</span></div>
+        <div class="competitive-chip">LinkedIn <span>Lead Gen</span></div>
+        <div class="competitive-chip">Groupe Les Échos <span>Média</span></div>
+        <div class="competitive-chip">Europages <span>SEO multilingue</span></div>
+        <div class="competitive-chip">GlobalSpec <span>Ingénierie</span></div>
+        <div class="competitive-chip">BFM Business <span>News / veille</span></div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Formules et ordres de grandeur</h2>
+    <p>Pour situer les enjeux, voici les formules utilisées.</p>
+    <div class="formula-block">
+      <div class="label">Chiffre d’affaires mensuel</div>
+      <code>CA = Visites × CVR × AOV</code>
+    </div>
+    <div class="formula-block">
+      <div class="label">Perte de ventes (si perte de conversion p)</div>
+      <code>LostOrders = Visites × CVR × p  →  LostRevenue = LostOrders × AOV</code>
+    </div>
+    <p><strong>Exemple</strong> : 30 k visites, 1,5 % CVR, panier 1 200 €, perte 18 % : LostRevenue ≈ ~28 k€/mois.</p>
+    <p class="muted">Ordre de grandeur. Recalibrer avec vos données (trafic, CVR, panier).</p>
+  </section>
+
+  <section class="card">
+    <h2>Piliers stratégiques</h2>
+    <p><strong>Inbound de masse</strong> : autorité des marques et automatisation pour couvrir des micro-niches (pompes hydrauliques, logiciels paie BTP…). Le contenu automatisé doit garder un niveau de qualité suffisant pour maintenir l’autorité.</p>
+    <p><strong>Long-tail</strong> : priorité aux requêtes ultra-qualifiées. Défi : piloter la performance de milliers de pages (Search Console, Semrush).</p>
+    <p><strong>SEO vs GEO</strong> : les bases de données constituent un atout pour les moteurs IA (Perplexity, Gemini). Transformer les données en réponses citables.</p>
+  </section>
+
+  <section class="card">
+    <h2>Google vs Meta — rôles</h2>
+    <div class="flow-diagram">
+      <span class="flow-node google">Google Ads<br><small style="font-weight:400;font-size:0.8rem">Capture de demande</small></span>
+      <span class="flow-arrow">↔</span>
+      <span class="flow-node meta">Meta (FB/IG)<br><small style="font-weight:400;font-size:0.8rem">Génération de demande</small></span>
+    </div>
+    <p>Google : requêtes, intention, mots-clés. Meta : offres, créas, test & learn. En B2B, le Search garde souvent une place centrale ; le paid social complète pour la notoriété et la génération de leads.</p>
+  </section>
+
+  <section class="card">
+    <h2>PESTEL — Contexte macro</h2>
+    <p><strong>Politique</strong> : Souveraineté numérique, DSA. <strong>Économique</strong> : Passage vers SaaS et Lead Gen (résilient). <strong>Technologique</strong> : IA & Content Factory, GEO (Perplexity, SGE). <strong>Légal</strong> : RGPD, Loi AI Act impactant l’automatisation. <strong>Environnemental</strong> : Sobriété numérique, reporting extra-financier.</p>
+  </section>
+
+  <section class="card">
+    <h2>Concurrents principaux</h2>
+    <p>À adapter : concurrents principaux de Rougier & Ple et ce qui vous distingue.</p>
+  </section>
+
+  <section class="card">
+    <h2>Objectifs SMART (exemples)</h2>
+    <ul>
+      <li><strong>Content Factory</strong> : +25 % de volume de contenus, échéance fin S1.</li>
+      <li><strong>Qualité SEO</strong> : 95 % conformité sur audits (H1, maillage, alt), bilan 3 mois.</li>
+      <li><strong>GEO</strong> : Présence sur 10 mots-clés stratégiques via moteurs IA, 12 mois.</li>
+      <li><strong>Conversion</strong> : +10 % CTR vers formulaires marketplaces, 6 mois.</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Sources et compléments</h2>
+    <p>Sources : <a href="https://adstransparency.google.com" target="_blank" rel="noopener">centre de transparence Google</a>, Meta Ad Library. À adapter selon votre secteur.</p>
+    <p class="muted">Rapport : <a href="/p/rougier-et-ple/rapport/">/p/rougier-et-ple/rapport/</a>. Infographie : <a href="infographie-rougier-et-ple-7-formats.html">infographie-rougier-et-ple-7-formats.html</a>.</p>
+  </section>
+  </div>
+  </div>
+</body>
+</html>

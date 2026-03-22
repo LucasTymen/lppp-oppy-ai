@@ -362,6 +362,25 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ---
 
+### Matrice RACI — Projets fiches de préparation entretien
+
+Pour tout projet de **fiches de préparation aux entretiens d’embauche** (création, mise à jour, veille contenu), répartition des responsabilités :
+
+| Tâche | Assistant Entretien Emploi | Chef de Projet | Rédacteur (agent RH) | Pentester / Growth | DevOps | Architecte | Conseiller |
+|-------|----------------------------|----------------|----------------------|--------------------|--------|------------|------------|
+| **Créer / mettre à jour la fiche HTML** (structure, contenu, accordéons) | **R** | A | C | I | I | C | I |
+| **Rappels et formalités** (info-box, dispo, prétentions, contrat) | C | **R** | C | I | I | I | I |
+| **Questions techniques** (programmation, CSS, cybersécurité, maintenance N2, IoT, Ruby/Rails, DevOps) | C | A | I | **R** (veille sécu / tech) | **C** (veille CI/CD, Docker, Git) | I | I |
+| **Questions relationnelles / RH** (à poser en entretien, conventions, poste) | C | A | **R** | I | I | I | I |
+| **Structure et rubriques** (sections, types de poste, cohérence base) | **R** | A | C | I | I | **C** | I |
+| **Rôle conseiller** (infos manquantes → demander à l’utilisateur ; stratégie si indisponible) | **R** | A | I | I | I | I | I |
+| **Checklist « nouvelle société »** (éviter résidus ancienne cible) | **R** | A | I | I | I | I | I |
+| **Ressources utilisateur** (documents, textes fournis pour alimenter la fiche) | C | I | I | I | I | I | **R** (enregistrement) |
+
+**Référence** : `fiches-entretien-emploi-modele-et-veille.md` (modèle canonique, types de poste § 6, veille par onglet). Le Chef de Projet pilote et valide que les fiches restent alignées avec la stratégie candidature ; l’Assistant Entretien Emploi réalise les fiches et s’appuie sur Rédacteur, Pentester et DevOps pour le contenu technique et relationnel.
+
+---
+
 ## 🔄 Workflow de coordination
 
 ### Phase 0 : Accord stratégie (Conseiller)
@@ -502,4 +521,4 @@ Ce document définit les **rôles d'agents**, leurs **compétences**, et la **ma
 
 ---
 
-*Document maintenu par le Chef de Projet. Dernière mise à jour : 2025-01-30. Annulation agent 5b Growth Analyst (standalone) — reste sous-assistant du Growth uniquement ; colonne RACI et section 5b supprimées.*
+*Document maintenu par le Chef de Projet. Dernière mise à jour : 2026-02-20. RACI fiches de préparation entretien ajouté ; annulation agent 5b Growth Analyst (standalone) — reste sous-assistant du Growth uniquement.*
