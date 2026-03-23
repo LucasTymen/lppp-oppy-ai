@@ -11,11 +11,13 @@
 
         var params = {
             gap: 1.3224,
-            speed: 0.0134,
-            waveHeight: 3.1213,
-            frequencyX: 0.33066,
-            frequencyZ: 0.6336,
-            chaosScale: 4.4,
+            speed: 0.034,
+            waveHeight: 6.4,
+            frequencyX: 0.42,
+            frequencyZ: 0.78,
+            chaosScale: 9.2,
+            randomWobble: 2.85,
+            randomSpeed: 1.65,
             dotSize: 0.45441,
             dotOpacity: 0.769,
             lineLength: 9.804,
@@ -157,7 +159,9 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            time += params.speed;
+            var t = time;
+            var tFast = t * params.randomSpeed;
+            time += params.speed * (0.88 + 0.24 * Math.sin(performance.now() * 0.0004));
 
             var pPos = particlesGeometry.attributes.position.array;
             var lPos = linesGeometry.attributes.position.array;
@@ -167,9 +171,13 @@
                 for (var z = 0; z < ROWS; z++) {
                     var px = pPos[i * 3];
                     var pz = pPos[i * 3 + 2];
-                    var py = Math.sin(px * params.frequencyX + time) * params.waveHeight +
-                             Math.cos(pz * params.frequencyZ + time * 0.5) * params.waveHeight +
-                             Math.sin((px + pz) * 0.1 + time) * params.chaosScale;
+                    var phase = (x * 17 + z * 31 + i * 13) * 0.019;
+                    var py = Math.sin(px * params.frequencyX + t) * params.waveHeight +
+                             Math.cos(pz * params.frequencyZ + t * 0.62) * params.waveHeight +
+                             Math.sin((px + pz) * 0.12 + t * 1.15) * params.chaosScale +
+                             Math.sin(px * 0.37 + tFast + phase) * params.randomWobble +
+                             Math.cos(pz * 0.29 + tFast * 1.08 + phase * 1.7) * params.randomWobble * 0.85 +
+                             Math.sin((px * pz) * 0.018 + t * 2.4 + i * 0.07) * params.chaosScale * 0.35;
 
                     pPos[i * 3 + 1] = py;
 

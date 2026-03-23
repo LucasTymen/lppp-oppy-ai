@@ -555,6 +555,18 @@ Pour chaque erreur documentée, indiquer :
 
 ---
 
+### Git — « error: option `trailer' requires a value » au commit
+
+| Champ | Contenu |
+|-------|---------|
+| **Date** | 2026-03-23 |
+| **Contexte** | `git commit -m "..."` (WSL, terminal Cursor, ou autre) — tout message. |
+| **Erreur** | `error: option 'trailer' requires a value` |
+| **Cause** | Une couche (Cursor, extension, alias, ou config) injecte `--trailer` à `git commit` sans valeur. Le flag `--trailer` exige `--trailer "Token: valeur"`. |
+| **Solution** | **Contournement** : commit depuis un terminal externe (Git Bash, PowerShell, WSL hors Cursor) : `git add . && git commit -m "message"`. Ou désactiver temporairement l’extension/paramètre qui injecte des trailers. |
+| **Prévention** | Vérifier les extensions Git (VS Code / Cursor) et la config `format.commitMessage` ou équivalent qui pourrait ajouter `--trailer`. |
+| **Lien(s)** | `strategie-deploiement-git-vercel.md` |
+
 ### Vercel — Root Directory deploy/static-infopro-vercel does not exist
 
 | Champ | Contenu |

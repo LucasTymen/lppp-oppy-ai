@@ -950,23 +950,33 @@ h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
   min-height: 100% !important;
   display: block !important;
 }
-/* CodePen iframe — plein écran, fond fixe */
+/* CodePen iframe — plein écran, fond fixe ; barre / console CodePen masquée (clip bas) */
+.hero-bg-codepen {
+  clip-path: inset(0 0 18% 0) !important;
+  -webkit-clip-path: inset(0 0 18% 0) !important;
+}
 .hero-bg-codepen .hero-codepen-iframe {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: 100% !important;
+  height: 118% !important;
   min-width: 100vw !important;
-  min-height: 100vh !important;
+  min-height: 118vh !important;
   border: 0 !important;
   pointer-events: none !important;
+  z-index: 0 !important;
 }
 /* Contenu au-dessus du fond fixe */
 body:has(.hero-bg-waves-pins) main,
-body:has(.hero-bg-waves-pins) .alert-banner {
+body:has(.hero-bg-waves-pins) .alert-banner,
+body:has(.hero-bg-codepen) main,
+body:has(.hero-bg-codepen) .alert-banner {
   position: relative !important;
   z-index: 1 !important;
+}
+body:has(.hero-bg-codepen) .nav {
+  z-index: 1000 !important;
 }
 
 /* Sections — fond sombre avec bordure cyan */

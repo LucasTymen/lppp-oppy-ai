@@ -46,6 +46,8 @@
  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
  "rapport_url": "/p/lppp-oppy-ai/rapport/",
  "infographies_oppy": [
+  { "label": "Cartographie — Placement concurrentiel 2D", "file": "competitive_mapping_2d.html", "desc": "Positionnement concurrentiel (axes stratégiques) — même fichier que dashboard 04 / kit." },
+  { "label": "Cadres — Porter & PESTEL", "file": "09_porter_pestel_cadres.html", "desc": "Synthèse cinq forces et macro-environnement — complément SWOT / spider." },
   { "label": "01 — Link Juice Flow", "file": "01_link_juice_flow.html", "desc": "Visualisation de la fragmentation SEO et du scénario de consolidation." },
   { "label": "02 — Revenue Gap Calculator", "file": "02_revenue_gap_calculator.html", "desc": "Simulateur interactif des gains de conversion et de chiffre d'affaires." },
   { "label": "03 — Chiffres Clés", "file": "03_chiffres_cles.html", "desc": "KPI cards avec compteurs animés au scroll et barres de progression." },
@@ -64,8 +66,8 @@
   { "value": "95–100", "unit": "%", "label": "Cible délivrabilité / joignabilité (référence étude)" }
  ],
  "alert_banner": "LPPP OPPORTUNITY (OPPY.AI) — STRATÉGIE GAM + SEO TECHNIQUE & SÉMANTIQUE (TRAME)",
- "infographie_url": "http://localhost:8010/p/lppp-oppy-ai/assets/infographies-oppy-ai.html",
- "positionnement_marketing_url": "http://localhost:8010/p/lppp-oppy-ai/assets/positionnement-marketing.html",
+ "infographie_url": "/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html",
+ "positionnement_marketing_url": "/p/lppp-oppy-ai/assets/positionnement-marketing.html",
  "seo_resume": {
   "title": "Synthèse stratégique (SWOT, funnel, North Star)",
   "strategic_kpi_lead": "North Star suggérée pour le poste : CAC vs LTV, ou volume de SQL générés de façon automatisée — à valider en entretien avec la direction.",

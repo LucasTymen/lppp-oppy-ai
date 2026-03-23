@@ -2,5 +2,9 @@
   "version": 2,
   "framework": null,
   "buildCommand": "echo Static",
-  "outputDirectory": "deploy/static-oppy-ai-vercel"
+  "outputDirectory": "deploy/static-oppy-ai-vercel",
+  "rewrites": [
+    { "source": "/rapport", "destination": "/rapport.html" },
+    { "source": "/rapport/", "destination": "/rapport.html" }
+  ]
 }

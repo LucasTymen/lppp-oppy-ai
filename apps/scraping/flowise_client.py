@@ -5,6 +5,7 @@ Voir docs/base-de-connaissances/flowise-push-documents-informatique.md
 """
 import os
 from pathlib import Path
+from typing import Any, Dict
 
 
 def get_flowise_config():
@@ -13,6 +14,22 @@ def get_flowise_config():
     store_id = os.environ.get("FLOWISE_DOCUMENT_STORE_ID", "")
     api_key = os.environ.get("FLOWISE_API_KEY", "")
     return url, store_id, api_key
+
+
+def get_flowise_chat_api_config():
+    """
+    Configuration API chat Flowise (prediction chatflow).
+    - FLOWISE_URL : base URL (ex: http://localhost:3010, http://127.0.0.1:43001).
+    - FLOWISE_CHATFLOW_ID : ID du chatflow RAG.
+    - FLOWISE_API_KEY : optionnel.
+    """
+    base_url = (os.environ.get("FLOWISE_URL", "http://flowise:3000") or "").strip().rstrip("/")
+    raw_chatflow_id = (os.environ.get("FLOWISE_CHATFLOW_ID") or "").strip()
+    if not raw_chatflow_id:
+        raw_chatflow_id = DEFAULT_CHATFLOW_ID
+    chatflow_id = (raw_chatflow_id or "").split("?")[0].strip()
+    api_key = (os.environ.get("FLOWISE_API_KEY", "") or "").strip()
+    return base_url, chatflow_id, api_key
 
 
 # Chatflow Concierge IA Maisons-Alfort (ID Flowise Embed). Overridable par FLOWISE_CHATFLOW_ID.
@@ -88,3 +105,43 @@ def push_file_to_flowise(file_path: Path, base_url: str, store_id: str, api_key:
                 "error": str(e),
                 "status_code": getattr(getattr(e, "response", None), "status_code", None),
             }
+
+
+def ask_flowise_chatflow(question: str, base_url: str, chatflow_id: str, api_key: str = "", timeout: int = 45) -> Dict[str, Any]:
+    """
+    Appel standard Flowise prediction:
+    POST {FLOWISE_BASE}/api/v1/prediction/{CHATFLOW_ID}
+    body: {"question": "..."}
+    """
+    try:
+        import requests
+    except ImportError:
+        return {"error": "requests non installé (pip install requests)"}
+
+    if not base_url:
+        return {"error": "FLOWISE_URL manquant"}
+    if not chatflow_id:
+        return {"error": "FLOWISE_CHATFLOW_ID manquant"}
+    if not question or not question.strip():
+        return {"error": "question vide"}
+
+    endpoint = f"{base_url.rstrip('/')}/api/v1/prediction/{chatflow_id}"
+    headers = {"Content-Type": "application/json"}
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+
+    payload = {"question": question.strip()}
+    try:
+        response = requests.post(endpoint, json=payload, headers=headers, timeout=timeout)
+        response.raise_for_status()
+    except requests.RequestException as exc:
+        return {
+            "error": str(exc),
+            "status_code": getattr(getattr(exc, "response", None), "status_code", None),
+            "endpoint": endpoint,
+        }
+
+    try:
+        return {"ok": True, "data": response.json(), "endpoint": endpoint}
+    except ValueError:
+        return {"ok": True, "data": {"text": response.text}, "endpoint": endpoint}

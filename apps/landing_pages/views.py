@@ -218,13 +218,13 @@ def landing_public(request, slug):
         content["promovacances_assets_url"] = request.build_absolute_uri("/p/promovacances/assets/")
         content["infographie_url"] = request.build_absolute_uri("/p/promovacances/assets/infographie-promovacances-7-formats.html")
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/promovacances/assets/positionnement-marketing.html")
-        if "audit_dashboard_url" not in content:
+        if _content_absent_or_blank(content, "audit_dashboard_url"):
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/promovacances/audit-dashboard/")
     elif lp.slug == "infopro":
         content["promovacances_assets_url"] = ""
         content["infographie_url"] = request.build_absolute_uri("/p/infopro/assets/infographie-infopro-7-formats.html")
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/infopro/assets/positionnement-marketing.html")
-        if "audit_dashboard_url" not in content:
+        if _content_absent_or_blank(content, "audit_dashboard_url"):
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/infopro/audit-dashboard/")
     elif lp.slug == "lppp-oppy-ai":
         content["promovacances_assets_url"] = ""
@@ -235,7 +235,7 @@ def landing_public(request, slug):
         if content.get("infographies_oppy"):
             for info in content["infographies_oppy"]:
                 info["url"] = assets_base + info.get("file", "")
-        if "audit_dashboard_url" not in content:
+        if _content_absent_or_blank(content, "audit_dashboard_url"):
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
         # Waves Pins pour Oppy-AI — script local (paramètres waves-pins-source.md, pas de console) si hero_codepen_url vide
         content["hero_waves_pins"] = content.get("hero_waves_pins", True)
@@ -244,7 +244,7 @@ def landing_public(request, slug):
         content["promovacances_assets_url"] = ""
         content["infographie_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/infographie-rougier-et-ple-7-formats.html")
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/positionnement-marketing.html")
-        if "audit_dashboard_url" not in content:
+        if _content_absent_or_blank(content, "audit_dashboard_url"):
             audit_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
             if audit_json_path.is_file():
                 content["audit_dashboard_url"] = request.build_absolute_uri("/p/rougier-et-ple/audit-dashboard/")
@@ -586,24 +586,39 @@ def _contact_dir(slug):
     return base / "docs" / "contacts" / slug
 
 
+def _content_absent_or_blank(content: dict, key: str) -> bool:
+    """True si la clé est absente, None, ou chaîne vide / blanche."""
+    val = content.get(key)
+    if val is None:
+        return True
+    if isinstance(val, str) and not val.strip():
+        return True
+    return False
+
+
 def _rapport_html(slug):
     """
     Lit le rapport Markdown du dossier contact, retourne HTML ou None.
-    Priorité : rapport-teaser*.md, puis rapport-complet*.md, puis tout rapport-*.md.
+    Priorité : rapport-teaser*.md, puis rapport-complet*.md, puis rapport-*.md,
+    puis tout autre fichier rapport*.md (ex. « rapport seo complet.md » sans tiret).
     """
     contact = _contact_dir(slug)
     if not contact.is_dir():
         return None
-    teasers = list(contact.glob("rapport-teaser*.md"))
-    rapports = list(contact.glob("rapport-complet*.md"))
-    autres = list(contact.glob("rapport-*.md"))
+    teasers = sorted(contact.glob("rapport-teaser*.md"))
+    complets = sorted(contact.glob("rapport-complet*.md"))
+    hyphen = sorted(contact.glob("rapport-*.md"))
     path = None
     if teasers:
         path = teasers[0]
-    elif rapports:
-        path = rapports[0]
-    elif autres:
-        path = sorted(autres)[0]
+    elif complets:
+        path = complets[0]
+    elif hyphen:
+        path = hyphen[0]
+    else:
+        # Fichiers type « rapport … .md » (espace après rapport) : non couverts par rapport-*.md
+        others = sorted(contact.glob("rapport*.md"))
+        path = others[0] if others else None
     if not path:
         return None
     try:
@@ -687,12 +702,30 @@ def landing_rapport(request, slug):
     report_html = _rapport_html(slug)
     ctx["report_html"] = report_html
     ctx["report_available"] = bool(report_html)
+    content = ctx["content"]
     if slug == "casapy":
         url = request.build_absolute_uri("/p/casapy/audit-dashboard/")
-        ctx["audit_dashboard_url"] = ctx["content"]["audit_dashboard_url"] = url
+        ctx["audit_dashboard_url"] = content["audit_dashboard_url"] = url
     elif slug == "promovacances":
         url = request.build_absolute_uri("/p/promovacances/audit-dashboard/")
-        ctx["audit_dashboard_url"] = ctx["content"]["audit_dashboard_url"] = url
+        ctx["audit_dashboard_url"] = content["audit_dashboard_url"] = url
+    elif slug == "infopro":
+        url = request.build_absolute_uri("/p/infopro/audit-dashboard/")
+        ctx["audit_dashboard_url"] = content["audit_dashboard_url"] = url
+        content["infographie_url"] = request.build_absolute_uri("/p/infopro/assets/infographie-infopro-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/infopro/assets/positionnement-marketing.html")
+    elif slug == "lppp-oppy-ai":
+        url = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
+        ctx["audit_dashboard_url"] = content["audit_dashboard_url"] = url
+        content["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/positionnement-marketing.html")
+    elif slug == "rougier-et-ple":
+        audit_json_path = Path(settings.BASE_DIR) / "docs" / "contacts" / slug / "audit-dashboard.json"
+        if audit_json_path.is_file():
+            url = request.build_absolute_uri("/p/rougier-et-ple/audit-dashboard/")
+            ctx["audit_dashboard_url"] = content["audit_dashboard_url"] = url
+        content["infographie_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/infographie-rougier-et-ple-7-formats.html")
+        content["positionnement_marketing_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/positionnement-marketing.html")
     response = render(request, "landing_pages/rapport.html", ctx)
     response["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
     response["Pragma"] = "no-cache"

@@ -13,6 +13,11 @@ Contexte : landing_page, content, current_page ('accueil'|'rapport'|'prospects'|
         <a href="{% url 'landing_rapport' landing_page.slug %}">Consulter le rapport</a>
         {% if landing_page.slug == 'casapy' %}<a href="{% url 'casapy_audit_dashboard' %}">Dashboard audit</a>{% endif %}
         {% if landing_page.slug == 'promovacances' and content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard audit</a>{% endif %}
+        {% if landing_page.slug == 'infopro' and content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard audit</a>{% endif %}
+        {% if landing_page.slug == 'lppp-oppy-ai' and content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard stratégique</a>{% endif %}
+        {% if landing_page.slug == 'rougier-et-ple' and content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard audit</a>{% endif %}
+        {% if content.infographie_url %}<a href="{{ content.infographie_url }}" target="_blank" rel="noopener noreferrer">Infographie</a>{% endif %}
+        {% if content.positionnement_marketing_url %}<a href="{{ content.positionnement_marketing_url }}" target="_blank" rel="noopener noreferrer">Positionnement</a>{% endif %}
         <a href="{% url 'landing_proposition_value' landing_page.slug %}">Proposition de valeur</a>
         {% if content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="{% url 'landing_public' landing_page.slug %}#coordonnees" class="nav-cta">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
     </div>

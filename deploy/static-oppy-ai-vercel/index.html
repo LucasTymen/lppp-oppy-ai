@@ -86,23 +86,33 @@ h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
   min-height: 100% !important;
   display: block !important;
 }
-/* CodePen iframe — plein écran, fond fixe */
+/* CodePen iframe — plein écran, fond fixe ; barre / console CodePen masquée (clip bas) */
+.hero-bg-codepen {
+  clip-path: inset(0 0 18% 0) !important;
+  -webkit-clip-path: inset(0 0 18% 0) !important;
+}
 .hero-bg-codepen .hero-codepen-iframe {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: 100% !important;
+  height: 118% !important;
   min-width: 100vw !important;
-  min-height: 100vh !important;
+  min-height: 118vh !important;
   border: 0 !important;
   pointer-events: none !important;
+  z-index: 0 !important;
 }
 /* Contenu au-dessus du fond fixe */
 body:has(.hero-bg-waves-pins) main,
-body:has(.hero-bg-waves-pins) .alert-banner {
+body:has(.hero-bg-waves-pins) .alert-banner,
+body:has(.hero-bg-codepen) main,
+body:has(.hero-bg-codepen) .alert-banner {
   position: relative !important;
   z-index: 1 !important;
+}
+body:has(.hero-bg-codepen) .nav {
+  z-index: 1000 !important;
 }
 
 /* Sections — fond sombre avec bordure cyan */
@@ -121,6 +131,62 @@ body:has(.hero-bg-waves-pins) .alert-banner {
   color: var(--lp-text-on-dark) !important;
 }
 .cta-wrap { background: var(--lp-block-bg) !important; color: var(--lp-text-on-dark) !important; }
+
+/* Infographies intercalées (iframes / SVG) — bordure cyan, lisible sur fond sombre */
+.oppy-infog-block {
+  margin: 1.5rem auto;
+  max-width: min(100%, 960px);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--lp-border);
+  background: var(--oppy-surface);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+.oppy-infog-block figcaption,
+.oppy-infog-caption {
+  padding: 0.65rem 1rem 1rem;
+  font-size: 0.88rem;
+  color: var(--lp-muted) !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--lp-border);
+  background: rgba(0, 0, 0, 0.2);
+}
+.oppy-infog-embed {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  height: clamp(320px, 52vw, 520px);
+}
+.oppy-infog-embed--compact { min-height: 280px; height: clamp(280px, 45vw, 440px); }
+.oppy-infog-embed--tall { min-height: 380px; height: clamp(380px, 58vw, 600px); }
+.oppy-infog-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--oppy-surface);
+}
+.oppy-infog-svg-wrap {
+  padding: 1rem;
+  text-align: center;
+  background: var(--oppy-surface);
+}
+.oppy-infog-svg-wrap img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+.oppy-infog-seo-row {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 0;
+}
+@media (min-width: 768px) {
+  .oppy-infog-seo-row { grid-template-columns: 1fr 1fr; align-items: start; }
+}
 
         
         :root {
@@ -159,11 +225,11 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             background: var(--lp-primary, #00C9D4);
             color: #0d0d0d;
             font-weight: 700;
-            padding: 0.55rem 0.8rem;
+            padding: 0.5rem 0.8rem;
             border-radius: 0 0 10px 10px;
             text-decoration: none;
         }
-        .skip-link:focus { left: 0.75rem; }
+        .skip-link:focus { left: 0.7rem; }
 
         /* ===== Nav sticky top — mobile-first, responsive harmonieux, effet waouh ===== */
         .nav {
@@ -280,25 +346,26 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             position: fixed;
             inset: 0;
             z-index: 999;
-            background: rgba(0, 0, 0, 0.45);
+            background: rgba(0, 0, 0, 0.42);
         }
         @media (max-width: 1024px) {
             .nav-waffle { display: flex; }
             .nav-links {
                 display: none;
                 position: fixed;
-                top: 38px;
+                top: var(--nav-mobile-top, 44px);
                 left: 0;
                 right: 0;
                 bottom: auto;
-                height: 0;
+                height: calc(100dvh - var(--nav-mobile-top, 44px));
+                max-height: calc(100vh - var(--nav-mobile-top, 44px));
                 width: 100%;
                 z-index: 10001;
                 flex-direction: column;
                 align-items: stretch;
                 justify-content: flex-start;
                 gap: 0;
-                padding: 0 1rem;
+                padding: 1rem;
                 background: rgba(255, 255, 255, 0.98);
                 background: color-mix(in srgb, var(--lp-bg, #ffffff) 98%, transparent);
                 backdrop-filter: blur(14px);
@@ -310,21 +377,17 @@ body:has(.hero-bg-waves-pins) .alert-banner {
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
-                transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s, height 0.25s var(--lp-ease), padding 0.25s var(--lp-ease);
-                overflow: hidden;
+                transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s;
+                overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
             .nav.nav--open .nav-links {
                 display: flex;
-                height: calc(100dvh - 44px);
-                max-height: calc(100vh - 44px);
-                padding: 1rem;
                 transform: translate3d(0, 0, 0);
                 -webkit-transform: translate3d(0, 0, 0);
                 opacity: 1;
                 visibility: visible;
                 pointer-events: auto;
-                overflow-y: auto;
             }
             .nav.nav--open + .nav-backdrop { display: block; }
             .nav-links a {
@@ -854,6 +917,27 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             font-size: 1.05rem;
         }
 
+        /* LPPP Oppy — section 02 : roadmap (même contenu que solution_workflow, bloc mis en avant) */
+        .oppy-roadmap-card {
+            max-width: min(100%, 980px);
+            margin: 0 auto;
+            padding: clamp(1.15rem, 3vw, 1.65rem) clamp(1.15rem, 3.5vw, 1.85rem);
+            background: linear-gradient(155deg, rgba(21, 21, 21, 0.96) 0%, rgba(12, 22, 30, 0.94) 100%);
+            border: 1px solid color-mix(in srgb, var(--lp-primary, #00C9D4) 50%, transparent);
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+        }
+        .oppy-roadmap-card__text {
+            margin: 0;
+            font-size: clamp(0.95rem, 2.1vw, 1.06rem);
+            line-height: 1.68;
+            color: var(--lp-text-on-dark, #f5f5f5);
+            font-weight: 400;
+        }
+        @media (max-width: 480px) {
+            .oppy-roadmap-card { padding: 1rem 1rem; }
+        }
+
         .cta-wrap {
             padding: var(--lp-section-padding) 1.5rem;
             text-align: center;
@@ -1001,6 +1085,7 @@ body:has(.hero-bg-waves-pins) .alert-banner {
 </head>
 <body class="">
     <a href="#main-content" class="skip-link">Aller au contenu</a>
+    <span id="top" aria-hidden="true"></span>
     
     <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide" id="hero-waves-pins-container" aria-hidden="true" style="inset:0;display:block;"></div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
@@ -1009,25 +1094,28 @@ body:has(.hero-bg-waves-pins) .alert-banner {
     <!-- Nav sticky (ancres style page perso) -->
     <nav class="nav">
         
-        <a href="#main-content"><img src="https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png" alt="OPPORTUNITY (Oppy.ai)" class="nav-logo" loading="lazy"></a>
+        <a href="#top"><img src="https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png" alt="OPPORTUNITY (Oppy.ai)" class="nav-logo" loading="lazy"></a>
         
         <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
             <span class="nav-waffle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
         <div class="nav-links" id="nav-menu">
+            
             <a href="#chiffres-cles">Chiffres clés</a>
             <a href="#enjeux">Enjeux</a>
             <a href="#infographies-audit">Dashboard</a>
-            <a href="#seo-technique-semantique">SEO technique &amp; sémantique</a>
+            <a href="#seo-technique-semantique">SEO technique</a>
             <a href="#services">Services</a>
             <a href="#squidresearch-complementarite">SquidResearch</a>
-            <a href="rapport.html">Consulter le rapport</a>
+            <a href="rapport.html">Rapport</a>
             <a href="positionnement-marketing.html">Positionnement</a>
-            <a href="#coordonnees">Me contacter</a>
+            <a href="#coordonnees">Contact</a>
+            
         </div>
     </nav>
     <button type="button" class="nav-backdrop" aria-label="Fermer le menu"></button>
     
+
     <main id="main-content" style="padding-top: 44px;">
         
         <!-- Hero : image, vidéo (MP4/WebM/YouTube), ou Waves Pins (position fixed en haut de body) -->
@@ -1052,6 +1140,17 @@ body:has(.hero-bg-waves-pins) .alert-banner {
 
         <p class="icebreaker">Chiffres publics cités dans l&#x27;étude de référence : ~25 M€ de CA, ~40 collaborateurs, certification Ecovadis Gold, clients grands comptes (banque, assurance, télécom). Fondée en 2005 (Anthony Dinis), rachat MS Innovations / allmysms (2021, Omnes Capital). Direction : accélération transformation SaaS (Philippe Almouzni). Siège : Paris 8e.</p>
         <p class="icebreaker">OPPORTUNITY combine une expertise historique (20+ ans) et une technologie d&#x27;IA conversationnelle forte, avec un positionnement Customer Interaction Management (CIM) : orchestrer SMS, RCS, vidéo, voicebot au bon moment du parcours. Le pivot vers un modèle SaaS « industriel » appelle une acquisition qui ne repose plus uniquement sur le réseau dirigeants : structurer le stack marketing, tracer 100 % des leads, enrichir et scorer avant Sales, et viser une délivrabilité / joignabilité de référence (objectif 95–100 %).</p>
+
+        
+        <div class="oppy-infog-standalone" style="max-width:min(100%,1000px);margin:0 auto 2rem;padding:0 clamp(1rem,4vw,1.5rem);">
+            <figure class="oppy-infog-block" style="margin:0;">
+                <div class="oppy-infog-embed oppy-infog-embed--compact">
+                    <iframe src="radar_chart_positioning.html" title="Radar de positionnement stratégique OPPORTUNITY" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Radar de maturité / leviers (conformité &amp; RSE, multicanal IA, agilité stack) — lecture alignée sur l’étude.</figcaption>
+            </figure>
+        </div>
+        
 
         
         <section class="section key-figures-section" id="chiffres-cles">
@@ -1107,6 +1206,17 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         
 
         
+        <div class="oppy-infog-standalone section" style="max-width:min(100%,1000px);margin:0 auto;padding:0 clamp(1rem,4vw,1.5rem) var(--lp-section-padding,3rem);border-left:none;background:transparent;">
+            <figure class="oppy-infog-block" style="margin:0;">
+                <div class="oppy-infog-embed oppy-infog-embed--tall">
+                    <iframe src="revenue_gap_calculator.html" title="Calculateur écart de revenus / projection" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Projection manque à gagner / levier revenus — complément aux chiffres clés et à l’argumentaire business.</figcaption>
+            </figure>
+        </div>
+        
+
+        
         <section class="section content-player" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
             <div class="content-player-text">
@@ -1118,99 +1228,93 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             
             </div>
             
-            <div class="enjeux-visuals" aria-hidden="true">
-                <div>
-                    <p class="enjeux-visual-label">Reverse waterfall (simulation 1 M€ nouveau CA)</p>
-                    <div class="enjeux-funnel">
-                        <div class="enjeux-funnel-tier"><span class="tier-val">2 000</span> leads ciblés / an</div>
-                        <div class="enjeux-funnel-tier"><span class="tier-val">200</span> SQL (hyp. 10 % qualif.)</div>
-                        <div class="enjeux-funnel-tier"><span class="tier-val">20</span> signatures (ACV ~50 k€)</div>
-                        <div class="enjeux-funnel-tier"><span class="tier-val">J+90</span> scale 15–20 « high interest » / mois</div>
-                    </div>
+            <figure class="oppy-infog-block" style="margin-top:1.25rem;">
+                <div class="oppy-infog-embed oppy-infog-embed--tall">
+                    <iframe src="reverse_waterfall_funnel.html" title="Reverse waterfall funnel — projection funnel commercial" loading="lazy"></iframe>
                 </div>
-                <div>
-                    <p class="enjeux-visual-label">Radar stratégique — levier GAM</p>
-                    <div class="content-player-flowchart">
-                        <span class="flow-step">Conformité &amp; RSE ↑</span><span class="flow-arrow">+</span>
-                        <span class="flow-step">Multicanal IA ↑</span><span class="flow-arrow">→</span>
-                        <span class="flow-step">Agilité stack ↑ (à renforcer)</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="enjeux-visual-label">Roadmap 90 jours (étude)</p>
-                    <div class="key-figures-timeline">
-                        <div class="key-figures-timeline-item"><span class="t-period">J+30</span><p class="t-desc">Audit flux Marketing→CRM, socle n8n, zéro fuite de leads</p></div>
-                        <div class="key-figures-timeline-item"><span class="t-period">J+60</span><p class="t-desc">Enrichissement auto (Python/OSINT), gain temps prospection</p></div>
-                        <div class="key-figures-timeline-item"><span class="t-period">J+90</span><p class="t-desc">Multicanal scalable, pilotage ROI</p></div>
-                    </div>
-                </div>
-                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : funnel, bullet metrics, waterfall, recovery rings (données étude OPPORTUNITY)</p>
-            </div>
+                <figcaption class="oppy-infog-caption">Reverse waterfall : volume cible, qualification SQL, signatures — même logique que l’étude (scénario 1 M€ nouveau CA).</figcaption>
+            </figure>
+            
+            
+            
+            <p class="enjeux-visual-label" style="margin-top:0.5rem;font-size:0.9rem;opacity:0.9;">Dashboard consolidé (section 01b) : funnel, métriques, recovery rings — données étude OPPORTUNITY.</p>
             
         </section>
         
 
         
+        
         <section class="section content-player" id="infographies-audit" aria-labelledby="infographies-audit-heading">
-            <div class="section-head"><span class="section-num">01b</span><h2 id="infographies-audit-heading">Kit infographies &amp; dashboard</h2></div>
+            <div class="section-head"><span class="section-num">01b</span><h2 id="infographies-audit-heading">Dashboard stratégique</h2></div>
             <div class="content-player-text">
-                <p class="section-lead">8 composants standalone : KPI animés, dashboard stratégique, SWOT interactif, benchmark spider, reverse waterfall natif et radar de positionnement — le tout aligné sur l’étude OPPORTUNITY (Oppy.ai).</p>
+                <p class="section-lead">Funnel inversé, scores de maturité acquisition (agilité stack, sourcing, SLA pipeline), timeline et recovery rings — contenu aligné sur l’étude OPPORTUNITY (Oppy.ai), pas un audit PageSpeed.</p>
             </div>
-            <div class="workflow-figure" style="position:relative;padding-bottom:75%;height:0;overflow:hidden;border-radius:12px;background:var(--lp-block-bg,#f5f5f5);">
-                <iframe src="04_dashboard_strategique.html" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;border-radius:12px;" loading="lazy" title="Dashboard stratégique OPPORTUNITY"></iframe>
+            <div class="workflow-figure workflow-figure--oppy-dashboard" style="position:relative;height:min(3200px, 260vh);min-height:88vh;padding-bottom:0;overflow:auto;border-radius:12px;background:var(--lp-block-bg,#f5f5f5);">
+                <iframe src="infographies-oppy-ai.html" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;min-height:min(3200px, 260vh);border:0;border-radius:12px;" loading="lazy" title="Dashboard stratégique OPPORTUNITY"></iframe>
             </div>
             <p style="margin-top:0.75rem;font-size:0.9rem;">
-                <a href="04_dashboard_strategique.html">Ouvrir le dashboard en plein écran</a>
+                <a href="infographies-oppy-ai.html">Ouvrir le dashboard en plein écran</a>
                 
-                &nbsp;·&nbsp; <a href="infographies-oppy-ai.html">Voir le kit complet (8 composants)</a>
+                &nbsp;·&nbsp; <a href="infographie-lppp-oppy-ai-7-formats.html">Infographie de synthèse</a>
                 
             </p>
             
             <div class="infographies-oppy-grid" style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;">
                 
+                <a href="competitive_mapping_2d.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
+                    <strong style="display:block;margin-bottom:0.35rem;">Cartographie — Placement concurrentiel 2D</strong>
+                    <span style="font-size:0.85rem;opacity:0.85;">Positionnement concurrentiel (axes stratégiques) — même fichier que dashboard 04 / kit.</span>
+                </a>
+                
+                <a href="09_porter_pestel_cadres.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
+                    <strong style="display:block;margin-bottom:0.35rem;">Cadres — Porter &amp; PESTEL</strong>
+                    <span style="font-size:0.85rem;opacity:0.85;">Synthèse cinq forces et macro-environnement — complément SWOT / spider.</span>
+                </a>
+                
                 <a href="01_link_juice_flow.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">01 — Link Juice Flow</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">Fragmentation SEO et scénario de consolidation.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">Visualisation de la fragmentation SEO et du scénario de consolidation.</span>
                 </a>
                 
                 <a href="02_revenue_gap_calculator.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">02 — Revenue Gap Calculator</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">Simulateur interactif de l'impact business.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">Simulateur interactif des gains de conversion et de chiffre d&#x27;affaires.</span>
                 </a>
                 
                 <a href="03_chiffres_cles.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">03 — Chiffres Clés</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">KPI animés avec progression visuelle.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">KPI cards avec compteurs animés au scroll et barres de progression.</span>
                 </a>
                 
                 <a href="04_dashboard_strategique.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">04 — Dashboard Stratégique</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">Funnel, North Star, waterfall et recovery rings.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">Maturité acquisition, funnel inversé, North Star et roadmap J+90.</span>
                 </a>
                 
                 <a href="05_swot_interactif.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">05 — SWOT Interactif</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">Quadrants SWOT avec effets hover et scoring.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">4 quadrants SWOT avec hover effects, icônes et scores.</span>
                 </a>
                 
                 <a href="06_spider_benchmark.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">06 — Spider Benchmark</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">Toile 6 acteurs × 7 axes avec filtres.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">Toile d&#x27;araignée 6 acteurs × 7 axes avec filtres interactifs.</span>
                 </a>
-
+                
                 <a href="07_reverse_waterfall_native.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">07 — Reverse Waterfall Native</strong>
                     <span style="font-size:0.85rem;opacity:0.85;">Funnel inversé standalone avec sliders live.</span>
                 </a>
-
+                
                 <a href="08_radar_positionnement.html" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
                     <strong style="display:block;margin-bottom:0.35rem;">08 — Radar Positionnement</strong>
-                    <span style="font-size:0.85rem;opacity:0.85;">Comparatif 3 acteurs + insight Growth Engineer.</span>
+                    <span style="font-size:0.85rem;opacity:0.85;">Radar comparatif 3 acteurs avec carte d&#x27;insight Growth Engineer.</span>
                 </a>
                 
             </div>
             
         </section>
+        
         
 
         
@@ -1218,10 +1322,20 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             <div class="section-head"><span class="section-num">02</span><h2>Harmonisons le chaos et boostons vos perfs.</h2></div>
             
             
-            <div class="card">
-                <p>Roadmap 90 jours (étude) : J+30 — audit des flux Marketing → CRM, fermeture des fuites, colonne vertébrale d&#x27;automatisation (n8n). J+60 — enrichissement automatisé (Python / OSINT) pour les Sales, cible +20 % de temps gagné sur la prospection manuelle. J+90 — montée en charge multicanale, stabiliser 15 à 20 opportunités « high interest » par mois. Logique reverse waterfall : pour ~1 M€ de nouveau CA (hypothèse ACV 50 k€), modèle indicatif 2 000 leads ciblés/an → 200 SQL → 20 signatures (taux à calibrer en entretien).</p>
-                
-            </div>
+            
+            <article class="oppy-roadmap-card" id="roadmap-solution" role="region" aria-label="Roadmap 90 jours, étude OPPORTUNITY">
+                <h3 class="sr-only">Roadmap 90 jours (étude)</h3>
+                <p class="oppy-roadmap-card__text">Roadmap 90 jours (étude) : J+30 — audit des flux Marketing → CRM, fermeture des fuites, colonne vertébrale d&#x27;automatisation (n8n). J+60 — enrichissement automatisé (Python / OSINT) pour les Sales, cible +20 % de temps gagné sur la prospection manuelle. J+90 — montée en charge multicanale, stabiliser 15 à 20 opportunités « high interest » par mois. Logique reverse waterfall : pour ~1 M€ de nouveau CA (hypothèse ACV 50 k€), modèle indicatif 2 000 leads ciblés/an → 200 SQL → 20 signatures (taux à calibrer en entretien).</p>
+            </article>
+            
+            
+            <figure class="oppy-infog-block" style="margin-top:1.5rem;">
+                <div class="oppy-infog-embed oppy-infog-embed--tall">
+                    <iframe src="competitive_mapping_2d.html" title="Cartographie concurrentielle 2D" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Cartographie 2D : lecture stratégique position / différenciation (alignée proposition harmonisation stack &amp; acquisition).</figcaption>
+            </figure>
+            
             
         </section>
         
@@ -1345,6 +1459,19 @@ body:has(.hero-bg-waves-pins) .alert-banner {
                 <ul class="pain-list"><li>Lancer crawl + export (ex. Screaming Frog) et noter volumes d’URLs, erreurs, redirections.</li><li>Brancher / consulter Google Search Console : impressions, clics, requêtes, pages.</li><li>PageSpeed Insights (mobile + desktop) sur home + templates solution + article blog pilier.</li><li>Renseigner le fichier markdown `seo-technique-semantique-oppy-ai.md` (cases à cocher + tableur sémantique).</li></ul>
                 
             </div>
+            
+            <div class="oppy-infog-block" style="margin-top:1.25rem;">
+                <div class="oppy-infog-seo-row">
+                    <div class="oppy-infog-svg-wrap">
+                        <img src="link_juice_flow_diagram.svg" alt="Schéma circulation du link juice et maillage interne" width="640" height="360" loading="lazy" decoding="async">
+                    </div>
+                    <div class="oppy-infog-svg-wrap">
+                        <img src="seo_action_plan_timeline.svg" alt="Timeline plan d’action SEO J+30, J+60, J+90" width="640" height="360" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <p class="oppy-infog-caption">Maillage / autorité et calendrier actions (vue complémentaire au texte technique &amp; sémantique).</p>
+            </div>
+            
         </section>
         
 
@@ -1381,16 +1508,18 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         <section class="section" id="squidresearch-complementarite">
             <div class="section-head"><span class="section-num">06</span><h2>SquidResearch, complémentarité</h2></div>
             <div class="card">
-                <p class="section-lead">Je ne positionne pas SquidResearch comme concurrent d&#x27;OPPORTUNITY : c&#x27;est un projet SaaS distinct, avec des personas et services differents, qui m&#x27;a permis de traiter des problematiques techniques similaires et complementaires.</p>
+                <p class="section-lead">SquidResearch n'est pas un concurrent direct d'OPPORTUNITY : c'est un projet SaaS avec des personas differents qui m'a permis d'aborder des problematiques proches et complementaires.</p>
                 <ul class="pain-list">
-                    <li><strong>Valeur transposable :</strong> qualite de donnees, enrichissement, scoring, orchestration de workflows et automatisations.</li>
-                    <li><strong>Application pour OPPORTUNITY :</strong> cadrage integration API/webhooks, pilotage de POC incrementaux et outillage growth engineering.</li>
-                    <li><strong>Approche commerciale honnete :</strong> faisabilite puis mesure sur KPI client, sans promesse de resultat non verifiee.</li>
+                    <li><strong>Transposable chez Oppy :</strong> qualite data, enrichissement, scoring, orchestration des workflows et automatisations.</li>
+                    <li><strong>Approche d'integration :</strong> cadrage API/webhooks, POC incremental, puis passage a l'echelle sur KPI valides.</li>
+                    <li><strong>Positionnement honnete :</strong> pas de promesse non mesuree, uniquement des capacites techniques verifiables.</li>
                 </ul>
-                <p style="margin-top:1rem;">Si utile, je peux proposer une visite de la plateforme pour montrer concretement les mecaniques produit et les patterns d&#x27;execution :</p>
-                <p><a href="https://squidresearch.com/" target="_blank" rel="noopener noreferrer">Visiter SquidResearch (demo produit) →</a></p>
+                <p style="margin-top:1rem;">Visite rapide de la plateforme pour illustrer concretement la logique produit :</p>
+                <p><a href="https://squidresearch.com/" target="_blank" rel="noopener noreferrer">Visiter SquidResearch →</a></p>
             </div>
         </section>
+        
+
         
         <section class="section" id="why-ge">
             <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
@@ -1471,7 +1600,12 @@ body:has(.hero-bg-waves-pins) .alert-banner {
     (function() {
         var nav = document.querySelector('.nav');
         if (!nav) return;
+        function syncNavMobileTop() {
+            var navH = Math.max(34, Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 44));
+            nav.style.setProperty('--nav-mobile-top', navH + 'px');
+        }
         function updateNav() { nav.classList.toggle('nav--scrolled', window.scrollY > 30); }
+        syncNavMobileTop();
         updateNav();
         window.addEventListener('scroll', function() { requestAnimationFrame(updateNav); }, { passive: true });
         var waffle = nav.querySelector('.nav-waffle');
@@ -1489,6 +1623,7 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         }
         if (waffle) {
             waffle.addEventListener('click', function() {
+                syncNavMobileTop();
                 var open = nav.classList.toggle('nav--open');
                 setMobileMenu(open);
                 waffle.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -1512,12 +1647,16 @@ body:has(.hero-bg-waves-pins) .alert-banner {
                 });
             }
             window.addEventListener('resize', function() {
+                syncNavMobileTop();
                 if (window.innerWidth > 1024) {
                     nav.classList.remove('nav--open');
                     setMobileMenu(false);
                     waffle.setAttribute('aria-expanded', 'false');
                     waffle.setAttribute('aria-label', 'Ouvrir le menu');
                 }
+            });
+            window.addEventListener('orientationchange', function() {
+                setTimeout(syncNavMobileTop, 80);
             });
             document.addEventListener('keydown', function(event) {
                 if (event.key === 'Escape' && nav.classList.contains('nav--open')) {

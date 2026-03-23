@@ -1214,7 +1214,8 @@
         </section>
         {% endif %}
 
-        {% if content.audit_dashboard_url and landing_page.slug == 'promovacances' or content.audit_dashboard_url and landing_page.slug == 'infopro' or content.audit_dashboard_url and landing_page.slug == 'lppp-oppy-ai' %}
+        {% if content.audit_dashboard_url %}
+        {% if landing_page.slug == 'promovacances' or landing_page.slug == 'infopro' or landing_page.slug == 'lppp-oppy-ai' %}
         <section class="section content-player" id="infographies-audit" aria-labelledby="infographies-audit-heading">
             <div class="section-head"><span class="section-num">01b</span><h2 id="infographies-audit-heading">{% if landing_page.slug == 'lppp-oppy-ai' %}Dashboard stratégique{% else %}Infographies audit performance{% endif %}</h2></div>
             <div class="content-player-text">
@@ -1240,6 +1241,7 @@
             </div>
             {% endif %}
         </section>
+        {% endif %}
         {% endif %}
 
         {% if content.solution_workflow or content.positionnement or content.solution_piliers %}

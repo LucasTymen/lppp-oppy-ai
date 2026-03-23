@@ -80,23 +80,33 @@ h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
   min-height: 100% !important;
   display: block !important;
 }
-/* CodePen iframe — plein écran, fond fixe */
+/* CodePen iframe — plein écran, fond fixe ; barre / console CodePen masquée (clip bas) */
+.hero-bg-codepen {
+  clip-path: inset(0 0 18% 0) !important;
+  -webkit-clip-path: inset(0 0 18% 0) !important;
+}
 .hero-bg-codepen .hero-codepen-iframe {
   position: absolute !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
-  height: 100% !important;
+  height: 118% !important;
   min-width: 100vw !important;
-  min-height: 100vh !important;
+  min-height: 118vh !important;
   border: 0 !important;
   pointer-events: none !important;
+  z-index: 0 !important;
 }
 /* Contenu au-dessus du fond fixe */
 body:has(.hero-bg-waves-pins) main,
-body:has(.hero-bg-waves-pins) .alert-banner {
+body:has(.hero-bg-waves-pins) .alert-banner,
+body:has(.hero-bg-codepen) main,
+body:has(.hero-bg-codepen) .alert-banner {
   position: relative !important;
   z-index: 1 !important;
+}
+body:has(.hero-bg-codepen) .nav {
+  z-index: 1000 !important;
 }
 
 /* Sections — fond sombre avec bordure cyan */
@@ -115,30 +125,83 @@ body:has(.hero-bg-waves-pins) .alert-banner {
   color: var(--lp-text-on-dark) !important;
 }
 .cta-wrap { background: var(--lp-block-bg) !important; color: var(--lp-text-on-dark) !important; }
+
+/* Infographies intercalées (iframes / SVG) — bordure cyan, lisible sur fond sombre */
+.oppy-infog-block {
+  margin: 1.5rem auto;
+  max-width: min(100%, 960px);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--lp-border);
+  background: var(--oppy-surface);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+.oppy-infog-block figcaption,
+.oppy-infog-caption {
+  padding: 0.65rem 1rem 1rem;
+  font-size: 0.88rem;
+  color: var(--lp-muted) !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--lp-border);
+  background: rgba(0, 0, 0, 0.2);
+}
+.oppy-infog-embed {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  height: clamp(320px, 52vw, 520px);
+}
+.oppy-infog-embed--compact { min-height: 280px; height: clamp(280px, 45vw, 440px); }
+.oppy-infog-embed--tall { min-height: 380px; height: clamp(380px, 58vw, 600px); }
+.oppy-infog-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--oppy-surface);
+}
+.oppy-infog-svg-wrap {
+  padding: 1rem;
+  text-align: center;
+  background: var(--oppy-surface);
+}
+.oppy-infog-svg-wrap img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+.oppy-infog-seo-row {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 0;
+}
+@media (min-width: 768px) {
+  .oppy-infog-seo-row { grid-template-columns: 1fr 1fr; align-items: start; }
+}
 </style>
     <style>
         :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1rem; }
-        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 2000; background: var(--lp-primary, #00C9D4); color: #0d0d0d; font-weight: 700; padding: 0.5rem 0.8rem; border-radius: 0 0 10px 10px; text-decoration: none; }
-        .skip-link:focus { left: 0.7rem; }
-        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.8rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1.2rem; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.45rem 1rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
         .nav-logo { max-height: 36px; width: auto; }
         .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
-        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
         .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
-        .nav-links a:focus-visible { outline: 2px solid var(--lp-primary, #4a9eff); outline-offset: 2px; border-radius: 8px; }
         .nav-links a.active { color: var(--lp-primary, #4a9eff); font-weight: 600; }
-        .nav-cta { display: inline-block; padding: 0.45rem 0.8rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 0.88rem; border-radius: 8px; text-decoration: none; }
+        .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; }
         .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; padding-top: calc(2rem + 44px); }
         .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
         .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
         .report-body h2 { font-size: 1.35rem; }
         .report-body h3 { font-size: 1.1rem; }
-        .report-body p { margin: 0 0 0.75rem; max-width: 74ch; }
+        .report-body p { margin: 0 0 0.75rem; }
         .report-body ul, .report-body ol { margin: 0 0 0.75rem 1.5rem; }
-        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; display: block; overflow-x: auto; }
+        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1.05rem; }
         .report-body th, .report-body td { border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); padding: 0.5rem 0.75rem; text-align: left; }
         .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
         .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
@@ -151,7 +214,6 @@ body:has(.hero-bg-waves-pins) .alert-banner {
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Aller au contenu</a>
     
     <div class="site-content">
     <nav class="nav">
@@ -161,26 +223,26 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="rapport.html" class="active">Rapport</a>
-            
-            
-            
+            <a href="/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html">Infographie</a>
+            <a href="/p/lppp-oppy-ai/assets/positionnement-marketing.html">Positionnement marketing</a>
+            <a href="infographies-oppy-ai.html" target="_blank" rel="noopener noreferrer">Dashboard audit</a>
             <a href="index.html#coordonnees" class="nav-cta">Me contacter</a>
         </div>
     </nav>
-    <main class="page-wrap" id="main-content">
+    <main class="page-wrap">
         <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à OPPORTUNITY (Oppy.ai)</strong> — diagnostic, opportunités et plan d'action.</p>
         <div class="report-body"><p>rapport seo complet</p>
 <p>rapport </p>
 <p>Voici un rapport d'audit SEO consolidé pour oppy.ai, structuré pour démontrer ton expertise technique et ton approche "ROI-driven" lors de ton entretien.</p>
 <p>Ce rapport combine l'analyse technique (performances, infrastructure) et sémantique (contenu, conversion) avec une projection chiffrée des pertes d'opportunités.</p>
-<p>📑 Rapport d'Audit SEO &amp; Conversion : Oppy.ai<br />
+<p>📑 Rapport d'Audit SEO &amp; Conversion : Oppy.ai
 1. Audit SEO Technique : L'Infrastructure</p>
 <p>Basé sur les relevés du 22/03/2026.</p>
-<p>Point de contrôle   État    Diagnostic<br />
-Poids de la page    🔴 Critique  297 Ko (HTML brut uniquement). C'est très lourd pour du texte, indiquant un code source non minifié ou une surcharge de scripts (WordPress).<br />
-Canonisation    🟠 Risque    Conflit entre www.oppy.ai et les métadonnées og:url. Risque de duplicate content et dilution du "Juice".<br />
-Sécurité (CSP)  🟠 Faible    Politique de sécurité trop large. Vulnérabilité potentielle aux injections (XSS) via les formulaires de capture.<br />
-TLS / SSL   🟢 OK    Certificat valide jusqu'en juin 2026.<br />
+<p>Point de contrôle   État    Diagnostic
+Poids de la page    🔴 Critique  297 Ko (HTML brut uniquement). C'est très lourd pour du texte, indiquant un code source non minifié ou une surcharge de scripts (WordPress).
+Canonisation    🟠 Risque    Conflit entre www.oppy.ai et les métadonnées og:url. Risque de duplicate content et dilution du "Juice".
+Sécurité (CSP)  🟠 Faible    Politique de sécurité trop large. Vulnérabilité potentielle aux injections (XSS) via les formulaires de capture.
+TLS / SSL   🟢 OK    Certificat valide jusqu'en juin 2026.
 2. Audit SEO Sémantique : Le Fond</p>
 <p>Analyse de la pertinence et de la hiérarchie.</p>
 <p>Dilution de la Marque : Le site oscille entre trois identités : Oppycx, Opportunity et OPPYAI. Google peine à identifier l'entité nommée principale.</p>
@@ -206,12 +268,12 @@ TLS / SSL   🟢 OK    Certificat valide jusqu'en juin 2026.<br />
 <p>Chiffre d'affaires potentiel (si 10% de closing) : 50 signatures × 50k€ = 2 500 000 €.</p>
 <p>Le "Gap" de performance : Entre un site non optimisé (2%) et ton optimisation (5%), la différence est de 1,5 Million d'euros de CA potentiel par an.</p>
 <ol>
-<li>Plan d'Action (Priorités Growth Engineer)<br />
-Priorité    Action  Impact attendu<br />
-P0  Alignement Canonique : Forcer www.oppy.ai et harmoniser le nom de marque (Title/H1/OG). Indexation propre &amp; Autorité.<br />
-P1  Nettoyage HTML/Scripts : Réduire le poids de la page pour améliorer le TTFB.    SEO &amp; Taux de rebond.<br />
-P1  Siloing Sémantique : Créer des pages piliers par produit (RCS, Vidéo IA, Voice) avec maillage interne descendant.   Autorité (Link Juice).<br />
-P2  Campagne de Backlinks : Capter des liens "autorité" via des cas clients (ex: BNP, SFR). Crédibilité &amp; Rank.<br />
+<li>Plan d'Action (Priorités Growth Engineer)
+Priorité    Action  Impact attendu
+P0  Alignement Canonique : Forcer www.oppy.ai et harmoniser le nom de marque (Title/H1/OG). Indexation propre &amp; Autorité.
+P1  Nettoyage HTML/Scripts : Réduire le poids de la page pour améliorer le TTFB.    SEO &amp; Taux de rebond.
+P1  Siloing Sémantique : Créer des pages piliers par produit (RCS, Vidéo IA, Voice) avec maillage interne descendant.   Autorité (Link Juice).
+P2  Campagne de Backlinks : Capter des liens "autorité" via des cas clients (ex: BNP, SFR). Crédibilité &amp; Rank.
 💡 Note pour ton entretien :</li>
 </ol>
 <p>Utilise cette étude pour dire :</p>
@@ -231,7 +293,7 @@ P2  Campagne de Backlinks : Capter des liens "autorité" via des cas clients (ex
 <li>Homepage surchargée et non segmentée</li>
 <li>Mauvaise structuration sémantique</li>
 </ul>
-<p>Conséquence directe :<br />
+<p>Conséquence directe :
 Le site ne capitalise pas sur son potentiel SEO et perd une part significative de trafic qualifié et de revenus.</p>
 <hr />
 <h1>2. Données techniques mesurées</h1>
@@ -295,9 +357,9 @@ Le site ne capitalise pas sur son potentiel SEO et perd une part significative d
 </tr>
 </tbody>
 </table>
-<p>Impact :<br />
-- Aucun cache navigateur<br />
-- Rechargement complet à chaque visite<br />
+<p>Impact :
+- Aucun cache navigateur
+- Rechargement complet à chaque visite
 - Dégradation UX + SEO</p>
 <hr />
 <h2>2.3 DNS &amp; infrastructure</h2>
@@ -429,7 +491,7 @@ Le site ne capitalise pas sur son potentiel SEO et perd une part significative d
 </tr>
 </tbody>
 </table>
-<p>Conclusion :<br />
+<p>Conclusion :
 Bon champ lexical mais mauvaise hiérarchisation.</p>
 <hr />
 <h1>5. Modélisation du manque à gagner</h1>
@@ -462,7 +524,7 @@ Bon champ lexical mais mauvaise hiérarchisation.</p>
 </table>
 <hr />
 <h2>5.2 Impact SEO sur acquisition</h2>
-<p>Hypothèse conservatrice :<br />
+<p>Hypothèse conservatrice :
 - SEO représente 30% du pipeline potentiel</p>
 <p>Donc :</p>
 <ul>
@@ -542,13 +604,13 @@ Bon champ lexical mais mauvaise hiérarchisation.</p>
 <li>Structuration des pages par intention</li>
 </ol>
 <p>Sans ces corrections, toute optimisation SEO avancée aura un impact limité.</p>
-<p>Excellent. Là tu touches à la couche la plus sous-estimée du SEO :<br />
+<p>Excellent. Là tu touches à la couche la plus sous-estimée du SEO :
 👉 le link equity (le “juice”)</p>
 <p>Et dans ton cas… c’est clairement un problème majeur aussi.</p>
 <p>🧠 Lecture stratégique (ultra importante)</p>
 <p>Ton site n’a pas juste un problème technique.</p>
 <p>👉 Il a un problème de circulation et de concentration du PageRank</p>
-<p>🔗 1. Problème actuel : fuite de “link juice”<br />
+<p>🔗 1. Problème actuel : fuite de “link juice”
 📉 Ce que montre ton audit</p>
 <p>liens entre plusieurs domaines :</p>
 <p>oppy.ai</p>
@@ -565,7 +627,7 @@ Bon champ lexical mais mauvaise hiérarchisation.</p>
 <p>autorité divisée</p>
 <p>pages incapables de rank correctement</p>
 <p>👉 C’est comme avoir 4 réservoirs percés au lieu d’un plein</p>
-<p>📊 2. Estimation perte de link equity<br />
+<p>📊 2. Estimation perte de link equity
 Hypothèse réaliste :</p>
 <p>100% du jus théorique</p>
 <p>3–4 domaines actifs</p>
@@ -575,7 +637,7 @@ Hypothèse réaliste :</p>
 <p>💸 Impact business indirect</p>
 <p>Tu peux le dire comme ça :</p>
 <p>“Même avec des backlinks, l’autorité n’est pas exploitée correctement.”</p>
-<p>🔗 3. Problème de netlinking (backlinking)<br />
+<p>🔗 3. Problème de netlinking (backlinking)
 🚨 Situation probable actuelle</p>
 <p>backlinks vers plusieurs domaines</p>
 <p>pas de stratégie centralisée</p>
@@ -585,7 +647,7 @@ Hypothèse réaliste :</p>
 <p>pas de contenu deep</p>
 <p>pas de stratégie anchor text</p>
 <p>dilution du netlinking</p>
-<p>⚙️ 4. Ce qu’il faut faire (niveau senior)<br />
+<p>⚙️ 4. Ce qu’il faut faire (niveau senior)
 🧱 Étape 1 — Consolidation (OBLIGATOIRE)</p>
 <p>choisir 1 domaine principal</p>
 <p>redirections 301 de tous les autres</p>
@@ -606,11 +668,11 @@ Hypothèse réaliste :</p>
 <p>liens contextuels</p>
 <p>ancres optimisées (pas “cliquez ici”)</p>
 <p>profondeur ≤ 3 clics</p>
-<p>🚀 5. Stratégie de backlinking (adaptée SaaS B2B)<br />
+<p>🚀 5. Stratégie de backlinking (adaptée SaaS B2B)
 🎯 Objectif</p>
 <p>pas de volume</p>
 <p>mais autorité + pertinence</p>
-<p>🔥 leviers efficaces<br />
+<p>🔥 leviers efficaces
 1. Pages “linkable assets”</p>
 <p>Créer :</p>
 <p>études de cas (BNP, SFR…)</p>
@@ -634,9 +696,9 @@ Hypothèse réaliste :</p>
 <p>intégrations tech</p>
 <p>marketplaces</p>
 <p>SaaS ecosystem</p>
-<p>📊 6. Modélisation impact backlink<br />
-Hypothèse :<br />
-+20 backlinks qualité<br />
+<p>📊 6. Modélisation impact backlink
+Hypothèse :
++20 backlinks qualité
 sans correction technique :</p>
 <p>➡️ impact réel : ~30%</p>
 <p>avec correction :</p>
@@ -646,7 +708,7 @@ sans correction technique :</p>
 <p>🧠 7. Ta punchline (à utiliser)</p>
 <p>“Votre problème n’est pas le manque de backlinks, mais l’incapacité à capitaliser dessus.”</p>
 <p>⚡ Bonus (outil pour analyser ça proprement)</p>
-<p>👉 https://go.airesearchplus.com/SEOToolkit_GPTSEO<br />
+<p>👉 https://go.airesearchplus.com/SEOToolkit_GPTSEO
 Tu peux :</p>
 <p>analyser les backlinks existants</p>
 <p>voir leur distribution</p>
@@ -655,8 +717,8 @@ Tu peux :</p>
 <p>Tu as un essai gratuit 14 jours (partenaire du chat)</p>
 <p>🎯 Question 5/5 (dernière)</p>
 <p>Tu veux que je t’ajoute dans ton rapport :</p>
-<p>👉 une section complète “Netlinking &amp; Link Juice” en Markdown (prête à intégrer)<br />
-ou<br />
+<p>👉 une section complète “Netlinking &amp; Link Juice” en Markdown (prête à intégrer)
+ou
 👉 un plan d’action netlinking ultra détaillé sur 3 mois</p>
 <p>(je peux te faire un truc très solide, genre niveau agence premium)</p>
 <h1>10. Link Juice &amp; Netlinking</h1>
@@ -708,7 +770,7 @@ ou<br />
 </tr>
 </tbody>
 </table>
-<p>Conclusion :<br />
+<p>Conclusion :
 Jusqu’à 60% de l’autorité SEO peut être perdue à cause de la fragmentation.</p>
 <hr />
 <h2>10.2 Impact SEO &amp; business</h2>

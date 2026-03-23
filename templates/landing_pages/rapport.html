@@ -47,9 +47,18 @@
         {% if landing_page.slug == 'promovacances' and audit_dashboard_url %}
         <p class="report-intro" style="margin-top:0.5rem;"><a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:4px;">Voir le dashboard audit performance</a> (score, timeline, compteur perte, bullet chart, waterfall, recovery rings).</p>
         {% endif %}
+        {% if landing_page.slug == 'infopro' and audit_dashboard_url %}
+        <p class="report-intro" style="margin-top:0.5rem;"><a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:4px;">Voir le dashboard audit performance</a> (score, timeline, infographies, waterfall, recovery).</p>
+        {% endif %}
+        {% if landing_page.slug == 'lppp-oppy-ai' and audit_dashboard_url %}
+        <p class="report-intro" style="margin-top:0.5rem;"><a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:4px;">Voir le dashboard stratégique</a> (funnel, métriques, infographies OPPORTUNITY).</p>
+        {% endif %}
+        {% if landing_page.slug == 'rougier-et-ple' and audit_dashboard_url %}
+        <p class="report-intro" style="margin-top:0.5rem;"><a href="{{ audit_dashboard_url }}" target="_blank" rel="noopener noreferrer" class="nav-cta" style="display:inline-block;margin-top:4px;">Voir le dashboard audit</a></p>
+        {% endif %}
         <div class="report-body">{{ report_html|safe }}</div>
         {% else %}
-        <p class="report-unavailable">Rapport non disponible pour ce contact. Le fichier <code>rapport-complet-&lt;slug&gt;.md</code> doit être présent dans <code>docs/contacts/{{ landing_page.slug }}/</code>.</p>
+        <p class="report-unavailable">Rapport non disponible pour ce contact. Placez un fichier Markdown dans <code>docs/contacts/{{ landing_page.slug }}/</code> : par ex. <code>rapport-complet-*.md</code>, <code>rapport-teaser*.md</code>, <code>rapport-*.md</code> ou <code>rapport*.md</code> (ex. « rapport seo complet.md »).</p>
         {% endif %}
     </main>
     {% include "landing_pages/includes/scroll_top_on_load.html" %}

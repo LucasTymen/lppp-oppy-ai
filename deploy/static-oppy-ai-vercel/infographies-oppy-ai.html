@@ -3,18 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kit infographies — OPPORTUNITY (Oppy.ai)</title>
+    <title>Infographies stratégiques — OPPORTUNITY (Oppy.ai)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --navy: #0a1628; --ink: #0f1f35; --text: #e8eef7; --muted: #8fa3bc; --accent: #00c853; --line: rgba(255,255,255,0.12); }
         * { box-sizing: border-box; }
-        body { margin: 0; font-family: "DM Sans", system-ui, sans-serif; background: var(--navy); color: var(--text); line-height: 1.55; padding: 1rem 1rem 3rem; }
-        .top-nav { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; margin: -1rem -1rem 1.25rem; padding: 0.45rem 0.8rem; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--navy) 94%, transparent); backdrop-filter: blur(8px); }
-        .top-nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid transparent; }
-        .top-nav a:hover, .top-nav a:focus-visible { color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.04); outline: none; }
-        .top-nav .brand { color: var(--text); font-weight: 700; letter-spacing: 0.02em; }
-        .top-nav .nav-sep { color: var(--muted); font-size: 0.75rem; opacity: 0.5; user-select: none; }
+        body { margin: 0; font-family: "DM Sans", system-ui, sans-serif; background: var(--navy); color: var(--text); line-height: 1.55; padding: 2rem 1rem 3rem; }
         .wrap { max-width: 1000px; margin: 0 auto; }
         h1 { font-size: clamp(1.35rem, 3vw, 1.75rem); font-weight: 700; margin: 0 0 0.5rem; }
         .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
@@ -30,31 +25,39 @@
     </style>
 </head>
 <body>
-    <nav class="top-nav" aria-label="Navigation LPPP OPPORTUNITY">
-        <a href="../" class="brand">← LPPP OPPORTUNITY</a>
-        <div>
-            <a href="../">Accueil proposition</a>
-            <span class="nav-sep" aria-hidden="true">·</span>
-            <a href="../#infographies-audit">Section dashboard</a>
-            <span class="nav-sep" aria-hidden="true">·</span>
-            <a href="04_dashboard_strategique.html">Dashboard 04</a>
-            <span class="nav-sep" aria-hidden="true">·</span>
-            <a href="positionnement-marketing.html">Positionnement</a>
-            <span class="nav-sep" aria-hidden="true">·</span>
-            <a href="../rapport/">Rapport</a>
-        </div>
-    </nav>
     <div class="wrap">
-        <h1>Kit infographies — OPPORTUNITY (Oppy.ai)</h1>
-        <p class="sub">8 composants standalone : KPI, dashboard stratégique, SWOT interactif, benchmark spider, reverse waterfall natif, radar, link juice et revenue gap.</p>
+        <h1>Infographies stratégiques — OPPORTUNITY (Oppy.ai)</h1>
+        <p class="sub">Mapping concurrentiel, roadmap SEO, calculateur revenue gap, flux link juice, funnel reverse waterfall, radar positionnement — étude LPPP.</p>
         <div class="infos-grid">
+            
+            <div class="info-card">
+                <h2>Cartographie — Placement concurrentiel 2D</h2>
+                <p>Positionnement concurrentiel (axes stratégiques) — même fichier que dashboard 04 / kit.</p>
+                <div class="embed">
+                    
+                    <iframe src="competitive_mapping_2d.html" title="Cartographie — Placement concurrentiel 2D" loading="lazy"></iframe>
+                    
+                </div>
+                <a href="competitive_mapping_2d.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
+            </div>
+            
+            <div class="info-card">
+                <h2>Cadres — Porter &amp; PESTEL</h2>
+                <p>Synthèse cinq forces et macro-environnement — complément SWOT / spider.</p>
+                <div class="embed">
+                    
+                    <iframe src="09_porter_pestel_cadres.html" title="Cadres — Porter &amp; PESTEL" loading="lazy"></iframe>
+                    
+                </div>
+                <a href="09_porter_pestel_cadres.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
+            </div>
             
             <div class="info-card">
                 <h2>01 — Link Juice Flow</h2>
                 <p>Visualisation de la fragmentation SEO et du scénario de consolidation.</p>
                 <div class="embed">
                     
-                    <iframe src="01_link_juice_flow.html" title="Link Juice Flow" loading="lazy"></iframe>
+                    <iframe src="01_link_juice_flow.html" title="01 — Link Juice Flow" loading="lazy"></iframe>
                     
                 </div>
                 <a href="01_link_juice_flow.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
@@ -62,10 +65,10 @@
             
             <div class="info-card">
                 <h2>02 — Revenue Gap Calculator</h2>
-                <p>Simulateur interactif des gains de conversion et de chiffre d'affaires.</p>
+                <p>Simulateur interactif des gains de conversion et de chiffre d&#x27;affaires.</p>
                 <div class="embed">
                     
-                    <iframe src="02_revenue_gap_calculator.html" title="Revenue Gap Calculator" loading="lazy"></iframe>
+                    <iframe src="02_revenue_gap_calculator.html" title="02 — Revenue Gap Calculator" loading="lazy"></iframe>
                     
                 </div>
                 <a href="02_revenue_gap_calculator.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
@@ -76,7 +79,7 @@
                 <p>KPI cards avec compteurs animés au scroll et barres de progression.</p>
                 <div class="embed">
                     
-                    <iframe src="03_chiffres_cles.html" title="Chiffres Clés" loading="lazy"></iframe>
+                    <iframe src="03_chiffres_cles.html" title="03 — Chiffres Clés" loading="lazy"></iframe>
                     
                 </div>
                 <a href="03_chiffres_cles.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
@@ -87,7 +90,7 @@
                 <p>Maturité acquisition, funnel inversé, North Star et roadmap J+90.</p>
                 <div class="embed">
                     
-                    <iframe src="04_dashboard_strategique.html" title="Dashboard Stratégique" loading="lazy" style="height:min(2200px, 92vh); min-height: 720px;"></iframe>
+                    <iframe src="04_dashboard_strategique.html" title="04 — Dashboard Stratégique" loading="lazy"></iframe>
                     
                 </div>
                 <a href="04_dashboard_strategique.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
@@ -95,10 +98,10 @@
             
             <div class="info-card">
                 <h2>05 — SWOT Interactif</h2>
-                <p>4 quadrants SWOT avec effets hover, scores et halo radial par catégorie.</p>
+                <p>4 quadrants SWOT avec hover effects, icônes et scores.</p>
                 <div class="embed">
                     
-                    <iframe src="05_swot_interactif.html" title="SWOT Interactif" loading="lazy"></iframe>
+                    <iframe src="05_swot_interactif.html" title="05 — SWOT Interactif" loading="lazy"></iframe>
                     
                 </div>
                 <a href="05_swot_interactif.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
@@ -106,32 +109,32 @@
             
             <div class="info-card">
                 <h2>06 — Spider Benchmark</h2>
-                <p>Toile d'araignée 6 acteurs × 7 axes avec filtres interactifs.</p>
+                <p>Toile d&#x27;araignée 6 acteurs × 7 axes avec filtres interactifs.</p>
                 <div class="embed">
                     
-                    <iframe src="06_spider_benchmark.html" title="Spider Benchmark" loading="lazy"></iframe>
+                    <iframe src="06_spider_benchmark.html" title="06 — Spider Benchmark" loading="lazy"></iframe>
                     
                 </div>
                 <a href="06_spider_benchmark.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
             </div>
-
+            
             <div class="info-card">
                 <h2>07 — Reverse Waterfall Native</h2>
-                <p>Funnel inversé standalone avec sliders live et recalcul immédiat.</p>
+                <p>Funnel inversé standalone avec sliders live.</p>
                 <div class="embed">
                     
-                    <iframe src="07_reverse_waterfall_native.html" title="Reverse Waterfall Native" loading="lazy"></iframe>
+                    <iframe src="07_reverse_waterfall_native.html" title="07 — Reverse Waterfall Native" loading="lazy"></iframe>
                     
                 </div>
                 <a href="07_reverse_waterfall_native.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>
             </div>
-
+            
             <div class="info-card">
                 <h2>08 — Radar Positionnement</h2>
-                <p>Radar comparatif 3 acteurs avec carte d'insight Growth Engineer.</p>
+                <p>Radar comparatif 3 acteurs avec carte d&#x27;insight Growth Engineer.</p>
                 <div class="embed">
                     
-                    <iframe src="08_radar_positionnement.html" title="Radar Positionnement" loading="lazy"></iframe>
+                    <iframe src="08_radar_positionnement.html" title="08 — Radar Positionnement" loading="lazy"></iframe>
                     
                 </div>
                 <a href="08_radar_positionnement.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>

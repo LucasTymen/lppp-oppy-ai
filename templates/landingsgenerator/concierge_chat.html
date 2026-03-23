@@ -65,6 +65,40 @@
     font-size: 0.9rem;
   }
   .back-link:hover { text-decoration: underline; }
+  .chat-api-test {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-card);
+  }
+  .chat-api-test textarea {
+    width: 100%;
+    min-height: 96px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--text);
+    padding: 0.65rem;
+  }
+  .chat-api-test button {
+    margin-top: 0.6rem;
+    padding: 0.55rem 0.85rem;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+  .chat-api-result {
+    margin-top: 0.7rem;
+    white-space: pre-wrap;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    color: var(--text-muted);
+  }
 </style>
 {% endblock %}
 {% block content %}
@@ -89,4 +123,42 @@
       </div>
     {% endif %}
   </div>
+  <div class="chat-api-test">
+    <p style="margin-top:0;"><strong>Test proxy backend</strong> — endpoint <code>/api/chat/flowise</code> (clé API côté serveur uniquement).</p>
+    <label for="chat-question" class="sr-only">Question</label>
+    <textarea id="chat-question" placeholder="Ex: Quels sont les horaires de la mairie ?"></textarea>
+    <button type="button" id="chat-send-btn">Envoyer au proxy</button>
+    <div id="chat-api-result" class="chat-api-result" aria-live="polite"></div>
+  </div>
+  <script>
+    (function () {
+      var btn = document.getElementById("chat-send-btn");
+      var questionInput = document.getElementById("chat-question");
+      var result = document.getElementById("chat-api-result");
+      if (!btn || !questionInput || !result) return;
+
+      btn.addEventListener("click", async function () {
+        var question = (questionInput.value || "").trim();
+        if (!question) {
+          result.textContent = "Saisissez une question.";
+          return;
+        }
+        btn.disabled = true;
+        result.textContent = "Appel en cours...";
+        try {
+          var response = await fetch("/api/chat/flowise", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: question })
+          });
+          var data = await response.json();
+          result.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          result.textContent = "Erreur réseau: " + (error && error.message ? error.message : String(error));
+        } finally {
+          btn.disabled = false;
+        }
+      });
+    })();
+  </script>
 {% endblock %}

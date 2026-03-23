@@ -6,8 +6,8 @@
 
 ## Implémentation LPPP-OppyAI
 
-- **CodePen (actif par défaut)** : `hero_codepen_url` = URL embed du pen (ex. `https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark`). Prioritaire dans le template ; thème sombre via `theme-id=dark`.
-- **Script local** : `hero_codepen_url: ""` + `hero_waves_pins: true` → `waves-pins-hero.js` (paramètres ci-dessous, pas de console CodePen).
+- **CodePen (optionnel)** : si `hero_codepen_url` est renseigné, il est **prioritaire** dans le template. Le thème Oppy applique un **clip bas** (~18 %) + iframe un peu plus haute pour **masquer la barre / console** d’embed CodePen ; la nav reste au-dessus (`z-index: 1000`).
+- **Script local (recommandé, sans console)** : `hero_codepen_url: ""` + `hero_waves_pins: true` → `waves-pins-hero.js` (paramètres ci-dessous, animation plus ample / rapide / « random » que la version d’origine).
 - **Three.js** : CDN jsDelivr (pour le script local)
 - **Templates** : `proposition.html`, `proposition_value.html`
 
@@ -15,11 +15,13 @@
 
 | Paramètre    | Valeur    |
 |-------------|-----------|
-| Amplitude   | 3.1213    |
-| Frequency X | 0.33066   |
-| Frequency Z | 0.6336    |
-| Chaos Level | 4.4       |
-| Speed       | 0.0134    |
+| Amplitude (`waveHeight`) | 6.4       |
+| Frequency X | 0.42      |
+| Frequency Z | 0.78      |
+| Chaos Level (`chaosScale`) | 9.2       |
+| Random wobble | 2.85   |
+| Random speed mult. | 1.65 |
+| Speed (base) | 0.034 (+ léger jitter temporel) |
 | Gap         | 1.3224    |
 | Dot Size    | 0.45441   |
 | Dot Opacity | 0.769     |

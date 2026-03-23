@@ -3,11 +3,13 @@ Exporte une landing (template proposition) en un fichier HTML statique.
 Usage : python manage.py export_landing_static p4s-archi --output deploy/static-p4s-vercel/index.html
 Avec version intermédiaire du rapport (société, stratégie, SEO) :
   python manage.py export_landing_static p4s-archi --rapport-md docs/contacts/p4s-archi/etude-concurrentielle-pestel-swot-porter.md
+Sans --rapport-md : si un fichier Markdown de rapport existe dans docs/contacts/<slug>/ (même logique que la vue Django : rapport-teaser*, rapport-complet*, rapport-*, rapport*.md), rapport.html est généré automatiquement.
 La page générée est exactement ce que Django sert sur /p/<slug>/ (contenu inlined, pas d'app).
 Préserve tous les degrés de personnalisation : thème (CSS Vampire), style perso (fallback), hero background, etc.
 Pour Vercel : déployer le dossier contenant ce index.html (page statique, pas Next.js).
 """
 import json
+import re
 from pathlib import Path
 
 import markdown
@@ -17,7 +19,36 @@ from django.template.loader import render_to_string
 
 from apps.landing_pages.models import LandingPage
 from apps.landing_pages.themes import LANDING_THEMES
-from apps.landing_pages.views import _content_with_defaults, _use_perso_style
+from apps.landing_pages.views import _content_with_defaults, _rapport_html, _use_perso_style
+
+
+def _nav_urls_for_static_rapport(slug, content):
+    """
+    URLs relatives pour la nav du rapport statique (aligné sur les blocs slug de handle()).
+    Permet d’avoir les bons liens (ex. Oppy : infographies-oppy-ai.html) avant le merge content plus bas.
+    """
+    infographie = content.get("infographie_url")
+    positionnement = content.get("positionnement_marketing_url")
+    audit = (content.get("audit_dashboard_url") or "").strip()
+
+    if slug == "promovacances":
+        infographie = infographie or "infographie-promovacances-7-formats.html"
+        positionnement = positionnement or "positionnement-marketing.html"
+    elif slug == "infopro":
+        infographie = infographie or "infographie-infopro-7-formats.html"
+        positionnement = positionnement or "positionnement-marketing.html"
+    elif slug == "lppp-oppy-ai":
+        infographie = infographie or "infographie-lppp-oppy-ai-7-formats.html"
+        positionnement = positionnement or "positionnement-marketing.html"
+        if not audit:
+            audit = "infographies-oppy-ai.html"
+
+    return {
+        "infographie_url": infographie,
+        "positionnement_marketing_url": positionnement,
+        "audit_dashboard_url": audit,
+    }
+
 
 class Command(BaseCommand):
     help = "Exporte une landing (proposition) en HTML statique pour déploiement Vercel (la page, pas une app). Préserve thème et style perso. Option --rapport-md : exporte une version intermédiaire du rapport (société, stratégie, SEO) en rapport.html et affiche le lien « Consulter le rapport »."
@@ -37,6 +68,44 @@ class Command(BaseCommand):
             "--rapport-md",
             help="Chemin vers un fichier Markdown (ex. docs/contacts/p4s-archi/etude-concurrentielle-pestel-swot-porter.md). Génère rapport.html et définit rapport_url pour le lien « Consulter le rapport complet ».",
         )
+
+    def _write_rapport_static_html(self, slug, content, lp, rapport_out, body_html):
+        """Écrit rapport_static_export.html à partir du HTML corps (Markdown converti)."""
+        rapport_out.parent.mkdir(parents=True, exist_ok=True)
+        nav = _nav_urls_for_static_rapport(slug, content)
+        theme_dict, theme_css = (None, None)
+        if slug in LANDING_THEMES:
+            theme_dict, theme_css = LANDING_THEMES[slug]
+        hero_video_embed = ""
+        hero_video_mp4 = ""
+        if slug in ("promovacances", "infopro"):
+            mp4_url = content.get("hero_video_mp4_url") or ""
+            if mp4_url:
+                hero_video_mp4 = mp4_url
+            else:
+                url = content.get("hero_video_url") or ""
+                m = re.search(r"(?:v=|embed/)([a-zA-Z0-9_-]{11})", str(url).strip()) if url else None
+                vid = m.group(1) if m else ("ArifpieowSw" if slug == "promovacances" else "IG9WGfuTOIQ")
+                hero_video_embed = (
+                    f"https://www.youtube-nocookie.com/embed/{vid}?autoplay=1&mute=1&loop=1&playlist={vid}"
+                    f"&controls=0&rel=0&showinfo=0"
+                )
+        rapport_ctx = {
+            "company_name": getattr(lp, "prospect_company", content.get("prospect_company", "")),
+            "logo_url": (theme_dict or {}).get("logo_url") if theme_dict else None,
+            "theme_css": theme_css or "",
+            "index_url": "index.html",
+            "rapport_url": "rapport.html",
+            "infographie_url": nav["infographie_url"],
+            "positionnement_marketing_url": nav["positionnement_marketing_url"],
+            "audit_dashboard_url": nav["audit_dashboard_url"],
+            "report_body": body_html,
+            "hero_video_embed_url": hero_video_embed,
+            "hero_video_mp4_url": hero_video_mp4,
+        }
+        rapport_html = render_to_string("landing_pages/rapport_static_export.html", rapport_ctx)
+        rapport_out.write_text(rapport_html, encoding="utf-8")
+        self.stdout.write(self.style.SUCCESS(f"Rapport statique écrit : {rapport_out}"))
 
     def handle(self, *args, **options):
         slug = options["slug"]
@@ -99,7 +168,8 @@ class Command(BaseCommand):
                 )
                 return
 
-        # Export optionnel de la version intermédiaire du rapport (société, stratégie, SEO)
+        # Rapport statique : --rapport-md si fourni, sinon même détection Markdown que la vue Django (_rapport_html)
+        body_html = None
         if rapport_md_path:
             rapport_path = Path(rapport_md_path)
             if rapport_path.exists():
@@ -108,44 +178,17 @@ class Command(BaseCommand):
                     md_text,
                     extensions=["tables", "fenced_code", "nl2br"],
                 )
-                rapport_out = output_path.parent / "rapport.html"
-                output_path.parent.mkdir(parents=True, exist_ok=True)
-                # Contexte pour rapport avec nav (comme sur le reste du site)
-                theme_dict, theme_css = (None, None)
-                if slug in LANDING_THEMES:
-                    theme_dict, theme_css = LANDING_THEMES[slug]
-                hero_video_embed = ""
-                hero_video_mp4 = ""
-                if slug in ("promovacances", "infopro"):
-                    mp4_url = content.get("hero_video_mp4_url") or ""
-                    if mp4_url:
-                        hero_video_mp4 = mp4_url
-                    else:
-                        import re
-                        url = content.get("hero_video_url") or ""
-                        m = re.search(r"(?:v=|embed/)([a-zA-Z0-9_-]{11})", str(url).strip()) if url else None
-                        vid = m.group(1) if m else ("ArifpieowSw" if slug == "promovacances" else "IG9WGfuTOIQ")
-                        hero_video_embed = f"https://www.youtube-nocookie.com/embed/{vid}?autoplay=1&mute=1&loop=1&playlist={vid}&controls=0&rel=0&showinfo=0"
-                rapport_ctx = {
-                    "company_name": getattr(lp, "prospect_company", content.get("prospect_company", "")),
-                    "logo_url": (theme_dict or {}).get("logo_url") if theme_dict else None,
-                    "theme_css": theme_css or "",
-                    "index_url": "index.html",
-                    "rapport_url": "rapport.html",
-                    "infographie_url": content.get("infographie_url") or ("infographie-promovacances-7-formats.html" if slug == "promovacances" else "infographie-infopro-7-formats.html" if slug == "infopro" else None),
-                    "positionnement_marketing_url": "positionnement-marketing.html" if slug in ("promovacances", "infopro") else None,
-                    "audit_dashboard_url": content.get("audit_dashboard_url") or "",
-                    "report_body": body_html,
-                    "hero_video_embed_url": hero_video_embed,
-                    "hero_video_mp4_url": hero_video_mp4,
-                }
-                rapport_html = render_to_string("landing_pages/rapport_static_export.html", rapport_ctx)
-                rapport_out.write_text(rapport_html, encoding="utf-8")
-                self.stdout.write(self.style.SUCCESS(f"Rapport intermédiaire écrit : {rapport_out}"))
-                content = dict(content)
-                content["rapport_url"] = "rapport.html"
             else:
                 self.stdout.write(self.style.WARNING(f"Fichier rapport non trouvé : {rapport_path}"))
+
+        if body_html is None:
+            body_html = _rapport_html(slug)
+
+        if body_html is not None:
+            rapport_out = output_path.parent / "rapport.html"
+            self._write_rapport_static_html(slug, content, lp, rapport_out, body_html)
+            content = dict(content)
+            content["rapport_url"] = "rapport.html"
 
         # Thème + vidéo hero pour les slugs enregistrés (ex. orsys) — même logique que la vue
         content = dict(content)

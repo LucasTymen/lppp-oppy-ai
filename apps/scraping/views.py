@@ -19,7 +19,12 @@ from apps.scraping.enriched.tasks import enrich_prospect, enrich_batch
 from apps.scraping.enriched.security import enrichment_rate_limiter
 
 from apps.scraping.concierge import scrape_urls, DEFAULT_MAISONS_ALFORT_URLS
-from apps.scraping.flowise_client import get_flowise_config, push_file_to_flowise
+from apps.scraping.flowise_client import (
+    ask_flowise_chatflow,
+    get_flowise_chat_api_config,
+    get_flowise_config,
+    push_file_to_flowise,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -256,3 +261,56 @@ class ConciergePushToFlowiseView(View):
         if isinstance(added, list):
             added = len(added)
         return JsonResponse({"status": "ok", "file": filename, "numAdded": added})
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def flowise_chat_proxy_view(request):
+    """
+    POST /api/chat/flowise
+    Body JSON attendu: {"question": "..."} (ou "message")
+    Proxy serveur -> Flowise prediction pour éviter d'exposer la clé API côté navigateur.
+    """
+    data = _parse_json_body(request)
+    if not data or not isinstance(data, dict):
+        return JsonResponse({"error": "Body JSON attendu"}, status=400)
+
+    question = (data.get("question") or data.get("message") or "").strip()
+    if not question:
+        return JsonResponse({"error": "question obligatoire"}, status=400)
+
+    # Même garde-fou que les endpoints enrichissement.
+    identifier = request.META.get("REMOTE_ADDR", "anonymous")
+    allowed, info = enrichment_rate_limiter.is_allowed(identifier, "flowise_chat")
+    if not allowed:
+        return JsonResponse({"error": "rate_limit_exceeded", "detail": info}, status=429)
+
+    base_url, chatflow_id, api_key = get_flowise_chat_api_config()
+    timeout = int(__import__("os").environ.get("FLOWISE_CHAT_TIMEOUT", "45"))
+    result = ask_flowise_chatflow(
+        question=question,
+        base_url=base_url,
+        chatflow_id=chatflow_id,
+        api_key=api_key,
+        timeout=timeout,
+    )
+    if result.get("error"):
+        return JsonResponse(
+            {
+                "error": result["error"],
+                "status_code": result.get("status_code"),
+                "flowise_endpoint": result.get("endpoint"),
+            },
+            status=502,
+        )
+
+    payload = result.get("data") or {}
+    text = payload.get("text") if isinstance(payload, dict) else None
+    return JsonResponse(
+        {
+            "status": "ok",
+            "question": question,
+            "answer": text,
+            "payload": payload,
+        }
+    )
