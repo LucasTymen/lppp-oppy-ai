@@ -46,12 +46,14 @@
  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
  "rapport_url": "/p/lppp-oppy-ai/rapport/",
  "infographies_oppy": [
-  { "label": "Mapping concurrentiel 2D", "file": "competitive_mapping_2d.html", "desc": "Opportunity vs Twilio, Brevo, géants CPaaS — sophistication tech × segment marché" },
-  { "label": "Roadmap SEO 90 jours", "file": "seo_action_plan_timeline.svg", "desc": "Phases J0–J90 : fondations, optimisation on-page, scale" },
-  { "label": "Calculateur revenue gap", "file": "revenue_gap_calculator.html", "desc": "Impact CVR avant/après optimisation — simulateur interactif" },
-  { "label": "Flux link juice", "file": "link_juice_flow_diagram.svg", "desc": "Fragmentation actuelle vs consolidation oppy.ai (301)" },
-  { "label": "Funnel reverse waterfall", "file": "reverse_waterfall_funnel.html", "desc": "MQL → SQL → signatures — paramètres objectif CA" },
-  { "label": "Radar positionnement", "file": "radar_chart_positioning.html", "desc": "Opportunity vs Twilio vs Brevo — conformité, multicanal IA, joignabilité" }
+  { "label": "01 — Link Juice Flow", "file": "01_link_juice_flow.html", "desc": "Visualisation de la fragmentation SEO et du scénario de consolidation." },
+  { "label": "02 — Revenue Gap Calculator", "file": "02_revenue_gap_calculator.html", "desc": "Simulateur interactif des gains de conversion et de chiffre d'affaires." },
+  { "label": "03 — Chiffres Clés", "file": "03_chiffres_cles.html", "desc": "KPI cards avec compteurs animés au scroll et barres de progression." },
+  { "label": "04 — Dashboard Stratégique", "file": "04_dashboard_strategique.html", "desc": "Maturité acquisition, funnel inversé, North Star et roadmap J+90." },
+  { "label": "05 — SWOT Interactif", "file": "05_swot_interactif.html", "desc": "4 quadrants SWOT avec hover effects, icônes et scores." },
+  { "label": "06 — Spider Benchmark", "file": "06_spider_benchmark.html", "desc": "Toile d'araignée 6 acteurs × 7 axes avec filtres interactifs." },
+  { "label": "07 — Reverse Waterfall Native", "file": "07_reverse_waterfall_native.html", "desc": "Funnel inversé standalone avec sliders live." },
+  { "label": "08 — Radar Positionnement", "file": "08_radar_positionnement.html", "desc": "Radar comparatif 3 acteurs avec carte d'insight Growth Engineer." }
  ],
  "key_figures_carousel": [
   { "value": "~25", "unit": "M€", "label": "CA indicatif (étude 2025 — à confirmer)" },
@@ -62,6 +64,8 @@
   { "value": "95–100", "unit": "%", "label": "Cible délivrabilité / joignabilité (référence étude)" }
  ],
  "alert_banner": "LPPP OPPORTUNITY (OPPY.AI) — STRATÉGIE GAM + SEO TECHNIQUE & SÉMANTIQUE (TRAME)",
+ "infographie_url": "http://localhost:8010/p/lppp-oppy-ai/assets/infographies-oppy-ai.html",
+ "positionnement_marketing_url": "http://localhost:8010/p/lppp-oppy-ai/assets/positionnement-marketing.html",
  "seo_resume": {
   "title": "Synthèse stratégique (SWOT, funnel, North Star)",
   "strategic_kpi_lead": "North Star suggérée pour le poste : CAC vs LTV, ou volume de SQL générés de façon automatisée — à valider en entretien avec la direction.",
