@@ -23,6 +23,9 @@
 - **Fallback** : si aucune `LandingPage` en base, chargement du JSON `landing-proposition-lppp-oppy-ai.json`.
 - **Admin** : créer une entrée avec `slug=lppp-oppy-ai`, `template_key=proposition`.
 
-## Déploiement statique (optionnel)
+## Déploiement statique (Vercel)
 
-Voir la doc déploiement du projet pour exporter une version statique si besoin.
+- **Procédure** : `deploy/PUSH-OPPY-AI.md`
+- **Repos cibles** : GitHub `LucasTymen/LPPP_OppyAI` · GitLab `LucasTymen/lppp_oppy_ai`
+- **Export** : `python manage.py export_landing_static lppp-oppy-ai --json landing-proposition-lppp-oppy-ai.json --output deploy/static-oppy-ai-vercel/index.html --rapport-md "rapport seo complet.md"`
+- **Vercel** : Framework = Other, Build Command = vide, Output = `.`

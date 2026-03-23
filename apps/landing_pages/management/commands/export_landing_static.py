@@ -76,6 +76,9 @@ class Command(BaseCommand):
             elif slug == "infopro":
                 lp.prospect_company = "Infopro Digital"
                 lp.prospect_name = ""
+            elif slug == "lppp-oppy-ai":
+                lp.prospect_company = "OPPORTUNITY (Oppy.ai)"
+                lp.prospect_name = ""
             use_perso_style = _use_perso_style(lp)
             self.stdout.write(f"Contenu chargé depuis {json_path} (use_perso_style={use_perso_style})")
         else:
@@ -166,6 +169,14 @@ class Command(BaseCommand):
         elif slug == "infopro":
             content["infographie_url"] = "infographie-infopro-7-formats.html"
             content["positionnement_marketing_url"] = "positionnement-marketing.html"
+        elif slug == "lppp-oppy-ai":
+            content["infographie_url"] = "infographie-lppp-oppy-ai-7-formats.html"
+            content["positionnement_marketing_url"] = "positionnement-marketing.html"
+            content["audit_dashboard_url"] = "infographies-oppy-ai.html"
+            content["oppy_assets_prefix"] = ""
+            if content.get("infographies_oppy"):
+                for info in content["infographies_oppy"]:
+                    info["url"] = info.get("file", "")
 
         perso_ref_path = getattr(settings, "LANDING_PERSO_REF_PATH", "")
         html = render_to_string(
@@ -182,6 +193,14 @@ class Command(BaseCommand):
         # Les liens « Consulter le rapport » sont gérés par rapport_url dans le template.
 
         output_path.parent.mkdir(parents=True, exist_ok=True)
+        if slug == "lppp-oppy-ai":
+            # Remplacer le script waves-pins (chemin Django /static/...) par chemin relatif
+            import re
+            html = re.sub(
+                r'src="[^"]*waves-pins-hero\.js"',
+                'src="waves-pins-hero.js"',
+                html,
+            )
         output_path.write_text(html, encoding="utf-8")
         self.stdout.write(self.style.SUCCESS(f"Écrit : {output_path}"))
 
@@ -218,6 +237,27 @@ class Command(BaseCommand):
                     dest = out_dir / f.name
                     shutil.copy2(f, dest)
                     self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))
+        elif slug == "lppp-oppy-ai":
+            import shutil
+            oppy_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "lppp-oppy-ai"
+            out_dir = output_path.parent
+            patterns = [
+                "competitive_mapping_2d.html", "seo_action_plan_timeline.svg",
+                "revenue_gap_calculator.html", "link_juice_flow_diagram.svg",
+                "reverse_waterfall_funnel.html", "radar_chart_positioning.html",
+                "infographie-lppp-oppy-ai-7-formats.html", "positionnement-marketing.html",
+                "waves-pins-hero.js",
+            ]
+            for fname in patterns:
+                f = oppy_assets / fname
+                if f.is_file():
+                    shutil.copy2(f, out_dir / fname)
+                    self.stdout.write(self.style.SUCCESS(f"  Copié : {fname}"))
+            if content.get("infographies_oppy"):
+                infos_ctx = {"infographies": content["infographies_oppy"]}
+                infos_html = render_to_string("landing_pages/infographies_oppy_static.html", infos_ctx)
+                (out_dir / "infographies-oppy-ai.html").write_text(infos_html, encoding="utf-8")
+                self.stdout.write(self.style.SUCCESS("  Copié : infographies-oppy-ai.html (généré)"))
 
         self.stdout.write(
             "Déploiement Vercel : pousser le dossier contenant ce index.html (repo = uniquement la page, pas Next.js)."

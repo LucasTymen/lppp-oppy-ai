@@ -230,11 +230,16 @@ def landing_public(request, slug):
         content["promovacances_assets_url"] = ""
         content["infographie_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html")
         content["positionnement_marketing_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/assets/positionnement-marketing.html")
+        assets_base = request.build_absolute_uri("/p/lppp-oppy-ai/assets/")
+        content["oppy_assets_prefix"] = assets_base
+        if content.get("infographies_oppy"):
+            for info in content["infographies_oppy"]:
+                info["url"] = assets_base + info.get("file", "")
         if "audit_dashboard_url" not in content:
             content["audit_dashboard_url"] = request.build_absolute_uri("/p/lppp-oppy-ai/audit-dashboard/")
-        # Forcer Waves Pins / CodePen pour Oppy-AI — garantit l'affichage
+        # Waves Pins pour Oppy-AI — script local (paramètres waves-pins-source.md, pas de console) si hero_codepen_url vide
         content["hero_waves_pins"] = content.get("hero_waves_pins", True)
-        content["hero_codepen_url"] = content.get("hero_codepen_url") or "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark"
+        content["hero_codepen_url"] = (content.get("hero_codepen_url") or "").strip() or ""
     elif lp.slug == "rougier-et-ple":
         content["promovacances_assets_url"] = ""
         content["infographie_url"] = request.build_absolute_uri("/p/rougier-et-ple/assets/infographie-rougier-et-ple-7-formats.html")

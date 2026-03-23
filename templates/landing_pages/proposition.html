@@ -934,6 +934,17 @@
         {% if content.icebreaker %}<p class="icebreaker">{{ content.icebreaker }}</p>{% endif %}
         {% if content.intro %}<p class="icebreaker">{{ content.intro }}</p>{% elif content.hero_title %}<p class="icebreaker">{{ content.hero_title }}</p>{% endif %}
 
+        {% if landing_page.slug == 'lppp-oppy-ai' %}
+        <div class="oppy-infog-standalone" style="max-width:min(100%,1000px);margin:0 auto 2rem;padding:0 clamp(1rem,4vw,1.5rem);">
+            <figure class="oppy-infog-block" style="margin:0;">
+                <div class="oppy-infog-embed oppy-infog-embed--compact">
+                    <iframe src="{{ content.oppy_assets_prefix }}radar_chart_positioning.html" title="Radar de positionnement stratégique OPPORTUNITY" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Radar de maturité / leviers (conformité &amp; RSE, multicanal IA, agilité stack) — lecture alignée sur l’étude.</figcaption>
+            </figure>
+        </div>
+        {% endif %}
+
         {% if content.key_figures_carousel %}
         <section class="section key-figures-section" id="chiffres-cles">
             <div class="section-head"><span class="section-num">00</span><h2>Chiffres clés</h2></div>
@@ -984,6 +995,17 @@
         </section>
         {% endif %}
 
+        {% if landing_page.slug == 'lppp-oppy-ai' %}
+        <div class="oppy-infog-standalone section" style="max-width:min(100%,1000px);margin:0 auto;padding:0 clamp(1rem,4vw,1.5rem) var(--lp-section-padding,3rem);border-left:none;background:transparent;">
+            <figure class="oppy-infog-block" style="margin:0;">
+                <div class="oppy-infog-embed oppy-infog-embed--tall">
+                    <iframe src="{{ content.oppy_assets_prefix }}revenue_gap_calculator.html" title="Calculateur écart de revenus / projection" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Projection manque à gagner / levier revenus — complément aux chiffres clés et à l’argumentaire business.</figcaption>
+            </figure>
+        </div>
+        {% endif %}
+
         {% if content.pain_points or content.activite_pain_points %}
         <section class="section{% if landing_page.slug == 'fitclem' or landing_page.slug == 'casapy' or landing_page.slug == 'promovacances' or landing_page.slug == 'infopro' or landing_page.slug == 'lppp-oppy-ai' %} content-player{% endif %}" id="enjeux">
             <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
@@ -995,6 +1017,14 @@
             </ul>
             {% else %}<p>{{ content.activite_pain_points }}</p>{% endif %}
             </div>
+            {% if landing_page.slug == 'lppp-oppy-ai' %}
+            <figure class="oppy-infog-block" style="margin-top:1.25rem;">
+                <div class="oppy-infog-embed oppy-infog-embed--tall">
+                    <iframe src="{{ content.oppy_assets_prefix }}reverse_waterfall_funnel.html" title="Reverse waterfall funnel — projection funnel commercial" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Reverse waterfall : volume cible, qualification SQL, signatures — même logique que l’étude (scénario 1 M€ nouveau CA).</figcaption>
+            </figure>
+            {% endif %}
             {% if landing_page.slug == 'fitclem' %}
             <div class="content-player-visual content-player-flowchart" aria-hidden="true">
                 <span class="flow-step">Pain point</span><span class="flow-arrow">→</span>
@@ -1096,34 +1126,8 @@
                 <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : score 68, timeline, bullet chart, waterfall, recovery rings</p>
             </div>
             {% elif landing_page.slug == 'lppp-oppy-ai' %}
-            <div class="enjeux-visuals" aria-hidden="true">
-                <div>
-                    <p class="enjeux-visual-label">Reverse waterfall (simulation 1 M€ nouveau CA)</p>
-                    <div class="enjeux-funnel">
-                        <div class="enjeux-funnel-tier"><span class="tier-val">2 000</span> leads ciblés / an</div>
-                        <div class="enjeux-funnel-tier"><span class="tier-val">200</span> SQL (hyp. 10 % qualif.)</div>
-                        <div class="enjeux-funnel-tier"><span class="tier-val">20</span> signatures (ACV ~50 k€)</div>
-                        <div class="enjeux-funnel-tier"><span class="tier-val">J+90</span> scale 15–20 « high interest » / mois</div>
-                    </div>
-                </div>
-                <div>
-                    <p class="enjeux-visual-label">Radar stratégique — levier GAM</p>
-                    <div class="content-player-flowchart">
-                        <span class="flow-step">Conformité &amp; RSE ↑</span><span class="flow-arrow">+</span>
-                        <span class="flow-step">Multicanal IA ↑</span><span class="flow-arrow">→</span>
-                        <span class="flow-step">Agilité stack ↑ (à renforcer)</span>
-                    </div>
-                </div>
-                <div>
-                    <p class="enjeux-visual-label">Roadmap 90 jours (étude)</p>
-                    <div class="key-figures-timeline">
-                        <div class="key-figures-timeline-item"><span class="t-period">J+30</span><p class="t-desc">Audit flux Marketing→CRM, socle n8n, zéro fuite de leads</p></div>
-                        <div class="key-figures-timeline-item"><span class="t-period">J+60</span><p class="t-desc">Enrichissement auto (Python/OSINT), gain temps prospection</p></div>
-                        <div class="key-figures-timeline-item"><span class="t-period">J+90</span><p class="t-desc">Multicanal scalable, pilotage ROI</p></div>
-                    </div>
-                </div>
-                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : funnel, bullet metrics, waterfall, recovery rings (données étude OPPORTUNITY)</p>
-            </div>
+            {# Waterfall interactif au-dessus ; radar en intro ; cartographie en section Solution ; SEO : SVG plus bas. #}
+            <p class="enjeux-visual-label" style="margin-top:0.5rem;font-size:0.9rem;opacity:0.9;">Dashboard consolidé (section 01b) : funnel, métriques, recovery rings — données étude OPPORTUNITY.</p>
             {% endif %}
         </section>
         {% endif %}
@@ -1143,6 +1147,16 @@
                 &nbsp;·&nbsp; <a href="{{ content.infographie_url }}">{% if landing_page.slug == 'lppp-oppy-ai' %}Infographie de synthèse{% else %}7 formats (palette {% if landing_page.slug == 'infopro' %}Infopro{% else %}Promovacances{% endif %}){% endif %}</a>
                 {% endif %}
             </p>
+            {% if landing_page.slug == 'lppp-oppy-ai' and content.infographies_oppy %}
+            <div class="infographies-oppy-grid" style="margin-top:1.5rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;">
+                {% for info in content.infographies_oppy %}
+                <a href="{{ info.url }}" class="infographie-card" target="_blank" rel="noopener" style="display:block;padding:1rem;background:var(--lp-block-bg,#f5f5f5);border-radius:8px;text-decoration:none;color:inherit;border:1px solid var(--lp-border,#e0e0e0);">
+                    <strong style="display:block;margin-bottom:0.35rem;">{{ info.label }}</strong>
+                    <span style="font-size:0.85rem;opacity:0.85;">{{ info.desc }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
         </section>
         {% endif %}
 
@@ -1185,6 +1199,14 @@
                 <figure class="workflow-figure"><img src="{{ content.workflow_image_url }}" alt="Workflow" loading="lazy"></figure>
                 {% endif %}
             </div>
+            {% if landing_page.slug == 'lppp-oppy-ai' %}
+            <figure class="oppy-infog-block" style="margin-top:1.5rem;">
+                <div class="oppy-infog-embed oppy-infog-embed--tall">
+                    <iframe src="{{ content.oppy_assets_prefix }}competitive_mapping_2d.html" title="Cartographie concurrentielle 2D" loading="lazy"></iframe>
+                </div>
+                <figcaption class="oppy-infog-caption">Cartographie 2D : lecture stratégique position / différenciation (alignée proposition harmonisation stack &amp; acquisition).</figcaption>
+            </figure>
+            {% endif %}
             {% endif %}
         </section>
         {% endif %}
@@ -1451,6 +1473,19 @@
                 <ul class="pain-list">{% for item in content.seo_technique_semantique.prochaines_etapes %}<li>{{ item }}</li>{% endfor %}</ul>
                 {% endif %}
             </div>
+            {% if landing_page.slug == 'lppp-oppy-ai' %}
+            <div class="oppy-infog-block" style="margin-top:1.25rem;">
+                <div class="oppy-infog-seo-row">
+                    <div class="oppy-infog-svg-wrap">
+                        <img src="{{ content.oppy_assets_prefix }}link_juice_flow_diagram.svg" alt="Schéma circulation du link juice et maillage interne" width="640" height="360" loading="lazy" decoding="async">
+                    </div>
+                    <div class="oppy-infog-svg-wrap">
+                        <img src="{{ content.oppy_assets_prefix }}seo_action_plan_timeline.svg" alt="Timeline plan d’action SEO J+30, J+60, J+90" width="640" height="360" loading="lazy" decoding="async">
+                    </div>
+                </div>
+                <p class="oppy-infog-caption">Maillage / autorité et calendrier actions (vue complémentaire au texte technique &amp; sémantique).</p>
+            </div>
+            {% endif %}
         </section>
         {% endif %}
 

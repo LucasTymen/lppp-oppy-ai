@@ -6,8 +6,8 @@
 
 ## Implémentation LPPP-OppyAI
 
-- **Option 1 — CodePen embed (prioritaire)** : `hero_codepen_url: "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark"` — iframe plein écran, fixe au scroll.
-- **Option 2 — Script local** : `apps/landing_pages/static/landing_pages/js/waves-pins-hero.js` — déclenché par `hero_waves_pins: true` si pas de hero_codepen_url.
+- **CodePen (actif par défaut)** : `hero_codepen_url` = URL embed du pen (ex. `https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark`). Prioritaire dans le template ; thème sombre via `theme-id=dark`.
+- **Script local** : `hero_codepen_url: ""` + `hero_waves_pins: true` → `waves-pins-hero.js` (paramètres ci-dessous, pas de console CodePen).
 - **Three.js** : CDN jsDelivr (pour le script local)
 - **Templates** : `proposition.html`, `proposition_value.html`
 

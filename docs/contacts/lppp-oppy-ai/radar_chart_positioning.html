@@ -1,0 +1,97 @@
+
+<div style="padding:1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>Opportunity</span>
+  <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#378ADD;display:inline-block;"></span>Géant CPaaS (Twilio)</span>
+  <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;border-radius:2px;background:#EF9F27;display:inline-block;"></span>Mass market (Brevo)</span>
+</div>
+<div style="position:relative;width:100%;height:420px;">
+  <canvas id="radarChart"></canvas>
+</div>
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px;">
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.75rem 1rem;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;letter-spacing:.05em;">AVANTAGE DÉCISIF</div>
+    <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);">Conformité RSE</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);">Ecovadis Gold · Top 5%</div>
+  </div>
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.75rem 1rem;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;letter-spacing:.05em;">CHANTIER IDENTIFIÉ</div>
+    <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);">Agilité du stack</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);">Ta mission : combler l'écart</div>
+  </div>
+  <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:0.75rem 1rem;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;letter-spacing:.05em;">POSITION UNIQUE</div>
+    <div style="font-size:14px;font-weight:500;color:var(--color-text-primary);">Joignabilité 100%</div>
+    <div style="font-size:12px;color:var(--color-text-secondary);">vs 90–95% marché standard</div>
+  </div>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const gridColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)';
+const tickColor = isDark ? 'rgba(255,255,255,0.35)' : 'rgba(0,0,0,0.35)';
+const labelColor = isDark ? '#c2c0b6' : '#3d3d3a';
+
+new Chart(document.getElementById('radarChart'), {
+  type: 'radar',
+  data: {
+    labels: ['Conformité & RSE','Multicanalité IA','Joignabilité','Agilité du stack','Proximité SLA'],
+    datasets: [
+      {
+        label: 'Opportunity',
+        data: [5,5,4,2,5],
+        borderColor: '#1D9E75',
+        backgroundColor: 'rgba(29,158,117,0.15)',
+        borderWidth: 2,
+        pointBackgroundColor: '#1D9E75',
+        pointRadius: 4,
+        pointHoverRadius: 6
+      },
+      {
+        label: 'Géant CPaaS (Twilio)',
+        data: [3,4,5,5,2],
+        borderColor: '#378ADD',
+        backgroundColor: 'rgba(55,138,221,0.10)',
+        borderWidth: 2,
+        pointBackgroundColor: '#378ADD',
+        pointRadius: 4,
+        pointHoverRadius: 6
+      },
+      {
+        label: 'Mass market (Brevo)',
+        data: [2,2,3,4,3],
+        borderColor: '#EF9F27',
+        backgroundColor: 'rgba(239,159,39,0.10)',
+        borderWidth: 2,
+        pointBackgroundColor: '#EF9F27',
+        pointRadius: 4,
+        pointHoverRadius: 6
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      r: {
+        min: 0,
+        max: 5,
+        ticks: {
+          stepSize: 1,
+          color: tickColor,
+          font: { size: 11 },
+          backdropColor: 'transparent'
+        },
+        grid: { color: gridColor },
+        angleLines: { color: gridColor },
+        pointLabels: {
+          color: labelColor,
+          font: { size: 13, weight: '500' }
+        }
+      }
+    }
+  }
+});
+</script>

@@ -922,14 +922,17 @@ THEME_CSS_OPPY_AI = """@import url('https://fonts.googleapis.com/css2?family=Int
 /* Titres — Montserrat */
 h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
 
-/* Hero Waves Pins — position fixe sur tout le site (parallaxe au scroll) */
+/* Hero Waves Pins — 100 % viewport, position fixe sur tout le site (parallaxe au scroll), sans console */
 .hero-bg-waves-pins,
 .hero-bg-waves-pins--site-wide {
   position: fixed !important;
+  inset: 0 !important;
   top: 0 !important;
   left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
   min-width: 100vw !important;
   min-height: 100vh !important;
   z-index: 0 !important;
@@ -938,10 +941,13 @@ h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
 }
 .hero-bg-waves-pins canvas {
   position: absolute !important;
+  inset: 0 !important;
   top: 0 !important;
   left: 0 !important;
   width: 100% !important;
   height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
   display: block !important;
 }
 /* CodePen iframe — plein écran, fond fixe */
@@ -979,6 +985,62 @@ body:has(.hero-bg-waves-pins) .alert-banner {
   color: var(--lp-text-on-dark) !important;
 }
 .cta-wrap { background: var(--lp-block-bg) !important; color: var(--lp-text-on-dark) !important; }
+
+/* Infographies intercalées (iframes / SVG) — bordure cyan, lisible sur fond sombre */
+.oppy-infog-block {
+  margin: 1.5rem auto;
+  max-width: min(100%, 960px);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--lp-border);
+  background: var(--oppy-surface);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+.oppy-infog-block figcaption,
+.oppy-infog-caption {
+  padding: 0.65rem 1rem 1rem;
+  font-size: 0.88rem;
+  color: var(--lp-muted) !important;
+  margin: 0 !important;
+  border-top: 1px solid var(--lp-border);
+  background: rgba(0, 0, 0, 0.2);
+}
+.oppy-infog-embed {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  height: clamp(320px, 52vw, 520px);
+}
+.oppy-infog-embed--compact { min-height: 280px; height: clamp(280px, 45vw, 440px); }
+.oppy-infog-embed--tall { min-height: 380px; height: clamp(380px, 58vw, 600px); }
+.oppy-infog-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--oppy-surface);
+}
+.oppy-infog-svg-wrap {
+  padding: 1rem;
+  text-align: center;
+  background: var(--oppy-surface);
+}
+.oppy-infog-svg-wrap img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+.oppy-infog-seo-row {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0 0;
+}
+@media (min-width: 768px) {
+  .oppy-infog-seo-row { grid-template-columns: 1fr 1fr; align-items: start; }
+}
 """
 
 # Slug → (theme dict, theme_css string) pour injection côté vue

@@ -1,0 +1,121 @@
+
+<style>
+.wf-wrap{padding:1rem 0;}
+.wf-params{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:1.25rem;margin-bottom:1rem;}
+.wf-ptitle{font-size:12px;font-weight:500;color:var(--color-text-secondary);letter-spacing:.07em;text-transform:uppercase;margin-bottom:1rem;}
+.wf-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.wf-lbl{font-size:13px;color:var(--color-text-secondary);min-width:190px;}
+.wf-val{font-size:13px;font-weight:500;min-width:68px;text-align:right;color:var(--color-text-primary);}
+.wf-funnel{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;}
+.wf-stage{display:flex;align-items:center;gap:12px;}
+.wf-bar-wrap{flex:1;height:44px;position:relative;display:flex;align-items:center;}
+.wf-bar{height:100%;border-radius:var(--border-radius-md);transition:width .4s ease;display:flex;align-items:center;padding:0 14px;box-sizing:border-box;min-width:120px;}
+.wf-bar-label{font-size:13px;font-weight:500;white-space:nowrap;}
+.wf-bar-count{font-size:11px;margin-left:8px;opacity:.75;white-space:nowrap;}
+.wf-stage-name{font-size:12px;color:var(--color-text-secondary);min-width:130px;text-align:right;}
+.wf-rate{font-size:11px;color:var(--color-text-secondary);min-width:44px;text-align:center;}
+.wf-arrow{font-size:14px;color:var(--color-text-secondary);min-width:16px;text-align:center;}
+.wf-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+.wf-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem 1rem;}
+.wf-card-lbl{font-size:11px;color:var(--color-text-secondary);letter-spacing:.05em;margin-bottom:4px;}
+.wf-card-val{font-size:22px;font-weight:500;color:var(--color-text-primary);}
+</style>
+
+<div class="wf-wrap">
+<div class="wf-params">
+  <div class="wf-ptitle">Paramètres objectif</div>
+  <div class="wf-row">
+    <span class="wf-lbl">Objectif nouveau CA annuel (€)</span>
+    <input type="range" min="500000" max="5000000" step="100000" value="1000000" id="wf-ca" style="flex:1" oninput="wfCalc()">
+    <span class="wf-val" id="wf-v-ca">1 000 000 €</span>
+  </div>
+  <div class="wf-row">
+    <span class="wf-lbl">ACV moyen (€)</span>
+    <input type="range" min="10000" max="200000" step="5000" value="50000" id="wf-acv" style="flex:1" oninput="wfCalc()">
+    <span class="wf-val" id="wf-v-acv">50 000 €</span>
+  </div>
+  <div class="wf-row">
+    <span class="wf-lbl">Taux closing Opport. → Vente (%)</span>
+    <input type="range" min="5" max="50" step="1" value="20" id="wf-r1" style="flex:1" oninput="wfCalc()">
+    <span class="wf-val" id="wf-v-r1">20 %</span>
+  </div>
+  <div class="wf-row">
+    <span class="wf-lbl">Taux SQL → Démo (%)</span>
+    <input type="range" min="10" max="80" step="1" value="50" id="wf-r2" style="flex:1" oninput="wfCalc()">
+    <span class="wf-val" id="wf-v-r2">50 %</span>
+  </div>
+  <div class="wf-row">
+    <span class="wf-lbl">Taux MQL → SQL (%)</span>
+    <input type="range" min="3" max="40" step="1" value="10" id="wf-r3" style="flex:1" oninput="wfCalc()">
+    <span class="wf-val" id="wf-v-r3">10 %</span>
+  </div>
+</div>
+
+<div class="wf-funnel" id="wf-funnel"></div>
+
+<div class="wf-result">
+  <div class="wf-card">
+    <div class="wf-card-lbl">LEADS MQL / MOIS</div>
+    <div class="wf-card-val" id="wf-mql-mo" style="color:#378ADD;">—</div>
+  </div>
+  <div class="wf-card">
+    <div class="wf-card-lbl">VENTES / MOIS</div>
+    <div class="wf-card-val" id="wf-deals-mo" style="color:#1D9E75;">—</div>
+  </div>
+</div>
+</div>
+
+<script>
+function fmtEur(n){return Math.round(n).toLocaleString('fr-FR')+' €';}
+function fmtN(n){return Math.round(n).toLocaleString('fr-FR');}
+
+function wfCalc(){
+  const ca=+document.getElementById('wf-ca').value;
+  const acv=+document.getElementById('wf-acv').value;
+  const r1=+document.getElementById('wf-r1').value/100;
+  const r2=+document.getElementById('wf-r2').value/100;
+  const r3=+document.getElementById('wf-r3').value/100;
+
+  document.getElementById('wf-v-ca').textContent=fmtEur(ca);
+  document.getElementById('wf-v-acv').textContent=fmtEur(acv);
+  document.getElementById('wf-v-r1').textContent=Math.round(r1*100)+' %';
+  document.getElementById('wf-v-r2').textContent=Math.round(r2*100)+' %';
+  document.getElementById('wf-v-r3').textContent=Math.round(r3*100)+' %';
+
+  const deals=ca/acv;
+  const opps=deals/r1;
+  const sqls=opps/r2;
+  const mqls=sqls/r3;
+
+  const stages=[
+    {name:'Ventes (Closed Won)',val:deals,color:'#085041',text:'#9FE1CB',rate:''},
+    {name:'Opportunités (négociation)',val:opps,color:'#0F6E56',text:'#9FE1CB',rate:Math.round(r1*100)+'% closing'},
+    {name:'Démos / SQL',val:sqls,color:'#185FA5',text:'#B5D4F4',rate:Math.round(r2*100)+'% transfo'},
+    {name:'Leads MQL (bruts)',val:mqls,color:'#0C447C',text:'#85B7EB',rate:Math.round(r3*100)+'% qualif'}
+  ];
+
+  const maxVal=mqls;
+  const minPct=18;
+  let html='';
+  stages.forEach((s,i)=>{
+    const pct=Math.max(minPct,Math.round((s.val/maxVal)*100));
+    html+=`<div class="wf-stage">
+      <span class="wf-stage-name">${s.name}</span>
+      <div class="wf-bar-wrap">
+        <div class="wf-bar" style="width:${pct}%;background:${s.color};">
+          <span class="wf-bar-label" style="color:${s.text};">${fmtN(s.val)}</span>
+          <span class="wf-bar-count" style="color:${s.text};">${i===0?'/ an':i===3?'/ an':''}</span>
+        </div>
+      </div>
+      <span class="wf-rate">${s.rate}</span>
+    </div>`;
+    if(i<stages.length-1){
+      html+=`<div class="wf-stage"><span class="wf-stage-name"></span><div style="padding-left:8px;font-size:18px;color:var(--color-text-secondary);">↓</div><span class="wf-rate"></span></div>`;
+    }
+  });
+  document.getElementById('wf-funnel').innerHTML=html;
+  document.getElementById('wf-mql-mo').textContent=fmtN(mqls/12)+' / mois';
+  document.getElementById('wf-deals-mo').textContent=fmtN(deals/12)+' / mois';
+}
+wfCalc();
+</script>

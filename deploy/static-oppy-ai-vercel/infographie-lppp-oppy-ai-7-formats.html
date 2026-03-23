@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infographie — OPPORTUNITY (Oppy.ai) — LPPP</title>
+  <style>
+    :root {
+      --navy: #0a1628;
+      --ink: #0f1f35;
+      --text: #e8eef7;
+      --muted: #8fa3bc;
+      --accent: #00c853;
+      --warn: #ffb020;
+      --line: rgba(255,255,255,0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "DM Sans", system-ui, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      line-height: 1.55;
+      padding: 2rem 1rem 3rem;
+    }
+    .wrap { max-width: 880px; margin: 0 auto; }
+    h1 {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin: 0 0 0.5rem;
+    }
+    .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    section {
+      background: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      margin: 0 0 1rem;
+    }
+    .grid2 { display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) { .grid2 { grid-template-columns: 1fr; } }
+    .swot { font-size: 0.9rem; }
+    .swot strong { color: var(--warn); }
+    ul { margin: 0; padding-left: 1.1rem; }
+    li { margin-bottom: 0.35rem; }
+    .funnel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .funnel div {
+      padding: 0.6rem 0.85rem;
+      background: rgba(0,200,83,0.12);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+    }
+    .comp {
+      font-size: 0.85rem;
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border: 1px solid var(--line); padding: 0.45rem 0.5rem; text-align: left; }
+    th { color: var(--muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    footer { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>OPPORTUNITY (Oppy.ai)</h1>
+    <p class="sub">Infographie de synthèse — étude LPPP (Growth &amp; Acquisition). Données indicatives : valider en entretien.</p>
+
+    <section>
+      <h2>Identité &amp; marché</h2>
+      <p class="swot">CIM — orchestration SMS, RCS, vidéo, voicebot. Cible : <strong>grands comptes</strong> (banque, assurance, télécom, retail). Pivot <strong>éditeur SaaS</strong> : industrialiser l’acquisition au-delà du seul réseau dirigeants.</p>
+    </section>
+
+    <section>
+      <h2>SWOT (résumé)</h2>
+      <div class="grid2">
+        <div class="swot"><strong>Forces</strong><ul><li>20+ ans d’expertise, clients premium</li><li>IA + canaux conversationnels</li><li>~25 M€ CA, croissance</li><li>Ecovadis Gold</li></ul></div>
+        <div class="swot"><strong>Faiblesses</strong><ul><li>Silos marketing / sales</li><li>Stack marketing à structurer</li><li>Dépendance encore « humaine » sur le pipe</li></ul></div>
+        <div class="swot"><strong>Opportunités</strong><ul><li>Pivot SaaS &amp; revenus récurrents</li><li>Machine à leads automatisée</li><li>RCS, IA générative</li></ul></div>
+        <div class="swot"><strong>Menaces</strong><ul><li>Concurrence agile no-code / PME</li><li>RGPD, délivrabilité</li><li>Cycles longs grands comptes</li></ul></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Reverse waterfall (simulation 1 M€)</h2>
+      <p style="font-size:0.9rem;color:var(--muted);margin:0 0 1rem;">ACV ~50 k€ → 20 signatures/an ; taux indicatifs : 10 % MQL→SQL, 50 % SQL→opp, 20 % closing.</p>
+      <div class="funnel">
+        <div><strong>2 000</strong> leads ciblés / an</div>
+        <div><strong>200</strong> SQL (démos qualifiées)</div>
+        <div><strong>100</strong> opportunités sérieuses</div>
+        <div><strong>20</strong> signatures</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Radar — levier GAM</h2>
+      <p class="swot">OPPORTUNITY : très fort sur <strong>conformité / RSE</strong> et <strong>multicanalité IA</strong> ; moins sur <strong>agilité du stack marketing</strong> — axe où un profil Growth + automation remonte la courbe.</p>
+    </section>
+
+    <section>
+      <h2>Concurrents (scores indicatifs étude)</h2>
+      <div class="comp">
+        <table>
+          <thead><tr><th>Acteur</th><th>IA (D1-X)</th><th>RSE (D1-Y)</th><th>Scale</th><th>Agilité</th></tr></thead>
+          <tbody>
+            <tr><td>OPPORTUNITY</td><td>95</td><td>98</td><td>85</td><td>45</td></tr>
+            <tr><td>Twilio</td><td>90</td><td>50</td><td>98</td><td>30</td></tr>
+            <tr><td>Brevo</td><td>40</td><td>60</td><td>60</td><td>90</td></tr>
+            <tr><td>Hubspot</td><td>60</td><td>70</td><td>50</td><td>95</td></tr>
+            <tr><td>Sinch</td><td>80</td><td>60</td><td>95</td><td>25</td></tr>
+            <tr><td>Vocalcom</td><td>55</td><td>90</td><td>80</td><td>40</td></tr>
+            <tr><td>MessageBird</td><td>70</td><td>55</td><td>80</td><td>75</td></tr>
+            <tr><td>Gupshup</td><td>85</td><td>45</td><td>75</td><td>60</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Roadmap 90 jours</h2>
+      <ul class="swot">
+        <li><strong>J+30</strong> — Audit Marketing→CRM, fermeture des fuites, socle n8n.</li>
+        <li><strong>J+60</strong> — Enrichissement automatisé (Python/OSINT), ~+20 % temps gagné prospection.</li>
+        <li><strong>J+90</strong> — Scale multicanal ; 15–20 opportunités « high interest » / mois.</li>
+      </ul>
+    </section>
+
+    <footer>LPPP — Document dérivé de <code>etude-oppy-ai-source.md</code>. URL d’asset : <code>/p/lppp-oppy-ai/assets/infographie-lppp-oppy-ai-7-formats.html</code></footer>
+  </div>
+</body>
+</html>

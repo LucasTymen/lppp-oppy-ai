@@ -1,0 +1,111 @@
+
+<div style="padding:1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:50%;background:#1D9E75;display:inline-block;"></span>Opportunity (cible)</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:50%;background:#378ADD;display:inline-block;"></span>Géants CPaaS</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:50%;background:#EF9F27;display:inline-block;"></span>Marketing automation</span>
+  <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:50%;background:#888780;display:inline-block;"></span>Spécialistes métiers</span>
+</div>
+<div style="position:relative;width:100%;height:460px;">
+  <canvas id="mapChart"></canvas>
+</div>
+<div id="map-tooltip" style="display:none;background:var(--color-background-primary);border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;color:var(--color-text-primary);position:absolute;pointer-events:none;max-width:200px;z-index:10;"></div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const isDark=matchMedia('(prefers-color-scheme: dark)').matches;
+const gridC=isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.07)';
+const tickC=isDark?'rgba(255,255,255,0.4)':'rgba(0,0,0,0.4)';
+const lblC=isDark?'#c2c0b6':'#3d3d3a';
+
+const actors=[
+  {label:'Opportunity',x:4.6,y:4.7,r:22,bg:'rgba(29,158,117,0.85)',border:'#085041',desc:'20 ans d\'expertise · Ecovadis Gold · IA Vidéo · 100% joignabilité'},
+  {label:'Twilio',x:4.2,y:2.8,r:18,bg:'rgba(55,138,221,0.75)',border:'#0C447C',desc:'Leader API SMS/Voice · Fort tech · Faible accompagnement'},
+  {label:'Vonage',x:3.8,y:2.5,r:14,bg:'rgba(55,138,221,0.65)',border:'#0C447C',desc:'CPaaS global · Bonne infra · Peu de différenciation IA'},
+  {label:'Sinch',x:3.5,y:2.2,r:13,bg:'rgba(55,138,221,0.55)',border:'#185FA5',desc:'Spécialiste SMS · Croissance acquisitions'},
+  {label:'Brevo',x:2.2,y:2.0,r:15,bg:'rgba(239,159,39,0.75)',border:'#633806',desc:'Mass market · Agile · Limité Grands Comptes'},
+  {label:'HubSpot',x:2.5,y:2.4,r:14,bg:'rgba(239,159,39,0.65)',border:'#633806',desc:'CRM + Marketing · SMB/Mid-market · Peu de multicanal IA'},
+  {label:'Premières Lignes',x:1.8,y:3.2,r:11,bg:'rgba(136,135,128,0.7)',border:'#444441',desc:'Agence flux · Grands Comptes · Pas SaaS scalable'},
+  {label:'Capa Prod',x:1.6,y:3.0,r:10,bg:'rgba(136,135,128,0.65)',border:'#444441',desc:'Spécialiste métier · Conforme · Faible techno IA'}
+];
+
+const chart=new Chart(document.getElementById('mapChart'),{
+  type:'bubble',
+  data:{
+    datasets: actors.map(a=>({
+      label:a.label,
+      data:[{x:a.x,y:a.y,r:a.r}],
+      backgroundColor:a.bg,
+      borderColor:a.border,
+      borderWidth:1.5
+    }))
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{enabled:false}
+    },
+    scales:{
+      x:{
+        min:1,max:5.4,
+        title:{display:true,text:'Sophistication technologique  →  Basic SMS → IA Vidéo multi-canal',color:lblC,font:{size:12}},
+        grid:{color:gridC},
+        ticks:{color:tickC,font:{size:11},callback:v=>({1:'SMS basique',2:'Multi-canal',3:'Automation',4:'IA vocal',5:'IA Vidéo'}[v]||'')}
+      },
+      y:{
+        min:1,max:5.4,
+        title:{display:true,text:'Segment de marché  →  PME → Grands Comptes Enterprise',color:lblC,font:{size:12}},
+        grid:{color:gridC},
+        ticks:{color:tickC,font:{size:11},callback:v=>({1:'PME',2:'Mid-market',3:'ETI',4:'GC',5:'Fortune 500'}[v]||'')}
+      }
+    },
+    layout:{padding:{top:20,right:20}}
+  }
+});
+
+const canvas=document.getElementById('mapChart');
+const tooltip=document.getElementById('map-tooltip');
+
+canvas.addEventListener('mousemove',e=>{
+  const rect=canvas.getBoundingClientRect();
+  const pts=chart.getElementsAtEventForMode(e,'nearest',{intersect:true},false);
+  if(pts.length){
+    const idx=pts[0].datasetIndex;
+    const a=actors[idx];
+    tooltip.style.display='block';
+    tooltip.style.left=(e.clientX-rect.left+12)+'px';
+    tooltip.style.top=(e.clientY-rect.top-10)+'px';
+    tooltip.innerHTML=`<div style="font-weight:500;margin-bottom:4px;">${a.label}</div><div style="color:var(--color-text-secondary);">${a.desc}</div>`;
+  } else {
+    tooltip.style.display='none';
+  }
+});
+canvas.addEventListener('mouseleave',()=>{tooltip.style.display='none';});
+
+const meta=chart.getDatasetMeta(0);
+chart.data.datasets.forEach((ds,i)=>{
+  const actor=actors[i];
+  chart.data.datasets[i]._actorLabel=actor.label;
+});
+
+chart.options.animation={onComplete:()=>{
+  const ctx=chart.ctx;
+  ctx.save();
+  chart.data.datasets.forEach((ds,i)=>{
+    const meta=chart.getDatasetMeta(i);
+    if(!meta.hidden&&meta.data[0]){
+      const pt=meta.data[0];
+      const a=actors[i];
+      ctx.fillStyle=isDark?'#e8e6de':'#2C2C2A';
+      ctx.font='500 12px sans-serif';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText(a.label,pt.x,pt.y-a.r-10);
+    }
+  });
+  ctx.restore();
+}};
+chart.update();
+</script>

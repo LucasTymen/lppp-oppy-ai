@@ -1,0 +1,150 @@
+
+<style>
+.rgc-wrap { padding: 1rem 0; font-family: var(--font-sans); }
+.rgc-section { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 1.25rem; margin-bottom: 1rem; }
+.rgc-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1rem; }
+.rgc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.rgc-label { font-size: 13px; color: var(--color-text-secondary); min-width: 180px; }
+.rgc-val { font-size: 13px; font-weight: 500; min-width: 72px; text-align: right; color: var(--color-text-primary); }
+.rgc-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 1rem; }
+.rgc-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; }
+.rgc-card-label { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px; letter-spacing: 0.05em; }
+.rgc-card-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.rgc-card-val.danger { color: #A32D2D; }
+.rgc-card-val.success { color: #3B6D11; }
+.rgc-gap-bar { height: 10px; border-radius: 5px; background: var(--color-border-tertiary); overflow: hidden; margin-bottom: 6px; }
+.rgc-gap-fill { height: 100%; border-radius: 5px; background: #E24B4A; transition: width 0.4s ease; }
+.rgc-gap-fill.green { background: #639922; }
+.rgc-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.rgc-scenario { border-radius: var(--border-radius-md); padding: 1rem; border: 0.5px solid var(--color-border-tertiary); }
+.rgc-scenario.before { background: #FCEBEB; border-color: #F09595; }
+.rgc-scenario.after { background: #EAF3DE; border-color: #97C459; }
+.rgc-scenario-label { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; margin-bottom: 8px; }
+.rgc-scenario.before .rgc-scenario-label { color: #791F1F; }
+.rgc-scenario.after .rgc-scenario-label { color: #27500A; }
+.rgc-scenario-num { font-size: 20px; font-weight: 500; }
+.rgc-scenario.before .rgc-scenario-num { color: #A32D2D; }
+.rgc-scenario.after .rgc-scenario-num { color: #3B6D11; }
+.rgc-scenario-sub { font-size: 12px; margin-top: 4px; }
+.rgc-scenario.before .rgc-scenario-sub { color: #993535; }
+.rgc-scenario.after .rgc-scenario-sub { color: #3B6D11; }
+.rgc-gap-box { background: var(--color-background-primary); border: 1.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
+.rgc-gap-val { font-size: 28px; font-weight: 500; color: #A32D2D; }
+.rgc-gap-label { font-size: 13px; color: var(--color-text-secondary); max-width: 220px; text-align: right; }
+</style>
+
+<div class="rgc-wrap">
+  <div class="rgc-section">
+    <div class="rgc-title">Paramètres business</div>
+
+    <div class="rgc-row">
+      <span class="rgc-label">Visiteurs qualifiés / mois</span>
+      <input type="range" min="1000" max="50000" step="500" value="10000" id="visitors" style="flex:1" oninput="calc()">
+      <span class="rgc-val" id="v-visitors">10 000</span>
+    </div>
+    <div class="rgc-row">
+      <span class="rgc-label">ACV moyen (€)</span>
+      <input type="range" min="5000" max="150000" step="5000" value="50000" id="acv" style="flex:1" oninput="calc()">
+      <span class="rgc-val" id="v-acv">50 000 €</span>
+    </div>
+    <div class="rgc-row">
+      <span class="rgc-label">Taux de closing (%)</span>
+      <input type="range" min="5" max="40" step="1" value="10" id="closing" style="flex:1" oninput="calc()">
+      <span class="rgc-val" id="v-closing">10 %</span>
+    </div>
+    <div class="rgc-row">
+      <span class="rgc-label">Friction actuelle (perte SEO)</span>
+      <input type="range" min="10" max="60" step="1" value="20" id="friction" style="flex:1" oninput="calc()">
+      <span class="rgc-val" id="v-friction">20 %</span>
+    </div>
+  </div>
+
+  <div class="rgc-section">
+    <div class="rgc-title">Taux de conversion</div>
+    <div class="rgc-compare">
+      <div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">Site actuel (non optimisé)</div>
+        <div class="rgc-row" style="margin-bottom:4px;">
+          <input type="range" min="0.5" max="10" step="0.5" value="2" id="cvr-low" style="flex:1" oninput="calc()">
+          <span class="rgc-val" id="v-cvr-low" style="color:#A32D2D;">2,0 %</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px;">Après optimisation (ta mission)</div>
+        <div class="rgc-row" style="margin-bottom:4px;">
+          <input type="range" min="0.5" max="10" step="0.5" value="5" id="cvr-high" style="flex:1" oninput="calc()">
+          <span class="rgc-val" id="v-cvr-high" style="color:#3B6D11;">5,0 %</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rgc-section">
+    <div class="rgc-title">Résultats</div>
+    <div class="rgc-compare" style="margin-bottom:1rem;">
+      <div class="rgc-scenario before">
+        <div class="rgc-scenario-label">AVANT — site actuel</div>
+        <div class="rgc-scenario-num" id="r-ca-low">—</div>
+        <div class="rgc-scenario-sub" id="r-leads-low">—</div>
+      </div>
+      <div class="rgc-scenario after">
+        <div class="rgc-scenario-label">APRÈS — optimisé</div>
+        <div class="rgc-scenario-num" id="r-ca-high">—</div>
+        <div class="rgc-scenario-sub" id="r-leads-high">—</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:6px;font-size:12px;color:var(--color-text-secondary);">Impact de la friction technique (perte immédiate)</div>
+    <div class="rgc-gap-bar"><div class="rgc-gap-fill" id="bar-friction" style="width:20%"></div></div>
+    <div style="font-size:12px;color:#A32D2D;margin-bottom:14px;" id="r-friction-loss">—</div>
+
+    <div class="rgc-gap-box">
+      <div>
+        <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Revenue Gap annuel</div>
+        <div class="rgc-gap-val" id="r-gap">—</div>
+      </div>
+      <div class="rgc-gap-label" id="r-gap-label">Différence de CA entre site non optimisé et optimisé</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function fmt(n) { return n.toLocaleString('fr-FR') + ' €'; }
+function fmtN(n) { return n.toLocaleString('fr-FR'); }
+
+function calc() {
+  const visitors = +document.getElementById('visitors').value;
+  const acv = +document.getElementById('acv').value;
+  const closing = +document.getElementById('closing').value / 100;
+  const friction = +document.getElementById('friction').value / 100;
+  const cvrLow = +document.getElementById('cvr-low').value / 100;
+  const cvrHigh = +document.getElementById('cvr-high').value / 100;
+
+  document.getElementById('v-visitors').textContent = fmtN(visitors);
+  document.getElementById('v-acv').textContent = fmtN(acv) + ' €';
+  document.getElementById('v-closing').textContent = Math.round(closing * 100) + ' %';
+  document.getElementById('v-friction').textContent = Math.round(friction * 100) + ' %';
+  document.getElementById('v-cvr-low').textContent = (cvrLow * 100).toFixed(1).replace('.',',') + ' %';
+  document.getElementById('v-cvr-high').textContent = (cvrHigh * 100).toFixed(1).replace('.',',') + ' %';
+
+  const leadsLow = Math.round(visitors * cvrLow);
+  const leadsHigh = Math.round(visitors * cvrHigh);
+  const dealsLow = Math.round(leadsLow * closing);
+  const dealsHigh = Math.round(leadsHigh * closing);
+  const caLow = dealsLow * acv * 12;
+  const caHigh = dealsHigh * acv * 12;
+  const frictionLoss = Math.round(caLow * friction);
+  const gap = caHigh - caLow;
+
+  document.getElementById('r-ca-low').textContent = fmt(caLow);
+  document.getElementById('r-leads-low').textContent = fmtN(leadsLow) + ' leads/mois · ' + fmtN(dealsLow) + ' deals/mois';
+  document.getElementById('r-ca-high').textContent = fmt(caHigh);
+  document.getElementById('r-leads-high').textContent = fmtN(leadsHigh) + ' leads/mois · ' + fmtN(dealsHigh) + ' deals/mois';
+  document.getElementById('r-friction-loss').textContent = '−' + fmt(frictionLoss) + ' de CA perdu / an à cause de la friction';
+  document.getElementById('bar-friction').style.width = Math.min(100, Math.round(friction * 100)) + '%';
+  document.getElementById('r-gap').textContent = fmt(gap);
+  document.getElementById('r-gap-label').textContent = 'soit ' + fmt(gap / 12) + '/mois de CA non généré';
+}
+
+calc();
+</script>
