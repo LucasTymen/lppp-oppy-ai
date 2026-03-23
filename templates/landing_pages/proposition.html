@@ -746,6 +746,27 @@
             font-size: 1.05rem;
         }
 
+        /* LPPP Oppy — section 02 : roadmap (même contenu que solution_workflow, bloc mis en avant) */
+        .oppy-roadmap-card {
+            max-width: min(100%, 980px);
+            margin: 0 auto;
+            padding: clamp(1.15rem, 3vw, 1.65rem) clamp(1.15rem, 3.5vw, 1.85rem);
+            background: linear-gradient(155deg, rgba(21, 21, 21, 0.96) 0%, rgba(12, 22, 30, 0.94) 100%);
+            border: 1px solid color-mix(in srgb, var(--lp-primary, #00C9D4) 50%, transparent);
+            border-radius: 14px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.38), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+        }
+        .oppy-roadmap-card__text {
+            margin: 0;
+            font-size: clamp(0.95rem, 2.1vw, 1.06rem);
+            line-height: 1.68;
+            color: var(--lp-text-on-dark, #f5f5f5);
+            font-weight: 400;
+        }
+        @media (max-width: 480px) {
+            .oppy-roadmap-card { padding: 1rem 1rem; }
+        }
+
         .cta-wrap {
             padding: var(--lp-section-padding) 1.5rem;
             text-align: center;
@@ -1254,12 +1275,19 @@
             </div>
             {% else %}
             {# Autres landings : comportement classique #}
+            {% if landing_page.slug == 'lppp-oppy-ai' and content.solution_workflow %}
+            <article class="oppy-roadmap-card" id="roadmap-solution" role="region" aria-label="Roadmap 90 jours, étude OPPORTUNITY">
+                <h3 class="sr-only">Roadmap 90 jours (étude)</h3>
+                <p class="oppy-roadmap-card__text">{{ content.solution_workflow }}</p>
+            </article>
+            {% else %}
             <div class="card">
                 <p>{{ content.solution_workflow|default:content.positionnement }}</p>
                 {% if content.workflow_image_url %}
                 <figure class="workflow-figure"><img src="{{ content.workflow_image_url }}" alt="Workflow" loading="lazy"></figure>
                 {% endif %}
             </div>
+            {% endif %}
             {% if landing_page.slug == 'lppp-oppy-ai' %}
             <figure class="oppy-infog-block" style="margin-top:1.5rem;">
                 <div class="oppy-infog-embed oppy-infog-embed--tall">
