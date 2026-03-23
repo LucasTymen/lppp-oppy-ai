@@ -470,7 +470,14 @@ def seo_audit_dashboard(request, slug):
     if not path.is_file():
         raise Http404("audit-dashboard.json introuvable pour ce projet")
     data = json.loads(path.read_text(encoding="utf-8"))
-    ctx = {"config": data}
+    ctx = {
+        "config": data,
+        "oppy_assets_base": (
+            request.build_absolute_uri("/p/lppp-oppy-ai/assets/")
+            if slug == "lppp-oppy-ai"
+            else ""
+        ),
+    }
 
     # Contexte nav + hero : charger landing et content pour afficher navbar fixe et hero
     lp = LandingPage.objects.filter(slug=slug).first()

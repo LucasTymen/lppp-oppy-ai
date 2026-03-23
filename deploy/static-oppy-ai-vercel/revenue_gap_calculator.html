@@ -1,5 +1,25 @@
-
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculateur revenue gap · Oppy.ai</title>
 <style>
+:root {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --color-text-primary: #e8e6de;
+  --color-text-secondary: #9c9a92;
+  --color-background-primary: #0d0f14;
+  --color-background-secondary: #13161e;
+  --color-border-tertiary: rgba(255,255,255,0.12);
+  --border-radius-md: 10px;
+  --border-radius-lg: 14px;
+}
+body { margin: 0; background: var(--color-background-primary); color: var(--color-text-primary); font-family: var(--font-sans); padding: 2rem; }
+.oppy-lvh-nav { position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.65rem; margin: -2rem -2rem 1.25rem -2rem; padding: 0.55rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.12); background: rgba(13, 15, 20, 0.94); backdrop-filter: blur(10px); }
+.oppy-lvh-nav a { color: var(--color-text-secondary); text-decoration: none; font-size: 12px; padding: 0.28rem 0.55rem; border-radius: 8px; border: 1px solid transparent; }
+.oppy-lvh-nav a:hover { color: var(--color-text-primary); border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.04); }
+.oppy-lvh-nav .oppy-lvh-brand { font-weight: 700; color: var(--color-text-primary); }
 .rgc-wrap { padding: 1rem 0; font-family: var(--font-sans); }
 .rgc-section { background: var(--color-background-secondary); border-radius: var(--border-radius-lg); border: 0.5px solid var(--color-border-tertiary); padding: 1.25rem; margin-bottom: 1rem; }
 .rgc-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1rem; }
@@ -32,7 +52,15 @@
 .rgc-gap-val { font-size: 28px; font-weight: 500; color: #A32D2D; }
 .rgc-gap-label { font-size: 13px; color: var(--color-text-secondary); max-width: 220px; text-align: right; }
 </style>
-
+</head>
+<body>
+<nav class="oppy-lvh-nav" aria-label="Navigation LPPP OPPORTUNITY">
+  <a class="oppy-lvh-brand" href="../">← Accueil LPPP</a>
+  <a href="../#infographies-audit">Section dashboard</a>
+  <a href="infographies-oppy-ai.html">Kit 8 composants</a>
+  <a href="positionnement-marketing.html">Positionnement</a>
+  <a href="../rapport/">Rapport</a>
+</nav>
 <div class="rgc-wrap">
   <div class="rgc-section">
     <div class="rgc-title">Paramètres business</div>
@@ -148,3 +176,5 @@ function calc() {
 
 calc();
 </script>
+</body>
+</html>

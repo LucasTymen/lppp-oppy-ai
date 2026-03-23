@@ -14,6 +14,7 @@
         .top-nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 0.25rem 0.5rem; border-radius: 8px; border: 1px solid transparent; }
         .top-nav a:hover, .top-nav a:focus-visible { color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.04); outline: none; }
         .top-nav .brand { color: var(--text); font-weight: 700; letter-spacing: 0.02em; }
+        .top-nav .nav-sep { color: var(--muted); font-size: 0.75rem; opacity: 0.5; user-select: none; }
         .wrap { max-width: 1000px; margin: 0 auto; }
         h1 { font-size: clamp(1.35rem, 3vw, 1.75rem); font-weight: 700; margin: 0 0 0.5rem; }
         .sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
@@ -29,13 +30,18 @@
     </style>
 </head>
 <body>
-    <nav class="top-nav" aria-label="Navigation secondaire Oppy">
-        <a href="index.html" class="brand">LPPP OPPORTUNITY</a>
+    <nav class="top-nav" aria-label="Navigation LPPP OPPORTUNITY">
+        <a href="../" class="brand">← LPPP OPPORTUNITY</a>
         <div>
-            <a href="index.html#infographies-audit">Accueil</a>
-            <a href="04_dashboard_strategique.html">Dashboard</a>
+            <a href="../">Accueil proposition</a>
+            <span class="nav-sep" aria-hidden="true">·</span>
+            <a href="../#infographies-audit">Section dashboard</a>
+            <span class="nav-sep" aria-hidden="true">·</span>
+            <a href="04_dashboard_strategique.html">Dashboard 04</a>
+            <span class="nav-sep" aria-hidden="true">·</span>
             <a href="positionnement-marketing.html">Positionnement</a>
-            <a href="rapport.html">Rapport</a>
+            <span class="nav-sep" aria-hidden="true">·</span>
+            <a href="../rapport/">Rapport</a>
         </div>
     </nav>
     <div class="wrap">
@@ -81,7 +87,7 @@
                 <p>Maturité acquisition, funnel inversé, North Star et roadmap J+90.</p>
                 <div class="embed">
                     
-                    <iframe src="04_dashboard_strategique.html" title="Dashboard Stratégique" loading="lazy"></iframe>
+                    <iframe src="04_dashboard_strategique.html" title="Dashboard Stratégique" loading="lazy" style="height:min(2200px, 92vh); min-height: 720px;"></iframe>
                     
                 </div>
                 <a href="04_dashboard_strategique.html" class="open" target="_blank" rel="noopener">Ouvrir en plein écran →</a>

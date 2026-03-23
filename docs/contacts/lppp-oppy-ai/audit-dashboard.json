@@ -77,5 +77,27 @@
     { "pct": 34, "label": "J+30 — Fondations", "color": "#ff3b3b", "sub": "Audit flux Marketing→CRM, 0 fuite, socle n8n" },
     { "pct": 33, "label": "J+60 — Valeur Sales", "color": "#b388ff", "sub": "Enrichissement auto, ~+20 % temps prospection" },
     { "pct": 33, "label": "J+90 — Scale", "color": "#00c853", "sub": "15–20 opportunités « high interest » / mois" }
+  ],
+  "roadmap_title": "Roadmap 90 jours (étude)",
+  "roadmap_sub": "Jalons alignés sur l’étude OPPORTUNITY — hypothèses à valider en entretien.",
+  "roadmap_phases": [
+    {
+      "badge": "J+30",
+      "title": "Fondations — audit & socle automation",
+      "desc": "Audit flux Marketing→CRM · fermeture des fuites leads · colonne vertébrale n8n · zéro lead nu chez les commerciaux.",
+      "tags": ["n8n", "CRM audit", "SLA pipeline"]
+    },
+    {
+      "badge": "J+60",
+      "title": "Enrichissement auto — Python / OSINT",
+      "desc": "Enrichissement automatisé des leads (Python / OSINT) · +20 % temps gagné sur la prospection manuelle · scoring avant Sales.",
+      "tags": ["Python", "OSINT", "Lead scoring"]
+    },
+    {
+      "badge": "J+90",
+      "title": "Scale — 15–20 high interest / mois",
+      "desc": "Multicanal scalable · 15 à 20 opportunités « high interest » / mois · pilotage ROI data-driven · reporting automatisé.",
+      "tags": ["Scale", "ROI tracking", "Multicanal"]
+    }
   ]
 }

@@ -71,9 +71,20 @@
     th, td { border: 1px solid var(--line); padding: 0.45rem 0.5rem; text-align: left; }
     th { color: var(--muted); font-weight: 600; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; }
     footer { margin-top: 2rem; font-size: 0.8rem; color: var(--muted); }
+    .oppy-lvh-nav { position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.65rem; margin: -2rem -1rem 1.25rem -1rem; padding: 0.55rem 1rem; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--navy) 94%, transparent); backdrop-filter: blur(8px); }
+    .oppy-lvh-nav a { color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 0.28rem 0.55rem; border-radius: 8px; border: 1px solid transparent; }
+    .oppy-lvh-nav a:hover { color: var(--text); border-color: var(--line); background: rgba(255,255,255,0.04); }
+    .oppy-lvh-nav .oppy-lvh-brand { font-weight: 700; color: var(--text); }
   </style>
 </head>
 <body>
+  <nav class="oppy-lvh-nav" aria-label="Navigation LPPP OPPORTUNITY">
+    <a class="oppy-lvh-brand" href="../">← Accueil LPPP</a>
+    <a href="../#infographies-audit">Section dashboard</a>
+    <a href="infographies-oppy-ai.html">Kit 8 composants</a>
+    <a href="positionnement-marketing.html">Positionnement</a>
+    <a href="../rapport/">Rapport</a>
+  </nav>
   <div class="wrap">
     <h1>OPPORTUNITY (Oppy.ai)</h1>
     <p class="sub">Infographie de synthèse — étude LPPP (Growth &amp; Acquisition). Données indicatives : valider en entretien.</p>

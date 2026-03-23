@@ -84,9 +84,25 @@ h1{font-size:24px;font-weight:700;margin-bottom:6px;}
 .tag-b{background:rgba(55,138,221,0.15);color:var(--blue2);}
 .tag-a{background:rgba(239,159,39,0.15);color:var(--amber2);}
 .tag-t{background:rgba(29,158,117,0.15);color:var(--teal2);}
+/* Nav retour LPPP + lisibilité roadmap */
+.oppy-lvh-nav{position:sticky;top:0;z-index:40;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .65rem;margin:-2rem -2rem 1.25rem -2rem;padding:.55rem 1rem;border-bottom:1px solid var(--border2);background:rgba(13,15,20,.94);backdrop-filter:blur(10px);}
+.oppy-lvh-nav a{color:var(--text2);text-decoration:none;font-size:12px;padding:.28rem .55rem;border-radius:8px;border:1px solid transparent;}
+.oppy-lvh-nav a:hover{color:var(--text);border-color:var(--border2);background:rgba(255,255,255,.04);}
+.oppy-lvh-nav .oppy-lvh-brand{font-weight:700;color:var(--text);border-color:transparent;}
+.timeline .tl-item{align-items:flex-start;}
+.timeline .tl-body{flex:1;min-width:0;}
+.timeline .tl-phase{font-size:13px;font-weight:700;line-height:1.35;}
+.timeline .tl-desc{font-size:12px;color:var(--text2);line-height:1.55;}
 </style>
 </head>
 <body>
+<nav class="oppy-lvh-nav" aria-label="Navigation LPPP OPPORTUNITY">
+  <a class="oppy-lvh-brand" href="../">← Accueil LPPP</a>
+  <a href="../#infographies-audit">Section dashboard</a>
+  <a href="infographies-oppy-ai.html">Kit 8 composants</a>
+  <a href="positionnement-marketing.html">Positionnement</a>
+  <a href="../rapport/">Rapport</a>
+</nav>
 <div class="page">
   <div class="page-header">
     <div class="badge"><span class="badge-dot"></span>Dashboard Stratégique · Oppy.ai</div>
@@ -176,7 +192,7 @@ h1{font-size:24px;font-weight:700;margin-bottom:6px;}
     <div class="timeline">
       <div class="tl-item">
         <div class="tl-dot-wrap"><div class="tl-dot">J30</div></div>
-        <div>
+        <div class="tl-body">
           <div class="tl-phase">Fondations — audit & socle automation</div>
           <div class="tl-desc">Audit flux Marketing→CRM · fermeture des fuites leads · colonne vertébrale n8n · zéro lead nu chez les commerciaux</div>
           <div><span class="tl-tag tag-b">n8n</span><span class="tl-tag tag-b">CRM audit</span><span class="tl-tag tag-b">SLA pipeline</span></div>
@@ -184,7 +200,7 @@ h1{font-size:24px;font-weight:700;margin-bottom:6px;}
       </div>
       <div class="tl-item">
         <div class="tl-dot-wrap"><div class="tl-dot">J60</div></div>
-        <div>
+        <div class="tl-body">
           <div class="tl-phase">Enrichissement auto — Python / OSINT</div>
           <div class="tl-desc">Enrichissement automatisé des leads (Python / OSINT) · +20% temps gagné prospection manuelle · scoring avant Sales</div>
           <div><span class="tl-tag tag-a">Python</span><span class="tl-tag tag-a">OSINT</span><span class="tl-tag tag-a">Lead scoring</span></div>
@@ -192,7 +208,7 @@ h1{font-size:24px;font-weight:700;margin-bottom:6px;}
       </div>
       <div class="tl-item">
         <div class="tl-dot-wrap"><div class="tl-dot">J90</div></div>
-        <div>
+        <div class="tl-body">
           <div class="tl-phase">Scale — 15–20 high interest / mois</div>
           <div class="tl-desc">Multicanal scalable · 15 à 20 opportunités « high interest » / mois · pilotage ROI data-driven · reporting automatisé</div>
           <div><span class="tl-tag tag-t">Scale</span><span class="tl-tag tag-t">ROI tracking</span><span class="tl-tag tag-t">Multicanal</span></div>

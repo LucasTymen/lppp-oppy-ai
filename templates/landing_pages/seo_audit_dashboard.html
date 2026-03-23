@@ -679,6 +679,49 @@ h1 span { color: var(--accent); }
 .dashboard-nav-links a:hover { color: var(--accent); }
 .dashboard-nav-cta { padding: 0.4rem 0.8rem; background: var(--accent); color: #fff; font-weight: 600; font-size: 0.85rem; border-radius: 8px; text-decoration: none; }
 body.has-dashboard-nav .wrapper { padding-top: 52px; }
+/* Roadmap 90 j. (données JSON — ex. lppp-oppy-ai) */
+.roadmap-list { display: flex; flex-direction: column; gap: 0; }
+.rp-item {
+  display: flex;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+  align-items: flex-start;
+}
+.rp-item:last-child { border-bottom: none; }
+.rp-badge {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(0, 200, 83, 0.15);
+  color: var(--ok);
+  border: 1px solid rgba(0, 200, 83, 0.35);
+}
+.rp-item:nth-child(2) .rp-badge { background: rgba(255, 153, 0, 0.12); color: var(--warn); border-color: rgba(255, 153, 0, 0.35); }
+.rp-item:nth-child(3) .rp-badge { background: rgba(79, 195, 247, 0.12); color: var(--blue); border-color: rgba(79, 195, 247, 0.35); }
+.rp-body { flex: 1; min-width: 0; }
+.rp-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 6px; line-height: 1.35; }
+.rp-desc { font-size: 13px; color: var(--muted); line-height: 1.55; margin-bottom: 10px; }
+.rp-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.rp-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
 .dashboard-hero {
   text-align: center;
   padding: 2rem 1rem 3rem;
@@ -710,7 +753,14 @@ body::before { opacity: 0.02; }
     <a href="{% url 'landing_rapport' landing_page.slug %}">Rapport</a>
     {% if landing_page.slug == 'casapy' %}<a href="{% url 'casapy_audit_dashboard' %}">Dashboard</a>{% endif %}
     {% if landing_page.slug == 'promovacances' and content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">Dashboard</a>{% endif %}
+    {% if landing_page.slug == 'lppp-oppy-ai' and oppy_assets_base %}
+    <a href="{{ oppy_assets_base }}infographies-oppy-ai.html">Kit infographies</a>
+    <a href="{{ oppy_assets_base }}positionnement-marketing.html">Positionnement</a>
+    <a href="{% url 'landing_public' landing_page.slug %}#seo-technique-semantique">SEO</a>
+    {% endif %}
+    {% if landing_page.slug != 'lppp-oppy-ai' %}
     <a href="{% url 'landing_prospects' landing_page.slug %}">Prospects</a>
+    {% endif %}
     <a href="{% url 'landing_proposition_value' landing_page.slug %}">Proposition</a>
     {% if content.contact_gmail or content.contact_linkedin %}<a href="{% url 'landing_public' landing_page.slug %}#coordonnees" class="dashboard-nav-cta">Contact</a>{% endif %}
   </div>
@@ -924,6 +974,32 @@ body::before { opacity: 0.02; }
     </div>
   </div>
 
+  {% if config.roadmap_phases %}
+  <div class="block roadmap-block">
+    <div class="section-label">08 / Feuille de route</div>
+    <div class="section-title">{{ config.roadmap_title|default:"Roadmap 90 jours (étude)" }}</div>
+    <div class="section-sub">{{ config.roadmap_sub|default:"Jalons indicatifs — à valider avec la direction." }}</div>
+    <div class="card">
+      <div class="roadmap-list">
+        {% for ph in config.roadmap_phases %}
+        <div class="rp-item">
+          <div class="rp-badge">{% firstof ph.badge ph.key "" %}</div>
+          <div class="rp-body">
+            <div class="rp-title">{{ ph.title }}</div>
+            <div class="rp-desc">{{ ph.desc }}</div>
+            {% if ph.tags %}
+            <div class="rp-tags">
+              {% for t in ph.tags %}<span class="rp-tag">{{ t }}</span>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
 </div><!-- /wrapper -->
 
 <script>
@@ -1004,10 +1080,12 @@ body::before { opacity: 0.02; }
   voidEl.style.width = ((firstTtfb / maxT) * 100) + '%';
   voidEl.style.top = '0px';
   inner.querySelector('.tl-track').appendChild(voidEl);
-  var voidLabel = document.createElement('div');
-  voidLabel.style.cssText = 'position:absolute;left:' + ((firstTtfb/2/maxT*100)) + '%;top:-18px;transform:translateX(-50%);font-family:var(--mono);font-size:9px;color:rgba(255,59,59,0.5);white-space:nowrap';
-  voidLabel.textContent = '← serveur silencieux →';
-  inner.querySelector('.tl-track').appendChild(voidLabel);
+  if (window.AUDIT_CONFIG.theme !== 'lppp-oppy-ai') {
+    var voidLabel = document.createElement('div');
+    voidLabel.style.cssText = 'position:absolute;left:' + ((firstTtfb/2/maxT*100)) + '%;top:-18px;transform:translateX(-50%);font-family:var(--mono);font-size:9px;color:rgba(255,59,59,0.5);white-space:nowrap';
+    voidLabel.textContent = '← serveur silencieux →';
+    inner.querySelector('.tl-track').appendChild(voidLabel);
+  }
 })();
 
 /* 3. LOST REVENUE METER */
