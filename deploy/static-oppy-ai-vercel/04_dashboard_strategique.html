@@ -93,6 +93,12 @@ h1{font-size:24px;font-weight:700;margin-bottom:6px;}
 .timeline .tl-body{flex:1;min-width:0;}
 .timeline .tl-phase{font-size:13px;font-weight:700;line-height:1.35;}
 .timeline .tl-desc{font-size:12px;color:var(--text2);line-height:1.55;}
+/* Embeds : mêmes fichiers que le kit (chemins relatifs, pas de changement d’arborescence) */
+.oppy-embed{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;overflow:hidden;margin-bottom:14px;}
+.oppy-embed h3{margin:0;padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);border-bottom:0.5px solid var(--border);}
+.oppy-embed iframe{width:100%;border:0;display:block;background:#080a0e;}
+.oppy-embed-intro{font-size:12px;color:var(--text2);margin:0 0 12px;line-height:1.55;}
+.oppy-embed-intro a{color:var(--blue2);}
 </style>
 </head>
 <body>
@@ -215,6 +221,27 @@ h1{font-size:24px;font-weight:700;margin-bottom:6px;}
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Cadres stratégiques : réutilisation des HTML existants du dossier (embed) -->
+  <div class="section-title" style="margin-top:1.5rem;">Cadres stratégiques &amp; lecture concurrentielle</div>
+  <p class="oppy-embed-intro">Même contenu que le <a href="infographies-oppy-ai.html">kit infographies</a> — fichiers non déplacés, intégration par iframe ici pour lecture sur cette page.</p>
+
+  <div class="oppy-embed" id="embed-cartographie-2d">
+    <h3>Cartographie concurrentielle 2D</h3>
+    <iframe src="competitive_mapping_2d.html" title="Cartographie concurrentielle 2D" loading="lazy" style="height:min(580px,85vh);"></iframe>
+  </div>
+  <div class="oppy-embed" id="embed-spider">
+    <h3>Spider benchmark (diagramme étoile)</h3>
+    <iframe src="06_spider_benchmark.html" title="Spider benchmark" loading="lazy" style="height:min(520px,80vh);"></iframe>
+  </div>
+  <div class="oppy-embed" id="embed-swot">
+    <h3>SWOT interactif</h3>
+    <iframe src="05_swot_interactif.html" title="SWOT interactif" loading="lazy" style="height:min(560px,82vh);"></iframe>
+  </div>
+  <div class="oppy-embed" id="embed-porter-pestel">
+    <h3>Porter &amp; PESTEL</h3>
+    <iframe src="09_porter_pestel_cadres.html" title="Porter et PESTEL" loading="lazy" style="height:min(640px,90vh);"></iframe>
   </div>
 </div>
 

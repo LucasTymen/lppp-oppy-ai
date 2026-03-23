@@ -284,14 +284,16 @@ class Command(BaseCommand):
             import shutil
             oppy_assets = Path(settings.BASE_DIR) / "docs" / "contacts" / "lppp-oppy-ai"
             out_dir = output_path.parent
-            patterns = [
-                "competitive_mapping_2d.html", "seo_action_plan_timeline.svg",
-                "revenue_gap_calculator.html", "link_juice_flow_diagram.svg",
-                "reverse_waterfall_funnel.html", "radar_chart_positioning.html",
-                "infographie-lppp-oppy-ai-7-formats.html", "positionnement-marketing.html",
-                "waves-pins-hero.js",
-            ]
-            for fname in patterns:
+            # Tous les HTML/SVG du dossier contact : iframes du kit, dashboard 04, Porter/PESTEL, etc.
+            # (un sous-ensemble en liste causait des 404 Vercel sur les fichiers non copiés.)
+            skip_manual_kit = bool(content.get("infographies_oppy"))
+            for ext in ("*.html", "*.svg"):
+                for f in sorted(oppy_assets.glob(ext)):
+                    if skip_manual_kit and f.name == "infographies-oppy-ai.html":
+                        continue
+                    shutil.copy2(f, out_dir / f.name)
+                    self.stdout.write(self.style.SUCCESS(f"  Copié : {f.name}"))
+            for fname in ("waves-pins-hero.js",):
                 f = oppy_assets / fname
                 if f.is_file():
                     shutil.copy2(f, out_dir / fname)

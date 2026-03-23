@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porter &amp; PESTEL — OPPORTUNITY (Oppy.ai)</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--border:rgba(255,255,255,0.1);--text:#e8e6de;--muted:#9c9a92;
+  --teal:#1D9E75;--blue:#378ADD;--amber:#EF9F27;--purple:#7F77DD;--red:#E24B4A;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',system-ui,sans-serif;padding:1.25rem;min-height:100vh;line-height:1.45;font-size:13px;}
+.wrap{max-width:920px;margin:0 auto;}
+h1{font-size:18px;font-weight:700;margin-bottom:4px;}
+.sub{color:var(--muted);font-size:12px;margin-bottom:1.25rem;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1rem 1.1rem;}
+.kicker{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+h2{font-size:14px;font-weight:700;margin-bottom:10px;color:#cfe8ff;}
+.porter{display:flex;flex-direction:column;gap:8px;}
+.p-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);}
+.p-row strong{min-width:118px;font-size:11px;color:var(--amber);}
+.p-row span{font-size:12px;color:var(--muted);}
+.pestel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+@media(max-width:640px){.pestel{grid-template-columns:1fr 1fr;}}
+.pest{display:flex;flex-direction:column;gap:4px;padding:10px;border-radius:8px;background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);}
+.pest b{font-size:11px;color:var(--teal);letter-spacing:.04em;}
+.pest p{font-size:11.5px;color:var(--muted);}
+footer{margin-top:1rem;font-size:11px;color:var(--muted);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Porter &amp; PESTEL — lecture synthétique</h1>
+  <p class="sub">Cadres stratégiques alignés sur l’étude OPPORTUNITY (messaging / CIM / grands comptes) — à affiner en atelier.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="kicker">Porter — 5 forces</div>
+      <h2>Pression concurrentielle &amp; marges</h2>
+      <div class="porter">
+        <div class="p-row"><strong>Rivalité</strong><span>Intense entre CPaaS globaux, MAO et acteurs télécom — différenciation sur conformité &amp; orchestration métier.</span></div>
+        <div class="p-row"><strong>Nouveaux entrants</strong><span>Barrière moyenne (agrégation canaux, conformité) ; le volume d’usage protège un peu les historiques.</span></div>
+        <div class="p-row"><strong>Fournisseurs</strong><span>Dépendance opérateurs / routes ; négociation volume et qualité de délivrabilité.</span></div>
+        <div class="p-row"><strong>Clients</strong><span>Grands comptes exigeants (AO, RSE) — pouvoir de négociation élevé sur prix &amp; SLA.</span></div>
+        <div class="p-row"><strong>Substituts</strong><span>Canaux alternatifs (e-mail, apps) et solutions no-code ; risque de commoditisation du canal.</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">PESTEL — macro</div>
+      <h2>Facteurs externes clés</h2>
+      <div class="pestel">
+        <div class="pest"><b>P</b><p>RGPD, souveraineté données, cadres sectoriels (banque, santé).</p></div>
+        <div class="pest"><b>E</b><p>Pression marge &amp; rationalisation budgets martech B2B.</p></div>
+        <div class="pest"><b>S</b><p>Attentes RSE / éthique expéditeur ; sensibilité spam &amp; consentement.</p></div>
+        <div class="pest"><b>T</b><p>RCS, IA générative, orchestration omnicanal ; dette stack marketing.</p></div>
+        <div class="pest"><b>E (eco)</b><p>Reporting RSE (Ecovadis) dans les réponses à AO.</p></div>
+        <div class="pest"><b>L</b><p>Anti-spam, identification expéditeur, opposabilité des preuves.</p></div>
+      </div>
+    </div>
+  </div>
+  <footer>LPPP — document de travail. Fichier : <code>09_porter_pestel_cadres.html</code></footer>
+</div>
+</body>
+</html>
