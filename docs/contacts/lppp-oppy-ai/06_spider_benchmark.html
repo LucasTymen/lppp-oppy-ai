@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benchmark concurrentiel — toile araignée · Oppy.ai</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8e6de;--text2:#9c9a92;--text3:#6b6965;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.wrap{width:100%;max-width:920px;}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(127,119,221,0.1);border:0.5px solid rgba(127,119,221,0.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:#AFA9EC;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#7F77DD;}
+h2{font-size:22px;font-weight:700;margin-bottom:6px;}
+.sub{font-size:13px;color:var(--text2);margin-bottom:2rem;}
+.main-layout{display:grid;grid-template-columns:1fr 260px;gap:16px;align-items:start;}
+.chart-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:1.5rem;}
+.legend-col{display:flex;flex-direction:column;gap:8px;}
+.legend-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:10px;padding:10px 12px;cursor:pointer;transition:border-color .15s,transform .15s;}
+.legend-card:hover,.legend-card.active{transform:translateX(2px);}
+.legend-header{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.legend-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.legend-name{font-size:12px;font-weight:700;}
+.legend-desc{font-size:10px;color:var(--text3);line-height:1.4;}
+.legend-scores{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;}
+.legend-score{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600;}
+canvas-wrap{position:relative;width:100%;}
+.axis-toggle{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;}
+.axis-btn{background:var(--bg3);border:0.5px solid var(--border2);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--text2);cursor:pointer;transition:all .15s;}
+.axis-btn.on{background:rgba(127,119,221,0.15);border-color:rgba(127,119,221,0.4);color:#AFA9EC;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge"><span class="badge-dot"></span>Benchmark concurrentiel · 6 acteurs</div>
+  <h2>Toile d'araignée — positionnement comparatif</h2>
+  <p class="sub">OPPORTUNITY vs 5 concurrents · 7 axes d'évaluation · cliquez sur un acteur pour l'isoler</p>
+
+  <div class="main-layout">
+    <div class="chart-card">
+      <div style="position:relative;width:100%;height:420px;"><canvas id="spider"></canvas></div>
+      <div class="axis-toggle" id="axis-toggle"></div>
+    </div>
+    <div class="legend-col" id="legend-col"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const axes=['Conformité RSE','Multicanalité IA','Joignabilité','Agilité stack','Proximité SLA','Innovation produit','Scalabilité'];
+
+const actors=[
+  {
+    name:'Opportunity',
+    short:'OPP',
+    data:[5,5,4,2,5,4,3],
+    color:'#1D9E75',
+    bg:'rgba(29,158,117,0.12)',
+    desc:'Leader conformité & SLA · Agilité à renforcer',
+    scores:['RSE ★★★★★','IA ★★★★★','SLA ★★★★★']
+  },
+  {
+    name:'Twilio',
+    short:'TWL',
+    data:[3,4,5,5,2,5,5],
+    color:'#378ADD',
+    bg:'rgba(55,138,221,0.09)',
+    desc:'Leader tech & scale · Faible accompagnement',
+    scores:['Tech ★★★★★','Scale ★★★★★','SLA ★★']
+  },
+  {
+    name:'Vonage',
+    short:'VON',
+    data:[3,3,5,4,2,4,5],
+    color:'#85B7EB',
+    bg:'rgba(133,183,235,0.08)',
+    desc:'CPaaS global · Infra solide · Peu diff. IA',
+    scores:['Infra ★★★★★','IA ★★★','SLA ★★']
+  },
+  {
+    name:'Brevo',
+    short:'BRV',
+    data:[2,2,3,5,3,2,4],
+    color:'#EF9F27',
+    bg:'rgba(239,159,39,0.09)',
+    desc:'Mass market · Très agile · Limité GC',
+    scores:['Stack ★★★★★','GC ★★','IA ★★']
+  },
+  {
+    name:'HubSpot',
+    short:'HUB',
+    data:[2,2,3,4,3,3,4],
+    color:'#FAC775',
+    bg:'rgba(250,199,117,0.08)',
+    desc:'CRM + Marketing · SMB · Peu multicanal IA',
+    scores:['CRM ★★★★','IA ★★','GC ★★']
+  },
+  {
+    name:'Premières Lignes',
+    short:'PL',
+    data:[4,2,3,2,4,2,2],
+    color:'#9c9a92',
+    bg:'rgba(156,154,146,0.08)',
+    desc:'Agence flux · GC · Non SaaS scalable',
+    scores:['GC ★★★★','Scale ★★','IA ★★']
+  },
+];
+
+let activeActors=new Set(actors.map((_,i)=>i));
+let activeAxes=new Set(axes.map((_,i)=>i));
+
+const legendEl=document.getElementById('legend-col');
+actors.forEach((a,i)=>{
+  const card=document.createElement('div');
+  card.className='legend-card active';
+  card.style.borderLeftColor=a.color;
+  card.style.borderLeftWidth='3px';
+  card.innerHTML=`<div class="legend-header"><span class="legend-swatch" style="background:${a.color};"></span><span class="legend-name" style="color:${a.color};">${a.name}</span></div>
+  <div class="legend-desc">${a.desc}</div>
+  <div class="legend-scores">${a.scores.map(s=>`<span class="legend-score" style="background:${a.bg};color:${a.color};">${s}</span>`).join('')}</div>`;
+  card.addEventListener('click',()=>{
+    if(activeActors.has(i)&&activeActors.size===1)return;
+    if(activeActors.has(i)){activeActors.delete(i);card.classList.remove('active');card.style.opacity='.45';}
+    else{activeActors.add(i);card.classList.add('active');card.style.opacity='1';}
+    updateChart();
+  });
+  legendEl.appendChild(card);
+});
+
+const axisToggle=document.getElementById('axis-toggle');
+axes.forEach((ax,i)=>{
+  const btn=document.createElement('button');
+  btn.className='axis-btn on';
+  btn.textContent=ax;
+  btn.addEventListener('click',()=>{
+    if(activeAxes.has(i)&&activeAxes.size<=3)return;
+    if(activeAxes.has(i)){activeAxes.delete(i);btn.classList.remove('on');}
+    else{activeAxes.add(i);btn.classList.add('on');}
+    updateChart();
+  });
+  axisToggle.appendChild(btn);
+});
+
+const isDark=true;
+const gridC='rgba(255,255,255,0.07)';
+const tickC='rgba(255,255,255,0.3)';
+const lblC='#9c9a92';
+
+function buildDatasets(){
+  const axIdxs=[...activeAxes].sort((a,b)=>a-b);
+  const labels=axIdxs.map(i=>axes[i]);
+  const datasets=actors.filter((_,i)=>activeActors.has(i)).map(a=>({
+    label:a.name,
+    data:axIdxs.map(i=>a.data[i]),
+    borderColor:a.color,
+    backgroundColor:a.bg,
+    borderWidth:2,
+    pointBackgroundColor:a.color,
+    pointRadius:4,
+    pointHoverRadius:6,
+  }));
+  return{labels,datasets};
+}
+
+const ctx=document.getElementById('spider').getContext('2d');
+const chart=new Chart(ctx,{
+  type:'radar',
+  data:buildDatasets(),
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{display:false},
+      tooltip:{
+        callbacks:{
+          label:ctx=>`${ctx.dataset.label}: ${ctx.raw}/5`
+        }
+      }
+    },
+    scales:{
+      r:{
+        min:0,max:5,
+        ticks:{stepSize:1,color:tickC,font:{size:10},backdropColor:'transparent'},
+        grid:{color:gridC},
+        angleLines:{color:gridC},
+        pointLabels:{color:lblC,font:{size:11,weight:'600'}}
+      }
+    }
+  }
+});
+
+function updateChart(){
+  const{labels,datasets}=buildDatasets();
+  chart.data.labels=labels;
+  chart.data.datasets=datasets;
+  chart.update();
+}
+</script>
+</body>
+</html>

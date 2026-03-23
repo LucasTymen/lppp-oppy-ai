@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radar Positionnement · Oppy.ai</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8e6de;--text2:#9c9a92;--text3:#6b6965;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.wrap{width:100%;max-width:820px;}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(29,158,117,0.1);border:0.5px solid rgba(29,158,117,0.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:#5DCAA5;letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:#1D9E75;}
+h2{font-size:22px;font-weight:700;margin-bottom:6px;}
+.sub{font-size:13px;color:var(--text2);margin-bottom:2rem;}
+.layout{display:grid;grid-template-columns:1fr 220px;gap:14px;align-items:start;}
+.chart-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:1.5rem;}
+.legend-col{display:flex;flex-direction:column;gap:8px;}
+.lcard{background:var(--bg2);border:0.5px solid var(--border2);border-radius:10px;padding:10px 12px;}
+.lcard-head{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.lswatch{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.lname{font-size:12px;font-weight:700;}
+.ldesc{font-size:10px;color:var(--text3);line-height:1.4;}
+.lscores{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px;}
+.lscore{font-size:9px;padding:2px 5px;border-radius:3px;font-weight:600;}
+.insight-card{background:var(--bg3);border:0.5px solid rgba(29,158,117,0.3);border-radius:10px;padding:10px 12px;margin-top:4px;}
+.insight-title{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#5DCAA5;margin-bottom:5px;}
+.insight-text{font-size:11px;color:var(--text2);line-height:1.5;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="badge"><span class="badge-dot"></span>Positionnement stratégique · vs marché</div>
+  <h2>Radar — OPPORTUNITY vs concurrence</h2>
+  <p class="sub">5 axes · 3 acteurs représentatifs · levier Growth Engineer identifié</p>
+
+  <div class="layout">
+    <div class="chart-card">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:1rem;font-size:12px;color:var(--text2);">
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#1D9E75;display:inline-block;"></span>Opportunity</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#378ADD;display:inline-block;"></span>Géant CPaaS (Twilio)</span>
+        <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:2px;background:#EF9F27;display:inline-block;"></span>Mass market (Brevo)</span>
+      </div>
+      <div style="position:relative;width:100%;height:380px;"><canvas id="rc"></canvas></div>
+    </div>
+    <div class="legend-col">
+      <div class="lcard">
+        <div class="lcard-head"><span class="lswatch" style="background:#1D9E75;"></span><span class="lname" style="color:#5DCAA5;">Opportunity</span></div>
+        <div class="ldesc">Leader conformité & SLA · Vidéo IA · 20 ans expertise</div>
+        <div class="lscores">
+          <span class="lscore" style="background:rgba(29,158,117,0.15);color:#5DCAA5;">RSE ★★★★★</span>
+          <span class="lscore" style="background:rgba(29,158,117,0.15);color:#5DCAA5;">SLA ★★★★★</span>
+          <span class="lscore" style="background:rgba(29,158,117,0.15);color:#5DCAA5;">IA ★★★★★</span>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lcard-head"><span class="lswatch" style="background:#378ADD;"></span><span class="lname" style="color:#85B7EB;">Géant CPaaS</span></div>
+        <div class="ldesc">Fort tech & scale · Faible accompagnement & conformité FR</div>
+        <div class="lscores">
+          <span class="lscore" style="background:rgba(55,138,221,0.15);color:#85B7EB;">Stack ★★★★★</span>
+          <span class="lscore" style="background:rgba(55,138,221,0.15);color:#85B7EB;">Scale ★★★★★</span>
+          <span class="lscore" style="background:rgba(55,138,221,0.15);color:#85B7EB;">SLA ★★</span>
+        </div>
+      </div>
+      <div class="lcard">
+        <div class="lcard-head"><span class="lswatch" style="background:#EF9F27;"></span><span class="lname" style="color:#FAC775;">Mass market</span></div>
+        <div class="ldesc">Très agile · SMB/PME · Limité Grands Comptes & IA complexe</div>
+        <div class="lscores">
+          <span class="lscore" style="background:rgba(239,159,39,0.15);color:#FAC775;">Agile ★★★★★</span>
+          <span class="lscore" style="background:rgba(239,159,39,0.15);color:#FAC775;">GC ★★</span>
+          <span class="lscore" style="background:rgba(239,159,39,0.15);color:#FAC775;">IA ★★</span>
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Levier Growth Engineer</div>
+        <div class="insight-text">Le creux "Agilité stack" d'Opportunity est le levier direct. En comblant cet écart avec n8n + Python + OSINT, on aligne l'excellence opérationnelle sur l'excellence technologique déjà acquise.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gridC='rgba(255,255,255,0.07)';
+const tickC='rgba(255,255,255,0.28)';
+const lblC='#9c9a92';
+new Chart(document.getElementById('rc'),{
+  type:'radar',
+  data:{
+    labels:['Conformité & RSE','Multicanalité IA','Joignabilité','Agilité du stack','Proximité SLA'],
+    datasets:[
+      {label:'Opportunity',data:[5,5,4,2,5],borderColor:'#1D9E75',backgroundColor:'rgba(29,158,117,0.13)',borderWidth:2.5,pointBackgroundColor:'#1D9E75',pointRadius:5,pointHoverRadius:7},
+      {label:'Géant CPaaS',data:[3,4,5,5,2],borderColor:'#378ADD',backgroundColor:'rgba(55,138,221,0.09)',borderWidth:2,pointBackgroundColor:'#378ADD',pointRadius:4,pointHoverRadius:6},
+      {label:'Mass market',data:[2,2,3,4,3],borderColor:'#EF9F27',backgroundColor:'rgba(239,159,39,0.09)',borderWidth:2,pointBackgroundColor:'#EF9F27',pointRadius:4,pointHoverRadius:6},
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{r:{min:0,max:5,ticks:{stepSize:1,color:tickC,font:{size:10},backdropColor:'transparent'},grid:{color:gridC},angleLines:{color:gridC},pointLabels:{color:lblC,font:{size:12,weight:'600'}}}}
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Stratégique · Oppy.ai</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;--bg4:#1e2230;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8e6de;--text2:#9c9a92;--text3:#6b6965;
+  --teal:#1D9E75;--teal2:#5DCAA5;--teal3:#9FE1CB;
+  --blue:#378ADD;--blue2:#85B7EB;
+  --amber:#EF9F27;--amber2:#FAC775;
+  --purple:#7F77DD;--purple2:#AFA9EC;
+  --red:#E24B4A;--green:#639922;--green2:#97C459;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',system-ui,sans-serif;padding:2rem;min-height:100vh;}
+.page{max-width:1000px;margin:0 auto;}
+.page-header{margin-bottom:2rem;}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(127,119,221,0.1);border:0.5px solid rgba(127,119,221,0.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--purple2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--purple);}
+h1{font-size:24px;font-weight:700;margin-bottom:6px;}
+.page-sub{font-size:13px;color:var(--text2);}
+.section-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.row{display:grid;gap:12px;margin-bottom:12px;}
+.row-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+.row-2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.row-42{grid-template-columns:2fr 1fr;}
+.row-24{grid-template-columns:1fr 2fr;}
+.card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:1.25rem 1.5rem;}
+/* Metric bullet cards */
+.metric-card{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:1.25rem;}
+.metric-label{font-size:11px;color:var(--text3);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.metric-score{font-size:28px;font-weight:700;margin-bottom:10px;}
+.bullet-wrap{display:flex;flex-direction:column;gap:6px;}
+.bullet-row{display:flex;align-items:center;gap:8px;}
+.bullet-label{font-size:11px;color:var(--text2);min-width:90px;}
+.bullet-track{flex:1;height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;}
+.bullet-fill{height:100%;border-radius:3px;transition:width 1.4s cubic-bezier(.22,1,.36,1);}
+.bullet-val{font-size:11px;font-weight:600;min-width:28px;text-align:right;}
+/* Funnel */
+.funnel-wrap{display:flex;flex-direction:column;gap:4px;}
+.funnel-stage{display:flex;align-items:center;gap:10px;}
+.funnel-bar-outer{flex:1;height:38px;border-radius:6px;display:flex;align-items:center;padding:0 12px;transition:width .4s;}
+.funnel-name{font-size:11px;color:var(--text2);min-width:100px;text-align:right;}
+.funnel-num{font-size:14px;font-weight:700;}
+.funnel-sub{font-size:10px;margin-left:6px;opacity:.65;}
+.funnel-rate{font-size:10px;color:var(--text3);min-width:52px;text-align:center;}
+.funnel-arrow{font-size:16px;color:var(--text3);padding-left:112px;}
+/* Waterfall */
+.wfall-wrap{display:flex;align-items:flex-end;gap:8px;height:160px;padding-top:12px;}
+.wfall-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.wfall-bar{width:100%;border-radius:4px 4px 0 0;transition:height 1.2s cubic-bezier(.22,1,.36,1);}
+.wfall-val{font-size:11px;font-weight:600;white-space:nowrap;}
+.wfall-lbl{font-size:10px;color:var(--text3);text-align:center;line-height:1.3;}
+/* Recovery rings */
+.rings-wrap{display:flex;justify-content:space-around;align-items:center;gap:8px;padding:8px 0;}
+.ring-item{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.ring-label{font-size:11px;color:var(--text2);text-align:center;line-height:1.3;max-width:70px;}
+.ring-val{font-size:13px;font-weight:700;}
+/* North star */
+.ns-card{background:var(--bg3);border:0.5px solid rgba(29,158,117,0.3);border-radius:12px;padding:1.25rem;position:relative;overflow:hidden;}
+.ns-card::before{content:'';position:absolute;top:-20px;right:-20px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,0.12) 0%,transparent 70%);}
+.ns-title{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--teal2);margin-bottom:8px;}
+.ns-val{font-size:22px;font-weight:700;color:var(--teal2);margin-bottom:4px;}
+.ns-sub{font-size:12px;color:var(--text2);}
+/* Timeline */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.tl-item{display:flex;gap:12px;padding:10px 0;}
+.tl-item:not(:last-child){border-bottom:0.5px solid var(--border);}
+.tl-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:0;}
+.tl-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;}
+.tl-item:nth-child(1) .tl-dot{background:rgba(55,138,221,0.2);color:var(--blue2);}
+.tl-item:nth-child(2) .tl-dot{background:rgba(239,159,39,0.2);color:var(--amber2);}
+.tl-item:nth-child(3) .tl-dot{background:rgba(29,158,117,0.2);color:var(--teal2);}
+.tl-phase{font-size:11px;font-weight:700;margin-bottom:3px;}
+.tl-item:nth-child(1) .tl-phase{color:var(--blue2);}
+.tl-item:nth-child(2) .tl-phase{color:var(--amber2);}
+.tl-item:nth-child(3) .tl-phase{color:var(--teal2);}
+.tl-desc{font-size:12px;color:var(--text2);line-height:1.5;}
+.tl-tag{display:inline-block;font-size:10px;font-weight:600;border-radius:4px;padding:2px 6px;margin-right:4px;margin-top:4px;}
+.tag-b{background:rgba(55,138,221,0.15);color:var(--blue2);}
+.tag-a{background:rgba(239,159,39,0.15);color:var(--amber2);}
+.tag-t{background:rgba(29,158,117,0.15);color:var(--teal2);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="page-header">
+    <div class="badge"><span class="badge-dot"></span>Dashboard Stratégique · Oppy.ai</div>
+    <h1>Acquisition GAM — état des lieux & leviers</h1>
+    <p class="page-sub">Données étude OPPORTUNITY 2025 · Reverse waterfall · Maturité acquisition · Roadmap 90 jours</p>
+  </div>
+
+  <!-- Row 1 : 3 bullet metrics -->
+  <div class="section-title">Maturité acquisition — scores radar</div>
+  <div class="row row-3" style="margin-bottom:16px;">
+    <div class="metric-card">
+      <div class="metric-label">Conformité & RSE</div>
+      <div class="metric-score" style="color:var(--teal2);">5 / 5</div>
+      <div class="bullet-wrap">
+        <div class="bullet-row"><span class="bullet-label">Ecovadis Gold</span><div class="bullet-track"><div class="bullet-fill" data-w="100" style="width:0%;background:var(--teal);"></div></div><span class="bullet-val" style="color:var(--teal2);">100%</span></div>
+        <div class="bullet-row"><span class="bullet-label">Historique 20 ans</span><div class="bullet-track"><div class="bullet-fill" data-w="95" style="width:0%;background:var(--teal);"></div></div><span class="bullet-val" style="color:var(--teal2);">95%</span></div>
+        <div class="bullet-row"><span class="bullet-label">RGPD / Grands ctes</span><div class="bullet-track"><div class="bullet-fill" data-w="90" style="width:0%;background:var(--teal);"></div></div><span class="bullet-val" style="color:var(--teal2);">90%</span></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Multicanal IA</div>
+      <div class="metric-score" style="color:var(--blue2);">5 / 5</div>
+      <div class="bullet-wrap">
+        <div class="bullet-row"><span class="bullet-label">RCS + SMS</span><div class="bullet-track"><div class="bullet-fill" data-w="95" style="width:0%;background:var(--blue);"></div></div><span class="bullet-val" style="color:var(--blue2);">95%</span></div>
+        <div class="bullet-row"><span class="bullet-label">Vidéo IA personnalisée</span><div class="bullet-track"><div class="bullet-fill" data-w="88" style="width:0%;background:var(--blue);"></div></div><span class="bullet-val" style="color:var(--blue2);">88%</span></div>
+        <div class="bullet-row"><span class="bullet-label">Voicebot / orchestration</span><div class="bullet-track"><div class="bullet-fill" data-w="82" style="width:0%;background:var(--blue);"></div></div><span class="bullet-val" style="color:var(--blue2);">82%</span></div>
+      </div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Agilité stack <span style="color:var(--red);font-size:10px;">↑ à renforcer</span></div>
+      <div class="metric-score" style="color:var(--amber2);">2 / 5</div>
+      <div class="bullet-wrap">
+        <div class="bullet-row"><span class="bullet-label">Automation n8n</span><div class="bullet-track"><div class="bullet-fill" data-w="30" style="width:0%;background:var(--amber);"></div></div><span class="bullet-val" style="color:var(--amber2);">30%</span></div>
+        <div class="bullet-row"><span class="bullet-label">Scoring leads auto</span><div class="bullet-track"><div class="bullet-fill" data-w="20" style="width:0%;background:var(--amber);"></div></div><span class="bullet-val" style="color:var(--amber2);">20%</span></div>
+        <div class="bullet-row"><span class="bullet-label">Pipeline data-driven</span><div class="bullet-track"><div class="bullet-fill" data-w="25" style="width:0%;background:var(--amber);"></div></div><span class="bullet-val" style="color:var(--amber2);">25%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2 : Funnel inversé + North Star + Timeline -->
+  <div class="row row-42" style="margin-bottom:12px;">
+    <div class="card">
+      <div class="section-title">Reverse waterfall — objectif 1 M€ nouveau CA</div>
+      <div class="funnel-wrap" id="funnel"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="ns-card">
+        <div class="ns-title">North Star suggérée</div>
+        <div class="ns-val">CAC vs LTV</div>
+        <div class="ns-sub">ou SQL générés de façon automatisée — à valider direction</div>
+      </div>
+      <div class="card" style="flex:1;">
+        <div class="section-title">Joignabilité cible</div>
+        <div style="font-size:32px;font-weight:700;color:var(--teal2);margin-bottom:4px;">95–100%</div>
+        <div style="font-size:11px;color:var(--text2);">vs 90–95% marché standard</div>
+        <div style="margin-top:12px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text3);margin-bottom:4px;"><span>Marché</span><span>Oppy.ai cible</span></div>
+          <div style="height:6px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;position:relative;">
+            <div style="position:absolute;left:0;top:0;height:100%;width:92%;background:rgba(255,255,255,0.12);border-radius:3px;"></div>
+            <div id="join-bar" style="position:absolute;left:0;top:0;height:100%;width:0%;background:var(--teal);border-radius:3px;transition:width 1.4s cubic-bezier(.22,1,.36,1);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 3 : Waterfall CA + Rings -->
+  <div class="row row-24" style="margin-bottom:12px;">
+    <div class="card">
+      <div class="section-title">Progression pipeline J+90 (estimation)</div>
+      <div class="wfall-wrap" id="wfall"></div>
+      <div style="display:flex;gap:8px;margin-top:8px;">
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3);"><span style="width:8px;height:8px;border-radius:2px;background:var(--blue);display:inline-block;"></span>J+30</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3);"><span style="width:8px;height:8px;border-radius:2px;background:var(--amber);display:inline-block;"></span>J+60</div>
+        <div style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text3);"><span style="width:8px;height:8px;border-radius:2px;background:var(--teal);display:inline-block;"></span>J+90</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">Objectifs recovery — 90 jours</div>
+      <div class="rings-wrap" id="rings"></div>
+    </div>
+  </div>
+
+  <!-- Row 4 : Timeline -->
+  <div class="card">
+    <div class="section-title">Roadmap 90 jours</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">J30</div></div>
+        <div>
+          <div class="tl-phase">Fondations — audit & socle automation</div>
+          <div class="tl-desc">Audit flux Marketing→CRM · fermeture des fuites leads · colonne vertébrale n8n · zéro lead nu chez les commerciaux</div>
+          <div><span class="tl-tag tag-b">n8n</span><span class="tl-tag tag-b">CRM audit</span><span class="tl-tag tag-b">SLA pipeline</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">J60</div></div>
+        <div>
+          <div class="tl-phase">Enrichissement auto — Python / OSINT</div>
+          <div class="tl-desc">Enrichissement automatisé des leads (Python / OSINT) · +20% temps gagné prospection manuelle · scoring avant Sales</div>
+          <div><span class="tl-tag tag-a">Python</span><span class="tl-tag tag-a">OSINT</span><span class="tl-tag tag-a">Lead scoring</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot-wrap"><div class="tl-dot">J90</div></div>
+        <div>
+          <div class="tl-phase">Scale — 15–20 high interest / mois</div>
+          <div class="tl-desc">Multicanal scalable · 15 à 20 opportunités « high interest » / mois · pilotage ROI data-driven · reporting automatisé</div>
+          <div><span class="tl-tag tag-t">Scale</span><span class="tl-tag tag-t">ROI tracking</span><span class="tl-tag tag-t">Multicanal</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+/* Funnel */
+const stages=[
+  {name:'MQL (leads ciblés)',val:2000,unit:'/an',color:'#0C447C',text:'#85B7EB',rate:''},
+  {name:'SQL / démos',val:200,unit:'/an',color:'#185FA5',text:'#B5D4F4',rate:'10% qualif.'},
+  {name:'Opportunités',val:40,unit:'/an',color:'#1D9E75',text:'#9FE1CB',rate:'20% SQL'},
+  {name:'Signatures',val:20,unit:'/an',color:'#085041',text:'#5DCAA5',rate:'50% closing'},
+];
+const funnelEl=document.getElementById('funnel');
+stages.forEach((s,i)=>{
+  const pct=Math.max(18,Math.round((s.val/2000)*100));
+  funnelEl.innerHTML+=`<div class="funnel-stage">
+    <span class="funnel-name">${s.name}</span>
+    <div style="flex:1;display:flex;align-items:center;gap:6px;">
+      <div class="funnel-bar-outer" style="background:${s.color};width:${pct}%;min-width:80px;">
+        <span class="funnel-num" style="color:${s.text};">${s.val.toLocaleString('fr-FR')}</span>
+        <span class="funnel-sub" style="color:${s.text};">${s.unit}</span>
+      </div>
+    </div>
+    <span class="funnel-rate">${s.rate}</span>
+  </div>`;
+  if(i<stages.length-1) funnelEl.innerHTML+=`<div class="funnel-arrow">↓</div>`;
+});
+
+/* Waterfall bars */
+const wfData=[
+  {label:'Audit\nflux',val:30,color:'#185FA5'},
+  {label:'Leads\ncaptés',val:55,color:'#185FA5'},
+  {label:'Scoring\nauto',val:45,color:'#BA7517'},
+  {label:'Enrich.\nOSINT',val:70,color:'#BA7517'},
+  {label:'Scale\nmulticanal',val:90,color:'#1D9E75'},
+  {label:'High int.\n/mois',val:100,color:'#085041'},
+];
+const wfEl=document.getElementById('wfall');
+wfData.forEach(w=>{
+  const lbl=w.label.replace('\n','<br>');
+  wfEl.innerHTML+=`<div class="wfall-col">
+    <span class="wfall-val" style="color:${w.color};font-size:10px;">${w.val}%</span>
+    <div class="wfall-bar" data-h="${w.val}" style="height:0px;background:${w.color};min-height:4px;"></div>
+    <span class="wfall-lbl">${lbl}</span>
+  </div>`;
+});
+
+/* Rings SVG */
+const ringsData=[
+  {label:'Leads\ncaptés',pct:75,color:'#378ADD',bg:'rgba(55,138,221,0.12)'},
+  {label:'Scoring\nauto',pct:60,color:'#EF9F27',bg:'rgba(239,159,39,0.12)'},
+  {label:'SLA\npipeline',pct:85,color:'#1D9E75',bg:'rgba(29,158,117,0.12)'},
+  {label:'Joigna-\nbilité',pct:97,color:'#7F77DD',bg:'rgba(127,119,221,0.12)'},
+];
+const ringsEl=document.getElementById('rings');
+ringsData.forEach(r=>{
+  const lbl=r.label.replace('\n','<br>');
+  const c=2*Math.PI*30;
+  ringsEl.innerHTML+=`<div class="ring-item">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="30" fill="${r.bg}" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <circle cx="40" cy="40" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/>
+      <circle cx="40" cy="40" r="30" fill="none" stroke="${r.color}" stroke-width="6"
+        stroke-dasharray="${c}" stroke-dashoffset="${c}" stroke-linecap="round"
+        transform="rotate(-90 40 40)"
+        class="ring-arc" data-pct="${r.pct}" data-circ="${c}"/>
+      <text x="40" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="${r.color}" font-family="Inter,sans-serif">${r.pct}%</text>
+    </svg>
+    <span class="ring-val" style="color:${r.color};">${r.pct}%</span>
+    <span class="ring-label">${lbl}</span>
+  </div>`;
+});
+
+/* Animate on view */
+function animateAll(){
+  document.querySelectorAll('.bullet-fill[data-w]').forEach(b=>{
+    setTimeout(()=>{b.style.width=b.dataset.w+'%';},200);
+  });
+  document.querySelectorAll('.wfall-bar[data-h]').forEach(b=>{
+    setTimeout(()=>{b.style.height=(parseFloat(b.dataset.h)*1.3)+'px';},200);
+  });
+  document.querySelectorAll('.ring-arc[data-pct]').forEach(arc=>{
+    const circ=parseFloat(arc.dataset.circ);
+    const pct=parseFloat(arc.dataset.pct)/100;
+    setTimeout(()=>{arc.style.transition='stroke-dashoffset 1.4s cubic-bezier(.22,1,.36,1)';arc.setAttribute('stroke-dashoffset',circ*(1-pct));},300);
+  });
+  const jb=document.getElementById('join-bar');
+  if(jb) setTimeout(()=>{jb.style.width='97%';},400);
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animateAll();io.unobserve(e.target);}});
+},{threshold:.1});
+io.observe(document.querySelector('.page'));
+</script>
+</body>
+</html>

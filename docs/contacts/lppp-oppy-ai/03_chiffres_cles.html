@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chiffres clés · Oppy.ai</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);
+  --text:#e8e6de;--text2:#9c9a92;--text3:#6b6965;
+  --teal:#1D9E75;--teal2:#5DCAA5;--blue:#378ADD;--blue2:#85B7EB;
+  --amber:#EF9F27;--amber2:#FAC775;--purple:#7F77DD;--purple2:#AFA9EC;
+  --red:#E24B4A;--green:#639922;--green2:#97C459;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter','Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.wrap{width:100%;max-width:900px;}
+.header{margin-bottom:2rem;}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(29,158,117,0.1);border:0.5px solid rgba(29,158,117,0.25);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--teal2);letter-spacing:.06em;text-transform:uppercase;margin-bottom:1rem;}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);}
+h2{font-size:22px;font-weight:700;color:var(--text);margin-bottom:6px;}
+.sub{font-size:13px;color:var(--text2);}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:12px;}
+.grid-2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.kcard{background:var(--bg2);border:0.5px solid var(--border2);border-radius:14px;padding:1.5rem 1.25rem;position:relative;overflow:hidden;transition:border-color .2s;}
+.kcard:hover{border-color:rgba(255,255,255,0.22);}
+.kcard::before{content:'';position:absolute;inset:0;border-radius:14px;opacity:0;transition:opacity .3s;}
+.kcard.teal::before{background:radial-gradient(ellipse at 0% 0%,rgba(29,158,117,0.08) 0%,transparent 70%);}
+.kcard.blue::before{background:radial-gradient(ellipse at 0% 0%,rgba(55,138,221,0.08) 0%,transparent 70%);}
+.kcard.amber::before{background:radial-gradient(ellipse at 0% 0%,rgba(239,159,39,0.08) 0%,transparent 70%);}
+.kcard.purple::before{background:radial-gradient(ellipse at 0% 0%,rgba(127,119,221,0.08) 0%,transparent 70%);}
+.kcard.green::before{background:radial-gradient(ellipse at 0% 0%,rgba(99,153,34,0.08) 0%,transparent 70%);}
+.kcard.red::before{background:radial-gradient(ellipse at 0% 0%,rgba(226,75,74,0.08) 0%,transparent 70%);}
+.kcard:hover::before{opacity:1;}
+.kcard-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
+.kcard-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.kcard.teal .kcard-icon{background:rgba(29,158,117,0.15);}
+.kcard.blue .kcard-icon{background:rgba(55,138,221,0.15);}
+.kcard.amber .kcard-icon{background:rgba(239,159,39,0.15);}
+.kcard.purple .kcard-icon{background:rgba(127,119,221,0.15);}
+.kcard.green .kcard-icon{background:rgba(99,153,34,0.15);}
+.kcard.red .kcard-icon{background:rgba(226,75,74,0.15);}
+.kcard-trend{font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;}
+.kcard.teal .kcard-trend{background:rgba(29,158,117,0.15);color:var(--teal2);}
+.kcard.blue .kcard-trend{background:rgba(55,138,221,0.15);color:var(--blue2);}
+.kcard.amber .kcard-trend{background:rgba(239,159,39,0.15);color:var(--amber2);}
+.kcard.purple .kcard-trend{background:rgba(127,119,221,0.15);color:var(--purple2);}
+.kcard.green .kcard-trend{background:rgba(99,153,34,0.15);color:var(--green2);}
+.kcard.red .kcard-trend{background:rgba(226,75,74,0.15);color:#F09595;}
+.kcard-num{display:flex;align-items:baseline;gap:4px;margin-bottom:6px;}
+.kcard-val{font-size:38px;font-weight:700;line-height:1;}
+.kcard.teal .kcard-val{color:var(--teal2);}
+.kcard.blue .kcard-val{color:var(--blue2);}
+.kcard.amber .kcard-val{color:var(--amber2);}
+.kcard.purple .kcard-val{color:var(--purple2);}
+.kcard.green .kcard-val{color:var(--green2);}
+.kcard.red .kcard-val{color:#F09595;}
+.kcard-unit{font-size:18px;font-weight:600;color:var(--text2);margin-left:2px;}
+.kcard-label{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.kcard-desc{font-size:11px;color:var(--text3);line-height:1.5;}
+.bar-wrap{margin-top:12px;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;transition:width 1.8s cubic-bezier(.22,1,.36,1);}
+.kcard.teal .bar-fill{background:var(--teal);}
+.kcard.blue .bar-fill{background:var(--blue);}
+.kcard.amber .bar-fill{background:var(--amber);}
+.kcard.purple .bar-fill{background:var(--purple);}
+.kcard.green .bar-fill{background:var(--green);}
+.kcard.red .bar-fill{background:var(--red);}
+svg.icon{width:18px;height:18px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <div class="badge"><span class="badge-dot"></span>Données étude · 2025</div>
+    <h2>Chiffres clés — OPPORTUNITY (Oppy.ai)</h2>
+    <p class="sub">Indicateurs stratégiques issus de l'étude de référence</p>
+  </div>
+
+  <div class="grid">
+    <div class="kcard teal">
+      <div class="kcard-top">
+        <div class="kcard-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <span class="kcard-trend">Étude 2025</span>
+      </div>
+      <div class="kcard-num"><span class="kcard-val" data-target="25" data-prefix="~" data-suffix="">0</span><span class="kcard-unit">M€</span></div>
+      <div class="kcard-label">Chiffre d'affaires</div>
+      <div class="kcard-desc">CA indicatif — à confirmer en entretien</div>
+      <div class="bar-wrap"><div class="bar-fill" data-pct="72" style="width:0%"></div></div>
+    </div>
+
+    <div class="kcard blue">
+      <div class="kcard-top">
+        <div class="kcard-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#378ADD" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+        </div>
+        <span class="kcard-trend">Structure</span>
+      </div>
+      <div class="kcard-num"><span class="kcard-val" data-target="40" data-prefix="~">0</span><span class="kcard-unit">pers.</span></div>
+      <div class="kcard-label">Effectif</div>
+      <div class="kcard-desc">Équipe « commando » — agile et ciblée</div>
+      <div class="bar-wrap"><div class="bar-fill" data-pct="40" style="width:0%"></div></div>
+    </div>
+
+    <div class="kcard amber">
+      <div class="kcard-top">
+        <div class="kcard-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#EF9F27" stroke-width="1.8"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+        </div>
+        <span class="kcard-trend">Barrière entrée</span>
+      </div>
+      <div class="kcard-num"><span class="kcard-val" data-target="20" data-prefix="">0</span><span class="kcard-unit">+ ans</span></div>
+      <div class="kcard-label">Historique CIM</div>
+      <div class="kcard-desc">Fondée 2005 · Anthony Dinis · Vocalcom</div>
+      <div class="bar-wrap"><div class="bar-fill" data-pct="90" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="kcard purple">
+      <div class="kcard-top">
+        <div class="kcard-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#7F77DD" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <span class="kcard-trend">Objectif / an</span>
+      </div>
+      <div class="kcard-num"><span class="kcard-val" data-target="2000">0</span><span class="kcard-unit">leads</span></div>
+      <div class="kcard-label">MQL cibles / an</div>
+      <div class="kcard-desc">Modèle 1 M€ · ACV 50 k€ · 10% qualif.</div>
+      <div class="bar-wrap"><div class="bar-fill" data-pct="55" style="width:0%"></div></div>
+    </div>
+
+    <div class="kcard green">
+      <div class="kcard-top">
+        <div class="kcard-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#639922" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+        </div>
+        <span class="kcard-trend">Pipeline</span>
+      </div>
+      <div class="kcard-num"><span class="kcard-val" data-target="200">0</span><span class="kcard-unit">SQL</span></div>
+      <div class="kcard-label">Démos qualifiées cible</div>
+      <div class="kcard-desc">MQL → SQL (même hypothèse waterfall)</div>
+      <div class="bar-wrap"><div class="bar-fill" data-pct="45" style="width:0%"></div></div>
+    </div>
+
+    <div class="kcard red">
+      <div class="kcard-top">
+        <div class="kcard-icon">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#E24B4A" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <span class="kcard-trend">Référence</span>
+      </div>
+      <div class="kcard-num"><span class="kcard-val" data-target="100" data-suffix="">95–</span><span class="kcard-unit">%</span></div>
+      <div class="kcard-label">Joignabilité cible</div>
+      <div class="kcard-desc">vs 90–95 % marché standard · Ecovadis Gold</div>
+      <div class="bar-wrap"><div class="bar-fill" data-pct="97" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+function animateCount(el){
+  const target=parseFloat(el.dataset.target)||0;
+  const prefix=el.dataset.prefix||'';
+  const suffix=el.dataset.suffix||'';
+  const duration=1600;
+  const start=performance.now();
+  function step(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,4);
+    const val=target<100?Math.round(ease*target*10)/10:Math.round(ease*target);
+    el.textContent=prefix+(target<100&&val%1!==0?val.toFixed(0):val)+suffix;
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=prefix+target+suffix;
+  }
+  requestAnimationFrame(step);
+}
+function animateBars(){
+  document.querySelectorAll('.bar-fill[data-pct]').forEach(b=>{
+    setTimeout(()=>{b.style.width=b.dataset.pct+'%';},200);
+  });
+}
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('[data-target]').forEach(animateCount);
+      animateBars();
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+document.querySelectorAll('.wrap').forEach(w=>io.observe(w));
+</script>
+</body>
+</html>

@@ -2,68 +2,306 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Positionnement marketing — OPPORTUNITY (Oppy.ai)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f6f8fc;
-      --card: #fff;
-      --text: #142032;
-      --muted: #5a6b82;
-      --accent: #0047ab;
-      --green: #00a854;
-      --border: rgba(20,32,50,0.08);
+      --lp-primary: #00c9d4;
+      --lp-secondary: #4dd0e1;
+      --lp-bg: #0d0d0d;
+      --lp-surface: #151515;
+      --lp-surface-2: #101a21;
+      --lp-text: #e6e6e6;
+      --lp-muted: #9ca3af;
+      --lp-border: rgba(0, 201, 212, 0.25);
+      --lp-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+      --lp-radius: 14px;
+      --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
     }
-    body { margin: 0; font-family: Georgia, "Times New Roman", serif; color: var(--text); background: var(--bg); line-height: 1.65; padding: 2rem 1rem 3rem; }
-    .wrap { max-width: 720px; margin: 0 auto; }
-    h1 { font-size: 1.85rem; font-weight: 700; margin: 0 0 0.75rem; color: var(--accent); }
-    .lead { font-size: 1.05rem; color: var(--muted); margin-bottom: 2rem; }
-    article { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; box-shadow: 0 8px 24px rgba(20,32,50,0.06); }
-    h2 { font-family: system-ui, sans-serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin: 0 0 0.75rem; }
-    p { margin: 0 0 0.85rem; }
-    ul { margin: 0; padding-left: 1.2rem; }
-    li { margin-bottom: 0.4rem; }
-    .quote { border-left: 4px solid var(--accent); padding-left: 1rem; font-style: italic; color: var(--muted); margin: 1rem 0; }
-    footer { font-size: 0.8rem; color: var(--muted); font-family: system-ui, sans-serif; margin-top: 2rem; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background: radial-gradient(circle at 15% -20%, rgba(0, 201, 212, 0.2), transparent 40%), var(--lp-bg);
+      color: var(--lp-text);
+      line-height: 1.6;
+    }
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.6rem 1rem;
+      background: color-mix(in srgb, var(--lp-bg) 92%, transparent);
+      border-bottom: 1px solid var(--lp-border);
+      backdrop-filter: blur(10px);
+    }
+    .nav-brand {
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--lp-text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .nav-links a {
+      color: var(--lp-text);
+      text-decoration: none;
+      font-size: 0.82rem;
+      padding: 0.35rem 0.65rem;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      transition: all 0.2s var(--lp-ease);
+    }
+    .nav-links a:hover {
+      border-color: var(--lp-border);
+      color: var(--lp-primary);
+      background: rgba(0, 201, 212, 0.08);
+    }
+    .hero {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 4vw, 3rem) 1rem 1rem;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 1rem;
+      align-items: stretch;
+    }
+    .hero-copy, .hero-card {
+      background: linear-gradient(145deg, rgba(21, 21, 21, 0.95), rgba(12, 20, 27, 0.9));
+      border: 1px solid var(--lp-border);
+      border-radius: var(--lp-radius);
+      box-shadow: var(--lp-shadow);
+      padding: 1.1rem;
+    }
+    .hero h1 {
+      margin: 0 0 0.5rem;
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+    }
+    .hero p { margin: 0; color: #cfd6dc; }
+    .chip-row {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .chip {
+      font-size: 0.74rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid var(--lp-border);
+      color: var(--lp-primary);
+      background: rgba(0, 201, 212, 0.06);
+    }
+    .viz-title {
+      margin: 0 0 0.7rem;
+      font-family: "Montserrat", system-ui, sans-serif;
+      font-size: 0.9rem;
+      color: var(--lp-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .bar-list { display: grid; gap: 0.65rem; }
+    .bar-item { display: grid; gap: 0.25rem; }
+    .bar-head { display: flex; justify-content: space-between; font-size: 0.78rem; color: #cad5e1; }
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+    .bar > span {
+      display: block;
+      height: 100%;
+      background: linear-gradient(90deg, var(--lp-primary), var(--lp-secondary));
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0.5rem 1rem 2.2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .card {
+      grid-column: span 6;
+      background: var(--lp-surface);
+      border: 1px solid var(--lp-border);
+      border-radius: var(--lp-radius);
+      padding: 1rem;
+      box-shadow: var(--lp-shadow);
+    }
+    .card.full { grid-column: span 12; }
+    .kicker {
+      margin: 0 0 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--lp-primary);
+      font-weight: 700;
+    }
+    h2 { margin: 0 0 0.6rem; font-size: 1.03rem; font-family: "Montserrat", system-ui, sans-serif; }
+    p { margin: 0 0 0.8rem; color: #d7dee6; }
+    ul { margin: 0; padding-left: 1.1rem; }
+    li { margin-bottom: 0.35rem; color: #d7dee6; }
+    .quote {
+      margin-top: 0.75rem;
+      padding: 0.8rem 0.9rem;
+      border-left: 3px solid var(--lp-primary);
+      background: var(--lp-surface-2);
+      border-radius: 10px;
+      color: #dce8ef;
+      font-style: italic;
+    }
+    .timeline {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.55rem;
+    }
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 0.55rem;
+      align-items: start;
+      font-size: 0.9rem;
+      padding: 0.5rem;
+      border: 1px solid rgba(77, 208, 225, 0.18);
+      border-radius: 10px;
+      background: rgba(77, 208, 225, 0.06);
+    }
+    .timeline-item strong { color: var(--lp-secondary); }
+    .actions {
+      margin-top: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 9px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.84rem;
+      font-weight: 600;
+      border: 1px solid var(--lp-border);
+      color: var(--lp-text);
+      background: rgba(0, 201, 212, 0.08);
+      transition: all 0.2s var(--lp-ease);
+    }
+    .btn:hover { transform: translateY(-1px); background: rgba(0, 201, 212, 0.16); }
+    .btn.primary {
+      background: var(--lp-primary);
+      color: #001316;
+      border-color: transparent;
+    }
+    .btn.primary:hover { background: var(--lp-secondary); }
+    footer {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1rem 1.6rem;
+      color: var(--lp-muted);
+      font-size: 0.78rem;
+    }
+    code { color: var(--lp-secondary); }
+    @media (max-width: 880px) {
+      .hero { grid-template-columns: 1fr; }
+      .card { grid-column: span 12; }
+      .nav { align-items: flex-start; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Positionnement marketing — OPPORTUNITY (Oppy.ai)</h1>
-    <p class="lead">Lecture B2B enterprise : pas seulement du messaging, mais du <strong>Customer Interaction Management</strong> — décider quel canal (SMS, RCS, vidéo personnalisée, voicebot) au bon moment, avec exigence conformité et RSE.</p>
+  <nav class="nav" aria-label="Navigation Oppy LPP">
+    <a class="nav-brand" href="index.html">LPPP OPPORTUNITY</a>
+    <div class="nav-links">
+      <a href="index.html#infographies-audit">Infographies</a>
+      <a href="04_dashboard_strategique.html">Dashboard</a>
+      <a href="infographies-oppy-ai.html">Kit complet</a>
+      <a href="rapport.html">Rapport</a>
+    </div>
+  </nav>
 
-    <article>
-      <h2>Catégories concurrentielles</h2>
-      <p><strong>Géants CPaaS</strong> (Twilio, Sinch, etc.) : infrastructure « tuyaux » ; OPPORTUNITY joue l’<strong>orchestration</strong> et les médias riches + contexte grands comptes français / Europe.</p>
-      <p><strong>Marketing automation</strong> (Brevo, HubSpot) : agilité et self-service ; OPPORTUNITY vise les <strong>flux critiques</strong>, volumes et exigences bancaires / assurance où la conformité (Ecovadis Gold, gouvernance data) compte autant que le feature set.</p>
-      <p><strong>Spécialistes métiers / agences</strong> : OPPORTUNITY industrialise en <strong>SaaS</strong> pour scaler l’interaction client sans dépendre uniquement de projets one-shot.</p>
-    </article>
+  <header class="hero">
+    <section class="hero-copy">
+      <h1>Positionnement marketing — OPPORTUNITY</h1>
+      <p>Lecture B2B enterprise : OPPORTUNITY n'est pas juste un acteur messaging, mais un orchestrateur <strong>Customer Interaction Management</strong> (SMS, RCS, voicebot, video personnalisee), au service d'un pipeline acquisition mesurable.</p>
+      <div class="chip-row">
+        <span class="chip">Enterprise first</span>
+        <span class="chip">Conformite &amp; RSE</span>
+        <span class="chip">Growth ops</span>
+        <span class="chip">SaaS scalable</span>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="04_dashboard_strategique.html">Ouvrir le dashboard</a>
+        <a class="btn" href="08_radar_positionnement.html">Voir le radar</a>
+      </div>
+    </section>
+    <aside class="hero-card" aria-label="Synthese visuelle de positionnement">
+      <p class="viz-title">Matrice de maturite percue</p>
+      <div class="bar-list">
+        <div class="bar-item"><div class="bar-head"><span>Orchestration CIM</span><strong>88</strong></div><div class="bar"><span style="width:88%"></span></div></div>
+        <div class="bar-item"><div class="bar-head"><span>Confiance enterprise</span><strong>83</strong></div><div class="bar"><span style="width:83%"></span></div></div>
+        <div class="bar-item"><div class="bar-head"><span>Scalabilite SaaS</span><strong>79</strong></div><div class="bar"><span style="width:79%"></span></div></div>
+        <div class="bar-item"><div class="bar-head"><span>Velocity growth</span><strong>71</strong></div><div class="bar"><span style="width:71%"></span></div></div>
+      </div>
+    </aside>
+  </header>
 
-    <article>
-      <h2>Promesse &amp; preuves</h2>
-      <ul>
-        <li>Références grands comptes (banque, télécom, assurance) — crédibilité cycle long.</li>
-        <li>20 ans d’historique + capacité IA conversationnelle actuelle.</li>
-        <li>RSE : Ecovadis Gold comme levier d’accès aux appels d’offres responsables.</li>
-      </ul>
-    </article>
+  <main class="wrap">
+    <section class="grid">
+      <article class="card">
+        <p class="kicker">Concurrence</p>
+        <h2>Categories concurrentielles</h2>
+        <p><strong>Geants CPaaS</strong> : OPPORTUNITY se differencie sur l'orchestration metier et les canaux riches pour grands comptes FR/EU.</p>
+        <p><strong>Marketing automation</strong> : positionnement sur les flux critiques et la gouvernance data plutot que le self-service pur.</p>
+        <p><strong>Specialistes/agences</strong> : industrialisation en <strong>SaaS</strong> pour sortir du modele one-shot.</p>
+      </article>
 
-    <article>
-      <h2>Angle Growth (alignement poste)</h2>
-      <p>Le marketing ne « remplit pas une vitrine » : il alimente un <strong>pipeline mesurable</strong> — inbound (SEO sémantique, contenus IA), outbound (LinkedIn, email), événements (Vivatech, webinars). L’enjeu est de livrer aux Sales des <strong>SQL enrichis et scorés</strong>, avec une délivrabilité élevée et un discours financier (reverse waterfall).</p>
-      <div class="quote">« Business partenaire des Sales » : l’objectif est l’agenda de démos qualifiées, pas seulement le volume de MQL.</div>
-    </article>
+      <article class="card">
+        <p class="kicker">Preuves</p>
+        <h2>Promesse &amp; credibilite</h2>
+        <ul>
+          <li>References grands comptes (banque, telecom, assurance).</li>
+          <li>Experience historique + capacites IA conversationnelle.</li>
+          <li>Ecovadis Gold comme levier appels d'offres responsables.</li>
+        </ul>
+      </article>
 
-    <article>
-      <h2>Funnel AAARR (rappel)</h2>
-      <p><strong>Acquisition</strong> — flux constant de MQL multicanal.<br>
-      <strong>Activation</strong> — démo, audit tunnel relation client, sandbox.<br>
-      <strong>Rétention</strong> — nurturing, adoption des modules IA, alertes sous-utilisation.<br>
-      <strong>Revenue</strong> — usage, upsell modules IA, contrats annuels.<br>
-      <strong>Referral</strong> — success stories, logos, témoignages, parrainage B2B.</p>
-    </article>
+      <article class="card full">
+        <p class="kicker">Growth Engineer</p>
+        <h2>Angle growth et alignement Sales</h2>
+        <p>Le marketing alimente un <strong>pipeline mesurable</strong> : inbound (SEO semantique, contenus IA), outbound (LinkedIn, email), events. L'objectif est de livrer des <strong>SQL enrichis et scores</strong>, pas d'augmenter artificiellement les MQL.</p>
+        <div class="quote">Business partenaire des Sales : la metrique cible est l'agenda de demos qualifiees et la conversion en signatures.</div>
+      </article>
 
-    <footer>LPPP — Synthèse à partir de l’étude projet. URL : <code>/p/lppp-oppy-ai/assets/positionnement-marketing.html</code></footer>
-  </div>
+      <article class="card full">
+        <p class="kicker">Funnel AAARR</p>
+        <h2>Lecture operationnelle du parcours</h2>
+        <div class="timeline">
+          <div class="timeline-item"><strong>Acquisition</strong><span>Flux constant de MQL multicanal cible.</span></div>
+          <div class="timeline-item"><strong>Activation</strong><span>Demo, audit tunnel relation client, sandbox.</span></div>
+          <div class="timeline-item"><strong>Retention</strong><span>Nurturing, adoption IA, alertes sous-utilisation.</span></div>
+          <div class="timeline-item"><strong>Revenue</strong><span>Upsell modules IA, contrats annuels, expansion.</span></div>
+          <div class="timeline-item"><strong>Referral</strong><span>Success stories, logos, temoignages et parrainage B2B.</span></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    LPPP — synthese positionnement OPPORTUNITY. URL : <code>/p/lppp-oppy-ai/assets/positionnement-marketing.html</code>
+  </footer>
 </body>
 </html>
