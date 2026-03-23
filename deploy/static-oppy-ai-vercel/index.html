@@ -1,0 +1,1405 @@
+
+<!-- LPPP proposition.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>Lucas Tymen — LPPP OPPORTUNITY (Oppy.ai) | Growth &amp; acquisition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap');
+
+:root {
+  /* Charte Oppy.ai — Tech CIM (fond sombre, cyan) */
+  --oppy-cyan: #00C9D4;
+  --oppy-cyan-light: #4DD0E1;
+  --oppy-bg: #0d0d0d;
+  --oppy-surface: #151515;
+  --lp-font-body: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --lp-font-heading: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --lp-bg: #0d0d0d;
+  --lp-text: #e6e6e6;
+  --lp-primary: #00C9D4;
+  --lp-secondary: #4DD0E1;
+  --lp-border: rgba(0, 201, 212, 0.25);
+  --lp-block-bg: #151515;
+  --lp-muted: #999;
+  --lp-heading: #e6e6e6;
+  --lp-cta-text: #0d0d0d;
+  --lp-text-on-light: #1a1a1a;
+  --lp-text-on-dark: #f5f5f5;
+}
+
+/* Nav fond sombre — texte clair */
+.nav { background: color-mix(in srgb, var(--lp-bg) 92%, rgba(0,201,212,0.05)) !important; }
+.nav-links a, .nav span:first-child { color: var(--lp-text-on-dark) !important; }
+.nav-links a:hover { color: var(--lp-primary) !important; }
+.nav-waffle { color: var(--lp-text-on-dark) !important; }
+
+/* CTA — cyan Oppy, texte foncé */
+.cta, .nav-cta, .hero .cta, .cta-wrap .cta {
+  background-color: var(--lp-primary) !important;
+  color: var(--lp-cta-text) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-family: var(--lp-font-heading) !important;
+}
+.cta:hover, .nav-cta:hover, .hero .cta:hover, .cta-wrap .cta:hover {
+  background-color: var(--lp-secondary) !important;
+  color: var(--lp-cta-text) !important;
+}
+
+/* Titres — Montserrat */
+h1, h2, h3, h4 { font-family: var(--lp-font-heading) !important; }
+
+/* Hero Waves Pins — 100 % viewport, position fixe sur tout le site (parallaxe au scroll), sans console */
+.hero-bg-waves-pins,
+.hero-bg-waves-pins--site-wide {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  overflow: hidden !important;
+}
+.hero-bg-waves-pins canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  display: block !important;
+}
+/* CodePen iframe — plein écran, fond fixe */
+.hero-bg-codepen .hero-codepen-iframe {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
+/* Contenu au-dessus du fond fixe */
+body:has(.hero-bg-waves-pins) main,
+body:has(.hero-bg-waves-pins) .alert-banner {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Sections — fond sombre avec bordure cyan */
+.section {
+  background: var(--lp-block-bg) !important;
+  border-left: 4px solid var(--lp-primary) !important;
+  color: var(--lp-text-on-dark) !important;
+}
+.section h2, .section .section-num { color: var(--lp-text-on-dark) !important; }
+.section p, .section .card { color: var(--lp-text-on-dark) !important; }
+
+/* Icebreaker, CTA wrap */
+.icebreaker {
+  background: rgba(0,201,212,0.12) !important;
+  border-left-color: var(--lp-primary) !important;
+  color: var(--lp-text-on-dark) !important;
+}
+.cta-wrap { background: var(--lp-block-bg) !important; color: var(--lp-text-on-dark) !important; }
+
+        
+        :root {
+            --lp-ease: cubic-bezier(0.4, 0, 0.2, 1);
+            --lp-section-padding: clamp(3rem, 8vw, 5rem);
+            /* Contraste : fond clair → texte sombre, fond foncé → texte clair (voir docs/base-de-connaissances/contraste-textes-landing.md) */
+            --lp-text-on-light: #1a1a1a;
+            --lp-text-on-dark: #f5f5f5;
+            /* Mobile-first : base = mobile ; min-width pour tablette, desktop, HD */
+            --lp-bp-mobile: 480px;
+            --lp-bp-tablet: 768px;
+            --lp-bp-desktop: 1024px;
+            --lp-bp-hd: 1440px;
+        }
+        * { box-sizing: border-box; }
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif);
+            margin: 0;
+            min-height: 100vh;
+            background: var(--lp-bg, #0d0d0d);
+            color: var(--lp-text, #e6e6e6);
+            line-height: 1.6;
+            font-size: 1rem;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ===== Nav sticky top — mobile-first, responsive harmonieux, effet waouh ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            min-height: 40px;
+            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 92%, transparent);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 100%;
+            transition: background 0.35s var(--lp-ease), box-shadow 0.35s var(--lp-ease), border-color 0.35s var(--lp-ease);
+        }
+        .nav.nav--scrolled {
+            background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 97%, transparent);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+            border-bottom-color: color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+        @keyframes nav-enter {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .nav { animation: nav-enter 0.45s var(--lp-ease) both; }
+        @media (prefers-reduced-motion: reduce) {
+            .nav { animation: none; }
+        }
+        .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
+        .nav-logo.nav-logo--svg { height: 28px; width: auto; display: block; }
+        .nav-logo-link { display: flex; align-items: center; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem 0.6rem;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        /* Mobile-first : zone de touch min 36px (compromis compacité/accessibilité) */
+        .nav-links a {
+            font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+            font-weight: 500;
+            color: var(--lp-muted, #999);
+            text-decoration: none;
+            padding: 0.35rem 0.35rem;
+            min-height: 36px;
+            min-width: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: color 0.2s var(--lp-ease), background 0.2s var(--lp-ease);
+        }
+        .nav-links a:hover { color: var(--lp-primary, #4a9eff); background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, transparent); }
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+            padding: 0.4rem 0.9rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease), background 0.2s var(--lp-ease);
+        }
+        .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+
+        /* Mobile : waffle (hamburger) + drawer ; nav reste sticky */
+        .nav-waffle {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            border: none;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--lp-text, #e6e6e6);
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s var(--lp-ease), color 0.2s var(--lp-ease);
+        }
+        .nav-waffle:hover { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, transparent); color: var(--lp-primary, #4a9eff); }
+        .nav-waffle-icon { display: flex; flex-direction: column; gap: 5px; }
+        .nav-waffle-icon span { display: block; width: 22px; height: 2px; background: currentColor; border-radius: 1px; transition: transform 0.25s var(--lp-ease), opacity 0.25s var(--lp-ease); }
+        .nav.nav--open .nav-waffle-icon span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav.nav--open .nav-waffle-icon span:nth-child(2) { opacity: 0; }
+        .nav.nav--open .nav-waffle-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        @media (max-width: 767px) {
+            .nav-waffle { display: flex; }
+            .nav-links {
+                position: fixed;
+                top: 44px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                z-index: 10001;
+                flex-direction: column;
+                align-items: stretch;
+                justify-content: flex-start;
+                gap: 0;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.98);
+                background: color-mix(in srgb, var(--lp-bg, #ffffff) 98%, transparent);
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+                transform: translate3d(100%, 0, 0);
+                -webkit-transform: translate3d(100%, 0, 0);
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav.nav--open .nav-links {
+                transform: translate3d(0, 0, 0);
+                -webkit-transform: translate3d(0, 0, 0);
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+            .nav-links a { min-height: 48px; justify-content: flex-start; padding: 0.75rem 1rem; border-radius: 10px; display: flex; align-items: center; color: var(--lp-text-on-light, #001327) !important; }
+        }
+        @media (min-width: 768px) {
+            .nav-waffle { display: none !important; }
+        }
+
+        /* ===== Bandeau alerte (style 0Flaw : bandeau teal sous la nav) ===== */
+        .alert-banner {
+            background: var(--lp-primary, #00C2CB);
+            color: #0d0d0d;
+            text-align: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* ===== Hero pleine hauteur — mobile-first ===== */
+        .hero {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem 1rem 3rem;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 100%;
+        }
+        /* Hero (Aérosection) : ton image en background 100 %, parallaxe, assombrissement léger uniquement */
+        .hero.has-bg-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        /* Hero fond vidéo : uniquement dans la section hero, avec parallaxe au scroll */
+        .hero.has-bg-video .hero-bg-video,
+        .hero.has-bg-video .hero-bg-thumbnail {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            will-change: transform;
+        }
+        .hero-bg-particles canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            pointer-events: none;
+        }
+        .hero.has-bg-video .hero-bg-video iframe,
+        .hero.has-bg-video .hero-bg-video video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            min-width: 100%;
+            min-height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            border: 0;
+        }
+        .hero.has-bg-video .hero-bg-video video {
+            object-fit: cover;
+        }
+        .hero.has-bg-video .hero-video-fallback,
+        .hero.has-bg-video .hero-video-cta {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            font-size: 0.95rem;
+            color: rgba(255,255,255,0.95);
+            text-decoration: none;
+            pointer-events: auto;
+            padding: 0.6rem 1.2rem;
+            background: rgba(0,0,0,0.6);
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .hero-video-fallback--inline {
+            position: static !important;
+            transform: none !important;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+        .hero.has-bg-video .hero-video-fallback:hover,
+        .hero.has-bg-video .hero-video-cta:hover {
+            color: #fff;
+            background: rgba(0,0,0,0.8);
+            text-decoration: none;
+        }
+        .hero.has-bg-video::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.35);
+            pointer-events: none;
+        }
+        .hero.has-bg-video > * { position: relative; z-index: 3; }
+        .hero.has-bg-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            pointer-events: none;
+        }
+        /* Texture légère (optionnelle) : limitée au hero uniquement, pas au scroll */
+        .hero.has-bg-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                rgba(0, 0, 0, 0.04) 2px,
+                rgba(0, 0, 0, 0.04) 4px
+            );
+            pointer-events: none;
+        }
+        /* Scanlines uniquement dans le hero : position absolute pour ne pas recouvrir le contenu en dessous au scroll */
+        .hero.has-bg-video::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent 0,
+                transparent 2px,
+                rgba(0, 0, 0, 0.04) 2px,
+                rgba(0, 0, 0, 0.04) 4px
+            );
+            pointer-events: none;
+        }
+        /* Fond hero sans image ni vidéo : fond uni (éviter que --lp-bg recouvre la vidéo) */
+        .hero:not(.has-bg-image):not(.has-bg-video)::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--lp-bg, #0d0d0d);
+            pointer-events: none;
+        }
+        .hero > * { position: relative; z-index: 3; }
+        .hero-logo { margin-bottom: 2rem; }
+        .hero-logo img {
+            max-height: 64px;
+            width: auto;
+            display: block;
+            margin: 0 auto;
+            filter: drop-shadow(0 2px 12px rgba(0,0,0,0.4));
+        }
+        /* Hero avec vidéo : texte blanc ou rose (primary) */
+        .hero.has-bg-video h1,
+        .hero.has-bg-video .hero-sub,
+        .hero.has-bg-video .hero-logo { color: #fff; }
+        .hero.has-bg-video .cta {
+            background: var(--lp-primary);
+            color: #fff;
+        }
+        .hero h1 {
+            font-family: var(--lp-font-heading, 'Open Sans', var(--lp-font-body, inherit));
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin: 0 0 1rem;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.02em;
+            max-width: 20ch;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s var(--lp-ease) both;
+        }
+        /* Bloc contenu hero : évite chevauchement CTA / texte (ex. "Regarder la vidéo" ou erreur iframe) */
+        .hero .hero-content-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.5rem 1.25rem;
+            max-width: 36rem;
+            margin: 0 auto;
+        }
+        .hero.has-bg-video .hero-content-block {
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+        }
+        .hero .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--lp-muted, rgba(255,255,255,0.75));
+            margin: 0;
+            max-width: 28ch;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s var(--lp-ease) 0.1s both;
+        }
+        .hero .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+            animation: fadeInUp 0.8s var(--lp-ease) 0.2s both;
+        }
+        .hero .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+        .hero .cta { animation: fadeInUp 0.8s var(--lp-ease) 0.2s both; }
+        .hero .cta:hover { animation: none; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Sections — mobile-first, responsive (max-width 100%) ===== */
+        .section {
+            width: 100%;
+            max-width: 720px;
+            padding: var(--lp-section-padding) 1rem;
+            margin: 0 auto;
+            animation: sectionReveal 0.7s var(--lp-ease) both;
+        }
+        .section:nth-of-type(2) { animation-delay: 0.05s; }
+        .section:nth-of-type(3) { animation-delay: 0.12s; }
+        .section:nth-of-type(4) { animation-delay: 0.19s; }
+        .section:nth-of-type(5) { animation-delay: 0.26s; }
+        .section:nth-of-type(6) { animation-delay: 0.33s; }
+        .section:nth-of-type(7) { animation-delay: 0.4s; }
+        .section:nth-of-type(8) { animation-delay: 0.47s; }
+        @keyframes sectionReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section:nth-of-type(odd) {
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section:nth-of-type(even) {
+            background: color-mix(in srgb, var(--lp-secondary, #5ebeff) 5%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            margin-bottom: 0.5rem;
+        }
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+        }
+        .section:nth-of-type(even) .section-head { border-left-color: var(--lp-secondary, #5ebeff); }
+        .section-num {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--lp-primary, #4a9eff);
+            min-width: 2rem;
+        }
+        .section:nth-of-type(even) .section-num { color: var(--lp-secondary, #5ebeff); }
+        .section h2 {
+            font-family: var(--lp-font-heading, inherit);
+            font-size: clamp(1.35rem, 3vw, 1.75rem);
+            font-weight: 700;
+            margin: 0;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.02em;
+        }
+        /* Contraste : sections fond foncé par défaut → paragraphes clairs (voir contraste-textes-landing.md) */
+        .section p { margin: 0 0 0.75rem; color: var(--lp-text-on-dark, var(--lp-text, #e6e6e6)); }
+        .section p:last-child { margin-bottom: 0; }
+
+        .icebreaker {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto 1rem;
+            padding: 1rem 1rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d));
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+            border-radius: 0 12px 12px 0;
+            font-size: 0.95rem;
+        }
+
+        .pain-list { margin: 0; padding-left: 1.35rem; }
+        .pain-list li { margin-bottom: 0.5rem; }
+
+        /* SEO technique & sémantique (bloc optionnel seo_technique_semantique) */
+        .seo-ts-subhead {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 1.25rem 0 0.5rem;
+            color: var(--lp-heading, #fff);
+            letter-spacing: -0.01em;
+        }
+        .seo-ts-subhead:first-of-type { margin-top: 0.5rem; }
+
+        /* Enjeux — funnel et graphiques (Casapy) — affichage universel (Firefox, Chrome, Safari, mobile) */
+        .enjeux-visuals { display: flex; flex-direction: column; gap: 2rem; margin-top: 2rem; }
+        .enjeux-visual-label { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--lp-muted, #999); margin-bottom: 0.75rem; }
+        /* Conteneur infographies : pleine largeur, pas de débordement, centrage */
+        .infographic-image-wrap {
+            width: 100%;
+            max-width: 100%;
+            margin: 1.25rem 0;
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+            min-width: 0;
+            overflow: hidden;
+        }
+        /* Image responsive et universelle : block (évite gap 4px), scale propre, tous navigateurs */
+        .infographic-image-wrap .infographic-img {
+            display: block;
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 0 auto;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+        /* Segment infographique (section Ce que j'offre) : ne pas couper l'image */
+        .services-segment-infographic {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow: visible;
+        }
+        .services-segment-infographic .infographic-image-wrap { margin: 1.25rem 0; }
+        .services-segments { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+        /* Mobile / petit viewport : infographies lisibles sans débordement */
+        @media (max-width: 480px) {
+            .infographic-image-wrap { margin: 1rem 0; }
+            .infographic-image-wrap .infographic-img { border-radius: 6px; }
+        }
+        .enjeux-funnel { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 320px; margin: 0 auto; }
+        .enjeux-funnel-tier { width: 100%; padding: 0.75rem 1rem; text-align: center; font-size: 0.95rem; font-weight: 600; border-radius: 8px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent); }
+        .enjeux-funnel-tier:nth-child(1) { width: 100%; }
+        .enjeux-funnel-tier:nth-child(2) { width: 85%; margin: 0 auto; }
+        .enjeux-funnel-tier:nth-child(3) { width: 65%; margin: 0 auto; background: color-mix(in srgb, #e74c3c 20%, var(--lp-bg, #0d0d0d)); border-color: color-mix(in srgb, #e74c3c 50%, transparent); }
+        .enjeux-funnel-tier:nth-child(4) { width: 45%; margin: 0 auto; background: color-mix(in srgb, #e74c3c 25%, var(--lp-bg, #0d0d0d)); border-color: color-mix(in srgb, #e74c3c 60%, transparent); }
+        .enjeux-funnel-tier .tier-val { display: block; font-size: 1.1rem; color: var(--lp-primary, #4a9eff); }
+        .enjeux-funnel-tier:nth-child(3) .tier-val, .enjeux-funnel-tier:nth-child(4) .tier-val { color: #e74c3c; }
+        .enjeux-ttfb-comparison { display: flex; align-items: flex-end; justify-content: center; gap: 2rem; max-width: 280px; margin: 0 auto; height: 120px; }
+        .enjeux-ttfb-bar { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+        .enjeux-ttfb-bar .bar { width: 48px; border-radius: 8px 8px 0 0; min-height: 8px; background: linear-gradient(180deg, var(--lp-primary, #4a9eff), var(--lp-secondary, #5ebeff)); }
+        .enjeux-ttfb-bar.enjeux-ttfb-bad .bar { background: linear-gradient(180deg, #e74c3c, #c0392b); }
+        .enjeux-ttfb-bar.enjeux-ttfb-ok .bar { background: linear-gradient(180deg, #00e676, #00c853); }
+        .enjeux-ttfb-bar .bar-label { font-size: 0.8rem; font-weight: 600; color: var(--lp-text, #e6e6e6); }
+        .enjeux-ttfb-bar .bar-val { font-size: 0.75rem; color: var(--lp-muted, #999); }
+
+        .card {
+            width: 100%;
+            max-width: 100%;
+            padding: 1.25rem 1rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border: 1px solid var(--lp-border, rgba(255,255,255,0.08));
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            transition: border-color 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+        }
+        .card:hover {
+            border-color: color-mix(in srgb, var(--lp-primary, #4a9eff) 35%, transparent);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 0 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, transparent);
+        }
+        .card:last-child { margin-bottom: 0; }
+
+        .workflow-figure { margin: 1.5rem 0 0; text-align: center; }
+        .workflow-figure img { max-width: 100%; height: auto; border-radius: 12px; }
+
+        /* Services onglets */
+        .services-annexes {
+            margin: 0 0 1rem;
+            font-size: 0.95rem;
+        }
+        .services-annexes a {
+            color: var(--lp-primary, #4a9eff);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .services-annexes a:hover { text-decoration: underline; }
+        .services-annexes .sep { color: var(--lp-muted, #999); margin: 0 0.35rem; }
+        .services-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .services-tabs input { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+        .services-tabs label {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.65rem 1.1rem;
+            font-size: 0.9rem; font-weight: 600;
+            color: var(--lp-muted, #999);
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d));
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s var(--lp-ease);
+        }
+        .services-tabs label:hover { color: var(--lp-text, #e6e6e6); }
+        .services-tabs input:checked + label {
+            color: var(--lp-cta-text, #fff);
+            background: var(--lp-primary, #4a9eff);
+            border-color: var(--lp-primary, #4a9eff);
+            box-shadow: 0 0 0 2px var(--lp-bg, #0d0d0d), 0 4px 20px color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent);
+        }
+        .services-panels .services-panel {
+            display: none;
+            padding: 1.5rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 16px;
+            border-left: 4px solid var(--lp-primary, #4a9eff);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            max-width: 100%;
+        }
+        .services-panels .services-panel h3 { font-size: 1.1rem; margin: 0 0 0.5rem; color: var(--lp-heading, #fff); }
+        .services-panels .services-panel p { margin: 0; }
+        .services-panels .about-me-content { margin: 0; }
+        .services-tabs input:nth-of-type(1):checked ~ .services-panels .services-panel:nth-of-type(1),
+        .services-tabs input:nth-of-type(2):checked ~ .services-panels .services-panel:nth-of-type(2),
+        .services-tabs input:nth-of-type(3):checked ~ .services-panels .services-panel:nth-of-type(3),
+        .services-tabs input:nth-of-type(4):checked ~ .services-panels .services-panel:nth-of-type(4),
+        .services-tabs input:nth-of-type(5):checked ~ .services-panels .services-panel:nth-of-type(5),
+        .services-tabs input:nth-of-type(6):checked ~ .services-panels .services-panel:nth-of-type(6),
+        .services-tabs input:nth-of-type(7):checked ~ .services-panels .services-panel:nth-of-type(7),
+        .services-tabs input:nth-of-type(8):checked ~ .services-panels .services-panel:nth-of-type(8),
+        .services-tabs input:nth-of-type(9):checked ~ .services-panels .services-panel:nth-of-type(9) { display: block; }
+
+        .stack-group { margin-bottom: 1.25rem; }
+        .stack-group .stack-label {
+            font-size: 0.8rem; font-weight: 700;
+            color: var(--lp-primary, #4a9eff);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+        .coordonnees-intro { margin-top: 0; margin-bottom: 1rem; }
+        .coordonnees-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+        .coordonnees-list a { color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; }
+        .coordonnees-list a:hover { text-decoration: underline; }
+        .coordonnees-email-trigger { color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; cursor: pointer; }
+        .coordonnees-email-trigger:hover { text-decoration: underline; }
+
+        /* Popup contact email (fallback quand mailto: ne fonctionne pas) — affichage via :target */
+        .contact-modal { display: none; position: fixed; inset: 0; z-index: 9999; align-items: center; justify-content: center; padding: 1.5rem; box-sizing: border-box; }
+        .contact-modal:target { display: flex; }
+        .contact-modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.65); }
+        .contact-modal-content {
+            position: relative; max-width: 420px; width: 100%;
+            background: var(--lp-bg, #0d0d0d);
+            border: 1px solid var(--lp-border, rgba(255,255,255,0.12));
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+        }
+        .contact-modal-content p { margin: 0 0 1rem; color: var(--lp-text, #e6e6e6); line-height: 1.5; }
+        .contact-modal-email { font-weight: 600; color: var(--lp-primary, #4a9eff); user-select: all; }
+        .contact-modal-close { display: inline-block; margin-top: 0.5rem; color: var(--lp-primary, #4a9eff); text-decoration: none; font-weight: 500; }
+        .contact-modal-close:hover { text-decoration: underline; }
+
+        .stack-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .stack-tag {
+            padding: 0.45rem 0.85rem;
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d));
+            color: var(--lp-text, #e6e6e6);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 30%, transparent);
+        }
+
+        .mission-flash {
+            padding: 2rem;
+            background: linear-gradient(135deg, color-mix(in srgb, var(--lp-primary, #4a9eff) 18%, var(--lp-bg, #0d0d0d)) 0%, color-mix(in srgb, var(--lp-secondary, #5ebeff) 12%, var(--lp-bg, #0d0d0d)) 50%, color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)) 100%);
+            border: 2px solid var(--lp-primary, #4a9eff);
+            border-radius: 20px;
+            box-shadow: 0 0 48px color-mix(in srgb, var(--lp-primary, #4a9eff) 25%, transparent), 0 0 24px color-mix(in srgb, var(--lp-secondary, #5ebeff) 15%, transparent);
+        }
+        .mission-flash p { margin: 0; }
+        .mission-flash .mission-flash-content { margin: 0; line-height: 1.7; }
+        .mission-flash .tag-line { font-size: 0.8rem; font-weight: 700; color: var(--lp-primary, #4a9eff); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.5rem; }
+
+        .why-quote {
+            padding: 1.5rem;
+            border-left: 4px solid var(--lp-secondary, #5ebeff);
+            background: color-mix(in srgb, var(--lp-primary, #4a9eff) 6%, var(--lp-bg, #0d0d0d));
+            border-radius: 0 16px 16px 0;
+            font-style: italic;
+            font-size: 1.05rem;
+        }
+
+        .cta-wrap {
+            padding: var(--lp-section-padding) 1.5rem;
+            text-align: center;
+        }
+        .cta-wrap .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--lp-primary, #4a9eff);
+            color: var(--lp-cta-text, #fff);
+            font-weight: 700;
+            font-size: 1.05rem;
+            border-radius: 12px;
+            text-decoration: none;
+            box-shadow: 0 4px 24px color-mix(in srgb, var(--lp-primary, #4a9eff) 45%, transparent);
+            transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease);
+        }
+        .cta-wrap .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px color-mix(in srgb, var(--lp-primary, #4a9eff) 55%, transparent);
+        }
+
+        /* Contenu principal : ne jamais déborder */
+        main#top { position: relative; z-index: 1; width: 100%; max-width: 100%; overflow-x: hidden; }
+
+        /* ===== Responsive : mobile-first — 480px ===== */
+        @media (min-width: 480px) {
+            .nav { padding: 0.45rem 1rem; min-height: 44px; }
+            .hero { padding: 2rem 1.25rem 3.5rem; }
+            .section { padding: var(--lp-section-padding) 1.25rem; }
+            .icebreaker { padding: 1rem 1.25rem; }
+            .card { padding: 1.35rem 1.25rem; }
+        }
+
+        /* ===== Responsive : tablette 768px — waouh espacement ===== */
+        @media (min-width: 768px) {
+            .nav { padding: 0.5rem 1.25rem; min-height: 46px; }
+            .nav-logo { max-height: 42px; }
+            .nav-logo.nav-logo--svg { height: 36px; }
+            .nav-links { gap: 0.5rem 1rem; }
+            .nav-links a { font-size: 1rem; padding: 0.5rem 0.6rem; }
+            .nav-cta { padding: 0.6rem 1.25rem; font-size: 1rem; border-radius: 14px; }
+            .hero { padding: 3rem 2rem 5rem; }
+            .hero h1 { font-size: clamp(2.25rem, 5.5vw, 3.5rem); max-width: 22ch; }
+            .hero .hero-sub { font-size: 1.15rem; max-width: 32ch; }
+            .hero-logo { margin-bottom: 2.25rem; }
+            .hero-logo img { max-height: 80px; }
+            .hero .cta { padding: 1.1rem 2.25rem; font-size: 1.1rem; }
+            .icebreaker { padding: 1.25rem 2rem; font-size: 1rem; max-width: 720px; margin-left: auto; margin-right: auto; }
+            .section { padding: var(--lp-section-padding) 2rem; max-width: 720px; }
+            .section-head { margin-bottom: 1.75rem; }
+            .section h2 { font-size: clamp(1.4rem, 3.2vw, 1.9rem); }
+            .card { padding: 1.75rem; }
+            .mission-flash { padding: 2.25rem; }
+            .cta-wrap { padding: var(--lp-section-padding) 2rem; }
+        }
+
+        /* ===== Responsive : desktop 1024px — waouh confort lecture ===== */
+        @media (min-width: 1024px) {
+            .nav { padding: 0.55rem 1.5rem; min-height: 48px; }
+            .nav-logo { max-height: 48px; }
+            .nav-logo.nav-logo--svg { height: 42px; }
+            .nav-links { gap: 0.75rem 1.5rem; }
+            .hero { padding: 4rem 2.5rem 6rem; }
+            .hero h1 { font-size: clamp(2.5rem, 4.5vw, 3.75rem); max-width: 24ch; }
+            .hero .hero-sub { font-size: 1.2rem; max-width: 36ch; }
+            .hero-logo { margin-bottom: 2.5rem; }
+            .hero-logo img { max-height: 88px; }
+            .hero .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
+            .icebreaker { padding: 1.5rem 2.5rem; max-width: 800px; }
+            .section { padding: var(--lp-section-padding) 2.5rem; max-width: 800px; }
+            .section-head { margin-bottom: 2rem; padding-left: 0.75rem; border-left-width: 5px; }
+            .section h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); }
+            .section-num { font-size: 0.9rem; min-width: 2.25rem; }
+            .card { padding: 2rem; }
+            .services-tabs label { padding: 0.75rem 1.25rem; font-size: 1rem; }
+            .services-panels .services-panel { padding: 2rem; }
+            .stack-tag { padding: 0.5rem 1rem; font-size: 0.95rem; }
+            .mission-flash { padding: 2.5rem; }
+            .why-quote { padding: 2rem; font-size: 1.1rem; }
+            .cta-wrap { padding: var(--lp-section-padding) 2.5rem; }
+            .cta-wrap .cta { padding: 1.2rem 2.5rem; font-size: 1.15rem; }
+        }
+
+        /* ===== Carousel chiffres clés (infographies animées + graphiques) ===== */
+        .key-figures-section { padding: var(--lp-section-padding) 1rem; max-width: 720px; margin: 0 auto; width: 100%; }
+        .key-figures-carousel { position: relative; overflow: hidden; border-radius: 20px; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 8%, var(--lp-bg, #0d0d0d)); border: 1px solid var(--lp-border, rgba(255,255,255,0.08)); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
+        .key-figures-track { display: flex; transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .key-figures-slide { min-width: 100%; padding: 2rem 1.25rem; text-align: center; }
+        .key-figures-slide .kpi-value { font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 700; color: var(--lp-primary, #4a9eff); margin: 0 0 0.25rem; opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .key-figures-slide.visible .kpi-value { opacity: 1; transform: translateY(0); }
+        .key-figures-slide .kpi-unit { font-size: 1rem; font-weight: 600; color: var(--lp-secondary, #5ebeff); margin-bottom: 0.5rem; }
+        .key-figures-slide .kpi-label { font-size: 0.9rem; color: var(--lp-muted, #999); max-width: 26ch; margin: 0 auto; line-height: 1.45; }
+        .key-figures-nav { display: flex; justify-content: center; align-items: center; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+        .key-figures-nav button { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--lp-primary, #4a9eff); background: transparent; color: var(--lp-primary, #4a9eff); font-size: 1.4rem; cursor: pointer; line-height: 1; transition: background 0.2s ease, color 0.2s ease; }
+        .key-figures-nav button:hover { background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); }
+        .key-figures-dots { display: flex; justify-content: center; gap: 0.4rem; margin-top: 0.5rem; }
+        .key-figures-dots span { width: 8px; height: 8px; border-radius: 50%; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); cursor: pointer; transition: transform 0.2s ease, background 0.2s ease; }
+        .key-figures-dots span.active { background: var(--lp-primary, #4a9eff); transform: scale(1.25); }
+        .key-figures-slide.chart-slide { padding: 1.5rem; }
+        .key-figures-slide.chart-slide h3 { font-size: 1rem; margin: 0 0 1rem; color: var(--lp-heading, #fff); text-transform: uppercase; letter-spacing: 0.04em; }
+        .key-figures-bar-chart { display: flex; align-items: flex-end; justify-content: center; gap: 1.25rem; height: 140px; padding: 0 0.5rem; }
+        .key-figures-bar-group { text-align: center; }
+        .key-figures-bar { width: 48px; border-radius: 10px 10px 0 0; margin: 0 auto 0.4rem; height: 0; background: linear-gradient(180deg, var(--lp-primary, #4a9eff), var(--lp-secondary, #5ebeff)); transition: height 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        .key-figures-slide.visible .key-figures-bar { height: var(--bar-h, 60%); }
+        .key-figures-bar-group .bar-val { font-size: 0.8rem; font-weight: 600; color: var(--lp-primary, #4a9eff); }
+        .key-figures-timeline { display: flex; flex-direction: column; gap: 0.75rem; max-width: 300px; margin: 0 auto; }
+        .key-figures-timeline-item { display: flex; align-items: flex-start; gap: 0.75rem; text-align: left; padding: 0.65rem 1rem; background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, var(--lp-bg, #0d0d0d)); border-radius: 12px; border-left: 4px solid var(--lp-primary, #4a9eff); opacity: 0; transform: translateX(-12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+        .key-figures-slide.visible .key-figures-timeline-item { opacity: 1; transform: translateX(0); }
+        .key-figures-slide.visible .key-figures-timeline-item:nth-child(1) { transition-delay: 0.08s; }
+        .key-figures-slide.visible .key-figures-timeline-item:nth-child(2) { transition-delay: 0.2s; }
+        .key-figures-timeline-item .t-period { font-weight: 700; color: var(--lp-primary, #4a9eff); min-width: 4.5rem; font-size: 0.95rem; }
+        .key-figures-timeline-item .t-desc { font-size: 0.85rem; color: var(--lp-muted, #999); margin: 0; line-height: 1.4; }
+        @media (prefers-reduced-motion: reduce) {
+            .key-figures-track { transition: none; }
+            .key-figures-slide .kpi-value, .key-figures-slide.visible .kpi-value { transition: none; opacity: 1; transform: none; }
+            .key-figures-slide.visible .key-figures-bar { transition: none; }
+            .key-figures-timeline-item, .key-figures-slide.visible .key-figures-timeline-item { transition: none; opacity: 1; transform: none; }
+        }
+
+        /* ===== Responsive : HD 1440px — waouh large écran ===== */
+        @media (min-width: 1440px) {
+            body { font-size: 1.0625rem; }
+            .nav { padding: 0.6rem 2rem; min-height: 50px; }
+            .nav-logo { max-height: 52px; }
+            .nav-logo.nav-logo--svg { height: 46px; }
+            .nav-links a { font-size: 1.05rem; }
+            .nav-cta { padding: 0.7rem 1.5rem; font-size: 1.05rem; border-radius: 16px; }
+            .hero { padding: 5rem 3rem 7rem; }
+            .hero h1 { font-size: 3.75rem; max-width: 26ch; }
+            .hero .hero-sub { font-size: 1.25rem; max-width: 40ch; }
+            .hero-logo { margin-bottom: 3rem; }
+            .hero-logo img { max-height: 96px; }
+            .hero .cta { padding: 1.25rem 2.75rem; font-size: 1.2rem; }
+            .icebreaker { padding: 1.75rem 3rem; max-width: 880px; font-size: 1.05rem; }
+            .section { padding: clamp(4rem, 10vw, 6rem) 3rem; max-width: 880px; }
+            .section-head { margin-bottom: 2.25rem; }
+            .section h2 { font-size: 2rem; }
+            .section p { font-size: 1.05rem; }
+            .card { padding: 2.25rem; }
+            .mission-flash { padding: 3rem; font-size: 1.05rem; }
+            .cta-wrap { padding: clamp(4rem, 10vw, 6rem) 3rem; }
+            .cta-wrap .cta { padding: 1.25rem 2.75rem; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body class="">
+    
+    <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide" id="hero-waves-pins-container" aria-hidden="true" style="inset:0;display:block;"></div>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+    <script src="/static/landing_pages/js/waves-pins-hero.js"></script>
+    
+    <!-- Nav sticky (ancres style page perso) -->
+    <nav class="nav">
+        
+        <a href="#top"><img src="https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png" alt="OPPORTUNITY (Oppy.ai)" class="nav-logo" loading="lazy"></a>
+        
+        <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false">
+            <span class="nav-waffle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+        <div class="nav-links">
+            <a href="#chiffres-cles">Chiffres clés</a>
+            <a href="#enjeux">Enjeux</a>
+            <a href="#solution">Solution</a>
+            
+            
+            <a href="#seo-technique-semantique">SEO technique &amp; sémantique</a>
+            <a href="#services">Services</a>
+            <a href="#stack">Stack</a>
+            <a href="#offre">Offre</a>
+            
+            <a href="rapport.html">Consulter le rapport</a>
+            
+            
+            <a href="#coordonnees">Me contacter</a>
+        </div>
+    </nav>
+    
+    <div class="alert-banner">LPPP OPPORTUNITY (OPPY.AI) — STRATÉGIE GAM + SEO TECHNIQUE &amp; SÉMANTIQUE (TRAME)</div>
+    
+
+    <main id="top" style="padding-top: 44px;">
+        
+        <!-- Hero : image, vidéo (MP4/WebM/YouTube), ou Waves Pins (position fixed en haut de body) -->
+        <section class="hero has-bg-video">
+            
+            
+            
+            <p class="hero-logo"><img src="https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png" alt="OPPORTUNITY (Oppy.ai)" loading="lazy"></p>
+            
+            
+            <div class="hero-content-block">
+                <h1>Industrialiser l&#x27;acquisition — OPPORTUNITY (Oppy.ai)</h1>
+                <p class="hero-sub">Étude stratégique + cadre SEO technique &amp; sémantique (site oppy.ai — mesures à compléter).</p>
+                
+                
+                <a href="#contact-email-modal" class="cta">OUVRIR LE DASHBOARD STRATÉGIQUE</a>
+                
+                
+                
+            </div>
+        </section>
+
+        <p class="icebreaker">Chiffres publics cités dans l&#x27;étude de référence : ~25 M€ de CA, ~40 collaborateurs, certification Ecovadis Gold, clients grands comptes (banque, assurance, télécom). Fondée en 2005 (Anthony Dinis), rachat MS Innovations / allmysms (2021, Omnes Capital). Direction : accélération transformation SaaS (Philippe Almouzni). Siège : Paris 8e.</p>
+        <p class="icebreaker">OPPORTUNITY combine une expertise historique (20+ ans) et une technologie d&#x27;IA conversationnelle forte, avec un positionnement Customer Interaction Management (CIM) : orchestrer SMS, RCS, vidéo, voicebot au bon moment du parcours. Le pivot vers un modèle SaaS « industriel » appelle une acquisition qui ne repose plus uniquement sur le réseau dirigeants : structurer le stack marketing, tracer 100 % des leads, enrichir et scorer avant Sales, et viser une délivrabilité / joignabilité de référence (objectif 95–100 %).</p>
+
+        
+        <section class="section key-figures-section" id="chiffres-cles">
+            <div class="section-head"><span class="section-num">00</span><h2>Chiffres clés</h2></div>
+            <div class="key-figures-carousel" role="region" aria-label="Carrousel chiffres clés et graphiques">
+                <div class="key-figures-track" id="key-figures-track">
+                    
+                    <div class="key-figures-slide" data-index="0">
+                        <p class="kpi-value">~25</p>
+                        <p class="kpi-unit">M€</p>
+                        <p class="kpi-label">CA indicatif (étude 2025 — à confirmer)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="1">
+                        <p class="kpi-value">~40</p>
+                        <p class="kpi-unit">pers.</p>
+                        <p class="kpi-label">Effectif — structure « commando » (étude)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="2">
+                        <p class="kpi-value">20+</p>
+                        <p class="kpi-unit">ans</p>
+                        <p class="kpi-label">Historique relation client / CIM</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="3">
+                        <p class="kpi-value">2 000</p>
+                        <p class="kpi-unit">leads/an</p>
+                        <p class="kpi-label">Ordre de grandeur MQL (modèle 1 M€ / ACV 50 k€)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="4">
+                        <p class="kpi-value">200</p>
+                        <p class="kpi-unit">SQL</p>
+                        <p class="kpi-label">Démos qualifiées cible (même hypothèse)</p>
+                    </div>
+                    
+                    <div class="key-figures-slide" data-index="5">
+                        <p class="kpi-value">95–100</p>
+                        <p class="kpi-unit">%</p>
+                        <p class="kpi-label">Cible délivrabilité / joignabilité (référence étude)</p>
+                    </div>
+                    
+                    
+                </div>
+                <div class="key-figures-nav">
+                    <button type="button" class="key-figures-prev" aria-label="Slide précédent">‹</button>
+                    <button type="button" class="key-figures-next" aria-label="Slide suivant">›</button>
+                </div>
+                <div class="key-figures-dots" id="key-figures-dots" aria-hidden="true"></div>
+            </div>
+        </section>
+        
+
+        
+        <section class="section content-player" id="enjeux">
+            <div class="section-head"><span class="section-num">01</span><h2>Vos enjeux</h2></div>
+            <div class="content-player-text">
+            <p class="section-lead">Du diagnostic au plan : gap technologique produit vs acquisition — passer d&#x27;un modèle artisanal à une machine scalable, sans sacrifier la conformité ni la qualité du pipeline.</p>
+            
+            <ul class="pain-list">
+                <li>Acquisition encore partiellement « artisanale » : besoin d&#x27;industrialiser la génération de leads grands comptes tout en gardant un filtre strict (MQL → SQL exigeant).</li><li>Silos possibles entre Marketing et Sales : fuites de données, SLA flous sur l&#x27;enrichissement et le scoring avant transmission aux commerciaux.</li><li>Agilité du stack marketing et automatisation du sourcing : points bas dans le radar stratégique (étude) — là où un profil Growth + engineering (n8n, Python, OSINT, alertes) apporte un levier direct.</li>
+            </ul>
+            
+            </div>
+            
+            <div class="enjeux-visuals" aria-hidden="true">
+                <div>
+                    <p class="enjeux-visual-label">Reverse waterfall (simulation 1 M€ nouveau CA)</p>
+                    <div class="enjeux-funnel">
+                        <div class="enjeux-funnel-tier"><span class="tier-val">2 000</span> leads ciblés / an</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">200</span> SQL (hyp. 10 % qualif.)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">20</span> signatures (ACV ~50 k€)</div>
+                        <div class="enjeux-funnel-tier"><span class="tier-val">J+90</span> scale 15–20 « high interest » / mois</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Radar stratégique — levier GAM</p>
+                    <div class="content-player-flowchart">
+                        <span class="flow-step">Conformité &amp; RSE ↑</span><span class="flow-arrow">+</span>
+                        <span class="flow-step">Multicanal IA ↑</span><span class="flow-arrow">→</span>
+                        <span class="flow-step">Agilité stack ↑ (à renforcer)</span>
+                    </div>
+                </div>
+                <div>
+                    <p class="enjeux-visual-label">Roadmap 90 jours (étude)</p>
+                    <div class="key-figures-timeline">
+                        <div class="key-figures-timeline-item"><span class="t-period">J+30</span><p class="t-desc">Audit flux Marketing→CRM, socle n8n, zéro fuite de leads</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">J+60</span><p class="t-desc">Enrichissement auto (Python/OSINT), gain temps prospection</p></div>
+                        <div class="key-figures-timeline-item"><span class="t-period">J+90</span><p class="t-desc">Multicanal scalable, pilotage ROI</p></div>
+                    </div>
+                </div>
+                <p class="enjeux-visual-label" style="margin-top: 2rem;">Dashboard : funnel, bullet metrics, waterfall, recovery rings (données étude OPPORTUNITY)</p>
+            </div>
+            
+        </section>
+        
+
+        
+
+        
+        <section class="section" id="solution">
+            <div class="section-head"><span class="section-num">02</span><h2>Harmonisons le chaos et boostons vos perfs.</h2></div>
+            
+            
+            <div class="card">
+                <p>Roadmap 90 jours (étude) : J+30 — audit des flux Marketing → CRM, fermeture des fuites, colonne vertébrale d&#x27;automatisation (n8n). J+60 — enrichissement automatisé (Python / OSINT) pour les Sales, cible +20 % de temps gagné sur la prospection manuelle. J+90 — montée en charge multicanale, stabiliser 15 à 20 opportunités « high interest » par mois. Logique reverse waterfall : pour ~1 M€ de nouveau CA (hypothèse ACV 50 k€), modèle indicatif 2 000 leads ciblés/an → 200 SQL → 20 signatures (taux à calibrer en entretien).</p>
+                
+            </div>
+            
+        </section>
+        
+
+        
+
+        
+        <section class="section" id="demo-concierge">
+            <div class="section-head"><span class="section-num">02c</span><h2>Démo : ce que je peux implanter pour vous</h2></div>
+            <div class="card">
+                <p class="section-lead">Un assistant IA qui répond aux questions des citoyens à partir de vos documents officiels (RAG).</p>
+                <div class="workflow-figure" style="min-height:200px;padding:1.5rem;border-radius:12px;background:#111;color:var(--lp-muted,#999);">
+                    <p><strong>Chat démo en cours de configuration</strong></p>
+                    <p>Pour afficher le chatbot ici : dans le fichier <code>.env</code> à la racine du projet, définissez <code>FLOWISE_URL=http://localhost:3010</code> (et éventuellement <code>FLOWISE_CHATFLOW_ID</code>). Vérifiez que Flowise tourne (port 3010). Puis redémarrez le conteneur web : <code>docker compose restart web</code>.</p>
+                </div>
+            </div>
+        </section>
+        
+
+        
+        <section class="section content-player services-segmented" id="services">
+            <div class="section-head"><span class="section-num">03</span><h2>Ce que j'offre</h2></div>
+            
+            <div class="rapport-cta-block">
+                <a href="rapport.html" class="rapport-cta-link">Consulter le rapport complet (société, stratégie, SEO) →</a>
+            </div>
+            
+            
+            
+            <div class="services-segments">
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Dashboard interactif</h3>
+                    <p>Score synthétique, timeline funnel, bullet charts, waterfall et recovery rings — champs remplis à partir de l&#x27;étude OPPORTUNITY (pas un audit PageSpeed du site).</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Infographie &amp; positionnement</h3>
+                    <p>Pages dédiées : mapping concurrentiel, messages B2B grands comptes, différenciation CIM vs CPaaS / marketing automation.</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">SEO technique &amp; sémantique</h3>
+                    <p>Grille crawl / index / on-page / schema / CWV ; piliers sémantiques et intentions ; livrables : rapport crawl, carte thématique, plan éditorial — détail dans seo-technique-semantique-oppy-ai.md.</p>
+                </div>
+                
+                
+                
+                <div class="services-segment-box">
+                    <h3 class="services-segment-title">Questions « puissantes » pour l&#x27;entretien</h3>
+                    
+                    <ul class="services-segment-bullets">
+                        <li>Part inbound vs outbound aujourd&#x27;hui ?</li><li>Après allmysms : comment segmenter l&#x27;acquisition (historique grands comptes vs comptes plus agiles) ?</li><li>North Star prioritaire : nombre de démos prises ou CAC ?</li>
+                    </ul>
+                    
+                </div>
+                
+                
+            </div>
+            
+        </section>
+        
+
+        
+        <section class="section content-player" id="resume-seo">
+            <div class="section-head"><span class="section-num">03b</span><h2>Synthèse stratégique (SWOT, funnel, North Star)</h2></div>
+            <div class="card seo-resume-card">
+                
+                <p class="seo-manque">North Star suggérée pour le poste : CAC vs LTV, ou volume de SQL générés de façon automatisée — à valider en entretien avec la direction.</p>
+                
+                
+                <p>Forces : expertise longue, techno IA + canaux riches, solidité financière, Ecovadis Gold. Faiblesses à adresser : silos marketing/sales, stack marketing à structurer, dépendance à la performance individuelle des commerciaux sans « machine » systémique. Opportunités : pivot SaaS, industrialisation growth, RCS et IA générative. Menaces : acteurs no-code agiles sur PME, RGPD / délivrabilité, cycles de vente grands comptes.</p>
+                
+                
+                <ul>
+                    <li>Passer de la quantité brute à la qualité de pipeline et au ROI d&#x27;acquisition</li><li>Alignement Sales / Marketing : SLA — pas de lead « nu » chez les commerciaux</li><li>Industrialiser sans alourdir les coûts fixes : automation, reporting data-driven</li>
+                </ul>
+                
+                
+                
+                <a href="rapport.html#analyse-seo-complete" class="seo-cta">VOIR LE DASHBOARD STRATÉGIQUE →</a>
+                
+                
+            </div>
+            
+        </section>
+        
+
+        
+        <section class="section content-player" id="seo-technique-semantique">
+            <div class="section-head"><span class="section-num">03c</span><h2>SEO technique &amp; sémantique — Oppy.ai</h2></div>
+            <div class="card seo-resume-card">
+                <p class="section-lead" style="margin-top:0;">Trame d’analyse pour le site public (oppy.ai) : technique (crawl, indexation, on-page, données structurées, CWV) et sémantique (piliers CIM, canaux, IA conversationnelle, secteurs grands comptes). Les cases et chiffres du document détaillé se remplissent après crawl, Search Console et mesures PageSpeed — aucune métrique inventée sur la landing.</p>
+                
+                <p style="font-size:0.9rem;color:var(--lp-muted,#999);margin-bottom:1rem;">Référence détaillée : <code style="font-size:0.85em;">docs/contacts/lppp-oppy-ai/seo-technique-semantique-oppy-ai.md</code></p>
+                
+                
+                <h3 class="seo-ts-subhead">Crawl &amp; indexation</h3>
+                <ul class="pain-list"><li>Robots.txt, sitemap XML, couverture d’index (GSC), canoniques et exclusions involontaires.</li><li>Maillage interne : profondeur, orphelines, ancres variées (éviter sur-optimisation).</li></ul>
+                
+                <h3 class="seo-ts-subhead">On-page &amp; rendu</h3>
+                <ul class="pain-list"><li>Titres / meta uniques par intention ; hiérarchie H1–Hn ; contenu critique accessible au crawl (HTML vs JS).</li><li>Images : alt pertinents, formats et dimensions adaptés au LCP/CLS.</li></ul>
+                
+                <h3 class="seo-ts-subhead">Données structurées &amp; performance</h3>
+                <ul class="pain-list"><li>Schema Organization / WebSite / produit SaaS si pertinent ; validation Rich Results.</li><li>Core Web Vitals (LCP, INP, CLS) et TTFB sur modèles de pages clés — à mesurer.</li></ul>
+                
+                
+                <h3 class="seo-ts-subhead">Piliers thématiques (clusters)</h3>
+                <ul class="pain-list"><li>CIM &amp; orchestration du parcours client ; omnicanal et « bon message, bon moment ».</li><li>Canaux : SMS pro, RCS, email transactionnel, voicebot, vidéo personnalisée (selon offre).</li><li>IA conversationnelle : personnalisation, automatisation, cas d’usage B2B.</li><li>Conformité, délivrabilité, confiance (RGPD, réputation expéditeur) ; angle RSE / Ecovadis en éditorial.</li><li>Verticales : banque, assurance, télécom, retail — pages piliers ou études de cas si disponibles.</li></ul>
+                
+                <h3 class="seo-ts-subhead">Intentions &amp; cannibalisation</h3>
+                <ul class="pain-list"><li>Distinguer requêtes informationnelles, commerciales et transactionnelles (démo, contact).</li><li>Cartographier les URL qui se chevauchent sur une même intention ; plan de consolidation ou différenciation.</li></ul>
+                
+                
+                <h3 class="seo-ts-subhead">Prochaines étapes (mesures)</h3>
+                <ul class="pain-list"><li>Lancer crawl + export (ex. Screaming Frog) et noter volumes d’URLs, erreurs, redirections.</li><li>Brancher / consulter Google Search Console : impressions, clics, requêtes, pages.</li><li>PageSpeed Insights (mobile + desktop) sur home + templates solution + article blog pilier.</li><li>Renseigner le fichier markdown `seo-technique-semantique-oppy-ai.md` (cases à cocher + tableur sémantique).</li></ul>
+                
+            </div>
+        </section>
+        
+
+        
+        <section class="section" id="stack">
+            <div class="section-head"><span class="section-num">04</span><h2>Stack technique</h2></div>
+            
+            
+            <div class="stack-group">
+                <p class="stack-label">Seo &amp; data</p>
+                <div class="stack-tags"><span class="stack-tag">Crawl (Screaming Frog, exports)</span><span class="stack-tag">Google Search Console</span><span class="stack-tag">PageSpeed / CrUX</span><span class="stack-tag">Schema.org / rich results</span><span class="stack-tag">Maillage &amp; cannibalisation</span></div>
+            </div>
+            
+            
+            <div class="stack-group">
+                <p class="stack-label">Contenu &amp; sémantique</p>
+                <div class="stack-tags"><span class="stack-tag">Cartographie intentions B2B</span><span class="stack-tag">Piliers éditoriaux / clusters</span><span class="stack-tag">Alignement sales enablement</span></div>
+            </div>
+            
+        </section>
+        
+
+        
+        <section class="section" id="offre">
+            <div class="section-head"><span class="section-num">05</span><h2>Mission Flash</h2></div>
+            <div class="mission-flash">
+                <p class="tag-line">Offre pour vous</p>
+                <div class="mission-flash-content">« Mon ambition n&#x27;est pas d&#x27;empiler des outils tiers, mais de construire pour OPPORTUNITY une infrastructure d&#x27;acquisition qui lui appartient — un système qui transforme la complexité technique en opportunités commerciales. »</div>
+            </div>
+        </section>
+        
+
+        
+        <section class="section" id="why-ge">
+            <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
+            <blockquote class="why-quote">Une agence livre des campagnes et des rapports ; un profil Growth Engineer intégré conçoit la plomberie (données, workflows, scoring, conformité), la mesure en continu et l&#x27;alignement avec les objectifs financiers (reverse waterfall). C&#x27;est cohérent avec un pivot SaaS où l&#x27;acquisition doit devenir un actif réplicable, pas une dépendance aux seuls réseaux dirigeants.</blockquote>
+        </section>
+        
+
+        
+        
+
+        
+        <section class="section" id="coordonnees">
+            <div class="section-head"><span class="section-num">07</span><h2>Coordonnées</h2></div>
+            <div class="card">
+                <p class="coordonnees-intro">Pour échanger sur cette proposition et la mise en œuvre :</p>
+                <ul class="coordonnees-list">
+                    <li>Gmail : <span class="coordonnees-email" style="user-select:all">lucas.tymen@gmail.com</span></li>
+                    <li><a href="https://www.linkedin.com/in/lucas-tymen-310255123/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                    
+                    
+                </ul>
+            </div>
+        </section>
+        
+
+        
+        
+        <div class="cta-wrap">
+            <a href="#contact-email-modal" class="cta">OUVRIR LE DASHBOARD STRATÉGIQUE</a>
+        </div>
+        
+        
+    </main>
+
+    
+    <div id="contact-email-modal" class="contact-modal" aria-hidden="true">
+        <a href="#" class="contact-modal-overlay" aria-label="Fermer"></a>
+        <div class="contact-modal-content">
+            <p>Vous pouvez me contacter par Mail à cette adresse : <span class="contact-modal-email">lucas.tymen@gmail.com</span></p>
+            <a href="#" class="contact-modal-close">Fermer</a>
+        </div>
+    </div>
+    
+
+    
+    <script>
+    (function() {
+        var track = document.getElementById('key-figures-track');
+        var dotsEl = document.getElementById('key-figures-dots');
+        if (!track || !dotsEl) return;
+        var slides = track.querySelectorAll('.key-figures-slide');
+        var total = slides.length;
+        var current = 0;
+        function goTo(i) {
+            current = (i + total) % total;
+            track.style.transform = 'translateX(-' + current * 100 + '%)';
+            for (var s = 0; s < slides.length; s++) slides[s].classList.toggle('visible', s === current);
+            var dots = dotsEl.querySelectorAll('span');
+            for (var d = 0; d < dots.length; d++) dots[d].classList.toggle('active', d === current);
+        }
+        var prev = document.querySelector('.key-figures-prev');
+        var next = document.querySelector('.key-figures-next');
+        if (prev) prev.addEventListener('click', function() { goTo(current - 1); });
+        if (next) next.addEventListener('click', function() { goTo(current + 1); });
+        for (var i = 0; i < total; i++) {
+            var span = document.createElement('span');
+            span.setAttribute('data-index', i);
+            span.addEventListener('click', function() { goTo(parseInt(this.getAttribute('data-index'), 10)); });
+            dotsEl.appendChild(span);
+        }
+        goTo(0);
+    })();
+    </script>
+    
+
+    <!-- Nav sticky : effet waouh au scroll (classe .nav--scrolled) + waffle mobile -->
+    <script>
+    (function() {
+        var nav = document.querySelector('.nav');
+        if (!nav) return;
+        function updateNav() { nav.classList.toggle('nav--scrolled', window.scrollY > 30); }
+        updateNav();
+        window.addEventListener('scroll', function() { requestAnimationFrame(updateNav); }, { passive: true });
+        var waffle = nav.querySelector('.nav-waffle');
+        if (waffle) {
+            waffle.addEventListener('click', function() {
+                var open = nav.classList.toggle('nav--open');
+                waffle.setAttribute('aria-expanded', open);
+                waffle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+            });
+            nav.querySelectorAll('.nav-links a').forEach(function(a) {
+                a.addEventListener('click', function() { nav.classList.remove('nav--open'); waffle.setAttribute('aria-expanded', 'false'); waffle.setAttribute('aria-label', 'Ouvrir le menu'); });
+            });
+        }
+    })();
+    </script>
+    <!-- Parallaxe vidéo hero : la vidéo ne bouge que dans le hero et se décale légèrement au scroll -->
+    <script>
+    (function() {
+        var hero = document.querySelector('.hero.has-bg-video');
+        var videoLayer = hero && hero.querySelector('.hero-bg-video');
+        if (!videoLayer) return;
+        var factor = 0.28;
+        function updateParallax() {
+            var y = window.scrollY;
+            var maxY = hero.offsetHeight;
+            var translate = y <= maxY ? -y * factor : -maxY * factor;
+            videoLayer.style.transform = 'translate3d(0, ' + translate + 'px, 0)';
+        }
+        updateParallax();
+        window.addEventListener('scroll', function() { requestAnimationFrame(updateParallax); }, { passive: true });
+    })();
+    </script>
+    
+<script>
+(function() {
+    if (typeof window === 'undefined') return;
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) window.scrollTo(0, 0);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        window.scrollTo(0, 0);
+    });
+})();
+</script>
+
+</body>
+</html>

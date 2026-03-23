@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "framework": null,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "installCommand": "",
+  "rewrites": [
+    { "source": "/p/lppp-oppy-ai/rapport", "destination": "/rapport.html" },
+    { "source": "/p/lppp-oppy-ai/rapport/", "destination": "/rapport.html" }
+  ]
+}
