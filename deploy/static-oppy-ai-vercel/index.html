@@ -151,6 +151,19 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             overflow-x: hidden;
             width: 100%;
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 2000;
+            background: var(--lp-primary, #00C9D4);
+            color: #0d0d0d;
+            font-weight: 700;
+            padding: 0.55rem 0.8rem;
+            border-radius: 0 0 10px 10px;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 0.75rem; }
 
         /* ===== Nav sticky top — mobile-first, responsive harmonieux, effet waouh ===== */
         .nav {
@@ -165,9 +178,9 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 0.5rem;
-            padding: 0.4rem 1rem;
-            min-height: 40px;
+            gap: 0.4rem;
+            padding: 0.22rem 0.7rem;
+            min-height: 34px;
             background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 92%, transparent);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -190,26 +203,26 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         @media (prefers-reduced-motion: reduce) {
             .nav { animation: none; }
         }
-        .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
-        .nav-logo.nav-logo--svg { height: 28px; width: auto; display: block; }
+        .nav-logo { max-height: 24px; width: auto; display: block; flex-shrink: 0; }
+        .nav-logo.nav-logo--svg { height: 22px; width: auto; display: block; }
         .nav-logo-link { display: flex; align-items: center; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.35rem 0.6rem;
+            gap: 0.2rem 0.45rem;
             align-items: center;
             justify-content: flex-end;
         }
         /* Mobile-first : zone de touch min 36px (compromis compacité/accessibilité) */
         .nav-links a {
-            font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+            font-size: clamp(0.75rem, 1.9vw, 0.82rem);
             font-weight: 500;
             color: var(--lp-muted, #999);
             text-decoration: none;
-            padding: 0.35rem 0.35rem;
-            min-height: 36px;
-            min-width: 36px;
+            padding: 0.22rem 0.3rem;
+            min-height: 30px;
+            min-width: 30px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -217,17 +230,24 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             transition: color 0.2s var(--lp-ease), background 0.2s var(--lp-ease);
         }
         .nav-links a:hover { color: var(--lp-primary, #4a9eff); background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, transparent); }
+        .nav-links a:focus-visible,
+        .nav-waffle:focus-visible,
+        .cta:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--lp-primary, #00C9D4);
+            outline-offset: 2px;
+        }
         .nav-cta {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 36px;
-            padding: 0.4rem 0.9rem;
+            min-height: 30px;
+            padding: 0.32rem 0.7rem;
             background: var(--lp-primary, #4a9eff);
             color: var(--lp-cta-text, #fff);
             font-weight: 600;
-            font-size: 0.9rem;
-            border-radius: 12px;
+            font-size: 0.8rem;
+            border-radius: 10px;
             text-decoration: none;
             transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease), background 0.2s var(--lp-ease);
         }
@@ -238,8 +258,8 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             display: none;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             padding: 0;
             border: none;
             border-radius: 8px;
@@ -255,21 +275,30 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         .nav.nav--open .nav-waffle-icon span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav.nav--open .nav-waffle-icon span:nth-child(2) { opacity: 0; }
         .nav.nav--open .nav-waffle-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        @media (max-width: 767px) {
+        .nav-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.45);
+        }
+        @media (max-width: 1024px) {
             .nav-waffle { display: flex; }
             .nav-links {
+                display: none;
                 position: fixed;
-                top: 44px;
+                top: 38px;
                 left: 0;
                 right: 0;
-                bottom: 0;
+                bottom: auto;
+                height: 0;
                 width: 100%;
                 z-index: 10001;
                 flex-direction: column;
                 align-items: stretch;
                 justify-content: flex-start;
                 gap: 0;
-                padding: 1rem;
+                padding: 0 1rem;
                 background: rgba(255, 255, 255, 0.98);
                 background: color-mix(in srgb, var(--lp-bg, #ffffff) 98%, transparent);
                 backdrop-filter: blur(14px);
@@ -281,20 +310,40 @@ body:has(.hero-bg-waves-pins) .alert-banner {
                 opacity: 0;
                 visibility: hidden;
                 pointer-events: none;
-                transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s;
-                overflow-y: auto;
+                transition: transform 0.3s var(--lp-ease), opacity 0.3s var(--lp-ease), visibility 0.3s, height 0.25s var(--lp-ease), padding 0.25s var(--lp-ease);
+                overflow: hidden;
                 -webkit-overflow-scrolling: touch;
             }
             .nav.nav--open .nav-links {
+                display: flex;
+                height: calc(100dvh - 44px);
+                max-height: calc(100vh - 44px);
+                padding: 1rem;
                 transform: translate3d(0, 0, 0);
                 -webkit-transform: translate3d(0, 0, 0);
                 opacity: 1;
                 visibility: visible;
                 pointer-events: auto;
+                overflow-y: auto;
             }
-            .nav-links a { min-height: 48px; justify-content: flex-start; padding: 0.75rem 1rem; border-radius: 10px; display: flex; align-items: center; color: var(--lp-text-on-light, #001327) !important; }
+            .nav.nav--open + .nav-backdrop { display: block; }
+            .nav-links a {
+                min-height: 44px;
+                justify-content: flex-start;
+                padding: 0.68rem 0.9rem;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                color: var(--lp-text-on-dark, #f5f5f5) !important;
+                border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 20%, transparent);
+                background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 90%, rgba(255,255,255,0.03));
+            }
+            .nav-links a:hover {
+                color: var(--lp-primary, #4a9eff) !important;
+                background: color-mix(in srgb, var(--lp-primary, #4a9eff) 18%, var(--lp-bg, #0d0d0d));
+            }
         }
-        @media (min-width: 768px) {
+        @media (min-width: 1025px) {
             .nav-waffle { display: none !important; }
         }
 
@@ -951,6 +1000,7 @@ body:has(.hero-bg-waves-pins) .alert-banner {
     </style>
 </head>
 <body class="">
+    <a href="#main-content" class="skip-link">Aller au contenu</a>
     
     <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide" id="hero-waves-pins-container" aria-hidden="true" style="inset:0;display:block;"></div>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
@@ -959,33 +1009,26 @@ body:has(.hero-bg-waves-pins) .alert-banner {
     <!-- Nav sticky (ancres style page perso) -->
     <nav class="nav">
         
-        <a href="#top"><img src="https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png" alt="OPPORTUNITY (Oppy.ai)" class="nav-logo" loading="lazy"></a>
+        <a href="#main-content"><img src="https://www.oppyai.fr/wp-content/themes/kadence-child/images/logo_opportunity.png" alt="OPPORTUNITY (Oppy.ai)" class="nav-logo" loading="lazy"></a>
         
-        <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
             <span class="nav-waffle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-menu">
             <a href="#chiffres-cles">Chiffres clés</a>
             <a href="#enjeux">Enjeux</a>
-            <a href="#solution">Solution</a>
-            
-            
+            <a href="#infographies-audit">Dashboard</a>
             <a href="#seo-technique-semantique">SEO technique &amp; sémantique</a>
             <a href="#services">Services</a>
-            <a href="#stack">Stack</a>
-            <a href="#offre">Offre</a>
-            
+            <a href="#squidresearch-complementarite">SquidResearch</a>
             <a href="rapport.html">Consulter le rapport</a>
-            <a href="positionnement-marketing.html">Positionnement marketing</a>
-            <a href="infographies-oppy-ai.html">Dashboard stratégique</a>
+            <a href="positionnement-marketing.html">Positionnement</a>
             <a href="#coordonnees">Me contacter</a>
         </div>
     </nav>
+    <button type="button" class="nav-backdrop" aria-label="Fermer le menu"></button>
     
-    <div class="alert-banner">LPPP OPPORTUNITY (OPPY.AI) — STRATÉGIE GAM + SEO TECHNIQUE &amp; SÉMANTIQUE (TRAME)</div>
-    
-
-    <main id="top" style="padding-top: 44px;">
+    <main id="main-content" style="padding-top: 44px;">
         
         <!-- Hero : image, vidéo (MP4/WebM/YouTube), ou Waves Pins (position fixed en haut de body) -->
         <section class="hero has-bg-video">
@@ -1335,6 +1378,20 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         
 
         
+        <section class="section" id="squidresearch-complementarite">
+            <div class="section-head"><span class="section-num">06</span><h2>SquidResearch, complémentarité</h2></div>
+            <div class="card">
+                <p class="section-lead">Je ne positionne pas SquidResearch comme concurrent d&#x27;OPPORTUNITY : c&#x27;est un projet SaaS distinct, avec des personas et services differents, qui m&#x27;a permis de traiter des problematiques techniques similaires et complementaires.</p>
+                <ul class="pain-list">
+                    <li><strong>Valeur transposable :</strong> qualite de donnees, enrichissement, scoring, orchestration de workflows et automatisations.</li>
+                    <li><strong>Application pour OPPORTUNITY :</strong> cadrage integration API/webhooks, pilotage de POC incrementaux et outillage growth engineering.</li>
+                    <li><strong>Approche commerciale honnete :</strong> faisabilite puis mesure sur KPI client, sans promesse de resultat non verifiee.</li>
+                </ul>
+                <p style="margin-top:1rem;">Si utile, je peux proposer une visite de la plateforme pour montrer concretement les mecaniques produit et les patterns d&#x27;execution :</p>
+                <p><a href="https://squidresearch.com/" target="_blank" rel="noopener noreferrer">Visiter SquidResearch (demo produit) →</a></p>
+            </div>
+        </section>
+        
         <section class="section" id="why-ge">
             <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
             <blockquote class="why-quote">Une agence livre des campagnes et des rapports ; un profil Growth Engineer intégré conçoit la plomberie (données, workflows, scoring, conformité), la mesure en continu et l&#x27;alignement avec les objectifs financiers (reverse waterfall). C&#x27;est cohérent avec un pivot SaaS où l&#x27;acquisition doit devenir un actif réplicable, pas une dépendance aux seuls réseaux dirigeants.</blockquote>
@@ -1418,15 +1475,59 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         updateNav();
         window.addEventListener('scroll', function() { requestAnimationFrame(updateNav); }, { passive: true });
         var waffle = nav.querySelector('.nav-waffle');
+        var navLinks = nav.querySelector('.nav-links');
+        var backdrop = document.querySelector('.nav-backdrop');
+        function setMobileMenu(open) {
+            if (!navLinks) return;
+            if (window.innerWidth <= 1024) {
+                navLinks.style.display = open ? 'flex' : 'none';
+                document.body.style.overflow = open ? 'hidden' : '';
+            } else {
+                navLinks.style.display = '';
+                document.body.style.overflow = '';
+            }
+        }
         if (waffle) {
             waffle.addEventListener('click', function() {
                 var open = nav.classList.toggle('nav--open');
-                waffle.setAttribute('aria-expanded', open);
+                setMobileMenu(open);
+                waffle.setAttribute('aria-expanded', open ? 'true' : 'false');
                 waffle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
             });
-            nav.querySelectorAll('.nav-links a').forEach(function(a) {
-                a.addEventListener('click', function() { nav.classList.remove('nav--open'); waffle.setAttribute('aria-expanded', 'false'); waffle.setAttribute('aria-label', 'Ouvrir le menu'); });
+            var links = nav.querySelectorAll('.nav-links a');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function() {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                });
+            }
+            if (backdrop) {
+                backdrop.addEventListener('click', function() {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                });
+            }
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 1024) {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                }
             });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && nav.classList.contains('nav--open')) {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                }
+            });
+            setMobileMenu(false);
         }
     })();
     </script>

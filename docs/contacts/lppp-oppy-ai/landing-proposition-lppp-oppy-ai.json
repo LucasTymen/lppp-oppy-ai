@@ -1,198 +1,198 @@
 {
-  "page_title": "Lucas Tymen — LPPP OPPORTUNITY (Oppy.ai) | Growth & acquisition",
-  "prospect_company": "OPPORTUNITY (Oppy.ai)",
-  "prospect_name": "",
-  "hero_headline": "Industrialiser l'acquisition — OPPORTUNITY (Oppy.ai)",
-  "hero_sub_headline": "Étude stratégique + cadre SEO technique & sémantique (site oppy.ai — mesures à compléter).",
-  "hero_subtitle": "LPPP — Stratégie GAM, dashboard, infographie, positionnement marketing et trame SEO (crawl, sémantique, CWV)",
-  "hero_video_mp4_url": "",
-  "hero_video_url": "",
-  "hero_waves_pins": true,
-  "hero_codepen_url": "https://codepen.io/sabosugi/embed/emzpagK?default-tab=result&theme-id=dark",
-  "theme": {},
-  "audit_dashboard_nav_label": "Dashboard stratégique",
-  "intro": "OPPORTUNITY combine une expertise historique (20+ ans) et une technologie d'IA conversationnelle forte, avec un positionnement Customer Interaction Management (CIM) : orchestrer SMS, RCS, vidéo, voicebot au bon moment du parcours. Le pivot vers un modèle SaaS « industriel » appelle une acquisition qui ne repose plus uniquement sur le réseau dirigeants : structurer le stack marketing, tracer 100 % des leads, enrichir et scorer avant Sales, et viser une délivrabilité / joignabilité de référence (objectif 95–100 %).",
-  "icebreaker": "Chiffres publics cités dans l'étude de référence : ~25 M€ de CA, ~40 collaborateurs, certification Ecovadis Gold, clients grands comptes (banque, assurance, télécom). Fondée en 2005 (Anthony Dinis), rachat MS Innovations / allmysms (2021, Omnes Capital). Direction : accélération transformation SaaS (Philippe Almouzni). Siège : Paris 8e.",
-  "enjeux_lead": "Du diagnostic au plan : gap technologique produit vs acquisition — passer d'un modèle artisanal à une machine scalable, sans sacrifier la conformité ni la qualité du pipeline.",
-  "pain_points": [
-    "Acquisition encore partiellement « artisanale » : besoin d'industrialiser la génération de leads grands comptes tout en gardant un filtre strict (MQL → SQL exigeant).",
-    "Silos possibles entre Marketing et Sales : fuites de données, SLA flous sur l'enrichissement et le scoring avant transmission aux commerciaux.",
-    "Agilité du stack marketing et automatisation du sourcing : points bas dans le radar stratégique (étude) — là où un profil Growth + engineering (n8n, Python, OSINT, alertes) apporte un levier direct."
-  ],
-  "solution_workflow": "Roadmap 90 jours (étude) : J+30 — audit des flux Marketing → CRM, fermeture des fuites, colonne vertébrale d'automatisation (n8n). J+60 — enrichissement automatisé (Python / OSINT) pour les Sales, cible +20 % de temps gagné sur la prospection manuelle. J+90 — montée en charge multicanale, stabiliser 15 à 20 opportunités « high interest » par mois. Logique reverse waterfall : pour ~1 M€ de nouveau CA (hypothèse ACV 50 k€), modèle indicatif 2 000 leads ciblés/an → 200 SQL → 20 signatures (taux à calibrer en entretien).",
-  "solution_piliers": [
-    {
-      "title": "Dashboard & funnel mathématique",
-      "desc": "Visualisation des étapes (acquisition → qualification → closing) et des métriques radar / concurrentielles — données issues de l'étude OPPORTUNITY."
-    },
-    {
-      "title": "Angle d'attaque data & automation",
-      "desc": "Sourcing par signaux (vs listes figées), enrichissement OSINT, délivrabilité pilotée, alertes temps réel (Slack / Telegram) pour Sales."
-    },
-    {
-      "title": "SWOT, Porter, AAARR",
-      "desc": "Cadres stratégiques alignés poste GAM : forces (historique, Gold Ecovadis, clients premium), faiblesses opérationnelles à adosser à ton rôle, menaces marché et leviers RCS / IA."
-    }
-  ],
-  "solution_steps": [
-    { "num": 1, "label": "J+30 — Audit flux, CRM, zéro fuite de leads ; socle n8n" },
-    { "num": 2, "label": "J+60 — Enrichissement & scoring automatisés pour les Sales" },
-    { "num": 3, "label": "J+90 — Scale multicanal, pilotage ROI et qualité de pipeline" }
-  ],
-  "cta_text": "OUVRIR LE DASHBOARD STRATÉGIQUE",
-  "cta_url": "",
-  "contact_email": "lucas.tymen@gmail.com",
-  "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=LPPP OPPORTUNITY (Oppy.ai) — Growth & acquisition",
-  "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
-  "rapport_url": "/p/lppp-oppy-ai/rapport/",
-  "infographies_oppy": [
-    { "label": "Mapping concurrentiel 2D", "file": "competitive_mapping_2d.html", "desc": "Opportunity vs Twilio, Brevo, géants CPaaS — sophistication tech × segment marché" },
-    { "label": "Roadmap SEO 90 jours", "file": "seo_action_plan_timeline.svg", "desc": "Phases J0–J90 : fondations, optimisation on-page, scale" },
-    { "label": "Calculateur revenue gap", "file": "revenue_gap_calculator.html", "desc": "Impact CVR avant/après optimisation — simulateur interactif" },
-    { "label": "Flux link juice", "file": "link_juice_flow_diagram.svg", "desc": "Fragmentation actuelle vs consolidation oppy.ai (301)" },
-    { "label": "Funnel reverse waterfall", "file": "reverse_waterfall_funnel.html", "desc": "MQL → SQL → signatures — paramètres objectif CA" },
-    { "label": "Radar positionnement", "file": "radar_chart_positioning.html", "desc": "Opportunity vs Twilio vs Brevo — conformité, multicanal IA, joignabilité" }
-  ],
-  "key_figures_carousel": [
-    { "value": "~25", "unit": "M€", "label": "CA indicatif (étude 2025 — à confirmer)" },
-    { "value": "~40", "unit": "pers.", "label": "Effectif — structure « commando » (étude)" },
-    { "value": "20+", "unit": "ans", "label": "Historique relation client / CIM" },
-    { "value": "2 000", "unit": "leads/an", "label": "Ordre de grandeur MQL (modèle 1 M€ / ACV 50 k€)" },
-    { "value": "200", "unit": "SQL", "label": "Démos qualifiées cible (même hypothèse)" },
-    { "value": "95–100", "unit": "%", "label": "Cible délivrabilité / joignabilité (référence étude)" }
-  ],
-  "alert_banner": "LPPP OPPORTUNITY (OPPY.AI) — STRATÉGIE GAM + SEO TECHNIQUE & SÉMANTIQUE (TRAME)",
-  "seo_resume": {
-    "title": "Synthèse stratégique (SWOT, funnel, North Star)",
-    "strategic_kpi_lead": "North Star suggérée pour le poste : CAC vs LTV, ou volume de SQL générés de façon automatisée — à valider en entretien avec la direction.",
-    "manque_annuel": "",
-    "intro": "Forces : expertise longue, techno IA + canaux riches, solidité financière, Ecovadis Gold. Faiblesses à adresser : silos marketing/sales, stack marketing à structurer, dépendance à la performance individuelle des commerciaux sans « machine » systémique. Opportunités : pivot SaaS, industrialisation growth, RCS et IA générative. Menaces : acteurs no-code agiles sur PME, RGPD / délivrabilité, cycles de vente grands comptes.",
-    "problemes_cles": [
-      "Passer de la quantité brute à la qualité de pipeline et au ROI d'acquisition",
-      "Alignement Sales / Marketing : SLA — pas de lead « nu » chez les commerciaux",
-      "Industrialiser sans alourdir les coûts fixes : automation, reporting data-driven"
-    ],
-    "lien_analyse": "VOIR LE DASHBOARD STRATÉGIQUE →"
+ "page_title": "Lucas Tymen — LPPP OPPORTUNITY (Oppy.ai) | Growth & acquisition",
+ "prospect_company": "OPPORTUNITY (Oppy.ai)",
+ "prospect_name": "",
+ "hero_headline": "Industrialiser l'acquisition — OPPORTUNITY (Oppy.ai)",
+ "hero_sub_headline": "Étude stratégique + cadre SEO technique & sémantique (site oppy.ai — mesures à compléter).",
+ "hero_subtitle": "LPPP — Stratégie GAM, dashboard, infographie, positionnement marketing et trame SEO (crawl, sémantique, CWV)",
+ "hero_video_mp4_url": "",
+ "hero_video_url": "",
+ "hero_waves_pins": true,
+ "hero_codepen_url": "",
+ "theme": {},
+ "audit_dashboard_nav_label": "Dashboard stratégique",
+ "intro": "OPPORTUNITY combine une expertise historique (20+ ans) et une technologie d'IA conversationnelle forte, avec un positionnement Customer Interaction Management (CIM) : orchestrer SMS, RCS, vidéo, voicebot au bon moment du parcours. Le pivot vers un modèle SaaS « industriel » appelle une acquisition qui ne repose plus uniquement sur le réseau dirigeants : structurer le stack marketing, tracer 100 % des leads, enrichir et scorer avant Sales, et viser une délivrabilité / joignabilité de référence (objectif 95–100 %).",
+ "icebreaker": "Chiffres publics cités dans l'étude de référence : ~25 M€ de CA, ~40 collaborateurs, certification Ecovadis Gold, clients grands comptes (banque, assurance, télécom). Fondée en 2005 (Anthony Dinis), rachat MS Innovations / allmysms (2021, Omnes Capital). Direction : accélération transformation SaaS (Philippe Almouzni). Siège : Paris 8e.",
+ "enjeux_lead": "Du diagnostic au plan : gap technologique produit vs acquisition — passer d'un modèle artisanal à une machine scalable, sans sacrifier la conformité ni la qualité du pipeline.",
+ "pain_points": [
+  "Acquisition encore partiellement « artisanale » : besoin d'industrialiser la génération de leads grands comptes tout en gardant un filtre strict (MQL → SQL exigeant).",
+  "Silos possibles entre Marketing et Sales : fuites de données, SLA flous sur l'enrichissement et le scoring avant transmission aux commerciaux.",
+  "Agilité du stack marketing et automatisation du sourcing : points bas dans le radar stratégique (étude) — là où un profil Growth + engineering (n8n, Python, OSINT, alertes) apporte un levier direct."
+ ],
+ "solution_workflow": "Roadmap 90 jours (étude) : J+30 — audit des flux Marketing → CRM, fermeture des fuites, colonne vertébrale d'automatisation (n8n). J+60 — enrichissement automatisé (Python / OSINT) pour les Sales, cible +20 % de temps gagné sur la prospection manuelle. J+90 — montée en charge multicanale, stabiliser 15 à 20 opportunités « high interest » par mois. Logique reverse waterfall : pour ~1 M€ de nouveau CA (hypothèse ACV 50 k€), modèle indicatif 2 000 leads ciblés/an → 200 SQL → 20 signatures (taux à calibrer en entretien).",
+ "solution_piliers": [
+  {
+   "title": "Dashboard & funnel mathématique",
+   "desc": "Visualisation des étapes (acquisition → qualification → closing) et des métriques radar / concurrentielles — données issues de l'étude OPPORTUNITY."
   },
-  "seo_technique_semantique": {
-    "title": "SEO technique & sémantique — Oppy.ai",
-    "intro": "Trame d’analyse pour le site public (oppy.ai) : technique (crawl, indexation, on-page, données structurées, CWV) et sémantique (piliers CIM, canaux, IA conversationnelle, secteurs grands comptes). Les cases et chiffres du document détaillé se remplissent après crawl, Search Console et mesures PageSpeed — aucune métrique inventée sur la landing.",
-    "doc_path": "docs/contacts/lppp-oppy-ai/seo-technique-semantique-oppy-ai.md",
-    "technique_sections": [
-      {
-        "heading": "Crawl & indexation",
-        "items": [
-          "Robots.txt, sitemap XML, couverture d’index (GSC), canoniques et exclusions involontaires.",
-          "Maillage interne : profondeur, orphelines, ancres variées (éviter sur-optimisation)."
-        ]
-      },
-      {
-        "heading": "On-page & rendu",
-        "items": [
-          "Titres / meta uniques par intention ; hiérarchie H1–Hn ; contenu critique accessible au crawl (HTML vs JS).",
-          "Images : alt pertinents, formats et dimensions adaptés au LCP/CLS."
-        ]
-      },
-      {
-        "heading": "Données structurées & performance",
-        "items": [
-          "Schema Organization / WebSite / produit SaaS si pertinent ; validation Rich Results.",
-          "Core Web Vitals (LCP, INP, CLS) et TTFB sur modèles de pages clés — à mesurer."
-        ]
-      }
-    ],
-    "semantique_sections": [
-      {
-        "heading": "Piliers thématiques (clusters)",
-        "items": [
-          "CIM & orchestration du parcours client ; omnicanal et « bon message, bon moment ».",
-          "Canaux : SMS pro, RCS, email transactionnel, voicebot, vidéo personnalisée (selon offre).",
-          "IA conversationnelle : personnalisation, automatisation, cas d’usage B2B.",
-          "Conformité, délivrabilité, confiance (RGPD, réputation expéditeur) ; angle RSE / Ecovadis en éditorial.",
-          "Verticales : banque, assurance, télécom, retail — pages piliers ou études de cas si disponibles."
-        ]
-      },
-      {
-        "heading": "Intentions & cannibalisation",
-        "items": [
-          "Distinguer requêtes informationnelles, commerciales et transactionnelles (démo, contact).",
-          "Cartographier les URL qui se chevauchent sur une même intention ; plan de consolidation ou différenciation."
-        ]
-      }
-    ],
-    "prochaines_etapes": [
-      "Lancer crawl + export (ex. Screaming Frog) et noter volumes d’URLs, erreurs, redirections.",
-      "Brancher / consulter Google Search Console : impressions, clics, requêtes, pages.",
-      "PageSpeed Insights (mobile + desktop) sur home + templates solution + article blog pilier.",
-      "Renseigner le fichier markdown `seo-technique-semantique-oppy-ai.md` (cases à cocher + tableur sémantique)."
+  {
+   "title": "Angle d'attaque data & automation",
+   "desc": "Sourcing par signaux (vs listes figées), enrichissement OSINT, délivrabilité pilotée, alertes temps réel (Slack / Telegram) pour Sales."
+  },
+  {
+   "title": "SWOT, Porter, AAARR",
+   "desc": "Cadres stratégiques alignés poste GAM : forces (historique, Gold Ecovadis, clients premium), faiblesses opérationnelles à adosser à ton rôle, menaces marché et leviers RCS / IA."
+  }
+ ],
+ "solution_steps": [
+  { "num": 1, "label": "J+30 — Audit flux, CRM, zéro fuite de leads ; socle n8n" },
+  { "num": 2, "label": "J+60 — Enrichissement & scoring automatisés pour les Sales" },
+  { "num": 3, "label": "J+90 — Scale multicanal, pilotage ROI et qualité de pipeline" }
+ ],
+ "cta_text": "OUVRIR LE DASHBOARD STRATÉGIQUE",
+ "cta_url": "",
+ "contact_email": "lucas.tymen@gmail.com",
+ "contact_gmail": "mailto:lucas.tymen@gmail.com?subject=LPPP OPPORTUNITY (Oppy.ai) — Growth & acquisition",
+ "contact_linkedin": "https://www.linkedin.com/in/lucas-tymen-310255123/",
+ "rapport_url": "/p/lppp-oppy-ai/rapport/",
+ "infographies_oppy": [
+  { "label": "Mapping concurrentiel 2D", "file": "competitive_mapping_2d.html", "desc": "Opportunity vs Twilio, Brevo, géants CPaaS — sophistication tech × segment marché" },
+  { "label": "Roadmap SEO 90 jours", "file": "seo_action_plan_timeline.svg", "desc": "Phases J0–J90 : fondations, optimisation on-page, scale" },
+  { "label": "Calculateur revenue gap", "file": "revenue_gap_calculator.html", "desc": "Impact CVR avant/après optimisation — simulateur interactif" },
+  { "label": "Flux link juice", "file": "link_juice_flow_diagram.svg", "desc": "Fragmentation actuelle vs consolidation oppy.ai (301)" },
+  { "label": "Funnel reverse waterfall", "file": "reverse_waterfall_funnel.html", "desc": "MQL → SQL → signatures — paramètres objectif CA" },
+  { "label": "Radar positionnement", "file": "radar_chart_positioning.html", "desc": "Opportunity vs Twilio vs Brevo — conformité, multicanal IA, joignabilité" }
+ ],
+ "key_figures_carousel": [
+  { "value": "~25", "unit": "M€", "label": "CA indicatif (étude 2025 — à confirmer)" },
+  { "value": "~40", "unit": "pers.", "label": "Effectif — structure « commando » (étude)" },
+  { "value": "20+", "unit": "ans", "label": "Historique relation client / CIM" },
+  { "value": "2 000", "unit": "leads/an", "label": "Ordre de grandeur MQL (modèle 1 M€ / ACV 50 k€)" },
+  { "value": "200", "unit": "SQL", "label": "Démos qualifiées cible (même hypothèse)" },
+  { "value": "95–100", "unit": "%", "label": "Cible délivrabilité / joignabilité (référence étude)" }
+ ],
+ "alert_banner": "LPPP OPPORTUNITY (OPPY.AI) — STRATÉGIE GAM + SEO TECHNIQUE & SÉMANTIQUE (TRAME)",
+ "seo_resume": {
+  "title": "Synthèse stratégique (SWOT, funnel, North Star)",
+  "strategic_kpi_lead": "North Star suggérée pour le poste : CAC vs LTV, ou volume de SQL générés de façon automatisée — à valider en entretien avec la direction.",
+  "manque_annuel": "",
+  "intro": "Forces : expertise longue, techno IA + canaux riches, solidité financière, Ecovadis Gold. Faiblesses à adresser : silos marketing/sales, stack marketing à structurer, dépendance à la performance individuelle des commerciaux sans « machine » systémique. Opportunités : pivot SaaS, industrialisation growth, RCS et IA générative. Menaces : acteurs no-code agiles sur PME, RGPD / délivrabilité, cycles de vente grands comptes.",
+  "problemes_cles": [
+   "Passer de la quantité brute à la qualité de pipeline et au ROI d'acquisition",
+   "Alignement Sales / Marketing : SLA — pas de lead « nu » chez les commerciaux",
+   "Industrialiser sans alourdir les coûts fixes : automation, reporting data-driven"
+  ],
+  "lien_analyse": "VOIR LE DASHBOARD STRATÉGIQUE →"
+ },
+ "seo_technique_semantique": {
+  "title": "SEO technique & sémantique — Oppy.ai",
+  "intro": "Trame d’analyse pour le site public (oppy.ai) : technique (crawl, indexation, on-page, données structurées, CWV) et sémantique (piliers CIM, canaux, IA conversationnelle, secteurs grands comptes). Les cases et chiffres du document détaillé se remplissent après crawl, Search Console et mesures PageSpeed — aucune métrique inventée sur la landing.",
+  "doc_path": "docs/contacts/lppp-oppy-ai/seo-technique-semantique-oppy-ai.md",
+  "technique_sections": [
+   {
+    "heading": "Crawl & indexation",
+    "items": [
+     "Robots.txt, sitemap XML, couverture d’index (GSC), canoniques et exclusions involontaires.",
+     "Maillage interne : profondeur, orphelines, ancres variées (éviter sur-optimisation)."
     ]
-  },
-  "coordonnees_intro": "Pour échanger sur cette proposition et la mise en œuvre :",
-  "about_me_title": "Contexte",
-  "about_me": "Proposition LPPP pour OPPORTUNITY (Oppy.ai) : lecture stratégique (étude : etude-oppy-ai-source.md) + trame SEO technique & sémantique pour oppy.ai (seo-technique-semantique-oppy-ai.md). Exécution : Python, n8n, données, agents IA type Flowise ; compléter le volet SEO avec mesures terrain réelles.",
-  "prestations_headline": "Ce que contient ce livrable",
-  "services_segments": [
-    {
-      "type": "box",
-      "title": "Dashboard interactif",
-      "format": "text",
-      "desc": "Score synthétique, timeline funnel, bullet charts, waterfall et recovery rings — champs remplis à partir de l'étude OPPORTUNITY (pas un audit PageSpeed du site)."
-    },
-    {
-      "type": "box",
-      "title": "Infographie & positionnement",
-      "format": "text",
-      "desc": "Pages dédiées : mapping concurrentiel, messages B2B grands comptes, différenciation CIM vs CPaaS / marketing automation."
-    },
-    {
-      "type": "box",
-      "title": "SEO technique & sémantique",
-      "format": "text",
-      "desc": "Grille crawl / index / on-page / schema / CWV ; piliers sémantiques et intentions ; livrables : rapport crawl, carte thématique, plan éditorial — détail dans seo-technique-semantique-oppy-ai.md."
-    },
-    {
-      "type": "box",
-      "title": "Questions « puissantes » pour l'entretien",
-      "format": "bullets",
-      "bullets": [
-        "Part inbound vs outbound aujourd'hui ?",
-        "Après allmysms : comment segmenter l'acquisition (historique grands comptes vs comptes plus agiles) ?",
-        "North Star prioritaire : nombre de démos prises ou CAC ?"
-      ]
-    }
-  ],
-  "services": [
-    {
-      "title": "Dashboard stratégique",
-      "description": "Funnel inversé, métriques de maturité acquisition, jalons J+30 / J+60 / J+90."
-    },
-    {
-      "title": "Étude marché & concurrents",
-      "description": "Twilio, Sinch, Brevo, Hubspot, Vocalcom, MessageBird, Gupshup — matrices et scores de l'étude."
-    },
-    {
-      "title": "Proposition d'exécution",
-      "description": "Stack automation, enrichissement, intégration CRM, preuves chiffrées (ex. méthode type SquidResearch : volume traité, temps gagné, délivrabilité)."
-    },
-    {
-      "title": "SEO technique & sémantique",
-      "description": "Audit oppy.ai : indexation, on-page, performance, schema ; clusters CIM / canaux / grands comptes ; pas de chiffres inventés — section 03c sur la landing + markdown de travail."
-    }
-  ],
-  "expertise_stack": {
-    "seo & data": [
-      "Crawl (Screaming Frog, exports)",
-      "Google Search Console",
-      "PageSpeed / CrUX",
-      "Schema.org / rich results",
-      "Maillage & cannibalisation"
-    ],
-    "contenu & sémantique": [
-      "Cartographie intentions B2B",
-      "Piliers éditoriaux / clusters",
-      "Alignement sales enablement"
+   },
+   {
+    "heading": "On-page & rendu",
+    "items": [
+     "Titres / meta uniques par intention ; hiérarchie H1–Hn ; contenu critique accessible au crawl (HTML vs JS).",
+     "Images : alt pertinents, formats et dimensions adaptés au LCP/CLS."
     ]
+   },
+   {
+    "heading": "Données structurées & performance",
+    "items": [
+     "Schema Organization / WebSite / produit SaaS si pertinent ; validation Rich Results.",
+     "Core Web Vitals (LCP, INP, CLS) et TTFB sur modèles de pages clés — à mesurer."
+    ]
+   }
+  ],
+  "semantique_sections": [
+   {
+    "heading": "Piliers thématiques (clusters)",
+    "items": [
+     "CIM & orchestration du parcours client ; omnicanal et « bon message, bon moment ».",
+     "Canaux : SMS pro, RCS, email transactionnel, voicebot, vidéo personnalisée (selon offre).",
+     "IA conversationnelle : personnalisation, automatisation, cas d’usage B2B.",
+     "Conformité, délivrabilité, confiance (RGPD, réputation expéditeur) ; angle RSE / Ecovadis en éditorial.",
+     "Verticales : banque, assurance, télécom, retail — pages piliers ou études de cas si disponibles."
+    ]
+   },
+   {
+    "heading": "Intentions & cannibalisation",
+    "items": [
+     "Distinguer requêtes informationnelles, commerciales et transactionnelles (démo, contact).",
+     "Cartographier les URL qui se chevauchent sur une même intention ; plan de consolidation ou différenciation."
+    ]
+   }
+  ],
+  "prochaines_etapes": [
+   "Lancer crawl + export (ex. Screaming Frog) et noter volumes d’URLs, erreurs, redirections.",
+   "Brancher / consulter Google Search Console : impressions, clics, requêtes, pages.",
+   "PageSpeed Insights (mobile + desktop) sur home + templates solution + article blog pilier.",
+   "Renseigner le fichier markdown `seo-technique-semantique-oppy-ai.md` (cases à cocher + tableur sémantique)."
+  ]
+ },
+ "coordonnees_intro": "Pour échanger sur cette proposition et la mise en œuvre :",
+ "about_me_title": "Contexte",
+ "about_me": "Proposition LPPP pour OPPORTUNITY (Oppy.ai) : lecture stratégique (étude : etude-oppy-ai-source.md) + trame SEO technique & sémantique pour oppy.ai (seo-technique-semantique-oppy-ai.md). Exécution : Python, n8n, données, agents IA type Flowise ; compléter le volet SEO avec mesures terrain réelles.",
+ "prestations_headline": "Ce que contient ce livrable",
+ "services_segments": [
+  {
+   "type": "box",
+   "title": "Dashboard interactif",
+   "format": "text",
+   "desc": "Score synthétique, timeline funnel, bullet charts, waterfall et recovery rings — champs remplis à partir de l'étude OPPORTUNITY (pas un audit PageSpeed du site)."
   },
-  "mission_flash": "« Mon ambition n'est pas d'empiler des outils tiers, mais de construire pour OPPORTUNITY une infrastructure d'acquisition qui lui appartient — un système qui transforme la complexité technique en opportunités commerciales. »",
-  "why_growth_engineer": "Une agence livre des campagnes et des rapports ; un profil Growth Engineer intégré conçoit la plomberie (données, workflows, scoring, conformité), la mesure en continu et l'alignement avec les objectifs financiers (reverse waterfall). C'est cohérent avec un pivot SaaS où l'acquisition doit devenir un actif réplicable, pas une dépendance aux seuls réseaux dirigeants."
+  {
+   "type": "box",
+   "title": "Infographie & positionnement",
+   "format": "text",
+   "desc": "Pages dédiées : mapping concurrentiel, messages B2B grands comptes, différenciation CIM vs CPaaS / marketing automation."
+  },
+  {
+   "type": "box",
+   "title": "SEO technique & sémantique",
+   "format": "text",
+   "desc": "Grille crawl / index / on-page / schema / CWV ; piliers sémantiques et intentions ; livrables : rapport crawl, carte thématique, plan éditorial — détail dans seo-technique-semantique-oppy-ai.md."
+  },
+  {
+   "type": "box",
+   "title": "Questions « puissantes » pour l'entretien",
+   "format": "bullets",
+   "bullets": [
+    "Part inbound vs outbound aujourd'hui ?",
+    "Après allmysms : comment segmenter l'acquisition (historique grands comptes vs comptes plus agiles) ?",
+    "North Star prioritaire : nombre de démos prises ou CAC ?"
+   ]
+  }
+ ],
+ "services": [
+  {
+   "title": "Dashboard stratégique",
+   "description": "Funnel inversé, métriques de maturité acquisition, jalons J+30 / J+60 / J+90."
+  },
+  {
+   "title": "Étude marché & concurrents",
+   "description": "Twilio, Sinch, Brevo, Hubspot, Vocalcom, MessageBird, Gupshup — matrices et scores de l'étude."
+  },
+  {
+   "title": "Proposition d'exécution",
+   "description": "Stack automation, enrichissement, intégration CRM, preuves chiffrées (ex. méthode type SquidResearch : volume traité, temps gagné, délivrabilité)."
+  },
+  {
+   "title": "SEO technique & sémantique",
+   "description": "Audit oppy.ai : indexation, on-page, performance, schema ; clusters CIM / canaux / grands comptes ; pas de chiffres inventés — section 03c sur la landing + markdown de travail."
+  }
+ ],
+ "expertise_stack": {
+  "seo & data": [
+   "Crawl (Screaming Frog, exports)",
+   "Google Search Console",
+   "PageSpeed / CrUX",
+   "Schema.org / rich results",
+   "Maillage & cannibalisation"
+  ],
+  "contenu & sémantique": [
+   "Cartographie intentions B2B",
+   "Piliers éditoriaux / clusters",
+   "Alignement sales enablement"
+  ]
+ },
+ "mission_flash": "« Mon ambition n'est pas d'empiler des outils tiers, mais de construire pour OPPORTUNITY une infrastructure d'acquisition qui lui appartient — un système qui transforme la complexité technique en opportunités commerciales. »",
+ "why_growth_engineer": "Une agence livre des campagnes et des rapports ; un profil Growth Engineer intégré conçoit la plomberie (données, workflows, scoring, conformité), la mesure en continu et l'alignement avec les objectifs financiers (reverse waterfall). C'est cohérent avec un pivot SaaS où l'acquisition doit devenir un actif réplicable, pas une dépendance aux seuls réseaux dirigeants."
 }

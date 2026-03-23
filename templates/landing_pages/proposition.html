@@ -46,6 +46,19 @@
             overflow-x: hidden;
             width: 100%;
         }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 2000;
+            background: var(--lp-primary, #00C9D4);
+            color: #0d0d0d;
+            font-weight: 700;
+            padding: 0.5rem 0.8rem;
+            border-radius: 0 0 10px 10px;
+            text-decoration: none;
+        }
+        .skip-link:focus { left: 0.7rem; }
 
         /* ===== Nav sticky top — mobile-first, responsive harmonieux, effet waouh ===== */
         .nav {
@@ -60,9 +73,9 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            gap: 0.5rem;
-            padding: 0.4rem 1rem;
-            min-height: 40px;
+            gap: 0.4rem;
+            padding: 0.22rem 0.7rem;
+            min-height: 34px;
             background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 92%, transparent);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
@@ -85,26 +98,26 @@
         @media (prefers-reduced-motion: reduce) {
             .nav { animation: none; }
         }
-        .nav-logo { max-height: 32px; width: auto; display: block; flex-shrink: 0; }
-        .nav-logo.nav-logo--svg { height: 28px; width: auto; display: block; }
+        .nav-logo { max-height: 24px; width: auto; display: block; flex-shrink: 0; }
+        .nav-logo.nav-logo--svg { height: 22px; width: auto; display: block; }
         .nav-logo-link { display: flex; align-items: center; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
         .nav-links {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.35rem 0.6rem;
+            gap: 0.2rem 0.45rem;
             align-items: center;
             justify-content: flex-end;
         }
         /* Mobile-first : zone de touch min 36px (compromis compacité/accessibilité) */
         .nav-links a {
-            font-size: clamp(0.8rem, 2.2vw, 0.9rem);
+            font-size: clamp(0.75rem, 1.9vw, 0.82rem);
             font-weight: 500;
             color: var(--lp-muted, #999);
             text-decoration: none;
-            padding: 0.35rem 0.35rem;
-            min-height: 36px;
-            min-width: 36px;
+            padding: 0.22rem 0.3rem;
+            min-height: 30px;
+            min-width: 30px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -112,17 +125,24 @@
             transition: color 0.2s var(--lp-ease), background 0.2s var(--lp-ease);
         }
         .nav-links a:hover { color: var(--lp-primary, #4a9eff); background: color-mix(in srgb, var(--lp-primary, #4a9eff) 12%, transparent); }
+        .nav-links a:focus-visible,
+        .nav-waffle:focus-visible,
+        .cta:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--lp-primary, #00C9D4);
+            outline-offset: 2px;
+        }
         .nav-cta {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-height: 36px;
-            padding: 0.4rem 0.9rem;
+            min-height: 30px;
+            padding: 0.32rem 0.7rem;
             background: var(--lp-primary, #4a9eff);
             color: var(--lp-cta-text, #fff);
             font-weight: 600;
-            font-size: 0.9rem;
-            border-radius: 12px;
+            font-size: 0.8rem;
+            border-radius: 10px;
             text-decoration: none;
             transition: transform 0.25s var(--lp-ease), box-shadow 0.25s var(--lp-ease), background 0.2s var(--lp-ease);
         }
@@ -133,8 +153,8 @@
             display: none;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             padding: 0;
             border: none;
             border-radius: 8px;
@@ -150,14 +170,24 @@
         .nav.nav--open .nav-waffle-icon span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav.nav--open .nav-waffle-icon span:nth-child(2) { opacity: 0; }
         .nav.nav--open .nav-waffle-icon span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        @media (max-width: 767px) {
+        .nav-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.42);
+        }
+        @media (max-width: 1024px) {
             .nav-waffle { display: flex; }
             .nav-links {
+                display: none;
                 position: fixed;
-                top: 44px;
+                top: var(--nav-mobile-top, 44px);
                 left: 0;
                 right: 0;
-                bottom: 0;
+                bottom: auto;
+                height: calc(100dvh - var(--nav-mobile-top, 44px));
+                max-height: calc(100vh - var(--nav-mobile-top, 44px));
                 width: 100%;
                 z-index: 10001;
                 flex-direction: column;
@@ -181,15 +211,31 @@
                 -webkit-overflow-scrolling: touch;
             }
             .nav.nav--open .nav-links {
+                display: flex;
                 transform: translate3d(0, 0, 0);
                 -webkit-transform: translate3d(0, 0, 0);
                 opacity: 1;
                 visibility: visible;
                 pointer-events: auto;
             }
-            .nav-links a { min-height: 48px; justify-content: flex-start; padding: 0.75rem 1rem; border-radius: 10px; display: flex; align-items: center; color: var(--lp-text-on-light, #001327) !important; }
+            .nav.nav--open + .nav-backdrop { display: block; }
+            .nav-links a {
+                min-height: 44px;
+                justify-content: flex-start;
+                padding: 0.68rem 0.9rem;
+                border-radius: 10px;
+                display: flex;
+                align-items: center;
+                color: var(--lp-text-on-dark, #f5f5f5) !important;
+                border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 20%, transparent);
+                background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 90%, rgba(255,255,255,0.03));
+            }
+            .nav-links a:hover {
+                color: var(--lp-primary, #4a9eff) !important;
+                background: color-mix(in srgb, var(--lp-primary, #4a9eff) 18%, var(--lp-bg, #0d0d0d));
+            }
         }
-        @media (min-width: 768px) {
+        @media (min-width: 1025px) {
             .nav-waffle { display: none !important; }
         }
 
@@ -846,6 +892,8 @@
     </style>
 </head>
 <body class="{% if use_perso_style %}lp-perso-style{% endif %}">
+    <a href="#main-content" class="skip-link">Aller au contenu</a>
+    <span id="top" aria-hidden="true"></span>
     {% if content.hero_codepen_url %}
     <div class="hero-bg-waves-pins hero-bg-waves-pins--site-wide hero-bg-codepen" aria-hidden="true" style="inset:0;display:block;">
         <iframe src="{{ content.hero_codepen_url }}" class="hero-codepen-iframe" title="Animation Waves Pins" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
@@ -867,10 +915,21 @@
         {% else %}
         <span style="font-weight:700; color: var(--lp-text);">{{ landing_page.prospect_company|default:content.page_title|default:"Landing" }}</span>
         {% endif %}
-        <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <button type="button" class="nav-waffle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-menu">
             <span class="nav-waffle-icon" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-menu">
+            {% if landing_page.slug == 'lppp-oppy-ai' %}
+            <a href="#chiffres-cles">Chiffres clés</a>
+            <a href="#enjeux">Enjeux</a>
+            <a href="#infographies-audit">Dashboard</a>
+            <a href="#seo-technique-semantique">SEO technique</a>
+            <a href="#services">Services</a>
+            <a href="#squidresearch-complementarite">SquidResearch</a>
+            {% if content.rapport_url %}<a href="{{ content.rapport_url }}">Rapport</a>{% endif %}
+            {% if content.positionnement_marketing_url %}<a href="{{ content.positionnement_marketing_url }}">Positionnement</a>{% endif %}
+            <a href="#coordonnees">Contact</a>
+            {% else %}
             {% if content.key_figures_carousel %}<a href="#chiffres-cles">Chiffres clés</a>{% endif %}
             {% if content.pain_points or content.activite_pain_points %}<a href="#enjeux">Enjeux</a>{% endif %}
             {% if content.solution_workflow or content.positionnement %}<a href="#solution">Solution</a>{% endif %}
@@ -885,13 +944,15 @@
             {% if content.positionnement_marketing_url %}<a href="{{ content.positionnement_marketing_url }}">Positionnement marketing</a>{% endif %}
             {% if content.audit_dashboard_url %}<a href="{{ content.audit_dashboard_url }}">{{ content.audit_dashboard_nav_label|default:"Dashboard audit" }}</a>{% endif %}
             {% if content.contact_email or content.contact_gmail or content.contact_linkedin or content.contact_github or content.contact_linktree %}<a href="#coordonnees">Me contacter</a>{% elif content.cta_url %}<a href="{{ content.cta_url }}" class="nav-cta">{{ content.cta_text|default:"Contact" }}</a>{% endif %}
+            {% endif %}
         </div>
     </nav>
-    {% if content.alert_banner %}
+    <button type="button" class="nav-backdrop" aria-label="Fermer le menu"></button>
+    {% if content.alert_banner and landing_page.slug != 'lppp-oppy-ai' %}
     <div class="alert-banner">{{ content.alert_banner }}</div>
     {% endif %}
 
-    <main id="top" style="padding-top: 44px;">
+    <main id="main-content" style="padding-top: 44px;">
         {% if landing_page.slug == 'casapy' %}
         <p class="lppp-django-marker" style="margin:0;padding:6px 12px;background:#0a7;color:#fff;font-size:12px;text-align:center;position:sticky;top:52px;z-index:999;">Page servie par Django LPPP — template à jour</p>
         {% if content.audit_dashboard_url %}
@@ -1512,6 +1573,22 @@
         </section>
         {% endif %}
 
+        {% if landing_page.slug == 'lppp-oppy-ai' %}
+        <section class="section" id="squidresearch-complementarite">
+            <div class="section-head"><span class="section-num">06</span><h2>SquidResearch, complémentarité</h2></div>
+            <div class="card">
+                <p class="section-lead">SquidResearch n'est pas un concurrent direct d'OPPORTUNITY : c'est un projet SaaS avec des personas differents qui m'a permis d'aborder des problematiques proches et complementaires.</p>
+                <ul class="pain-list">
+                    <li><strong>Transposable chez Oppy :</strong> qualite data, enrichissement, scoring, orchestration des workflows et automatisations.</li>
+                    <li><strong>Approche d'integration :</strong> cadrage API/webhooks, POC incremental, puis passage a l'echelle sur KPI valides.</li>
+                    <li><strong>Positionnement honnete :</strong> pas de promesse non mesuree, uniquement des capacites techniques verifiables.</li>
+                </ul>
+                <p style="margin-top:1rem;">Visite rapide de la plateforme pour illustrer concretement la logique produit :</p>
+                <p><a href="https://squidresearch.com/" target="_blank" rel="noopener noreferrer">Visiter SquidResearch →</a></p>
+            </div>
+        </section>
+        {% endif %}
+
         {% if content.why_growth_engineer %}
         <section class="section" id="why-ge">
             <h2>Pourquoi un Growth Engineer et pas une agence ?</h2>
@@ -1604,19 +1681,73 @@
     (function() {
         var nav = document.querySelector('.nav');
         if (!nav) return;
+        function syncNavMobileTop() {
+            var navH = Math.max(34, Math.ceil(nav.getBoundingClientRect().height || nav.offsetHeight || 44));
+            nav.style.setProperty('--nav-mobile-top', navH + 'px');
+        }
         function updateNav() { nav.classList.toggle('nav--scrolled', window.scrollY > 30); }
+        syncNavMobileTop();
         updateNav();
         window.addEventListener('scroll', function() { requestAnimationFrame(updateNav); }, { passive: true });
         var waffle = nav.querySelector('.nav-waffle');
+        var navLinks = nav.querySelector('.nav-links');
+        var backdrop = document.querySelector('.nav-backdrop');
+        function setMobileMenu(open) {
+            if (!navLinks) return;
+            if (window.innerWidth <= 1024) {
+                navLinks.style.display = open ? 'flex' : 'none';
+                document.body.style.overflow = open ? 'hidden' : '';
+            } else {
+                navLinks.style.display = '';
+                document.body.style.overflow = '';
+            }
+        }
         if (waffle) {
             waffle.addEventListener('click', function() {
+                syncNavMobileTop();
                 var open = nav.classList.toggle('nav--open');
-                waffle.setAttribute('aria-expanded', open);
+                setMobileMenu(open);
+                waffle.setAttribute('aria-expanded', open ? 'true' : 'false');
                 waffle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
             });
-            nav.querySelectorAll('.nav-links a').forEach(function(a) {
-                a.addEventListener('click', function() { nav.classList.remove('nav--open'); waffle.setAttribute('aria-expanded', 'false'); waffle.setAttribute('aria-label', 'Ouvrir le menu'); });
+            var links = nav.querySelectorAll('.nav-links a');
+            for (var i = 0; i < links.length; i++) {
+                links[i].addEventListener('click', function() {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                });
+            }
+            if (backdrop) {
+                backdrop.addEventListener('click', function() {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                });
+            }
+            window.addEventListener('resize', function() {
+                syncNavMobileTop();
+                if (window.innerWidth > 1024) {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                }
             });
+            window.addEventListener('orientationchange', function() {
+                setTimeout(syncNavMobileTop, 80);
+            });
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && nav.classList.contains('nav--open')) {
+                    nav.classList.remove('nav--open');
+                    setMobileMenu(false);
+                    waffle.setAttribute('aria-expanded', 'false');
+                    waffle.setAttribute('aria-label', 'Ouvrir le menu');
+                }
+            });
+            setMobileMenu(false);
         }
     })();
     </script>

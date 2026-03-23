@@ -120,22 +120,25 @@ body:has(.hero-bg-waves-pins) .alert-banner {
         :root { --lp-ease: cubic-bezier(0.4, 0, 0.2, 1); }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1.2rem; }
-        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.45rem 1rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 2px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
+        body { font-family: var(--lp-font-body, 'Roboto', system-ui, sans-serif); margin: 0; min-height: 100vh; background: var(--lp-bg, #0d0d0d); color: var(--lp-text, #e6e6e6); line-height: 1.6; font-size: 1rem; }
+        .skip-link { position: absolute; left: -9999px; top: 0; z-index: 2000; background: var(--lp-primary, #00C9D4); color: #0d0d0d; font-weight: 700; padding: 0.5rem 0.8rem; border-radius: 0 0 10px 10px; text-decoration: none; }
+        .skip-link:focus { left: 0.7rem; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0.35rem 0.8rem; background: color-mix(in srgb, var(--lp-bg, #0d0d0d) 94%, transparent); backdrop-filter: blur(12px); border-bottom: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 50%, transparent); }
         .nav-logo { max-height: 36px; width: auto; }
         .nav-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; align-items: center; }
-        .nav-links a { font-size: 1.05rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
+        .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--lp-muted, #999); text-decoration: none; transition: color 0.2s var(--lp-ease); }
         .nav-links a:hover { color: var(--lp-primary, #4a9eff); }
+        .nav-links a:focus-visible { outline: 2px solid var(--lp-primary, #4a9eff); outline-offset: 2px; border-radius: 8px; }
         .nav-links a.active { color: var(--lp-primary, #4a9eff); font-weight: 600; }
-        .nav-cta { display: inline-block; padding: 0.5rem 1rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 1.05rem; border-radius: 8px; text-decoration: none; }
+        .nav-cta { display: inline-block; padding: 0.45rem 0.8rem; background: var(--lp-primary, #4a9eff); color: var(--lp-cta-text, #fff); font-weight: 600; font-size: 0.88rem; border-radius: 8px; text-decoration: none; }
         .page-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 4rem; padding-top: calc(2rem + 44px); }
         .report-body h1, .report-body h2, .report-body h3 { color: var(--lp-heading, #fff); margin-top: 1.5em; margin-bottom: 0.5em; }
         .report-body h1 { font-size: 1.75rem; border-bottom: 2px solid var(--lp-primary, #4a9eff); padding-bottom: 0.25em; }
         .report-body h2 { font-size: 1.35rem; }
         .report-body h3 { font-size: 1.1rem; }
-        .report-body p { margin: 0 0 0.75rem; }
+        .report-body p { margin: 0 0 0.75rem; max-width: 74ch; }
         .report-body ul, .report-body ol { margin: 0 0 0.75rem 1.5rem; }
-        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 1.05rem; }
+        .report-body table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95rem; display: block; overflow-x: auto; }
         .report-body th, .report-body td { border: 1px solid color-mix(in srgb, var(--lp-primary, #4a9eff) 40%, transparent); padding: 0.5rem 0.75rem; text-align: left; }
         .report-body th { background: color-mix(in srgb, var(--lp-primary, #4a9eff) 15%, var(--lp-bg, #0d0d0d)); color: var(--lp-heading, #fff); }
         .report-body blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 4px solid var(--lp-primary, #4a9eff); color: var(--lp-muted, #999); }
@@ -148,6 +151,7 @@ body:has(.hero-bg-waves-pins) .alert-banner {
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Aller au contenu</a>
     
     <div class="site-content">
     <nav class="nav">
@@ -163,7 +167,7 @@ body:has(.hero-bg-waves-pins) .alert-banner {
             <a href="index.html#coordonnees" class="nav-cta">Me contacter</a>
         </div>
     </nav>
-    <main class="page-wrap">
+    <main class="page-wrap" id="main-content">
         <p class="report-intro">Ce rapport synthétise <strong>ce qui s'applique à OPPORTUNITY (Oppy.ai)</strong> — diagnostic, opportunités et plan d'action.</p>
         <div class="report-body"><p>rapport seo complet</p>
 <p>rapport </p>

@@ -29,6 +29,19 @@
       color: var(--lp-text);
       line-height: 1.6;
     }
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 2000;
+      background: var(--lp-primary);
+      color: #001316;
+      font-weight: 700;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0 0 10px 10px;
+      text-decoration: none;
+    }
+    .skip-link:focus { left: 0.7rem; }
     .nav {
       position: sticky;
       top: 0;
@@ -64,6 +77,10 @@
       border-color: var(--lp-border);
       color: var(--lp-primary);
       background: rgba(0, 201, 212, 0.08);
+    }
+    .nav-links a:focus-visible, .btn:focus-visible {
+      outline: 2px solid var(--lp-primary);
+      outline-offset: 2px;
     }
     .hero {
       max-width: 1100px;
@@ -151,7 +168,7 @@
       font-weight: 700;
     }
     h2 { margin: 0 0 0.6rem; font-size: 1.03rem; font-family: "Montserrat", system-ui, sans-serif; }
-    p { margin: 0 0 0.8rem; color: #d7dee6; }
+    p { margin: 0 0 0.8rem; color: #d7dee6; max-width: 72ch; }
     ul { margin: 0; padding-left: 1.1rem; }
     li { margin-bottom: 0.35rem; color: #d7dee6; }
     .quote {
@@ -223,6 +240,7 @@
   </style>
 </head>
 <body>
+  <a href="#main-content" class="skip-link">Aller au contenu</a>
   <nav class="nav" aria-label="Navigation Oppy LPP">
     <a class="nav-brand" href="index.html">LPPP OPPORTUNITY</a>
     <div class="nav-links">
@@ -259,7 +277,7 @@
     </aside>
   </header>
 
-  <main class="wrap">
+  <main class="wrap" id="main-content">
     <section class="grid">
       <article class="card">
         <p class="kicker">Concurrence</p>
